@@ -9,8 +9,10 @@ function handleEnterSwap(event) {
 
   // Check if this is Gemini's input element
   const isGeminiInput = event.target.tagName === "DIV" &&
-                        event.target.classList.contains("ql-editor") &&
-                        event.target.contentEditable === "true";
+                        event.target.contentEditable === "true" &&
+                        (event.target.classList.contains("ql-editor") ||
+                         (event.target.classList.contains("textarea") &&
+                          event.target.getAttribute("role") === "textbox"));
 
   if (!isGeminiInput) {
     return;
@@ -23,14 +25,53 @@ function handleEnterSwap(event) {
     event.preventDefault();
     event.stopImmediatePropagation();
 
-    const newEvent = new KeyboardEvent("keydown", {
-      key: "Enter",
-      code: "Enter",
-      bubbles: true,
-      cancelable: true,
-      shiftKey: isOnlyEnter  // Shift for newline, no Shift for send
-    });
-    event.target.dispatchEvent(newEvent);
+    if (isOnlyEnter) {
+      // Enter pressed - insert newline
+      try {
+        // Try using execCommand first (works well with Quill)
+        if (document.execCommand) {
+          document.execCommand('insertLineBreak');
+        } else {
+          // Fallback: manual DOM manipulation
+          const selection = window.getSelection();
+          const range = selection.getRangeAt(0);
+
+          const br = document.createElement('br');
+          range.deleteContents();
+          range.insertNode(br);
+
+          // Insert second br if at end (Quill needs this)
+          const isAtEnd = !br.nextSibling ||
+                          (br.nextSibling && br.nextSibling.nodeName === 'BR');
+          if (isAtEnd) {
+            const br2 = document.createElement('br');
+            br.parentNode.insertBefore(br2, br.nextSibling);
+          }
+
+          // Move cursor
+          range.setStartAfter(br);
+          range.setEndAfter(br);
+          selection.removeAllRanges();
+          selection.addRange(range);
+        }
+
+        // Trigger input event for framework
+        event.target.dispatchEvent(new Event('input', { bubbles: true }));
+        event.target.dispatchEvent(new Event('change', { bubbles: true }));
+      } catch (e) {
+        console.error('[Gemini Enter] Failed to insert newline:', e);
+      }
+    } else if (isShiftEnter) {
+      // Shift+Enter pressed - dispatch plain Enter to send
+      const newEvent = new KeyboardEvent("keydown", {
+        key: "Enter",
+        code: "Enter",
+        bubbles: true,
+        cancelable: true,
+        shiftKey: false
+      });
+      event.target.dispatchEvent(newEvent);
+    }
   }
 }
 
