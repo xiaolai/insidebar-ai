@@ -55,22 +55,6 @@
     "128": "icons/icon-128.png"
   },
 
-  "commands": {
-    "open-sidebar": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+S",
-        "mac": "Command+Shift+S"
-      },
-      "description": "Open Smarter Panel sidebar"
-    },
-    "open-prompt-library": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+P",
-        "mac": "Command+Shift+P"
-      },
-      "description": "Open Prompt Library"
-    }
-  },
 
   "content_scripts": [
     {

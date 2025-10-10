@@ -16,7 +16,6 @@ async function init() {
   await loadDataStats();
   await renderProviderList();
   setupEventListeners();
-  detectKeyboardShortcuts();
 }
 
 // T051: Load and display current settings
@@ -82,19 +81,6 @@ async function toggleProvider(providerId) {
   await saveSetting('enabledProviders', enabledProviders);
   await renderProviderList();
   showStatus('success', 'Provider settings updated');
-}
-
-// T054-T055: Detect and display keyboard shortcuts
-function detectKeyboardShortcuts() {
-  chrome.commands.getAll((commands) => {
-    commands.forEach(command => {
-      if (command.name === 'open-sidebar' && command.shortcut) {
-        document.getElementById('shortcut-sidebar').textContent = command.shortcut;
-      } else if (command.name === 'open-prompt-library' && command.shortcut) {
-        document.getElementById('shortcut-prompts').textContent = command.shortcut;
-      }
-    });
-  });
 }
 
 // T056: Load and display data statistics

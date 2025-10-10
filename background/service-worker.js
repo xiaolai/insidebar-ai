@@ -102,48 +102,10 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   }
 });
 
-// T010: Keyboard shortcut handler
-// Store pending command for action click handler
-let pendingCommand = null;
-
-chrome.commands.onCommand.addListener(async (command) => {
-  console.log('[Shortcut] Command received:', command);
-
-  try {
-    if (command === 'open-sidebar' || command === 'open-prompt-library') {
-      // Get current window
-      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-
-      if (!tab || !tab.windowId) {
-        console.error('[Shortcut] No active tab or window found');
-        return;
-      }
-
-      console.log('[Shortcut] Attempting to open side panel for window:', tab.windowId);
-
-      // Store the command for later if needed
-      pendingCommand = command;
-
-      // Try to open the panel directly with windowId
-      // This should work since keyboard shortcuts count as user gestures
-      await chrome.sidePanel.open({ windowId: tab.windowId });
-
-      console.log('[Shortcut] Side panel opened successfully');
-
-      // If opening prompt library, send message after sidebar loads
-      if (command === 'open-prompt-library') {
-        setTimeout(() => {
-          chrome.runtime.sendMessage({ action: 'openPromptLibrary' }).catch(() => {
-            console.log('[Shortcut] Sidebar not ready yet for prompt library switch');
-          });
-        }, 150);
-      }
-
-      // Clear pending command after successful open
-      pendingCommand = null;
-    }
-  } catch (error) {
-    console.error('[Shortcut] Error in keyboard shortcut handler:', error);
-    console.error('[Shortcut] Error details:', error.message);
-  }
-});
+// T010: Keyboard shortcuts removed
+// NOTE: Chrome Side Panel API has a limitation - sidePanel.open() doesn't work in keyboard
+// command handlers due to "user gesture" requirement (even though shortcuts are user gestures).
+// This is a known Chrome bug: https://issues.chromium.org/issues/40282907
+//
+// Keyboard shortcuts have been removed from manifest.json.
+// Users must use: extension icon click or right-click context menu to open sidebar.
