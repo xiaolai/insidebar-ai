@@ -36,7 +36,9 @@ function isEdgeBrowser() {
 function getChatgptHistoryElements() {
   return {
     button: document.getElementById('sync-chatgpt-history-btn'),
-    status: document.getElementById('chatgpt-history-status')
+    status: document.getElementById('chatgpt-history-status'),
+    spinner: document.getElementById('chatgpt-history-spinner'),
+    progress: document.getElementById('chatgpt-history-progress')
   };
 }
 
@@ -53,6 +55,7 @@ function resetChatgptHistoryStatus() {
   if (defaultStatus) {
     status.textContent = defaultStatus;
   }
+  setChatgptHistoryLoadingState(false);
 }
 
 function setChatgptHistoryButtonState(isSyncing) {
@@ -60,6 +63,16 @@ function setChatgptHistoryButtonState(isSyncing) {
   if (!button) return;
   button.disabled = isSyncing;
   button.textContent = isSyncing ? 'Downloading…' : 'Download';
+}
+
+function setChatgptHistoryLoadingState(isLoading) {
+  const { spinner, progress } = getChatgptHistoryElements();
+  if (spinner) {
+    spinner.style.display = isLoading ? 'inline-block' : 'none';
+  }
+  if (progress) {
+    progress.style.display = isLoading ? 'block' : 'none';
+  }
 }
 
 function formatChatgptHistoryStatus(lastSync, count) {
@@ -129,11 +142,13 @@ function setupChatgptHistoryControls() {
 
   button.addEventListener('click', () => {
     setChatgptHistoryButtonState(true);
+    setChatgptHistoryLoadingState(true);
     updateChatgptHistoryStatus('Starting download…');
 
     chrome.runtime.sendMessage({ action: 'startChatgptHistorySync' }, (response) => {
       if (chrome.runtime.lastError) {
         setChatgptHistoryButtonState(false);
+        setChatgptHistoryLoadingState(false);
         updateChatgptHistoryStatus(`Unable to start download: ${chrome.runtime.lastError.message}`);
         return;
       }
@@ -141,6 +156,7 @@ function setupChatgptHistoryControls() {
       if (!response || response.success === false) {
         const errorMessage = response?.error ? `Unable to start download: ${response.error}` : 'Unable to start download.';
         setChatgptHistoryButtonState(false);
+        setChatgptHistoryLoadingState(false);
         updateChatgptHistoryStatus(errorMessage);
       }
     });
@@ -151,12 +167,14 @@ function chatgptHistoryMessageHandler(message) {
   switch (message.action) {
     case 'chatgptHistorySyncStarted':
       setChatgptHistoryButtonState(true);
+      setChatgptHistoryLoadingState(true);
       updateChatgptHistoryStatus('Downloading history…');
       break;
     case 'chatgptHistorySyncProgress': {
       const total = message.payload?.totalSaved ?? 0;
       const countLabel = total === 1 ? 'conversation' : 'conversations';
       setChatgptHistoryButtonState(true);
+      setChatgptHistoryLoadingState(true);
       updateChatgptHistoryStatus(`Downloaded ${total} ${countLabel}…`);
       break;
     }
@@ -164,12 +182,14 @@ function chatgptHistoryMessageHandler(message) {
       const lastSync = message.payload?.lastSync ?? Date.now();
       const total = message.payload?.totalSaved ?? 0;
       setChatgptHistoryButtonState(false);
+      setChatgptHistoryLoadingState(false);
       updateChatgptHistoryStatus(formatChatgptHistoryStatus(lastSync, total));
       break;
     }
     case 'chatgptHistorySyncError': {
       const errorMessage = message.payload?.message || 'Unknown error while downloading history.';
       setChatgptHistoryButtonState(false);
+      setChatgptHistoryLoadingState(false);
       updateChatgptHistoryStatus(`Error: ${errorMessage}`);
       break;
     }
@@ -185,6 +205,7 @@ async function loadChatgptHistoryMeta() {
       chatgptHistoryCount: 0
     });
     updateChatgptHistoryStatus(formatChatgptHistoryStatus(chatgptHistoryLastSync, chatgptHistoryCount));
+    setChatgptHistoryLoadingState(false);
   } catch (error) {
     console.warn('Unable to load ChatGPT history metadata', error);
     resetChatgptHistoryStatus();
