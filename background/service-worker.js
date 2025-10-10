@@ -103,28 +103,38 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 });
 
 // T010: Keyboard shortcut handler
+// Note: chrome.sidePanel.open() with windowId doesn't work reliably with keyboard shortcuts
+// Instead, we set the sidebar path and let the openPanelOnActionClick behavior handle it
 chrome.commands.onCommand.addListener(async (command) => {
   try {
-    // Get current active tab to extract windowId
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    if (command === 'open-sidebar' || command === 'open-prompt-library') {
+      // Get current window
+      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
-    if (!tab || !tab.windowId) {
-      console.error('No active tab or window found');
-      return;
-    }
+      if (!tab || !tab.windowId) {
+        console.error('No active tab or window found');
+        return;
+      }
 
-    if (command === 'open-sidebar') {
-      await chrome.sidePanel.open({ windowId: tab.windowId });
-    } else if (command === 'open-prompt-library') {
-      // T048: Open sidebar and switch to Prompt Genie
-      await chrome.sidePanel.open({ windowId: tab.windowId });
+      // For keyboard shortcuts, we use setOptions to configure the panel
+      // then send a message to the sidebar to switch views if needed
+      await chrome.sidePanel.setOptions({
+        tabId: tab.id,
+        path: 'sidebar/sidebar.html',
+        enabled: true
+      });
 
-      // Wait a moment for sidebar to load, then send message
-      setTimeout(() => {
-        chrome.runtime.sendMessage({ action: 'openPromptLibrary' }).catch(() => {
-          // Sidebar may not be ready yet, ignore error
-        });
-      }, 100);
+      // Open the panel using the tab context
+      await chrome.sidePanel.open({ tabId: tab.id });
+
+      // If opening prompt library, send message after sidebar loads
+      if (command === 'open-prompt-library') {
+        setTimeout(() => {
+          chrome.runtime.sendMessage({ action: 'openPromptLibrary' }).catch(() => {
+            // Sidebar may not be ready yet, ignore error
+          });
+        }, 150);
+      }
     }
   } catch (error) {
     console.error('Error in keyboard shortcut handler:', error);
