@@ -3,7 +3,6 @@ const DEFAULT_SETTINGS = {
   defaultProvider: 'chatgpt',
   lastSelectedProvider: 'chatgpt',
   theme: 'auto',
-  ollamaUrl: 'http://localhost:3000',
   keyboardShortcutEnabled: true
 };
 

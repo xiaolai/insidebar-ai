@@ -7,7 +7,7 @@
 
 ## 📖 Overview
 
-**insidebar.ai** brings together multiple AI assistants in one convenient sidebar interface. Access ChatGPT, Claude, Gemini, Grok, DeepSeek, and Ollama without leaving your current tab or juggling multiple windows.
+**insidebar.ai** brings together multiple AI assistants in one convenient sidebar interface. Access ChatGPT, Claude, Gemini, Grok, and DeepSeek without leaving your current tab or juggling multiple windows.
 
 ### ✨ Key Features
 
@@ -27,7 +27,6 @@
 | Gemini | https://gemini.google.com | ✅ Supported |
 | Grok | https://grok.com | ✅ Supported |
 | DeepSeek | https://chat.deepseek.com | ✅ Supported |
-| Ollama | http://localhost:3000 | ✅ Supported (requires local setup) |
 
 ## 📦 Installation
 
@@ -82,12 +81,6 @@
      - **Open insidebar.ai**: Default `Ctrl+Shift+E` (macOS: `Cmd+Shift+E`)
      - **Open Prompt Library**: Default `Ctrl+Shift+P` (macOS: `Cmd+Shift+P`)
 
-3. **Ollama Setup** (Optional)
-   - Install [Ollama](https://ollama.com/)
-   - Install [Open WebUI](https://github.com/open-webui/open-webui) for Ollama
-   - Run Open WebUI on `http://localhost:3000`
-   - Enable Ollama in extension settings
-
 ## 📚 Usage Guide
 
 ### Opening the Sidebar
@@ -111,7 +104,6 @@ Click the icon tabs at the bottom of the sidebar:
 - ✨ Gemini
 - 🚀 Grok
 - 🔍 DeepSeek
-- 🦙 Ollama
 - ✏️ Prompt Genie
 - ⚙️ Settings
 
@@ -208,7 +200,6 @@ insidebar-ai/
 | `declarativeNetRequestWithHostAccess` | Modify headers for specific domains |
 | Host permissions | Access AI provider websites |
 
-> **Optional host permissions**: When you enable a custom Ollama or other self-hosted provider, the extension prompts for `http://*/*` and `https://*/*` so Chrome can reach the URL you supply. These permissions are optional—nothing is requested unless you explicitly opt in—and the extension only touches the domains you configure.
 
 ## 🛠️ Development
 
@@ -262,13 +253,6 @@ Contributions are welcome! Please follow these guidelines:
 - Clear browser cache and cookies
 - Check if provider changed their URL
 - Verify provider is enabled in settings
-
-### Ollama Not Working
-
-- **Solution**: Ensure Ollama and Open WebUI are running
-- Verify Open WebUI is accessible at `http://localhost:3000`
-- Check Ollama URL in extension settings
-- Enable Ollama in provider settings
 
 ### Keyboard Shortcuts Not Working
 

@@ -59,8 +59,7 @@ async function createContextMenus() {
     claude: 'Claude',
     gemini: 'Gemini',
     grok: 'Grok',
-    deepseek: 'DeepSeek',
-    ollama: 'Ollama'
+    deepseek: 'DeepSeek'
   };
 
   enabledProviders.forEach(providerId => {

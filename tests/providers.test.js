@@ -13,7 +13,7 @@ describe('providers module', () => {
 
   describe('PROVIDERS constant', () => {
     it('should contain all expected providers', () => {
-      expect(PROVIDERS).toHaveLength(6);
+      expect(PROVIDERS).toHaveLength(5);
       const providerIds = PROVIDERS.map((p) => p.id);
       expect(providerIds).toEqual([
         'chatgpt',
@@ -21,7 +21,6 @@ describe('providers module', () => {
         'gemini',
         'grok',
         'deepseek',
-        'ollama',
       ]);
     });
 
@@ -63,17 +62,6 @@ describe('providers module', () => {
       expect(provider.url).toBe('https://chatgpt.com');
     });
 
-    it('should return ollama with custom URL from settings', async () => {
-      chrome.storage.sync.get.mockResolvedValue({
-        ollamaUrl: 'http://localhost:11434',
-      });
-
-      const provider = await getProviderByIdWithSettings('ollama');
-
-      expect(provider).toBeDefined();
-      expect(provider.url).toBe('http://localhost:11434');
-    });
-
     it('should return null for non-existent provider', async () => {
       const provider = await getProviderByIdWithSettings('nonexistent');
 
@@ -85,7 +73,6 @@ describe('providers module', () => {
     it('should return enabled providers from settings', async () => {
       chrome.storage.sync.get.mockResolvedValue({
         enabledProviders: ['chatgpt', 'claude'],
-        ollamaUrl: 'http://localhost:3000',
       });
 
       const providers = await getEnabledProviders();
@@ -93,19 +80,6 @@ describe('providers module', () => {
       expect(providers).toHaveLength(2);
       expect(providers[0].id).toBe('chatgpt');
       expect(providers[1].id).toBe('claude');
-    });
-
-    it('should apply custom ollama URL to ollama provider', async () => {
-      chrome.storage.sync.get.mockResolvedValue({
-        enabledProviders: ['ollama'],
-        ollamaUrl: 'http://custom:8080',
-      });
-
-      const providers = await getEnabledProviders();
-
-      expect(providers).toHaveLength(1);
-      expect(providers[0].id).toBe('ollama');
-      expect(providers[0].url).toBe('http://custom:8080');
     });
 
     it('should use default settings when not provided', async () => {

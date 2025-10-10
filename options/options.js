@@ -9,8 +9,6 @@ import {
   importPrompts,
   clearAllPrompts
 } from '../modules/prompt-manager.js';
-import { validateOllamaUrl } from '../modules/url-validator.js';
-
 const DEFAULT_ENABLED_PROVIDERS = ['chatgpt', 'claude', 'gemini', 'grok', 'deepseek'];
 
 function getEnabledProvidersOrDefault(settings) {
@@ -18,12 +16,6 @@ function getEnabledProvidersOrDefault(settings) {
     return [...settings.enabledProviders];
   }
   return [...DEFAULT_ENABLED_PROVIDERS];
-}
-
-function setOllamaUrlVisibility(isEnabled) {
-  const container = document.getElementById('ollama-url-setting');
-  if (!container) return;
-  container.style.display = isEnabled ? 'flex' : 'none';
 }
 
 function isEdgeBrowser() {
@@ -91,12 +83,6 @@ async function loadSettings() {
   // Default provider
   document.getElementById('default-provider-select').value = settings.defaultProvider || 'chatgpt';
 
-  // Ollama URL
-  document.getElementById('ollama-url-input').value = settings.ollamaUrl || 'http://localhost:3000';
-
-  const enabledProviders = getEnabledProvidersOrDefault(settings);
-  setOllamaUrlVisibility(enabledProviders.includes('ollama'));
-
   const keyboardShortcutEnabled = settings.keyboardShortcutEnabled !== false;
   const shortcutToggle = document.getElementById('keyboard-shortcut-toggle');
   if (shortcutToggle) {
@@ -133,8 +119,6 @@ async function renderProviderList() {
       await toggleProvider(toggle.dataset.providerId);
     });
   });
-
-  setOllamaUrlVisibility(enabledProviders.includes('ollama'));
 }
 
 async function toggleProvider(providerId) {
@@ -202,30 +186,6 @@ function setupEventListeners() {
       showStatus('success', enabled ? 'Keyboard shortcut enabled' : 'Keyboard shortcut disabled');
     });
   }
-
-  // Ollama URL change
-  document.getElementById('ollama-url-input').addEventListener('change', async (e) => {
-    const url = e.target.value.trim();
-    const defaultUrl = 'http://localhost:3000';
-
-    if (!url) {
-      await saveSetting('ollamaUrl', defaultUrl);
-      e.target.value = defaultUrl;
-      showStatus('success', 'Ollama URL reset to default');
-      return;
-    }
-
-    // Validate URL using comprehensive validator
-    const validation = validateOllamaUrl(url);
-    if (!validation.valid) {
-      showStatus('error', `Invalid Ollama URL: ${validation.error}`);
-      e.target.value = await getSetting('ollamaUrl') || defaultUrl;
-      return;
-    }
-
-    await saveSetting('ollamaUrl', url);
-    showStatus('success', 'Ollama URL updated. Reload sidebar to apply changes.');
-  });
 
   // Export data
   document.getElementById('export-btn').addEventListener('click', exportData);

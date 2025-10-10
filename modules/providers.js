@@ -1,5 +1,3 @@
-import { validateOllamaUrl } from './url-validator.js';
-
 export const PROVIDERS = [
   {
     id: 'chatgpt',
@@ -40,14 +38,6 @@ export const PROVIDERS = [
     icon: '/icons/providers/deepseek.png',
     iconDark: '/icons/providers/dark/deepseek.png',
     enabled: true
-  },
-  {
-    id: 'ollama',
-    name: 'Ollama',
-    url: 'http://localhost:3000',
-    icon: '/icons/providers/ollama.png',
-    iconDark: '/icons/providers/dark/ollama.png',
-    enabled: false  // Disabled by default (requires local setup)
   }
 ];
 
@@ -59,52 +49,14 @@ export async function getProviderByIdWithSettings(id) {
   const provider = PROVIDERS.find(p => p.id === id);
   if (!provider) return null;
 
-  // For Ollama, use custom URL from settings
-  if (id === 'ollama') {
-    const settings = await chrome.storage.sync.get({ ollamaUrl: 'http://localhost:3000' });
-    const ollamaUrl = settings.ollamaUrl || 'http://localhost:3000';
-
-    // Validate Ollama URL
-    const validation = validateOllamaUrl(ollamaUrl);
-    if (!validation.valid) {
-      console.warn('Invalid Ollama URL:', validation.error);
-      // Fall back to default
-      return {
-        ...provider,
-        url: 'http://localhost:3000'
-      };
-    }
-
-    return {
-      ...provider,
-      url: ollamaUrl
-    };
-  }
-
   return provider;
 }
 
 export async function getEnabledProviders() {
   const settings = await chrome.storage.sync.get({
-    enabledProviders: ['chatgpt', 'claude', 'gemini', 'grok', 'deepseek'],
-    ollamaUrl: 'http://localhost:3000'
+    enabledProviders: ['chatgpt', 'claude', 'gemini', 'grok', 'deepseek']
   });
 
   return PROVIDERS
-    .filter(p => settings.enabledProviders.includes(p.id))
-    .map(p => {
-      // For Ollama, use custom URL from settings
-      if (p.id === 'ollama') {
-        const ollamaUrl = settings.ollamaUrl || 'http://localhost:3000';
-        const validation = validateOllamaUrl(ollamaUrl);
-
-        if (!validation.valid) {
-          console.warn('Invalid Ollama URL:', validation.error);
-          return { ...p, url: 'http://localhost:3000' };
-        }
-
-        return { ...p, url: ollamaUrl };
-      }
-      return p;
-    });
+    .filter(p => settings.enabledProviders.includes(p.id));
 }
