@@ -167,7 +167,9 @@ function hideLoading() {
 function setupPromptLibrary() {
   // Switch between providers view and prompt library
   const promptLibraryTab = document.getElementById('prompt-library-tab');
-  promptLibraryTab.addEventListener('click', () => switchToView('prompt-library'));
+  if (promptLibraryTab) {
+    promptLibraryTab.addEventListener('click', () => switchToView('prompt-library'));
+  }
 
   // Provider tabs switching back to providers view
   document.querySelectorAll('#provider-tabs button[data-provider-id]').forEach(btn => {
