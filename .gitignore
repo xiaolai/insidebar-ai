@@ -44,5 +44,8 @@ test-profiles/
 .claude/
 CLAUDE.md
 .specify/
+specs/
 .codex/
 AGENTS.md
+
+docs/
