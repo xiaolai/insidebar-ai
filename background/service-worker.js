@@ -49,7 +49,7 @@ async function createContextMenus() {
   chrome.contextMenus.create({
     id: 'open-prompt-library',
     parentId: 'open-smarter-panel',
-    title: '📚 Prompt Library',
+    title: 'Prompt Library',
     contexts: ['page', 'selection', 'link']
   });
 }
