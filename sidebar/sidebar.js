@@ -1,4 +1,4 @@
-import { PROVIDERS, getProviderById, getEnabledProviders } from '../modules/providers.js';
+import { PROVIDERS, getProviderById, getProviderByIdWithSettings, getEnabledProviders } from '../modules/providers.js';
 import { applyTheme } from '../modules/theme-manager.js';
 import {
   getAllPrompts,
@@ -115,7 +115,6 @@ async function renderProviderTabs() {
   // Add settings tab at the very end (right side)
   const settingsTab = document.createElement('button');
   settingsTab.id = 'settings-tab';
-  settingsTab.dataset.view = 'settings';
   settingsTab.title = 'Settings';
 
   const settingsIcon = document.createElement('img');
@@ -124,13 +123,15 @@ async function renderProviderTabs() {
   settingsIcon.className = 'provider-icon';
 
   settingsTab.appendChild(settingsIcon);
-  settingsTab.addEventListener('click', () => switchToView('settings'));
+  settingsTab.addEventListener('click', () => {
+    chrome.runtime.openOptionsPage();
+  });
   tabsContainer.appendChild(settingsTab);
 }
 
 // T015: Switch to a provider
 async function switchProvider(providerId) {
-  const provider = getProviderById(providerId);
+  const provider = await getProviderByIdWithSettings(providerId);
   if (!provider) {
     showError(`Provider ${providerId} not found`);
     return;
@@ -139,8 +140,6 @@ async function switchProvider(providerId) {
   // Hide non-provider views if currently active
   currentView = 'providers';
   document.getElementById('prompt-library').style.display = 'none';
-  const settingsView = document.getElementById('settings-view');
-  if (settingsView) settingsView.style.display = 'none';
 
   // Show provider container
   document.getElementById('provider-container').style.display = 'flex';
@@ -150,11 +149,9 @@ async function switchProvider(providerId) {
     btn.classList.remove('active');
   });
 
-  // Deactivate prompt library and settings tabs
+  // Deactivate prompt library tab
   const promptLibraryTab = document.getElementById('prompt-library-tab');
-  const settingsTab = document.getElementById('settings-tab');
   if (promptLibraryTab) promptLibraryTab.classList.remove('active');
-  if (settingsTab) settingsTab.classList.remove('active');
 
   // Activate the selected provider tab
   const activeProviderTab = document.querySelector(`#provider-tabs button[data-provider-id="${providerId}"]`);
@@ -319,8 +316,6 @@ function switchToView(view) {
   // Hide all views first
   document.getElementById('provider-container').style.display = 'none';
   document.getElementById('prompt-library').style.display = 'none';
-  const settingsView = document.getElementById('settings-view');
-  if (settingsView) settingsView.style.display = 'none';
 
   // Deactivate all tabs
   document.querySelectorAll('#provider-tabs button').forEach(btn => {
@@ -332,11 +327,6 @@ function switchToView(view) {
     document.getElementById('prompt-library-tab').classList.add('active');
     renderPromptList();
     updateCategoryFilter();
-  } else if (view === 'settings') {
-    if (settingsView) settingsView.style.display = 'flex';
-    const settingsTab = document.getElementById('settings-tab');
-    if (settingsTab) settingsTab.classList.add('active');
-    renderSettings();
   } else {
     // Switch back to providers view
     document.getElementById('provider-container').style.display = 'flex';
@@ -648,137 +638,6 @@ function escapeHtml(text) {
   const div = document.createElement('div');
   div.textContent = text;
   return div.innerHTML;
-}
-
-// Settings Page Implementation
-async function renderSettings() {
-  const settingsContainer = document.getElementById('settings-content');
-  if (!settingsContainer) return;
-
-  // Get current settings
-  const settings = await chrome.storage.sync.get({
-    theme: 'auto',
-    defaultProvider: 'chatgpt',
-    enabledProviders: PROVIDERS.map(p => p.id)
-  });
-
-  settingsContainer.innerHTML = `
-    <div class="settings-section">
-      <h3>Appearance</h3>
-      <div class="setting-item">
-        <label for="theme-select">Theme</label>
-        <select id="theme-select">
-          <option value="auto" ${settings.theme === 'auto' ? 'selected' : ''}>Auto (System)</option>
-          <option value="light" ${settings.theme === 'light' ? 'selected' : ''}>Light</option>
-          <option value="dark" ${settings.theme === 'dark' ? 'selected' : ''}>Dark</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="settings-section">
-      <h3>Default Provider</h3>
-      <div class="setting-item">
-        <label for="default-provider-select">Default AI Provider</label>
-        <select id="default-provider-select">
-          ${PROVIDERS.map(p => `
-            <option value="${p.id}" ${settings.defaultProvider === p.id ? 'selected' : ''}>
-              ${p.name}
-            </option>
-          `).join('')}
-        </select>
-      </div>
-    </div>
-
-    <div class="settings-section">
-      <h3>Enabled Providers</h3>
-      <div class="setting-item">
-        <p class="setting-description">Select which AI providers appear in your sidebar</p>
-        ${PROVIDERS.map(p => `
-          <label class="checkbox-label">
-            <input type="checkbox"
-                   class="provider-checkbox"
-                   data-provider-id="${p.id}"
-                   ${settings.enabledProviders.includes(p.id) ? 'checked' : ''}>
-            ${p.name}
-          </label>
-        `).join('')}
-      </div>
-    </div>
-
-    <div class="settings-section">
-      <h3>About</h3>
-      <div class="setting-item">
-        <p><strong>Smarter Panel</strong></p>
-        <p>Version 1.0.0</p>
-        <p class="setting-description">
-          A unified sidebar for accessing multiple AI providers with built-in prompt management.
-        </p>
-      </div>
-    </div>
-
-    <div class="settings-actions">
-      <button id="save-settings-btn" class="primary">Save Settings</button>
-      <button id="reset-settings-btn" class="secondary">Reset to Defaults</button>
-    </div>
-  `;
-
-  // Add event listeners
-  document.getElementById('save-settings-btn').addEventListener('click', saveSettings);
-  document.getElementById('reset-settings-btn').addEventListener('click', resetSettings);
-}
-
-async function saveSettings() {
-  const theme = document.getElementById('theme-select').value;
-  const defaultProvider = document.getElementById('default-provider-select').value;
-
-  const enabledProviders = [];
-  document.querySelectorAll('.provider-checkbox:checked').forEach(checkbox => {
-    enabledProviders.push(checkbox.dataset.providerId);
-  });
-
-  if (enabledProviders.length === 0) {
-    alert('Please enable at least one provider');
-    return;
-  }
-
-  try {
-    await chrome.storage.sync.set({
-      theme,
-      defaultProvider,
-      enabledProviders
-    });
-
-    // Apply theme immediately
-    await applyTheme();
-
-    showToast('Settings saved successfully!');
-
-    // Re-render tabs if providers changed
-    await renderProviderTabs();
-  } catch (error) {
-    console.error('Error saving settings:', error);
-    showToast('Failed to save settings');
-  }
-}
-
-async function resetSettings() {
-  if (!confirm('Reset all settings to defaults?')) return;
-
-  try {
-    await chrome.storage.sync.set({
-      theme: 'auto',
-      defaultProvider: 'chatgpt',
-      enabledProviders: PROVIDERS.map(p => p.id)
-    });
-
-    await applyTheme();
-    showToast('Settings reset successfully!');
-    renderSettings();
-    await renderProviderTabs();
-  } catch (error) {
-    console.error('Error resetting settings:', error);
-    showToast('Failed to reset settings');
-  }
 }
 
 // Initialize on load

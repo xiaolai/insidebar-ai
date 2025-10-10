@@ -18,8 +18,14 @@
     "https://claude.ai/*",
     "https://gemini.google.com/*",
     "https://grok.com/*",
-    "https://chat.deepseek.com/*",
-    "http://localhost:3000/*"
+    "https://chat.deepseek.com/*"
+  ],
+
+  "optional_host_permissions": [
+    "http://localhost/*",
+    "http://127.0.0.1/*",
+    "http://*/*",
+    "https://*/*"
   ],
 
   "background": {
@@ -99,15 +105,6 @@
       "js": [
         "content-scripts/enter-behavior-utils.js",
         "content-scripts/enter-behavior-deepseek.js"
-      ],
-      "run_at": "document_start",
-      "all_frames": true
-    },
-    {
-      "matches": ["http://localhost:3000/*"],
-      "js": [
-        "content-scripts/enter-behavior-utils.js",
-        "content-scripts/enter-behavior-ollama.js"
       ],
       "run_at": "document_start",
       "all_frames": true

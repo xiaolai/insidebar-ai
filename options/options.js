@@ -1,6 +1,6 @@
 // T050-T064: Settings Page Implementation
 import { PROVIDERS } from '../modules/providers.js';
-import { getSettings, saveSettings, saveSetting, resetSettings, exportSettings, importSettings } from '../modules/settings.js';
+import { getSettings, getSetting, saveSettings, saveSetting, resetSettings, exportSettings, importSettings } from '../modules/settings.js';
 import {
   getAllPrompts,
   getFavoritePrompts,
@@ -28,6 +28,9 @@ async function loadSettings() {
 
   // Default provider
   document.getElementById('default-provider-select').value = settings.defaultProvider || 'chatgpt';
+
+  // Ollama URL
+  document.getElementById('ollama-url-input').value = settings.ollamaUrl || 'http://localhost:3000';
 }
 
 // T052-T053: Render provider enable/disable toggles
@@ -126,6 +129,21 @@ function setupEventListeners() {
   document.getElementById('default-provider-select').addEventListener('change', async (e) => {
     await saveSetting('defaultProvider', e.target.value);
     showStatus('success', 'Default provider updated');
+  });
+
+  // Ollama URL change
+  document.getElementById('ollama-url-input').addEventListener('change', async (e) => {
+    const url = e.target.value.trim();
+
+    // Basic URL validation
+    if (url && !url.match(/^https?:\/\/.+/)) {
+      showStatus('error', 'Invalid URL format. Must start with http:// or https://');
+      e.target.value = await getSetting('ollamaUrl') || 'http://localhost:3000';
+      return;
+    }
+
+    await saveSetting('ollamaUrl', url || 'http://localhost:3000');
+    showStatus('success', 'Ollama URL updated. Reload sidebar to apply changes.');
   });
 
   // Export data

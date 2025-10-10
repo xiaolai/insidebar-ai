@@ -2,7 +2,8 @@ const DEFAULT_SETTINGS = {
   enabledProviders: ['chatgpt', 'claude', 'gemini', 'grok', 'deepseek'],
   defaultProvider: 'chatgpt',
   lastSelectedProvider: 'chatgpt',
-  theme: 'auto'
+  theme: 'auto',
+  ollamaUrl: 'http://localhost:3000'
 };
 
 export async function getSettings() {
