@@ -63,57 +63,70 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
 
 // T009 & T067-T068: Context menu click handler
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
-  if (info.menuItemId.startsWith('provider-')) {
-    const providerId = info.menuItemId.replace('provider-', '');
+  try {
+    if (!tab || !tab.windowId) {
+      console.error('No valid tab or window found');
+      return;
+    }
 
-    // Open side panel
-    await chrome.sidePanel.open({ windowId: tab.windowId });
+    if (info.menuItemId.startsWith('provider-')) {
+      const providerId = info.menuItemId.replace('provider-', '');
 
-    // Wait for sidebar to load, then send message to switch provider
-    setTimeout(() => {
-      chrome.runtime.sendMessage({
-        action: 'switchProvider',
-        payload: { providerId }
-      }).catch(() => {
-        // Sidebar may not be ready yet, ignore error
-      });
-    }, 100);
-  } else if (info.menuItemId === 'open-prompt-library') {
-    // Open side panel with prompt library
-    await chrome.sidePanel.open({ windowId: tab.windowId });
+      // Open side panel
+      await chrome.sidePanel.open({ windowId: tab.windowId });
 
-    // Wait for sidebar to load, then switch to prompt library
-    setTimeout(() => {
-      chrome.runtime.sendMessage({
-        action: 'openPromptLibrary'
-      }).catch(() => {
-        // Sidebar may not be ready yet, ignore error
-      });
-    }, 100);
+      // Wait for sidebar to load, then send message to switch provider
+      setTimeout(() => {
+        chrome.runtime.sendMessage({
+          action: 'switchProvider',
+          payload: { providerId }
+        }).catch(() => {
+          // Sidebar may not be ready yet, ignore error
+        });
+      }, 100);
+    } else if (info.menuItemId === 'open-prompt-library') {
+      // Open side panel with prompt library
+      await chrome.sidePanel.open({ windowId: tab.windowId });
+
+      // Wait for sidebar to load, then switch to prompt library
+      setTimeout(() => {
+        chrome.runtime.sendMessage({
+          action: 'openPromptLibrary'
+        }).catch(() => {
+          // Sidebar may not be ready yet, ignore error
+        });
+      }, 100);
+    }
+  } catch (error) {
+    console.error('Error in context menu handler:', error);
   }
 });
 
 // T010: Keyboard shortcut handler
 chrome.commands.onCommand.addListener(async (command) => {
-  // Get current active tab to extract windowId
-  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  try {
+    // Get current active tab to extract windowId
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
-  if (!tab) {
-    console.error('No active tab found');
-    return;
-  }
+    if (!tab || !tab.windowId) {
+      console.error('No active tab or window found');
+      return;
+    }
 
-  if (command === 'open-sidebar') {
-    await chrome.sidePanel.open({ windowId: tab.windowId });
-  } else if (command === 'open-prompt-library') {
-    // T048: Open sidebar and switch to Prompt Genie
-    await chrome.sidePanel.open({ windowId: tab.windowId });
+    if (command === 'open-sidebar') {
+      await chrome.sidePanel.open({ windowId: tab.windowId });
+    } else if (command === 'open-prompt-library') {
+      // T048: Open sidebar and switch to Prompt Genie
+      await chrome.sidePanel.open({ windowId: tab.windowId });
 
-    // Wait a moment for sidebar to load, then send message
-    setTimeout(() => {
-      chrome.runtime.sendMessage({ action: 'openPromptLibrary' }).catch(() => {
-        // Sidebar may not be ready yet, ignore error
-      });
-    }, 100);
+      // Wait a moment for sidebar to load, then send message
+      setTimeout(() => {
+        chrome.runtime.sendMessage({ action: 'openPromptLibrary' }).catch(() => {
+          // Sidebar may not be ready yet, ignore error
+        });
+      }, 100);
+    }
+  } catch (error) {
+    console.error('Error in keyboard shortcut handler:', error);
   }
 });
