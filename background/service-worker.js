@@ -254,10 +254,16 @@ async function ensureSidePanelWithChatgpt() {
   try {
     const window = await chrome.windows.getLastFocused({ populate: false });
     if (window && typeof window.id === 'number') {
-      await chrome.sidePanel.open({ windowId: window.id });
+      await chrome.sidePanel.open({ windowId: window.id }).catch((error) => {
+        if (!error?.message?.includes('may only be called in response to a user gesture')) {
+          console.warn('Unable to open side panel for ChatGPT history sync', error);
+        }
+      });
     }
   } catch (error) {
-    console.warn('Unable to open side panel for ChatGPT history sync', error);
+    if (!error?.message?.includes('may only be called in response to a user gesture')) {
+      console.warn('Unable to open side panel for ChatGPT history sync', error);
+    }
   }
 
   // Ask sidebar to switch to ChatGPT provider

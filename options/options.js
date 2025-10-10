@@ -172,6 +172,14 @@ function setupChatgptHistoryControls() {
     setChatgptHistoryLoadingState(true);
     updateChatgptHistoryStatus('Starting download…');
 
+    try {
+      chrome.sidePanel.open({}).catch((error) => {
+        console.warn('Unable to open side panel from options page:', error);
+      });
+    } catch (error) {
+      console.warn('sidePanel.open threw synchronously:', error);
+    }
+
     chrome.runtime.sendMessage({ action: 'startChatgptHistorySync' }, (response) => {
       if (chrome.runtime.lastError) {
         setChatgptHistoryButtonState(false);
