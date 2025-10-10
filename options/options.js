@@ -11,6 +11,10 @@ import {
 } from '../modules/prompt-manager.js';
 
 const DEFAULT_ENABLED_PROVIDERS = ['chatgpt', 'claude', 'gemini', 'grok', 'deepseek'];
+const chatgptSyncState = {
+  totalSaved: 0,
+  currentTitle: null
+};
 
 function getEnabledProvidersOrDefault(settings) {
   if (settings.enabledProviders && Array.isArray(settings.enabledProviders)) {
@@ -55,6 +59,8 @@ function resetChatgptHistoryStatus() {
   if (defaultStatus) {
     status.textContent = defaultStatus;
   }
+  chatgptSyncState.totalSaved = 0;
+  chatgptSyncState.currentTitle = null;
   setChatgptHistoryLoadingState(false);
 }
 
@@ -73,6 +79,27 @@ function setChatgptHistoryLoadingState(isLoading) {
   if (progress) {
     progress.style.display = isLoading ? 'block' : 'none';
   }
+}
+
+function renderChatgptHistoryStatus() {
+  const { status } = getChatgptHistoryElements();
+  if (!status) return;
+
+  const base = chatgptSyncState.totalSaved > 0
+    ? `Downloaded ${chatgptSyncState.totalSaved} ${chatgptSyncState.totalSaved === 1 ? 'conversation' : 'conversations'}…`
+    : 'Downloading history…';
+
+  const title = chatgptSyncState.currentTitle
+    ? `Current: ${truncateTitle(chatgptSyncState.currentTitle)}`
+    : null;
+
+  status.textContent = title ? `${base} (${title})` : base;
+}
+
+function truncateTitle(title, maxLength = 60) {
+  if (!title) return '';
+  if (title.length <= maxLength) return title;
+  return `${title.slice(0, maxLength - 1)}…`;
 }
 
 function formatChatgptHistoryStatus(lastSync, count) {
@@ -168,14 +195,23 @@ function chatgptHistoryMessageHandler(message) {
     case 'chatgptHistorySyncStarted':
       setChatgptHistoryButtonState(true);
       setChatgptHistoryLoadingState(true);
-      updateChatgptHistoryStatus('Downloading history…');
+      chatgptSyncState.totalSaved = 0;
+      chatgptSyncState.currentTitle = null;
+      renderChatgptHistoryStatus();
       break;
     case 'chatgptHistorySyncProgress': {
       const total = message.payload?.totalSaved ?? 0;
-      const countLabel = total === 1 ? 'conversation' : 'conversations';
       setChatgptHistoryButtonState(true);
       setChatgptHistoryLoadingState(true);
-      updateChatgptHistoryStatus(`Downloaded ${total} ${countLabel}…`);
+      chatgptSyncState.totalSaved = total;
+      renderChatgptHistoryStatus();
+      break;
+    }
+    case 'chatgptHistorySyncCurrent': {
+      const title = message.payload?.title || 'Untitled conversation';
+      chatgptSyncState.currentTitle = title;
+      setChatgptHistoryLoadingState(true);
+      renderChatgptHistoryStatus();
       break;
     }
     case 'chatgptHistorySyncComplete': {
@@ -183,6 +219,8 @@ function chatgptHistoryMessageHandler(message) {
       const total = message.payload?.totalSaved ?? 0;
       setChatgptHistoryButtonState(false);
       setChatgptHistoryLoadingState(false);
+      chatgptSyncState.totalSaved = 0;
+      chatgptSyncState.currentTitle = null;
       updateChatgptHistoryStatus(formatChatgptHistoryStatus(lastSync, total));
       break;
     }
@@ -190,6 +228,8 @@ function chatgptHistoryMessageHandler(message) {
       const errorMessage = message.payload?.message || 'Unknown error while downloading history.';
       setChatgptHistoryButtonState(false);
       setChatgptHistoryLoadingState(false);
+      chatgptSyncState.totalSaved = 0;
+      chatgptSyncState.currentTitle = null;
       updateChatgptHistoryStatus(`Error: ${errorMessage}`);
       break;
     }

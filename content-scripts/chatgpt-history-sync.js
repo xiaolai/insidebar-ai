@@ -50,6 +50,15 @@ async function syncChatgptHistory() {
     const detailedConversations = [];
     for (const item of items) {
       try {
+        const currentTitle = formatConversationTitle(item);
+        chrome.runtime.sendMessage({
+          action: 'chatgptHistorySyncCurrent',
+          payload: {
+            conversationId: item.id,
+            title: currentTitle
+          }
+        }).catch(() => {});
+
         const detail = await fetchConversationDetail(item.id);
         detailedConversations.push({ summary: item, detail });
       } catch (error) {
@@ -116,4 +125,18 @@ async function fetchConversationDetail(id) {
 
 function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function formatConversationTitle(item) {
+  const rawTitle = (item && item.title) || '';
+  const trimmed = rawTitle.trim();
+  if (trimmed) {
+    return trimmed;
+  }
+
+  if (item && item.id) {
+    return `Conversation ${item.id.slice(0, 8)}`;
+  }
+
+  return 'Untitled conversation';
 }

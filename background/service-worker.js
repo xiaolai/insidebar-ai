@@ -375,6 +375,18 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
       break;
     }
+    case 'chatgptHistorySyncCurrent': {
+      if (!chatgptHistoryState.inProgress) {
+        return;
+      }
+
+      broadcastHistoryUpdate('chatgptHistorySyncCurrent', {
+        title: message.payload?.title || 'Untitled conversation',
+        conversationId: message.payload?.conversationId || null
+      });
+
+      break;
+    }
     case 'chatgptHistorySyncFinished': {
       chatgptHistoryState.pendingBatchPromise
         .then(() => {
