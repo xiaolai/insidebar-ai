@@ -136,10 +136,29 @@ async function switchProvider(providerId) {
     return;
   }
 
-  // Update active tab
+  // Hide non-provider views if currently active
+  currentView = 'providers';
+  document.getElementById('prompt-library').style.display = 'none';
+  const settingsView = document.getElementById('settings-view');
+  if (settingsView) settingsView.style.display = 'none';
+
+  // Show provider container
+  document.getElementById('provider-container').style.display = 'flex';
+
+  // Update active tab - deactivate all tabs first
   document.querySelectorAll('#provider-tabs button').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.providerId === providerId);
+    btn.classList.remove('active');
   });
+
+  // Deactivate prompt library and settings tabs
+  const promptLibraryTab = document.getElementById('prompt-library-tab');
+  const settingsTab = document.getElementById('settings-tab');
+  if (promptLibraryTab) promptLibraryTab.classList.remove('active');
+  if (settingsTab) settingsTab.classList.remove('active');
+
+  // Activate the selected provider tab
+  const activeProviderTab = document.querySelector(`#provider-tabs button[data-provider-id="${providerId}"]`);
+  if (activeProviderTab) activeProviderTab.classList.add('active');
 
   // Hide current provider iframe
   if (currentProvider && loadedIframes.has(currentProvider)) {
