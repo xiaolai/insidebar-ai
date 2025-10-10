@@ -102,10 +102,6 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   }
 });
 
-// T010: Keyboard shortcuts removed
-// NOTE: Chrome Side Panel API has a limitation - sidePanel.open() doesn't work in keyboard
-// command handlers due to "user gesture" requirement (even though shortcuts are user gestures).
-// This is a known Chrome bug: https://issues.chromium.org/issues/40282907
-//
-// Keyboard shortcuts have been removed from manifest.json.
-// Users must use: extension icon click or right-click context menu to open sidebar.
+// T010: Keyboard shortcut handled via manifest command `_execute_action`.
+// Chrome triggers the same behavior as clicking the toolbar icon, so no additional
+// command handler is needed here. See manifest.json `commands`.
