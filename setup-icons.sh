@@ -46,6 +46,7 @@ DEEPSEEK_ICON="$DOWNLOADS/deepseek.png"
 OLLAMA_ICON="$DOWNLOADS/ollama.png"
 SETTINGS_ICON="$DOWNLOADS/settings.png"
 PROMPTS_ICON="$DOWNLOADS/prompts.png"
+CHAT_HISTORY_ICON="$DOWNLOADS/chat-history.png"
 
 # Define dark icon files (optional - will be processed if they exist)
 OPENAI_DARK="$DOWNLOADS/openai-dark.png"
@@ -56,6 +57,7 @@ DEEPSEEK_DARK="$DOWNLOADS/deepseek-dark.png"
 OLLAMA_DARK="$DOWNLOADS/ollama-dark.png"
 SETTINGS_DARK="$DOWNLOADS/settings-dark.png"
 PROMPTS_DARK="$DOWNLOADS/prompts-dark.png"
+CHAT_HISTORY_DARK="$DOWNLOADS/chat-history-dark.png"
 
 # Function to check if file exists
 check_file() {
@@ -88,7 +90,7 @@ echo ""
 
 # Check all source files
 FILES_MISSING=0
-for file in "$MAIN_ICON" "$OPENAI_ICON" "$CLAUDE_ICON" "$GEMINI_ICON" "$GROK_ICON" "$DEEPSEEK_ICON" "$OLLAMA_ICON" "$SETTINGS_ICON" "$PROMPTS_ICON"; do
+for file in "$MAIN_ICON" "$OPENAI_ICON" "$CLAUDE_ICON" "$GEMINI_ICON" "$GROK_ICON" "$DEEPSEEK_ICON" "$OLLAMA_ICON" "$SETTINGS_ICON" "$PROMPTS_ICON" "$CHAT_HISTORY_ICON"; do
     if check_file "$file"; then
         echo -e "${GREEN}✓${NC} Found: $(basename "$file")"
     else
@@ -183,6 +185,13 @@ if check_file "$PROMPTS_ICON"; then
     echo ""
 fi
 
+# Chat history icon
+if check_file "$CHAT_HISTORY_ICON"; then
+    echo "Processing: chat-history.png"
+    resize_icon "$CHAT_HISTORY_ICON" "$UI_DIR/chat-history.png" 32
+    echo ""
+fi
+
 # Process dark provider icons (optional - only if files exist)
 echo -e "${BLUE}Step 5: Creating dark provider icons (optional)...${NC}"
 echo ""
@@ -264,6 +273,14 @@ if [ -f "$PROMPTS_DARK" ]; then
     echo ""
 fi
 
+# Chat history dark
+if [ -f "$CHAT_HISTORY_DARK" ]; then
+    echo "Processing: chat-history-dark.png"
+    resize_icon "$CHAT_HISTORY_DARK" "$UI_DARK_DIR/chat-history.png" 32
+    DARK_UI_FOUND=1
+    echo ""
+fi
+
 if [ $DARK_UI_FOUND -eq 0 ]; then
     echo -e "${BLUE}ℹ${NC}  No dark UI icons found (optional)"
     echo ""
@@ -291,6 +308,7 @@ echo ""
 echo "  UI icons:"
 echo "    - icons/ui/settings.png"
 echo "    - icons/ui/prompts.png"
+echo "    - icons/ui/chat-history.png"
 
 if [ $DARK_ICONS_FOUND -eq 1 ] || [ $DARK_UI_FOUND -eq 1 ]; then
     echo ""
