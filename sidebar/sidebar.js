@@ -175,7 +175,6 @@ async function switchProvider(providerId) {
   // Save last selected provider
   await chrome.storage.sync.set({ lastSelectedProvider: providerId });
 
-  hideLoading();
   hideError();
 }
 
@@ -187,6 +186,7 @@ function createProviderIframe(provider) {
   iframe.src = provider.url;
   iframe.sandbox = 'allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox';
   iframe.allow = 'clipboard-read; clipboard-write';
+  iframe.loading = 'eager';  // Hint to browser to load immediately
 
   iframe.addEventListener('load', () => {
     console.log(`${provider.name} loaded`);
@@ -251,6 +251,12 @@ function hideError() {
 }
 
 // T020: Show/hide loading indicator
+function showLoading(message = 'Loading AI provider...') {
+  const loadingEl = document.getElementById('loading');
+  loadingEl.textContent = message;
+  loadingEl.style.display = 'flex';
+}
+
 function hideLoading() {
   document.getElementById('loading').style.display = 'none';
 }

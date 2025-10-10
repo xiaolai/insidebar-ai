@@ -31,6 +31,9 @@ async function loadSettings() {
 
   // Ollama URL
   document.getElementById('ollama-url-input').value = settings.ollamaUrl || 'http://localhost:3000';
+
+  // Open on startup
+  document.getElementById('open-on-startup-checkbox').checked = settings.openOnStartup || false;
 }
 
 // T052-T053: Render provider enable/disable toggles
@@ -123,6 +126,12 @@ function setupEventListeners() {
   document.getElementById('theme-select').addEventListener('change', async (e) => {
     await saveSetting('theme', e.target.value);
     showStatus('success', 'Theme updated');
+  });
+
+  // Open on startup
+  document.getElementById('open-on-startup-checkbox').addEventListener('change', async (e) => {
+    await saveSetting('openOnStartup', e.target.checked);
+    showStatus('success', e.target.checked ? 'Sidebar will open on browser startup' : 'Auto-open disabled');
   });
 
   // Default provider change

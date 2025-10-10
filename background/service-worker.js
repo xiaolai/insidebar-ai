@@ -7,6 +7,31 @@ chrome.runtime.onInstalled.addListener(async () => {
   chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true });
 });
 
+// Auto-open side panel when browser starts (if enabled in settings)
+chrome.runtime.onStartup.addListener(async () => {
+  try {
+    // Check if user wants to open on startup
+    const settings = await chrome.storage.sync.get({ openOnStartup: false });
+
+    if (!settings.openOnStartup) {
+      return; // User disabled auto-open
+    }
+
+    // Get all windows
+    const windows = await chrome.windows.getAll({ populate: true });
+
+    // Open side panel in the first window with tabs
+    for (const window of windows) {
+      if (window.tabs && window.tabs.length > 0) {
+        await chrome.sidePanel.open({ windowId: window.id });
+        break; // Only open in first window
+      }
+    }
+  } catch (error) {
+    console.error('Error opening side panel on startup:', error);
+  }
+});
+
 // T065-T068: Create/update context menus dynamically based on enabled providers
 async function createContextMenus() {
   // Remove all existing menus

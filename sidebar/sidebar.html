@@ -5,12 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Smarter Panel</title>
   <link rel="stylesheet" href="sidebar.css">
+
+  <!-- DNS prefetch and preconnect for faster loading -->
+  <link rel="dns-prefetch" href="https://chatgpt.com">
+  <link rel="dns-prefetch" href="https://claude.ai">
+  <link rel="dns-prefetch" href="https://gemini.google.com">
+  <link rel="dns-prefetch" href="https://grok.com">
+  <link rel="dns-prefetch" href="https://chat.deepseek.com">
+
+  <link rel="preconnect" href="https://chatgpt.com">
+  <link rel="preconnect" href="https://claude.ai">
+  <link rel="preconnect" href="https://gemini.google.com">
+  <link rel="preconnect" href="https://grok.com">
+  <link rel="preconnect" href="https://chat.deepseek.com">
 </head>
 <body data-theme="auto">
   <div id="app">
     <!-- Provider iframe container -->
     <div id="provider-container">
-      <div id="loading">Loading AI provider...</div>
+      <div id="loading" style="display: none;">Loading AI provider...</div>
       <div id="error" style="display: none;"></div>
       <!-- Iframes will be dynamically inserted here -->
     </div>
