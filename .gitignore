@@ -1,0 +1,48 @@
+# OS Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node modules (if you add build tools later)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Build outputs (if you add a build process)
+dist/
+build/
+*.zip
+
+# Temporary files
+*.tmp
+*.bak
+*.log
+
+# Environment files
+.env
+.env.local
+
+# Extension packaging
+*.crx
+*.pem
+
+# Test files
+coverage/
+.nyc_output/
+
+# User data (don't commit personal data)
+user-data/
+test-profiles/
+
+.claude/
+CLAUDE.md
+.specify/
+.codex/
+AGENTS.md

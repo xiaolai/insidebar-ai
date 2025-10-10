@@ -1,0 +1,111 @@
+// T008 & T065: Install event - setup context menus and configure side panel
+chrome.runtime.onInstalled.addListener(async () => {
+  console.log('Smarter Panel installed');
+  await createContextMenus();
+
+  // Configure side panel to open on action click
+  chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true });
+});
+
+// T065-T068: Create/update context menus dynamically based on enabled providers
+async function createContextMenus() {
+  // Remove all existing menus
+  await chrome.contextMenus.removeAll();
+
+  // Get enabled providers from settings
+  const settings = await chrome.storage.sync.get({
+    enabledProviders: ['chatgpt', 'claude', 'gemini', 'grok', 'deepseek']
+  });
+
+  const enabledProviders = settings.enabledProviders;
+
+  // Create main context menu item
+  chrome.contextMenus.create({
+    id: 'open-smarter-panel',
+    title: 'Open in Smarter Panel',
+    contexts: ['page', 'selection', 'link']
+  });
+
+  // Create submenu for each enabled provider
+  const providerNames = {
+    chatgpt: 'ChatGPT',
+    claude: 'Claude',
+    gemini: 'Gemini',
+    grok: 'Grok',
+    deepseek: 'DeepSeek',
+    ollama: 'Ollama'
+  };
+
+  enabledProviders.forEach(providerId => {
+    chrome.contextMenus.create({
+      id: `provider-${providerId}`,
+      parentId: 'open-smarter-panel',
+      title: providerNames[providerId] || providerId,
+      contexts: ['page', 'selection', 'link']
+    });
+  });
+
+  // Add Prompt Library option
+  chrome.contextMenus.create({
+    id: 'open-prompt-library',
+    parentId: 'open-smarter-panel',
+    title: '📚 Prompt Library',
+    contexts: ['page', 'selection', 'link']
+  });
+}
+
+// T066: Listen for settings changes and update context menus
+chrome.storage.onChanged.addListener((changes, namespace) => {
+  if (changes.enabledProviders) {
+    createContextMenus();
+  }
+});
+
+// T009 & T067-T068: Context menu click handler
+chrome.contextMenus.onClicked.addListener(async (info, tab) => {
+  if (info.menuItemId.startsWith('provider-')) {
+    const providerId = info.menuItemId.replace('provider-', '');
+
+    // Open side panel
+    await chrome.sidePanel.open({ windowId: tab.windowId });
+
+    // Wait for sidebar to load, then send message to switch provider
+    setTimeout(() => {
+      chrome.runtime.sendMessage({
+        action: 'switchProvider',
+        payload: { providerId }
+      }).catch(() => {
+        // Sidebar may not be ready yet, ignore error
+      });
+    }, 100);
+  } else if (info.menuItemId === 'open-prompt-library') {
+    // Open side panel with prompt library
+    await chrome.sidePanel.open({ windowId: tab.windowId });
+
+    // Wait for sidebar to load, then switch to prompt library
+    setTimeout(() => {
+      chrome.runtime.sendMessage({
+        action: 'openPromptLibrary'
+      }).catch(() => {
+        // Sidebar may not be ready yet, ignore error
+      });
+    }, 100);
+  }
+});
+
+// T010: Keyboard shortcut handler
+chrome.commands.onCommand.addListener(async (command) => {
+  if (command === 'open-sidebar') {
+    chrome.sidePanel.open();
+  } else if (command === 'open-prompt-library') {
+    // T048: Open sidebar and switch to Prompt Genie
+    await chrome.sidePanel.open();
+
+    // Wait a moment for sidebar to load, then send message
+    setTimeout(() => {
+      chrome.runtime.sendMessage({ action: 'openPromptLibrary' }).catch(() => {
+        // Sidebar may not be ready yet, ignore error
+      });
+    }, 100);
+  }
+});

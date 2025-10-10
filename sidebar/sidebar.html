@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smarter Panel</title>
+  <link rel="stylesheet" href="sidebar.css">
+</head>
+<body data-theme="auto">
+  <div id="app">
+    <!-- Provider iframe container -->
+    <div id="provider-container">
+      <div id="loading">Loading AI provider...</div>
+      <div id="error" style="display: none;"></div>
+      <!-- Iframes will be dynamically inserted here -->
+    </div>
+
+    <!-- T045: Prompt Genie UI -->
+    <div id="prompt-library" style="display: none;">
+      <div id="prompt-library-header">
+        <h2>📚 Prompt Genie</h2>
+        <button id="new-prompt-btn" title="Create new prompt">+ New</button>
+      </div>
+
+      <div id="prompt-filters">
+        <input type="text" id="prompt-search" placeholder="Search prompts..." />
+        <select id="category-filter">
+          <option value="">All Categories</option>
+        </select>
+        <button id="show-favorites" title="Show favorites">★</button>
+      </div>
+
+      <div id="prompt-list">
+        <!-- Prompt items will be dynamically rendered here -->
+      </div>
+
+      <!-- T046: Prompt Editor Modal -->
+      <div id="prompt-editor-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 id="editor-title">New Prompt</h3>
+            <button class="close-btn" id="close-editor">&times;</button>
+          </div>
+          <div class="modal-body">
+            <input type="text" id="prompt-title-input" placeholder="Prompt title" />
+            <textarea id="prompt-content-input" placeholder="Enter your prompt here..."></textarea>
+            <input type="text" id="prompt-category-input" placeholder="Category (e.g., Writing, Coding)" />
+            <input type="text" id="prompt-tags-input" placeholder="Tags (comma-separated)" />
+            <label>
+              <input type="checkbox" id="prompt-favorite-input" />
+              Mark as favorite
+            </label>
+          </div>
+          <div class="modal-footer">
+            <button id="cancel-edit-btn" class="secondary">Cancel</button>
+            <button id="save-prompt-btn" class="primary">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Provider tabs (bottom navigation) -->
+    <nav id="provider-tabs">
+      <!-- Tabs will be dynamically generated -->
+      <button id="prompt-library-tab" data-view="prompt-library">
+        📚 Prompts
+      </button>
+    </nav>
+  </div>
+
+  <script type="module" src="sidebar.js"></script>
+</body>
+</html>

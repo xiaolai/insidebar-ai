@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smarter Panel - Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>⚙️ Smarter Panel Settings</h1>
+      <p>Customize your multi-AI sidebar experience</p>
+    </header>
+
+    <div class="content">
+      <!-- Status Messages -->
+      <div id="status-success" class="status-message status-success"></div>
+      <div id="status-error" class="status-message status-error"></div>
+
+      <!-- T051: Theme Settings -->
+      <section class="section">
+        <h2 class="section-title">Appearance</h2>
+
+        <div class="setting-item">
+          <div class="setting-info">
+            <div class="setting-label">Theme</div>
+            <div class="setting-description">Choose your preferred color scheme</div>
+          </div>
+          <div class="setting-control">
+            <select id="theme-select">
+              <option value="auto">Auto (System)</option>
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- T052-T053: Provider Settings -->
+      <section class="section">
+        <h2 class="section-title">AI Providers</h2>
+
+        <div class="setting-item">
+          <div class="setting-info">
+            <div class="setting-label">Default Provider</div>
+            <div class="setting-description">AI provider to load when opening the sidebar</div>
+          </div>
+          <div class="setting-control">
+            <select id="default-provider-select">
+              <option value="chatgpt">ChatGPT</option>
+              <option value="claude">Claude</option>
+              <option value="gemini">Gemini</option>
+              <option value="grok">Grok</option>
+              <option value="deepseek">DeepSeek</option>
+              <option value="ollama">Ollama</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="setting-item">
+          <div class="setting-info">
+            <div class="setting-label">Enabled Providers</div>
+            <div class="setting-description">Select which AI providers appear in your sidebar</div>
+          </div>
+        </div>
+
+        <div class="provider-list" id="provider-list">
+          <!-- Provider items will be dynamically generated -->
+        </div>
+      </section>
+
+      <!-- T054-T055: Keyboard Shortcuts -->
+      <section class="section">
+        <h2 class="section-title">Keyboard Shortcuts</h2>
+
+        <div class="shortcuts-list">
+          <div class="shortcut-item">
+            <span class="shortcut-label">Open Sidebar</span>
+            <div class="shortcut-keys">
+              <span class="key" id="shortcut-sidebar">Ctrl+Shift+S</span>
+            </div>
+          </div>
+          <div class="shortcut-item">
+            <span class="shortcut-label">Open Prompt Library</span>
+            <div class="shortcut-keys">
+              <span class="key" id="shortcut-prompts">Ctrl+Shift+P</span>
+            </div>
+          </div>
+        </div>
+
+        <p style="margin-top: 12px; font-size: 12px; color: #666;">
+          To customize shortcuts, visit:
+          <a href="chrome://extensions/shortcuts" target="_blank" style="color: #1a73e8;">
+            chrome://extensions/shortcuts
+          </a>
+        </p>
+      </section>
+
+      <!-- T056-T064: Data Management -->
+      <section class="section">
+        <h2 class="section-title">Data Management</h2>
+
+        <div class="data-stats" id="data-stats">
+          <div class="data-stat-item">
+            <span class="data-stat-label">Total Prompts</span>
+            <span class="data-stat-value" id="stat-prompts">0</span>
+          </div>
+          <div class="data-stat-item">
+            <span class="data-stat-label">Favorite Prompts</span>
+            <span class="data-stat-value" id="stat-favorites">0</span>
+          </div>
+          <div class="data-stat-item">
+            <span class="data-stat-label">Categories</span>
+            <span class="data-stat-value" id="stat-categories">0</span>
+          </div>
+          <div class="data-stat-item">
+            <span class="data-stat-label">Storage Used</span>
+            <span class="data-stat-value" id="stat-storage">~0 KB</span>
+          </div>
+        </div>
+
+        <div class="setting-item">
+          <div class="setting-info">
+            <div class="setting-label">Export Data</div>
+            <div class="setting-description">Download all prompts and settings as JSON</div>
+          </div>
+          <div class="setting-control">
+            <button class="btn btn-secondary" id="export-btn">Export</button>
+          </div>
+        </div>
+
+        <div class="setting-item">
+          <div class="setting-info">
+            <div class="setting-label">Import Data</div>
+            <div class="setting-description">Restore prompts and settings from JSON file</div>
+          </div>
+          <div class="setting-control">
+            <input type="file" id="import-file" accept=".json" style="display: none;" />
+            <button class="btn btn-secondary" id="import-btn">Import</button>
+          </div>
+        </div>
+
+        <div class="setting-item">
+          <div class="setting-info">
+            <div class="setting-label">Reset All Data</div>
+            <div class="setting-description">Delete all prompts and reset settings to defaults (cannot be undone)</div>
+          </div>
+          <div class="setting-control">
+            <button class="btn btn-danger" id="reset-btn">Reset</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section class="section">
+        <h2 class="section-title">About</h2>
+
+        <div class="about-info">
+          <div class="version" id="version">Version 1.0.0</div>
+          <p style="font-size: 14px; color: #666; margin-bottom: 8px;">
+            Smarter Panel provides quick access to multiple AI assistants in one convenient sidebar.
+          </p>
+          <p style="font-size: 12px; color: #999;">
+            Built with privacy-first architecture. All data stored locally.
+          </p>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script type="module" src="options.js"></script>
+</body>
+</html>
