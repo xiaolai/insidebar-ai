@@ -2,7 +2,7 @@ export const PROVIDERS = [
   {
     id: 'chatgpt',
     name: 'ChatGPT',
-    url: 'https://chat.openai.com',
+    url: 'https://chatgpt.com',
     icon: 'icons/providers/chatgpt.png',
     enabled: true
   },
