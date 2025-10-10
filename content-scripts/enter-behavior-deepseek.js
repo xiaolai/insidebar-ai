@@ -7,8 +7,10 @@ function handleEnterSwap(event) {
     return;
   }
 
-  // Check if this is DeepSeek's input element
-  const isDeepSeekInput = event.target.id === "chat-input";
+  // Check if this is DeepSeek's input element (textarea with ds-scroll-area class)
+  const isDeepSeekInput = event.target.tagName === "TEXTAREA" &&
+                          (event.target.classList.contains("ds-scroll-area") ||
+                           event.target.placeholder?.includes("DeepSeek"));
 
   if (!isDeepSeekInput) {
     return;
@@ -21,14 +23,31 @@ function handleEnterSwap(event) {
     event.preventDefault();
     event.stopImmediatePropagation();
 
-    const newEvent = new KeyboardEvent("keydown", {
-      key: "Enter",
-      code: "Enter",
-      bubbles: true,
-      cancelable: true,
-      shiftKey: isOnlyEnter  // Shift for newline, no Shift for send
-    });
-    event.target.dispatchEvent(newEvent);
+    if (isOnlyEnter) {
+      // Enter pressed - want newline
+      // Use direct manipulation for both iframe and normal page (more reliable for DeepSeek)
+      const target = event.target;
+      const start = target.selectionStart;
+      const end = target.selectionEnd;
+      const value = target.value;
+
+      target.value = value.substring(0, start) + '\n' + value.substring(end);
+      target.selectionStart = target.selectionEnd = start + 1;
+
+      // Trigger input event for framework reactivity
+      target.dispatchEvent(new Event('input', { bubbles: true }));
+      target.dispatchEvent(new Event('change', { bubbles: true }));
+    } else if (isShiftEnter) {
+      // Shift+Enter pressed - want to send
+      const newEvent = new KeyboardEvent("keydown", {
+        key: "Enter",
+        code: "Enter",
+        bubbles: true,
+        cancelable: true,
+        shiftKey: false  // Plain Enter to send
+      });
+      event.target.dispatchEvent(newEvent);
+    }
   }
 }
 
