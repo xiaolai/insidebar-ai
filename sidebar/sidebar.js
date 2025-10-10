@@ -35,6 +35,7 @@ async function renderProviderTabs() {
 
   tabsContainer.innerHTML = '';
 
+  // Add provider tabs
   enabledProviders.forEach(provider => {
     const button = document.createElement('button');
     button.dataset.providerId = provider.id;
@@ -50,6 +51,21 @@ async function renderProviderTabs() {
     button.addEventListener('click', () => switchProvider(provider.id));
     tabsContainer.appendChild(button);
   });
+
+  // Add prompt library tab at the end (right side)
+  const promptLibraryTab = document.createElement('button');
+  promptLibraryTab.id = 'prompt-library-tab';
+  promptLibraryTab.dataset.view = 'prompt-library';
+  promptLibraryTab.title = 'Prompt Library';
+
+  const promptIcon = document.createElement('img');
+  promptIcon.src = '/icons/providers/settings.png';
+  promptIcon.alt = 'Prompts';
+  promptIcon.className = 'provider-icon';
+
+  promptLibraryTab.appendChild(promptIcon);
+  promptLibraryTab.addEventListener('click', () => switchToView('prompt-library'));
+  tabsContainer.appendChild(promptLibraryTab);
 }
 
 // T015: Switch to a provider
@@ -165,16 +181,8 @@ function hideLoading() {
 
 // T045-T049: Prompt Library Implementation
 function setupPromptLibrary() {
-  // Switch between providers view and prompt library
-  const promptLibraryTab = document.getElementById('prompt-library-tab');
-  if (promptLibraryTab) {
-    promptLibraryTab.addEventListener('click', () => switchToView('prompt-library'));
-  }
-
-  // Provider tabs switching back to providers view
-  document.querySelectorAll('#provider-tabs button[data-provider-id]').forEach(btn => {
-    btn.addEventListener('click', () => switchToView('providers'));
-  });
+  // Note: Prompt library tab is now created in renderProviderTabs()
+  // No need to add event listener here as it's done during creation
 
   // New prompt button
   document.getElementById('new-prompt-btn').addEventListener('click', () => openPromptEditor());
