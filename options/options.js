@@ -9,6 +9,7 @@ import {
   importPrompts,
   clearAllPrompts
 } from '../modules/prompt-manager.js';
+import { validateOllamaUrl } from '../modules/url-validator.js';
 
 const DEFAULT_ENABLED_PROVIDERS = ['chatgpt', 'claude', 'gemini', 'grok', 'deepseek'];
 
@@ -205,15 +206,24 @@ function setupEventListeners() {
   // Ollama URL change
   document.getElementById('ollama-url-input').addEventListener('change', async (e) => {
     const url = e.target.value.trim();
+    const defaultUrl = 'http://localhost:3000';
 
-    // Basic URL validation
-    if (url && !url.match(/^https?:\/\/.+/)) {
-      showStatus('error', 'Invalid URL format. Must start with http:// or https://');
-      e.target.value = await getSetting('ollamaUrl') || 'http://localhost:3000';
+    if (!url) {
+      await saveSetting('ollamaUrl', defaultUrl);
+      e.target.value = defaultUrl;
+      showStatus('success', 'Ollama URL reset to default');
       return;
     }
 
-    await saveSetting('ollamaUrl', url || 'http://localhost:3000');
+    // Validate URL using comprehensive validator
+    const validation = validateOllamaUrl(url);
+    if (!validation.valid) {
+      showStatus('error', `Invalid Ollama URL: ${validation.error}`);
+      e.target.value = await getSetting('ollamaUrl') || defaultUrl;
+      return;
+    }
+
+    await saveSetting('ollamaUrl', url);
     showStatus('success', 'Ollama URL updated. Reload sidebar to apply changes.');
   });
 

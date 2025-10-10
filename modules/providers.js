@@ -1,3 +1,5 @@
+import { validateOllamaUrl } from './url-validator.js';
+
 export const PROVIDERS = [
   {
     id: 'chatgpt',
@@ -60,9 +62,22 @@ export async function getProviderByIdWithSettings(id) {
   // For Ollama, use custom URL from settings
   if (id === 'ollama') {
     const settings = await chrome.storage.sync.get({ ollamaUrl: 'http://localhost:3000' });
+    const ollamaUrl = settings.ollamaUrl || 'http://localhost:3000';
+
+    // Validate Ollama URL
+    const validation = validateOllamaUrl(ollamaUrl);
+    if (!validation.valid) {
+      console.warn('Invalid Ollama URL:', validation.error);
+      // Fall back to default
+      return {
+        ...provider,
+        url: 'http://localhost:3000'
+      };
+    }
+
     return {
       ...provider,
-      url: settings.ollamaUrl
+      url: ollamaUrl
     };
   }
 
@@ -80,7 +95,15 @@ export async function getEnabledProviders() {
     .map(p => {
       // For Ollama, use custom URL from settings
       if (p.id === 'ollama') {
-        return { ...p, url: settings.ollamaUrl };
+        const ollamaUrl = settings.ollamaUrl || 'http://localhost:3000';
+        const validation = validateOllamaUrl(ollamaUrl);
+
+        if (!validation.valid) {
+          console.warn('Invalid Ollama URL:', validation.error);
+          return { ...p, url: 'http://localhost:3000' };
+        }
+
+        return { ...p, url: ollamaUrl };
       }
       return p;
     });

@@ -143,17 +143,15 @@ async function switchProvider(providerId) {
   }
 
   isSwitchingProvider = true;
-  let nextProviderAfterSwitch = null;
   const provider = await getProviderByIdWithSettings(providerId);
   if (!provider) {
     showError(`Provider ${providerId} not found`);
     isSwitchingProvider = false;
-    if (pendingProviderId) {
-      nextProviderAfterSwitch = pendingProviderId;
+    // Process any pending switch request
+    if (pendingProviderId && pendingProviderId !== providerId) {
+      const next = pendingProviderId;
       pendingProviderId = null;
-    }
-    if (nextProviderAfterSwitch) {
-      switchProvider(nextProviderAfterSwitch);
+      switchProvider(next);
     }
     return;
   }

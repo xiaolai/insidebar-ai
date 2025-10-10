@@ -2,10 +2,18 @@
   "name": "smarter-panel",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "lint": "web-ext lint --source-dir ."
+    "lint": "web-ext lint --source-dir .",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "test:coverage": "vitest --coverage",
+    "test:ui": "vitest --ui"
   },
   "devDependencies": {
+    "@vitest/ui": "^1.0.4",
+    "happy-dom": "^12.10.3",
+    "vitest": "^1.0.4",
     "web-ext": "^7.9.0"
   }
 }
