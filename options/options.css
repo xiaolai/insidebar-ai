@@ -243,6 +243,11 @@ select:focus {
   transition: all 0.2s;
 }
 
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 .btn-primary {
   background: #1a73e8;
   color: white;

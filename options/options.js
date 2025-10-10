@@ -33,6 +33,46 @@ function isEdgeBrowser() {
   return navigator.userAgent.includes('Edg/');
 }
 
+function getChatgptHistoryElements() {
+  return {
+    button: document.getElementById('sync-chatgpt-history-btn'),
+    status: document.getElementById('chatgpt-history-status')
+  };
+}
+
+function updateChatgptHistoryStatus(message) {
+  const { status } = getChatgptHistoryElements();
+  if (!status) return;
+  status.textContent = message;
+}
+
+function resetChatgptHistoryStatus() {
+  const { status } = getChatgptHistoryElements();
+  if (!status) return;
+  const defaultStatus = status.dataset.defaultStatus;
+  if (defaultStatus) {
+    status.textContent = defaultStatus;
+  }
+}
+
+function setChatgptHistoryButtonState(isSyncing) {
+  const { button } = getChatgptHistoryElements();
+  if (!button) return;
+  button.disabled = isSyncing;
+  button.textContent = isSyncing ? 'Downloading…' : 'Download';
+}
+
+function formatChatgptHistoryStatus(lastSync, count) {
+  if (!lastSync) {
+    const { status } = getChatgptHistoryElements();
+    return status?.dataset.defaultStatus || "Import your ChatGPT conversations into Smarter Panel's local database for unified search.";
+  }
+
+  const date = new Date(lastSync);
+  const conversations = count === 1 ? '1 conversation' : `${count} conversations`;
+  return `Last synced ${date.toLocaleString()} · ${conversations} stored locally.`;
+}
+
 function openShortcutSettings(browserOverride) {
   const isEdge = browserOverride === 'edge' || (browserOverride !== 'chrome' && isEdgeBrowser());
   const url = isEdge ? 'edge://extensions/shortcuts' : 'chrome://extensions/shortcuts';
@@ -70,6 +110,87 @@ function updateShortcutHelperVisibility(isEnabled) {
   }
 }
 
+let chatgptHistoryListenerRegistered = false;
+
+function setupChatgptHistoryControls() {
+  const { button, status } = getChatgptHistoryElements();
+  if (!button || !status) return;
+
+  if (!chatgptHistoryListenerRegistered) {
+    chrome.runtime.onMessage.addListener(chatgptHistoryMessageHandler);
+    chatgptHistoryListenerRegistered = true;
+  }
+
+  if (button.dataset.syncListenerAttached === 'true') {
+    return;
+  }
+
+  button.dataset.syncListenerAttached = 'true';
+
+  button.addEventListener('click', () => {
+    setChatgptHistoryButtonState(true);
+    updateChatgptHistoryStatus('Starting download…');
+
+    chrome.runtime.sendMessage({ action: 'startChatgptHistorySync' }, (response) => {
+      if (chrome.runtime.lastError) {
+        setChatgptHistoryButtonState(false);
+        updateChatgptHistoryStatus(`Unable to start download: ${chrome.runtime.lastError.message}`);
+        return;
+      }
+
+      if (!response || response.success === false) {
+        const errorMessage = response?.error ? `Unable to start download: ${response.error}` : 'Unable to start download.';
+        setChatgptHistoryButtonState(false);
+        updateChatgptHistoryStatus(errorMessage);
+      }
+    });
+  });
+}
+
+function chatgptHistoryMessageHandler(message) {
+  switch (message.action) {
+    case 'chatgptHistorySyncStarted':
+      setChatgptHistoryButtonState(true);
+      updateChatgptHistoryStatus('Downloading history…');
+      break;
+    case 'chatgptHistorySyncProgress': {
+      const total = message.payload?.totalSaved ?? 0;
+      const countLabel = total === 1 ? 'conversation' : 'conversations';
+      setChatgptHistoryButtonState(true);
+      updateChatgptHistoryStatus(`Downloaded ${total} ${countLabel}…`);
+      break;
+    }
+    case 'chatgptHistorySyncComplete': {
+      const lastSync = message.payload?.lastSync ?? Date.now();
+      const total = message.payload?.totalSaved ?? 0;
+      setChatgptHistoryButtonState(false);
+      updateChatgptHistoryStatus(formatChatgptHistoryStatus(lastSync, total));
+      break;
+    }
+    case 'chatgptHistorySyncError': {
+      const errorMessage = message.payload?.message || 'Unknown error while downloading history.';
+      setChatgptHistoryButtonState(false);
+      updateChatgptHistoryStatus(`Error: ${errorMessage}`);
+      break;
+    }
+    default:
+      break;
+  }
+}
+
+async function loadChatgptHistoryMeta() {
+  try {
+    const { chatgptHistoryLastSync, chatgptHistoryCount } = await chrome.storage.local.get({
+      chatgptHistoryLastSync: null,
+      chatgptHistoryCount: 0
+    });
+    updateChatgptHistoryStatus(formatChatgptHistoryStatus(chatgptHistoryLastSync, chatgptHistoryCount));
+  } catch (error) {
+    console.warn('Unable to load ChatGPT history metadata', error);
+    resetChatgptHistoryStatus();
+  }
+}
+
 // T050: Initialize settings page
 async function init() {
   await loadSettings();
@@ -77,6 +198,8 @@ async function init() {
   await renderProviderList();
   setupEventListeners();
   setupShortcutHelpers();
+  setupChatgptHistoryControls();
+  await loadChatgptHistoryMeta();
 }
 
 // T051: Load and display current settings
