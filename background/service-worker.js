@@ -95,11 +95,19 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 
 // T010: Keyboard shortcut handler
 chrome.commands.onCommand.addListener(async (command) => {
+  // Get current active tab to extract windowId
+  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+
+  if (!tab) {
+    console.error('No active tab found');
+    return;
+  }
+
   if (command === 'open-sidebar') {
-    chrome.sidePanel.open();
+    await chrome.sidePanel.open({ windowId: tab.windowId });
   } else if (command === 'open-prompt-library') {
     // T048: Open sidebar and switch to Prompt Genie
-    await chrome.sidePanel.open();
+    await chrome.sidePanel.open({ windowId: tab.windowId });
 
     // Wait a moment for sidebar to load, then send message
     setTimeout(() => {
