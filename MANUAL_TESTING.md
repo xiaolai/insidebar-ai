@@ -9,7 +9,8 @@ Users can now select text on any webpage and send it directly to an AI provider'
    - Enable "Developer mode"
    - Click "Load unpacked"
    - Select the `insidebar-ai` folder
-   - Reload the extension if already loaded
+   - **IMPORTANT: If extension was already loaded, click the reload button (↻) on the extension card**
+   - This ensures the latest code is loaded
 
 2. Ensure you're logged into at least one AI provider:
    - ChatGPT (https://chatgpt.com)
@@ -154,12 +155,19 @@ Users can now select text on any webpage and send it directly to an AI provider'
 ## Debugging
 
 ### Check Console Logs
-Open DevTools on the sidebar:
+
+**Sidebar Console (for postMessage sending):**
 - Right-click sidebar → "Inspect"
+- Look for messages about sending text to iframe
+
+**Provider iframe Console (for text injection):**
+- Right-click inside the provider iframe → "Inspect" (this opens the iframe's console)
 - Look for console messages:
+  - "Text injection listener registered for {provider}" (initialization)
   - "Text injected into {Provider} editor" (success)
   - "{Provider} editor not found, will retry..." (waiting for page load)
   - "Failed to inject text into {Provider}" (error)
+  - "Text injected into {Provider} editor (retry)" (retry success)
 
 ### Common Issues
 

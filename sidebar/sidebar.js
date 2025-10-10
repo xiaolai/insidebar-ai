@@ -275,9 +275,18 @@ function setupMessageListener() {
 }
 
 // Inject selected text into provider iframe
-function injectTextIntoProvider(providerId, text) {
+async function injectTextIntoProvider(providerId, text) {
   if (!text || !providerId) {
     return;
+  }
+
+  // First, copy text to clipboard so user can paste manually if needed
+  try {
+    await navigator.clipboard.writeText(text);
+    console.log('Selected text copied to clipboard');
+  } catch (error) {
+    console.warn('Failed to copy text to clipboard:', error);
+    // Continue with injection even if clipboard fails
   }
 
   // Wait a bit for provider iframe to be fully loaded and ready
