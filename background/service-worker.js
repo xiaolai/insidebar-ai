@@ -103,40 +103,47 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 });
 
 // T010: Keyboard shortcut handler
-// Note: chrome.sidePanel.open() with windowId doesn't work reliably with keyboard shortcuts
-// Instead, we set the sidebar path and let the openPanelOnActionClick behavior handle it
+// Store pending command for action click handler
+let pendingCommand = null;
+
 chrome.commands.onCommand.addListener(async (command) => {
+  console.log('[Shortcut] Command received:', command);
+
   try {
     if (command === 'open-sidebar' || command === 'open-prompt-library') {
       // Get current window
       const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
       if (!tab || !tab.windowId) {
-        console.error('No active tab or window found');
+        console.error('[Shortcut] No active tab or window found');
         return;
       }
 
-      // For keyboard shortcuts, we use setOptions to configure the panel
-      // then send a message to the sidebar to switch views if needed
-      await chrome.sidePanel.setOptions({
-        tabId: tab.id,
-        path: 'sidebar/sidebar.html',
-        enabled: true
-      });
+      console.log('[Shortcut] Attempting to open side panel for window:', tab.windowId);
 
-      // Open the panel using the tab context
-      await chrome.sidePanel.open({ tabId: tab.id });
+      // Store the command for later if needed
+      pendingCommand = command;
+
+      // Try to open the panel directly with windowId
+      // This should work since keyboard shortcuts count as user gestures
+      await chrome.sidePanel.open({ windowId: tab.windowId });
+
+      console.log('[Shortcut] Side panel opened successfully');
 
       // If opening prompt library, send message after sidebar loads
       if (command === 'open-prompt-library') {
         setTimeout(() => {
           chrome.runtime.sendMessage({ action: 'openPromptLibrary' }).catch(() => {
-            // Sidebar may not be ready yet, ignore error
+            console.log('[Shortcut] Sidebar not ready yet for prompt library switch');
           });
         }, 150);
       }
+
+      // Clear pending command after successful open
+      pendingCommand = null;
     }
   } catch (error) {
-    console.error('Error in keyboard shortcut handler:', error);
+    console.error('[Shortcut] Error in keyboard shortcut handler:', error);
+    console.error('[Shortcut] Error details:', error.message);
   }
 });
