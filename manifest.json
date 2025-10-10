@@ -66,6 +66,54 @@
     }
   },
 
+  "content_scripts": [
+    {
+      "matches": ["https://chatgpt.com/*"],
+      "js": [
+        "content-scripts/enter-behavior-utils.js",
+        "content-scripts/enter-behavior-chatgpt.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://gemini.google.com/*"],
+      "js": [
+        "content-scripts/enter-behavior-utils.js",
+        "content-scripts/enter-behavior-gemini.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://grok.com/*"],
+      "js": [
+        "content-scripts/enter-behavior-utils.js",
+        "content-scripts/enter-behavior-grok.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://chat.deepseek.com/*"],
+      "js": [
+        "content-scripts/enter-behavior-utils.js",
+        "content-scripts/enter-behavior-deepseek.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": ["http://localhost:3000/*"],
+      "js": [
+        "content-scripts/enter-behavior-utils.js",
+        "content-scripts/enter-behavior-ollama.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+
   "declarative_net_request": {
     "rule_resources": [
       {
