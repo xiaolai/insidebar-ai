@@ -244,12 +244,20 @@ async function loadDefaultProvider() {
 // T018: Setup message listener
 function setupMessageListener() {
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    console.log('[Sidebar] Received message:', message);
+
     if (message.action === 'switchProvider') {
+      console.log('[Sidebar] Switching to provider:', message.payload.providerId);
+      console.log('[Sidebar] Selected text:', message.payload.selectedText ? `"${message.payload.selectedText}"` : '(none)');
+
       switchProvider(message.payload.providerId);
 
       // If there's selected text, inject it into the provider iframe
       if (message.payload.selectedText) {
+        console.log('[Sidebar] Injecting text into provider');
         injectTextIntoProvider(message.payload.providerId, message.payload.selectedText);
+      } else {
+        console.log('[Sidebar] No selected text to inject');
       }
 
       sendResponse({ success: true });
