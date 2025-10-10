@@ -49,7 +49,7 @@ async function createContextMenus() {
   // Create main context menu item
   chrome.contextMenus.create({
     id: 'open-smarter-panel',
-    title: 'Open in Smarter Panel',
+    title: 'Open in insidebar.ai',
     contexts: ['page', 'selection', 'link']
   });
 

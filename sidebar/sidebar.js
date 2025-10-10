@@ -720,7 +720,7 @@ function showEdgeShortcutReminder() {
   `;
 
   const message = document.createElement('div');
-  message.textContent = 'Enable the Smarter Panel shortcut: confirm it in edge://extensions/shortcuts';
+  message.textContent = 'Enable the insidebar.ai shortcut: confirm it in edge://extensions/shortcuts';
 
   const actions = document.createElement('div');
   actions.style.display = 'flex';

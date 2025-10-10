@@ -1,6 +1,6 @@
 {
-  "name": "smarter-panel",
-  "version": "1.1.0",
+  "name": "insidebar-ai",
+  "version": "1.2.0",
   "private": true,
   "type": "module",
   "scripts": {

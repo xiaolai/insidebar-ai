@@ -1,13 +1,13 @@
-# 🤖 Smarter Panel
+# 🤖 insidebar.ai
 
 > A multi-AI sidebar extension for Microsoft Edge and Google Chrome
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
+![Version](https://img.shields.io/badge/version-1.2.0-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
 ## 📖 Overview
 
-**Smarter Panel** brings together multiple AI assistants in one convenient sidebar interface. Access ChatGPT, Claude, Gemini, Grok, DeepSeek, and Ollama without leaving your current tab or juggling multiple windows.
+**insidebar.ai** brings together multiple AI assistants in one convenient sidebar interface. Access ChatGPT, Claude, Gemini, Grok, DeepSeek, and Ollama without leaving your current tab or juggling multiple windows.
 
 ### ✨ Key Features
 
@@ -35,8 +35,8 @@
 
 1. **Download the Extension**
    ```bash
-   git clone https://github.com/xiaolai/smarter-panel.git
-   cd smarter-panel
+   git clone https://github.com/xiaolai/insidebar-ai.git
+   cd insidebar-ai
    ```
 
 2. **Open Edge Extensions Page**
@@ -45,7 +45,7 @@
 
 3. **Load the Extension**
    - Click "Load unpacked"
-   - Select the `smarter-panel` folder
+   - Select the `insidebar-ai` folder
 
 4. **Configure (Optional)**
    - Click the extension icon to open the sidebar
@@ -61,7 +61,7 @@
 
 3. **Load the Extension**
    - Click "Load unpacked"
-   - Select the `smarter-panel` folder
+   - Select the `insidebar-ai` folder
 
 4. **Configure (Optional)**
    - Click the extension icon to open the sidebar
@@ -79,7 +79,7 @@
 2. **Configure Keyboard Shortcuts** (Optional)
    - Navigate to `chrome://extensions/shortcuts` (Chrome) or `edge://extensions/shortcuts` (Edge)
    - Customize the shortcuts for:
-     - **Open Smarter Panel**: Default `Ctrl+Shift+S` (macOS: `Cmd+Shift+S`)
+     - **Open insidebar.ai**: Default `Ctrl+Shift+E` (macOS: `Cmd+Shift+E`)
      - **Open Prompt Library**: Default `Ctrl+Shift+P` (macOS: `Cmd+Shift+P`)
 
 3. **Ollama Setup** (Optional)
@@ -93,14 +93,14 @@
 ### Opening the Sidebar
 
 **Method 1: Keyboard Shortcut**
-- Press `Ctrl+Shift+S` (Windows/Linux) or `Cmd+Shift+S` (macOS)
+- Press `Ctrl+Shift+E` (Windows/Linux) or `Cmd+Shift+E` (macOS)
 
 **Method 2: Extension Icon**
-- Click the Smarter Panel icon in your browser toolbar
+- Click the insidebar.ai icon in your browser toolbar
 
 **Method 3: Right-Click Context Menu**
 - Right-click anywhere on a webpage
-- Select "Open in Smarter Panel"
+- Select "Open in insidebar.ai"
 - Choose your preferred AI provider
 
 ### Switching Between AI Providers
@@ -156,7 +156,7 @@ Click the icon tabs at the bottom of the sidebar:
 ## 🎨 Project Structure
 
 ```
-smarter-panel/
+insidebar-ai/
 ├── manifest.json              # Extension manifest (MV3)
 ├── sidebar/
 │   ├── sidebar.html          # Main sidebar UI
@@ -221,8 +221,8 @@ smarter-panel/
 
 ```bash
 # Clone repository
-git clone https://github.com/xiaolai/smarter-panel.git
-cd smarter-panel
+git clone https://github.com/xiaolai/insidebar-ai.git
+cd insidebar-ai
 
 # No build step required - pure JavaScript!
 # Just load the extension in your browser
@@ -288,8 +288,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/xiaolai/smarter-panel/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/xiaolai/smarter-panel/discussions)
+- **Issues**: [GitHub Issues](https://github.com/xiaolai/insidebar-ai/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/xiaolai/insidebar-ai/discussions)
 - **Email**: support@example.com (replace with actual email)
 
 ## 🗺️ Roadmap
