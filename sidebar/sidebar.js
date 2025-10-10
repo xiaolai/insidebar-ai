@@ -28,7 +28,7 @@ async function init() {
   setupPromptLibrary();  // T045: Initialize prompt library
 }
 
-// T014: Render provider tabs
+// T014: Render provider tabs with icons
 async function renderProviderTabs() {
   const enabledProviders = await getEnabledProviders();
   const tabsContainer = document.getElementById('provider-tabs');
@@ -37,8 +37,16 @@ async function renderProviderTabs() {
 
   enabledProviders.forEach(provider => {
     const button = document.createElement('button');
-    button.textContent = provider.name;
     button.dataset.providerId = provider.id;
+    button.title = provider.name; // Tooltip shows name on hover
+
+    // Create icon element
+    const icon = document.createElement('img');
+    icon.src = provider.icon;
+    icon.alt = provider.name;
+    icon.className = 'provider-icon';
+
+    button.appendChild(icon);
     button.addEventListener('click', () => switchProvider(provider.id));
     tabsContainer.appendChild(button);
   });

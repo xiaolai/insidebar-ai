@@ -66,20 +66,33 @@ body {
 
 #provider-tabs button {
   flex: 1;
-  min-width: 60px;
-  padding: 12px 8px;
+  min-width: 48px;
+  max-width: 64px;
+  padding: 10px 8px;
   border: none;
   background: transparent;
   cursor: pointer;
-  transition: background 0.2s, border-top 0.2s;
+  transition: background 0.2s, border-top 0.2s, opacity 0.2s;
   font-size: 12px;
   color: #666;
   border-top: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.6;
+}
+
+.provider-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
 }
 
 #provider-tabs button:hover {
   background: #eeeeee;
   color: #333;
+  opacity: 1;
 }
 
 #provider-tabs button.active {
@@ -87,6 +100,7 @@ body {
   border-top: 2px solid #1a73e8;
   color: #1a73e8;
   font-weight: 500;
+  opacity: 1;
 }
 
 /* Dark theme */
@@ -121,17 +135,30 @@ body {
 
 [data-theme="dark"] #provider-tabs button {
   color: #aaa;
+  opacity: 0.6;
 }
 
 [data-theme="dark"] #provider-tabs button:hover {
   background: #3a3a3a;
   color: #e0e0e0;
+  opacity: 1;
 }
 
 [data-theme="dark"] #provider-tabs button.active {
   background: #1e1e1e;
   border-top-color: #4285f4;
   color: #4285f4;
+  opacity: 1;
+}
+
+/* Icon brightness in dark mode */
+[data-theme="dark"] .provider-icon {
+  filter: brightness(0.9);
+}
+
+[data-theme="dark"] #provider-tabs button.active .provider-icon,
+[data-theme="dark"] #provider-tabs button:hover .provider-icon {
+  filter: brightness(1.1);
 }
 
 /* T045: Prompt Library Styles */
