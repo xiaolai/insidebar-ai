@@ -1,0 +1,11 @@
+{
+  "name": "smarter-panel",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "lint": "web-ext lint --source-dir ."
+  },
+  "devDependencies": {
+    "web-ext": "^7.9.0"
+  }
+}

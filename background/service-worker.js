@@ -1,3 +1,5 @@
+import { notifyMessage } from '../modules/messaging.js';
+
 // T008 & T065: Install event - setup context menus and configure side panel
 const DEFAULT_SHORTCUT_SETTING = { keyboardShortcutEnabled: true };
 let keyboardShortcutEnabled = true;
@@ -102,7 +104,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 
       // Wait for sidebar to load, then send message to switch provider
       setTimeout(() => {
-        chrome.runtime.sendMessage({
+        notifyMessage({
           action: 'switchProvider',
           payload: { providerId }
         }).catch(() => {
@@ -115,7 +117,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 
       // Wait for sidebar to load, then switch to prompt library
       setTimeout(() => {
-        chrome.runtime.sendMessage({
+        notifyMessage({
           action: 'openPromptLibrary'
         }).catch(() => {
           // Sidebar may not be ready yet, ignore error

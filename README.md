@@ -230,11 +230,13 @@ cd smarter-panel
 
 ### Testing
 
-1. **Load Extension**: Follow installation instructions above
-2. **Open DevTools**: Right-click sidebar → Inspect
-3. **Check Console**: Look for initialization messages
-4. **Test Providers**: Switch between different AI tabs
-5. **Test Prompts**: Create, edit, delete prompts
+1. Install dev dependencies (once): `npm install`
+2. Run automated lint checks: `npm run lint`
+3. Load the extension (see installation instructions)
+4. Open DevTools: Right-click sidebar → Inspect
+5. Check Console: Look for initialization messages
+6. Test Providers: Switch between different AI tabs
+7. Test Prompts: Create, edit, delete prompts
 
 ### Contributing
 
