@@ -292,9 +292,9 @@ async function importData(file) {
     }
 
     // Import prompts
+    let promptImportSummary = null;
     if (data.prompts && Array.isArray(data.prompts)) {
-      const result = await importPrompts({ prompts: data.prompts }, 'skip');
-      console.log(`Import result: ${result.imported} imported, ${result.skipped} skipped`);
+      promptImportSummary = await importPrompts({ prompts: data.prompts }, 'skip');
     }
 
     // Import settings (but preserve current enabled providers)
@@ -309,7 +309,13 @@ async function importData(file) {
 
     await loadSettings();
     await loadDataStats();
-    showStatus('success', 'Data imported successfully');
+
+    if (promptImportSummary) {
+      const { imported = 0, skipped = 0 } = promptImportSummary;
+      showStatus('success', `Data imported successfully — prompts: ${imported} added, ${skipped} skipped.`);
+    } else {
+      showStatus('success', 'Data imported successfully.');
+    }
   } catch (error) {
     console.error('Import error:', error);
     showStatus('error', 'Failed to import data. Please check the file format.');

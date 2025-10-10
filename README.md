@@ -208,6 +208,8 @@ smarter-panel/
 | `declarativeNetRequestWithHostAccess` | Modify headers for specific domains |
 | Host permissions | Access AI provider websites |
 
+> **Optional host permissions**: When you enable a custom Ollama or other self-hosted provider, the extension prompts for `http://*/*` and `https://*/*` so Chrome can reach the URL you supply. These permissions are optional—nothing is requested unless you explicitly opt in—and the extension only touches the domains you configure.
+
 ## 🛠️ Development
 
 ### Prerequisites

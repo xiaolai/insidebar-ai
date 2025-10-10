@@ -188,12 +188,14 @@ function createProviderIframe(provider) {
   const iframe = document.createElement('iframe');
 
   iframe.src = provider.url;
+  // Sandbox must allow same-origin + scripts so provider UIs can function; popups are
+  // permitted to support OAuth flows within embedded sites. See README "Permissions"
+  // for the full security rationale.
   iframe.sandbox = 'allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox';
   iframe.allow = 'clipboard-read; clipboard-write';
   iframe.loading = 'eager';  // Hint to browser to load immediately
 
   iframe.addEventListener('load', () => {
-    console.log(`${provider.name} loaded`);
     hideLoading();
   });
 

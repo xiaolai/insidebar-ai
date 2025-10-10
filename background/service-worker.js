@@ -22,7 +22,6 @@ async function configureActionBehavior() {
 }
 
 chrome.runtime.onInstalled.addListener(async () => {
-  console.log('Smarter Panel installed');
   await createContextMenus();
   await loadShortcutSetting();
   await configureActionBehavior();

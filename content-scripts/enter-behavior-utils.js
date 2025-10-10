@@ -3,12 +3,10 @@
 
 function enableEnterSwap() {
   document.addEventListener("keydown", handleEnterSwap, { capture: true });
-  console.log('[Smarter Panel] Enter behavior swap enabled');
 }
 
 function disableEnterSwap() {
   document.removeEventListener("keydown", handleEnterSwap, { capture: true });
-  console.log('[Smarter Panel] Enter behavior swap disabled');
 }
 
 function applyEnterSwapSetting() {
