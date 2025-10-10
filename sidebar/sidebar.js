@@ -246,6 +246,12 @@ function setupMessageListener() {
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === 'switchProvider') {
       switchProvider(message.payload.providerId);
+
+      // If there's selected text, inject it into the provider iframe
+      if (message.payload.selectedText) {
+        injectTextIntoProvider(message.payload.providerId, message.payload.selectedText);
+      }
+
       sendResponse({ success: true });
     } else if (message.action === 'openPromptLibrary') {
       // T048: Switch to Prompt Genie tab
@@ -266,6 +272,35 @@ function setupMessageListener() {
       }
     }
   });
+}
+
+// Inject selected text into provider iframe
+function injectTextIntoProvider(providerId, text) {
+  if (!text || !providerId) {
+    return;
+  }
+
+  // Wait a bit for provider iframe to be fully loaded and ready
+  setTimeout(() => {
+    const iframe = loadedIframes.get(providerId);
+    if (!iframe || !iframe.contentWindow) {
+      console.warn('Provider iframe not found or not ready:', providerId);
+      return;
+    }
+
+    try {
+      // Send message to content script inside the iframe
+      iframe.contentWindow.postMessage(
+        {
+          type: 'INJECT_TEXT',
+          text: text
+        },
+        '*' // We're posting to same-origin AI provider domains
+      );
+    } catch (error) {
+      console.error('Error sending text injection message:', error);
+    }
+  }, 500); // Wait 500ms for iframe to be ready
 }
 
 // T019: Show/hide error message

@@ -68,40 +68,57 @@
 
   "content_scripts": [
     {
-      "matches": ["https://chatgpt.com/*"],
+      "matches": ["https://chatgpt.com/*", "https://chat.openai.com/*"],
       "js": [
         "content-scripts/enter-behavior-utils.js",
-        "content-scripts/enter-behavior-chatgpt.js"
+        "content-scripts/enter-behavior-chatgpt.js",
+        "content-scripts/text-injection-chatgpt.js"
       ],
       "run_at": "document_end",
-      "all_frames": true
+      "all_frames": true,
+      "type": "module"
+    },
+    {
+      "matches": ["https://claude.ai/*"],
+      "js": [
+        "content-scripts/text-injection-claude.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true,
+      "type": "module"
     },
     {
       "matches": ["https://gemini.google.com/*"],
       "js": [
         "content-scripts/enter-behavior-utils.js",
-        "content-scripts/enter-behavior-gemini.js"
+        "content-scripts/enter-behavior-gemini.js",
+        "content-scripts/text-injection-gemini.js"
       ],
       "run_at": "document_start",
-      "all_frames": true
+      "all_frames": true,
+      "type": "module"
     },
     {
       "matches": ["https://grok.com/*"],
       "js": [
         "content-scripts/enter-behavior-utils.js",
-        "content-scripts/enter-behavior-grok.js"
+        "content-scripts/enter-behavior-grok.js",
+        "content-scripts/text-injection-grok.js"
       ],
       "run_at": "document_start",
-      "all_frames": true
+      "all_frames": true,
+      "type": "module"
     },
     {
       "matches": ["https://chat.deepseek.com/*"],
       "js": [
         "content-scripts/enter-behavior-utils.js",
-        "content-scripts/enter-behavior-deepseek.js"
+        "content-scripts/enter-behavior-deepseek.js",
+        "content-scripts/text-injection-deepseek.js"
       ],
       "run_at": "document_start",
-      "all_frames": true
+      "all_frames": true,
+      "type": "module"
     }
   ],
 

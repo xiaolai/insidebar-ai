@@ -101,11 +101,14 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
       // Open side panel
       await chrome.sidePanel.open({ windowId: tab.windowId });
 
+      // Capture selected text if available
+      const selectedText = info.selectionText || '';
+
       // Wait for sidebar to load, then send message to switch provider
       setTimeout(() => {
         notifyMessage({
           action: 'switchProvider',
-          payload: { providerId }
+          payload: { providerId, selectedText }
         }).catch(() => {
           // Sidebar may not be ready yet, ignore error
         });
