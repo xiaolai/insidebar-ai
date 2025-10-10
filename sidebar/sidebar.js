@@ -18,6 +18,7 @@ const loadedIframes = new Map();  // providerId -> iframe element
 let currentView = 'providers';  // 'providers' or 'prompt-library'
 let currentEditingPromptId = null;
 let isShowingFavorites = false;
+const EDGE_SHORTCUT_STORAGE_KEY = 'edgeShortcutReminderDismissed';
 
 // Helper function to detect if dark theme is currently active
 function isDarkTheme() {
@@ -38,6 +39,9 @@ async function init() {
 
   // Re-render tabs when theme changes
   setupThemeChangeListener();
+
+  // Show shortcut reminder for Edge users once
+  await checkEdgeShortcutReminder();
 }
 
 // Listen for theme changes and re-render tabs with appropriate icons
@@ -638,6 +642,114 @@ function showToast(message) {
     toast.style.transition = 'opacity 0.3s';
     setTimeout(() => toast.remove(), 300);
   }, 2000);
+}
+
+function isEdgeBrowser() {
+  const uaData = navigator.userAgentData;
+  if (uaData && Array.isArray(uaData.brands)) {
+    return uaData.brands.some(brand => /Edge/i.test(brand.brand));
+  }
+  return navigator.userAgent.includes('Edg/');
+}
+
+async function checkEdgeShortcutReminder() {
+  if (!isEdgeBrowser()) return;
+
+  try {
+    const settings = await chrome.storage.sync.get({ [EDGE_SHORTCUT_STORAGE_KEY]: false });
+    if (!settings[EDGE_SHORTCUT_STORAGE_KEY]) {
+      showEdgeShortcutReminder();
+    }
+  } catch (error) {
+    console.warn('Unable to read shortcut reminder state:', error);
+  }
+}
+
+function showEdgeShortcutReminder() {
+  const banner = document.createElement('div');
+  banner.style.cssText = `
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(22, 22, 22, 0.92);
+    color: #fff;
+    padding: 16px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 10000;
+    max-width: 420px;
+    font-size: 14px;
+  `;
+
+  const message = document.createElement('div');
+  message.textContent = 'Enable the Smarter Panel shortcut: confirm it in edge://extensions/shortcuts';
+
+  const actions = document.createElement('div');
+  actions.style.display = 'flex';
+  actions.style.gap = '8px';
+
+  const openButton = document.createElement('button');
+  openButton.textContent = 'Open settings';
+  openButton.style.cssText = `
+    background: #4c8bf5;
+    border: none;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+  `;
+  openButton.addEventListener('click', async () => {
+    openBrowserShortcutSettings('edge');
+    await dismissEdgeShortcutReminder();
+    banner.remove();
+  });
+
+  const dismissButton = document.createElement('button');
+  dismissButton.textContent = 'Dismiss';
+  dismissButton.style.cssText = `
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.6);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+  `;
+  dismissButton.addEventListener('click', async () => {
+    await dismissEdgeShortcutReminder();
+    banner.remove();
+  });
+
+  actions.appendChild(openButton);
+  actions.appendChild(dismissButton);
+  banner.appendChild(message);
+  banner.appendChild(actions);
+
+  document.body.appendChild(banner);
+}
+
+async function dismissEdgeShortcutReminder() {
+  try {
+    await chrome.storage.sync.set({ [EDGE_SHORTCUT_STORAGE_KEY]: true });
+  } catch (error) {
+    console.warn('Unable to persist shortcut reminder state:', error);
+  }
+}
+
+function openBrowserShortcutSettings(browser) {
+  const url = browser === 'edge'
+    ? 'edge://extensions/shortcuts'
+    : 'chrome://extensions/shortcuts';
+
+  try {
+    chrome.tabs.create({ url });
+  } catch (error) {
+    console.warn('Unable to open shortcut settings via chrome.tabs, falling back to window.open', error);
+    window.open(url, '_blank');
+  }
 }
 
 function escapeHtml(text) {

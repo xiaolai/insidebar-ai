@@ -10,12 +10,67 @@ import {
   clearAllPrompts
 } from '../modules/prompt-manager.js';
 
+const DEFAULT_ENABLED_PROVIDERS = ['chatgpt', 'claude', 'gemini', 'grok', 'deepseek'];
+
+function getEnabledProvidersOrDefault(settings) {
+  if (settings.enabledProviders && Array.isArray(settings.enabledProviders)) {
+    return [...settings.enabledProviders];
+  }
+  return [...DEFAULT_ENABLED_PROVIDERS];
+}
+
+function setOllamaUrlVisibility(isEnabled) {
+  const container = document.getElementById('ollama-url-setting');
+  if (!container) return;
+  container.style.display = isEnabled ? 'flex' : 'none';
+}
+
+function isEdgeBrowser() {
+  const uaData = navigator.userAgentData;
+  if (uaData && Array.isArray(uaData.brands)) {
+    return uaData.brands.some(brand => /Edge/i.test(brand.brand));
+  }
+  return navigator.userAgent.includes('Edg/');
+}
+
+function openShortcutSettings(browserOverride) {
+  const isEdge = browserOverride === 'edge' || (browserOverride !== 'chrome' && isEdgeBrowser());
+  const url = isEdge ? 'edge://extensions/shortcuts' : 'chrome://extensions/shortcuts';
+
+  try {
+    chrome.tabs.create({ url });
+  } catch (error) {
+    console.warn('Unable to open shortcuts via chrome.tabs, falling back to window.open', error);
+    window.open(url, '_blank');
+  }
+}
+
+function setupShortcutHelpers() {
+  const openShortcutsBtn = document.getElementById('open-shortcuts-btn');
+  if (openShortcutsBtn) {
+    openShortcutsBtn.addEventListener('click', () => openShortcutSettings());
+  }
+
+  const edgeHelper = document.getElementById('edge-shortcut-helper');
+  const edgeButton = document.getElementById('open-edge-shortcuts-btn');
+
+  if (!edgeHelper) return;
+
+  if (isEdgeBrowser()) {
+    edgeHelper.style.display = 'flex';
+    if (edgeButton) {
+      edgeButton.addEventListener('click', () => openShortcutSettings('edge'));
+    }
+  }
+}
+
 // T050: Initialize settings page
 async function init() {
   await loadSettings();
   await loadDataStats();
   await renderProviderList();
   setupEventListeners();
+  setupShortcutHelpers();
 }
 
 // T051: Load and display current settings
@@ -30,12 +85,15 @@ async function loadSettings() {
 
   // Ollama URL
   document.getElementById('ollama-url-input').value = settings.ollamaUrl || 'http://localhost:3000';
+
+  const enabledProviders = getEnabledProvidersOrDefault(settings);
+  setOllamaUrlVisibility(enabledProviders.includes('ollama'));
 }
 
 // T052-T053: Render provider enable/disable toggles
 async function renderProviderList() {
   const settings = await getSettings();
-  const enabledProviders = settings.enabledProviders || ['chatgpt', 'claude', 'gemini', 'grok', 'deepseek'];
+  const enabledProviders = getEnabledProvidersOrDefault(settings);
   const listContainer = document.getElementById('provider-list');
 
   listContainer.innerHTML = PROVIDERS.map(provider => {
@@ -60,11 +118,13 @@ async function renderProviderList() {
       await toggleProvider(toggle.dataset.providerId);
     });
   });
+
+  setOllamaUrlVisibility(enabledProviders.includes('ollama'));
 }
 
 async function toggleProvider(providerId) {
   const settings = await getSettings();
-  let enabledProviders = settings.enabledProviders || ['chatgpt', 'claude', 'gemini', 'grok', 'deepseek'];
+  let enabledProviders = getEnabledProvidersOrDefault(settings);
 
   if (enabledProviders.includes(providerId)) {
     // Disable - but ensure at least one provider remains enabled
