@@ -656,7 +656,15 @@ async function checkEdgeShortcutReminder() {
   if (!isEdgeBrowser()) return;
 
   try {
-    const settings = await chrome.storage.sync.get({ [EDGE_SHORTCUT_STORAGE_KEY]: false });
+    const settings = await chrome.storage.sync.get({
+      [EDGE_SHORTCUT_STORAGE_KEY]: false,
+      keyboardShortcutEnabled: true
+    });
+
+    if (settings.keyboardShortcutEnabled === false) {
+      return;
+    }
+
     if (!settings[EDGE_SHORTCUT_STORAGE_KEY]) {
       showEdgeShortcutReminder();
     }

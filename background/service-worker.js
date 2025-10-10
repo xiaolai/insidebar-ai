@@ -1,10 +1,36 @@
 // T008 & T065: Install event - setup context menus and configure side panel
+const DEFAULT_SHORTCUT_SETTING = { keyboardShortcutEnabled: true };
+let keyboardShortcutEnabled = true;
+
+async function loadShortcutSetting() {
+  try {
+    const result = await chrome.storage.sync.get(DEFAULT_SHORTCUT_SETTING);
+    keyboardShortcutEnabled = result.keyboardShortcutEnabled;
+  } catch (error) {
+    console.warn('Unable to load shortcut setting, defaulting to enabled.', error);
+    keyboardShortcutEnabled = true;
+  }
+}
+
+async function configureActionBehavior() {
+  // Always handle action clicks ourselves so we can respect the toggle state.
+  try {
+    await chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: false });
+  } catch (error) {
+    console.error('Failed to configure side panel behavior:', error);
+  }
+}
+
 chrome.runtime.onInstalled.addListener(async () => {
   console.log('Smarter Panel installed');
   await createContextMenus();
+  await loadShortcutSetting();
+  await configureActionBehavior();
+});
 
-  // Configure side panel to open on action click
-  chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true });
+chrome.runtime.onStartup.addListener(async () => {
+  await loadShortcutSetting();
+  await configureActionBehavior();
 });
 
 // T065-T068: Create/update context menus dynamically based on enabled providers
@@ -102,6 +128,29 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   }
 });
 
-// T010: Keyboard shortcut handled via manifest command `_execute_action`.
-// Chrome triggers the same behavior as clicking the toolbar icon, so no additional
-// command handler is needed here. See manifest.json `commands`.
+// T010: Handle action clicks (toolbar or `_execute_action` command) so we can respect
+// the keyboard shortcut setting while keeping side panel toggling responsive.
+chrome.action.onClicked.addListener(async (tab) => {
+  if (!tab || !tab.windowId) {
+    console.error('Action clicked without valid tab/window context.');
+    return;
+  }
+
+  if (!keyboardShortcutEnabled) {
+    return;
+  }
+
+  try {
+    await chrome.sidePanel.open({ windowId: tab.windowId });
+  } catch (error) {
+    console.error('Error opening side panel from action click:', error);
+  }
+});
+
+chrome.storage.onChanged.addListener((changes, namespace) => {
+  if (namespace !== 'sync') return;
+
+  if (changes.keyboardShortcutEnabled) {
+    keyboardShortcutEnabled = changes.keyboardShortcutEnabled.newValue !== false;
+  }
+});

@@ -54,13 +54,19 @@ function setupShortcutHelpers() {
   const edgeHelper = document.getElementById('edge-shortcut-helper');
   const edgeButton = document.getElementById('open-edge-shortcuts-btn');
 
+  if (edgeHelper && edgeButton) {
+    edgeButton.addEventListener('click', () => openShortcutSettings('edge'));
+  }
+}
+
+function updateShortcutHelperVisibility(isEnabled) {
+  const edgeHelper = document.getElementById('edge-shortcut-helper');
   if (!edgeHelper) return;
 
-  if (isEdgeBrowser()) {
+  if (isEdgeBrowser() && isEnabled) {
     edgeHelper.style.display = 'flex';
-    if (edgeButton) {
-      edgeButton.addEventListener('click', () => openShortcutSettings('edge'));
-    }
+  } else {
+    edgeHelper.style.display = 'none';
   }
 }
 
@@ -88,6 +94,13 @@ async function loadSettings() {
 
   const enabledProviders = getEnabledProvidersOrDefault(settings);
   setOllamaUrlVisibility(enabledProviders.includes('ollama'));
+
+  const keyboardShortcutEnabled = settings.keyboardShortcutEnabled !== false;
+  const shortcutToggle = document.getElementById('keyboard-shortcut-toggle');
+  if (shortcutToggle) {
+    shortcutToggle.checked = keyboardShortcutEnabled;
+  }
+  updateShortcutHelperVisibility(keyboardShortcutEnabled);
 }
 
 // T052-T053: Render provider enable/disable toggles
@@ -176,6 +189,17 @@ function setupEventListeners() {
     await saveSetting('defaultProvider', e.target.value);
     showStatus('success', 'Default provider updated');
   });
+
+  // Keyboard shortcut toggle
+  const shortcutToggle = document.getElementById('keyboard-shortcut-toggle');
+  if (shortcutToggle) {
+    shortcutToggle.addEventListener('change', async (e) => {
+      const enabled = e.target.checked;
+      await saveSetting('keyboardShortcutEnabled', enabled);
+      updateShortcutHelperVisibility(enabled);
+      showStatus('success', enabled ? 'Keyboard shortcut enabled' : 'Keyboard shortcut disabled');
+    });
+  }
 
   // Ollama URL change
   document.getElementById('ollama-url-input').addEventListener('change', async (e) => {
