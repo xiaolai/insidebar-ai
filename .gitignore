@@ -41,11 +41,14 @@ coverage/
 user-data/
 test-profiles/
 
+# Development tools
 .claude/
 CLAUDE.md
 .specify/
 specs/
 .codex/
 AGENTS.md
+scripts/
 
+# Documentation (local reference only)
 docs/
