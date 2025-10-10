@@ -4,6 +4,7 @@ export const PROVIDERS = [
     name: 'ChatGPT',
     url: 'https://chatgpt.com',
     icon: '/icons/providers/chatgpt.png',
+    iconDark: '/icons/providers/dark/chatgpt.png',
     enabled: true
   },
   {
@@ -11,6 +12,7 @@ export const PROVIDERS = [
     name: 'Claude',
     url: 'https://claude.ai',
     icon: '/icons/providers/claude.png',
+    iconDark: '/icons/providers/dark/claude.png',
     enabled: true
   },
   {
@@ -18,6 +20,7 @@ export const PROVIDERS = [
     name: 'Gemini',
     url: 'https://gemini.google.com',
     icon: '/icons/providers/gemini.png',
+    iconDark: '/icons/providers/dark/gemini.png',
     enabled: true
   },
   {
@@ -25,6 +28,7 @@ export const PROVIDERS = [
     name: 'Grok',
     url: 'https://grok.com',
     icon: '/icons/providers/grok.png',
+    iconDark: '/icons/providers/dark/grok.png',
     enabled: true
   },
   {
@@ -32,6 +36,7 @@ export const PROVIDERS = [
     name: 'DeepSeek',
     url: 'https://chat.deepseek.com',
     icon: '/icons/providers/deepseek.png',
+    iconDark: '/icons/providers/dark/deepseek.png',
     enabled: true
   },
   {
@@ -39,6 +44,7 @@ export const PROVIDERS = [
     name: 'Ollama',
     url: 'http://localhost:3000',
     icon: '/icons/providers/ollama.png',
+    iconDark: '/icons/providers/dark/ollama.png',
     enabled: false  // Disabled by default (requires local setup)
   }
 ];

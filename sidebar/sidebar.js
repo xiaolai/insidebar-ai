@@ -19,6 +19,15 @@ let currentView = 'providers';  // 'providers' or 'prompt-library'
 let currentEditingPromptId = null;
 let isShowingFavorites = false;
 
+// Helper function to detect if dark theme is currently active
+function isDarkTheme() {
+  const theme = document.body.getAttribute('data-theme');
+  if (theme === 'dark') return true;
+  if (theme === 'light') return false;
+  // Auto mode: check system preference
+  return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
+
 // T013: Initialize sidebar
 async function init() {
   await applyTheme();
@@ -26,12 +35,43 @@ async function init() {
   await loadDefaultProvider();
   setupMessageListener();
   setupPromptLibrary();  // T045: Initialize prompt library
+
+  // Re-render tabs when theme changes
+  setupThemeChangeListener();
+}
+
+// Listen for theme changes and re-render tabs with appropriate icons
+function setupThemeChangeListener() {
+  // Watch for data-theme attribute changes on body
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.attributeName === 'data-theme') {
+        renderProviderTabs();
+      }
+    });
+  });
+
+  observer.observe(document.body, {
+    attributes: true,
+    attributeFilter: ['data-theme']
+  });
+
+  // Also listen for system theme changes when in auto mode
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+      const theme = document.body.getAttribute('data-theme');
+      if (theme === 'auto') {
+        renderProviderTabs();
+      }
+    });
+  }
 }
 
 // T014: Render provider tabs with icons
 async function renderProviderTabs() {
   const enabledProviders = await getEnabledProviders();
   const tabsContainer = document.getElementById('provider-tabs');
+  const useDarkIcons = isDarkTheme();
 
   tabsContainer.innerHTML = '';
 
@@ -41,9 +81,9 @@ async function renderProviderTabs() {
     button.dataset.providerId = provider.id;
     button.title = provider.name; // Tooltip shows name on hover
 
-    // Create icon element
+    // Create icon element - use dark icon if available and theme is dark
     const icon = document.createElement('img');
-    icon.src = provider.icon;
+    icon.src = useDarkIcons && provider.iconDark ? provider.iconDark : provider.icon;
     icon.alt = provider.name;
     icon.className = 'provider-icon';
 
@@ -52,6 +92,11 @@ async function renderProviderTabs() {
     tabsContainer.appendChild(button);
   });
 
+  // Add separator between providers and UI tabs
+  const separator = document.createElement('div');
+  separator.className = 'tab-separator';
+  tabsContainer.appendChild(separator);
+
   // Add prompt library tab at the end (right side)
   const promptLibraryTab = document.createElement('button');
   promptLibraryTab.id = 'prompt-library-tab';
@@ -59,13 +104,28 @@ async function renderProviderTabs() {
   promptLibraryTab.title = 'Prompt Library';
 
   const promptIcon = document.createElement('img');
-  promptIcon.src = '/icons/providers/settings.png';
+  promptIcon.src = useDarkIcons ? '/icons/ui/dark/prompts.png' : '/icons/ui/prompts.png';
   promptIcon.alt = 'Prompts';
   promptIcon.className = 'provider-icon';
 
   promptLibraryTab.appendChild(promptIcon);
   promptLibraryTab.addEventListener('click', () => switchToView('prompt-library'));
   tabsContainer.appendChild(promptLibraryTab);
+
+  // Add settings tab at the very end (right side)
+  const settingsTab = document.createElement('button');
+  settingsTab.id = 'settings-tab';
+  settingsTab.dataset.view = 'settings';
+  settingsTab.title = 'Settings';
+
+  const settingsIcon = document.createElement('img');
+  settingsIcon.src = useDarkIcons ? '/icons/ui/dark/settings.png' : '/icons/ui/settings.png';
+  settingsIcon.alt = 'Settings';
+  settingsIcon.className = 'provider-icon';
+
+  settingsTab.appendChild(settingsIcon);
+  settingsTab.addEventListener('click', () => switchToView('settings'));
+  tabsContainer.appendChild(settingsTab);
 }
 
 // T015: Switch to a provider
@@ -237,22 +297,34 @@ function setupPromptLibrary() {
 function switchToView(view) {
   currentView = view;
 
+  // Hide all views first
+  document.getElementById('provider-container').style.display = 'none';
+  document.getElementById('prompt-library').style.display = 'none';
+  const settingsView = document.getElementById('settings-view');
+  if (settingsView) settingsView.style.display = 'none';
+
+  // Deactivate all tabs
+  document.querySelectorAll('#provider-tabs button').forEach(btn => {
+    btn.classList.remove('active');
+  });
+
   if (view === 'prompt-library') {
-    document.getElementById('provider-container').style.display = 'none';
     document.getElementById('prompt-library').style.display = 'flex';
     document.getElementById('prompt-library-tab').classList.add('active');
-
-    // Deactivate provider tabs
-    document.querySelectorAll('#provider-tabs button[data-provider-id]').forEach(btn => {
-      btn.classList.remove('active');
-    });
-
     renderPromptList();
     updateCategoryFilter();
+  } else if (view === 'settings') {
+    if (settingsView) settingsView.style.display = 'flex';
+    const settingsTab = document.getElementById('settings-tab');
+    if (settingsTab) settingsTab.classList.add('active');
+    renderSettings();
   } else {
+    // Switch back to providers view
     document.getElementById('provider-container').style.display = 'flex';
-    document.getElementById('prompt-library').style.display = 'none';
-    document.getElementById('prompt-library-tab').classList.remove('active');
+    if (currentProvider) {
+      const providerTab = document.querySelector(`#provider-tabs button[data-provider-id="${currentProvider}"]`);
+      if (providerTab) providerTab.classList.add('active');
+    }
   }
 }
 
@@ -557,6 +629,137 @@ function escapeHtml(text) {
   const div = document.createElement('div');
   div.textContent = text;
   return div.innerHTML;
+}
+
+// Settings Page Implementation
+async function renderSettings() {
+  const settingsContainer = document.getElementById('settings-content');
+  if (!settingsContainer) return;
+
+  // Get current settings
+  const settings = await chrome.storage.sync.get({
+    theme: 'auto',
+    defaultProvider: 'chatgpt',
+    enabledProviders: PROVIDERS.map(p => p.id)
+  });
+
+  settingsContainer.innerHTML = `
+    <div class="settings-section">
+      <h3>Appearance</h3>
+      <div class="setting-item">
+        <label for="theme-select">Theme</label>
+        <select id="theme-select">
+          <option value="auto" ${settings.theme === 'auto' ? 'selected' : ''}>Auto (System)</option>
+          <option value="light" ${settings.theme === 'light' ? 'selected' : ''}>Light</option>
+          <option value="dark" ${settings.theme === 'dark' ? 'selected' : ''}>Dark</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h3>Default Provider</h3>
+      <div class="setting-item">
+        <label for="default-provider-select">Default AI Provider</label>
+        <select id="default-provider-select">
+          ${PROVIDERS.map(p => `
+            <option value="${p.id}" ${settings.defaultProvider === p.id ? 'selected' : ''}>
+              ${p.name}
+            </option>
+          `).join('')}
+        </select>
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h3>Enabled Providers</h3>
+      <div class="setting-item">
+        <p class="setting-description">Select which AI providers appear in your sidebar</p>
+        ${PROVIDERS.map(p => `
+          <label class="checkbox-label">
+            <input type="checkbox"
+                   class="provider-checkbox"
+                   data-provider-id="${p.id}"
+                   ${settings.enabledProviders.includes(p.id) ? 'checked' : ''}>
+            ${p.name}
+          </label>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="settings-section">
+      <h3>About</h3>
+      <div class="setting-item">
+        <p><strong>Smarter Panel</strong></p>
+        <p>Version 1.0.0</p>
+        <p class="setting-description">
+          A unified sidebar for accessing multiple AI providers with built-in prompt management.
+        </p>
+      </div>
+    </div>
+
+    <div class="settings-actions">
+      <button id="save-settings-btn" class="primary">Save Settings</button>
+      <button id="reset-settings-btn" class="secondary">Reset to Defaults</button>
+    </div>
+  `;
+
+  // Add event listeners
+  document.getElementById('save-settings-btn').addEventListener('click', saveSettings);
+  document.getElementById('reset-settings-btn').addEventListener('click', resetSettings);
+}
+
+async function saveSettings() {
+  const theme = document.getElementById('theme-select').value;
+  const defaultProvider = document.getElementById('default-provider-select').value;
+
+  const enabledProviders = [];
+  document.querySelectorAll('.provider-checkbox:checked').forEach(checkbox => {
+    enabledProviders.push(checkbox.dataset.providerId);
+  });
+
+  if (enabledProviders.length === 0) {
+    alert('Please enable at least one provider');
+    return;
+  }
+
+  try {
+    await chrome.storage.sync.set({
+      theme,
+      defaultProvider,
+      enabledProviders
+    });
+
+    // Apply theme immediately
+    await applyTheme();
+
+    showToast('Settings saved successfully!');
+
+    // Re-render tabs if providers changed
+    await renderProviderTabs();
+  } catch (error) {
+    console.error('Error saving settings:', error);
+    showToast('Failed to save settings');
+  }
+}
+
+async function resetSettings() {
+  if (!confirm('Reset all settings to defaults?')) return;
+
+  try {
+    await chrome.storage.sync.set({
+      theme: 'auto',
+      defaultProvider: 'chatgpt',
+      enabledProviders: PROVIDERS.map(p => p.id)
+    });
+
+    await applyTheme();
+    showToast('Settings reset successfully!');
+    renderSettings();
+    await renderProviderTabs();
+  } catch (error) {
+    console.error('Error resetting settings:', error);
+    showToast('Failed to reset settings');
+  }
 }
 
 // Initialize on load

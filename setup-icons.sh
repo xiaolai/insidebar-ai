@@ -25,12 +25,18 @@ fi
 DOWNLOADS="/Users/joker/Downloads"
 ICON_DIR="icons"
 PROVIDER_DIR="icons/providers"
+PROVIDER_DARK_DIR="icons/providers/dark"
+UI_DIR="icons/ui"
+UI_DARK_DIR="icons/ui/dark"
 
 # Create directories if they don't exist
 mkdir -p "$ICON_DIR"
 mkdir -p "$PROVIDER_DIR"
+mkdir -p "$PROVIDER_DARK_DIR"
+mkdir -p "$UI_DIR"
+mkdir -p "$UI_DARK_DIR"
 
-# Define source files
+# Define source files (light versions)
 MAIN_ICON="$DOWNLOADS/smarter-panel.png"
 OPENAI_ICON="$DOWNLOADS/openai.png"
 CLAUDE_ICON="$DOWNLOADS/claude.png"
@@ -39,6 +45,17 @@ GROK_ICON="$DOWNLOADS/grok.png"
 DEEPSEEK_ICON="$DOWNLOADS/deepseek.png"
 OLLAMA_ICON="$DOWNLOADS/ollama.png"
 SETTINGS_ICON="$DOWNLOADS/settings.png"
+PROMPTS_ICON="$DOWNLOADS/prompts.png"
+
+# Define dark icon files (optional - will be processed if they exist)
+OPENAI_DARK="$DOWNLOADS/openai-dark.png"
+CLAUDE_DARK="$DOWNLOADS/claude-dark.png"
+GEMINI_DARK="$DOWNLOADS/gemini-dark.png"
+GROK_DARK="$DOWNLOADS/grok-dark.png"
+DEEPSEEK_DARK="$DOWNLOADS/deepseek-dark.png"
+OLLAMA_DARK="$DOWNLOADS/ollama-dark.png"
+SETTINGS_DARK="$DOWNLOADS/settings-dark.png"
+PROMPTS_DARK="$DOWNLOADS/prompts-dark.png"
 
 # Function to check if file exists
 check_file() {
@@ -71,7 +88,7 @@ echo ""
 
 # Check all source files
 FILES_MISSING=0
-for file in "$MAIN_ICON" "$OPENAI_ICON" "$CLAUDE_ICON" "$GEMINI_ICON" "$GROK_ICON" "$DEEPSEEK_ICON" "$OLLAMA_ICON" "$SETTINGS_ICON"; do
+for file in "$MAIN_ICON" "$OPENAI_ICON" "$CLAUDE_ICON" "$GEMINI_ICON" "$GROK_ICON" "$DEEPSEEK_ICON" "$OLLAMA_ICON" "$SETTINGS_ICON" "$PROMPTS_ICON"; do
     if check_file "$file"; then
         echo -e "${GREEN}✓${NC} Found: $(basename "$file")"
     else
@@ -148,10 +165,107 @@ if check_file "$OLLAMA_ICON"; then
     echo ""
 fi
 
-# Settings icon (optional, for future use)
+# Process UI icons (for local functions)
+echo -e "${BLUE}Step 4: Creating UI icons...${NC}"
+echo ""
+
+# Settings icon
 if check_file "$SETTINGS_ICON"; then
     echo "Processing: settings.png"
-    resize_icon "$SETTINGS_ICON" "$PROVIDER_DIR/settings.png" 32
+    resize_icon "$SETTINGS_ICON" "$UI_DIR/settings.png" 32
+    echo ""
+fi
+
+# Prompts icon
+if check_file "$PROMPTS_ICON"; then
+    echo "Processing: prompts.png"
+    resize_icon "$PROMPTS_ICON" "$UI_DIR/prompts.png" 32
+    echo ""
+fi
+
+# Process dark provider icons (optional - only if files exist)
+echo -e "${BLUE}Step 5: Creating dark provider icons (optional)...${NC}"
+echo ""
+
+DARK_ICONS_FOUND=0
+
+# ChatGPT dark
+if [ -f "$OPENAI_DARK" ]; then
+    echo "Processing: openai-dark.png → chatgpt.png"
+    resize_icon "$OPENAI_DARK" "$PROVIDER_DARK_DIR/chatgpt.png" 32
+    DARK_ICONS_FOUND=1
+    echo ""
+fi
+
+# Claude dark
+if [ -f "$CLAUDE_DARK" ]; then
+    echo "Processing: claude-dark.png"
+    resize_icon "$CLAUDE_DARK" "$PROVIDER_DARK_DIR/claude.png" 32
+    DARK_ICONS_FOUND=1
+    echo ""
+fi
+
+# Gemini dark
+if [ -f "$GEMINI_DARK" ]; then
+    echo "Processing: gemini-dark.png"
+    resize_icon "$GEMINI_DARK" "$PROVIDER_DARK_DIR/gemini.png" 32
+    DARK_ICONS_FOUND=1
+    echo ""
+fi
+
+# Grok dark
+if [ -f "$GROK_DARK" ]; then
+    echo "Processing: grok-dark.png"
+    resize_icon "$GROK_DARK" "$PROVIDER_DARK_DIR/grok.png" 32
+    DARK_ICONS_FOUND=1
+    echo ""
+fi
+
+# DeepSeek dark
+if [ -f "$DEEPSEEK_DARK" ]; then
+    echo "Processing: deepseek-dark.png"
+    resize_icon "$DEEPSEEK_DARK" "$PROVIDER_DARK_DIR/deepseek.png" 32
+    DARK_ICONS_FOUND=1
+    echo ""
+fi
+
+# Ollama dark
+if [ -f "$OLLAMA_DARK" ]; then
+    echo "Processing: ollama-dark.png"
+    resize_icon "$OLLAMA_DARK" "$PROVIDER_DARK_DIR/ollama.png" 32
+    DARK_ICONS_FOUND=1
+    echo ""
+fi
+
+if [ $DARK_ICONS_FOUND -eq 0 ]; then
+    echo -e "${BLUE}ℹ${NC}  No dark provider icons found (optional)"
+    echo ""
+fi
+
+# Process dark UI icons (optional - only if files exist)
+echo -e "${BLUE}Step 6: Creating dark UI icons (optional)...${NC}"
+echo ""
+
+DARK_UI_FOUND=0
+
+# Settings dark
+if [ -f "$SETTINGS_DARK" ]; then
+    echo "Processing: settings-dark.png"
+    resize_icon "$SETTINGS_DARK" "$UI_DARK_DIR/settings.png" 32
+    DARK_UI_FOUND=1
+    echo ""
+fi
+
+# Prompts dark
+if [ -f "$PROMPTS_DARK" ]; then
+    echo "Processing: prompts-dark.png"
+    resize_icon "$PROMPTS_DARK" "$UI_DARK_DIR/prompts.png" 32
+    DARK_UI_FOUND=1
+    echo ""
+fi
+
+if [ $DARK_UI_FOUND -eq 0 ]; then
+    echo -e "${BLUE}ℹ${NC}  No dark UI icons found (optional)"
     echo ""
 fi
 
@@ -173,11 +287,27 @@ echo "    - icons/providers/gemini.png"
 echo "    - icons/providers/grok.png"
 echo "    - icons/providers/deepseek.png"
 echo "    - icons/providers/ollama.png"
-echo "    - icons/providers/settings.png"
+echo ""
+echo "  UI icons:"
+echo "    - icons/ui/settings.png"
+echo "    - icons/ui/prompts.png"
+
+if [ $DARK_ICONS_FOUND -eq 1 ] || [ $DARK_UI_FOUND -eq 1 ]; then
+    echo ""
+    echo "  Dark theme variants:"
+    [ $DARK_ICONS_FOUND -eq 1 ] && echo "    - icons/providers/dark/* (provider icons)"
+    [ $DARK_UI_FOUND -eq 1 ] && echo "    - icons/ui/dark/* (UI icons)"
+fi
+
 echo ""
 echo -e "${BLUE}📝 Next steps:${NC}"
 echo "  1. Reload the extension in Chrome/Edge"
 echo "  2. Verify icons appear correctly"
 echo "  3. Test the extension functionality"
+if [ $DARK_ICONS_FOUND -eq 0 ] && [ $DARK_UI_FOUND -eq 0 ]; then
+    echo ""
+    echo -e "${BLUE}💡 Tip:${NC} To add dark theme icons, place *-dark.png files in Downloads"
+    echo "  and run this script again. Dark icons will be automatically detected."
+fi
 echo ""
 echo -e "${GREEN}🚀 Ready to use Smarter Panel!${NC}"
