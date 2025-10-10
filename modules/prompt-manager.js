@@ -14,6 +14,31 @@ const MAX_TAGS_COUNT = 20;
 
 let db = null;
 
+const MAX_IDB_ATTEMPTS = 3;
+const RETRY_DELAY_BASE_MS = 100;
+
+function isQuotaExceeded(error) {
+  if (!error) return false;
+  return error.name === 'QuotaExceededError' || error.code === 22;
+}
+
+function buildQuotaError() {
+  return new Error('Storage quota exceeded. Delete unused prompts to free space.');
+}
+
+async function ensureDb() {
+  if (db) {
+    try {
+      // Accessing objectStoreNames will throw if connection is closing/closed
+      db.objectStoreNames;
+      return;
+    } catch (_) {
+      db = null;
+    }
+  }
+  await initPromptDB();
+}
+
 // T069: Input sanitization helpers
 function sanitizeString(str, maxLength) {
   if (typeof str !== 'string') return '';
@@ -54,6 +79,9 @@ export async function initPromptDB() {
     request.onerror = () => reject(request.error);
     request.onsuccess = () => {
       db = request.result;
+      db.onclose = () => {
+        db = null;
+      };
       resolve(db);
     };
 
@@ -79,7 +107,7 @@ export async function initPromptDB() {
 
 // T030 & T069: Save new prompt with validation
 export async function savePrompt(promptData) {
-  if (!db) await initPromptDB();
+  await ensureDb();
 
   // Validate input
   const validationErrors = validatePromptData(promptData);
@@ -101,53 +129,47 @@ export async function savePrompt(promptData) {
     useCount: 0
   };
 
-  return new Promise((resolve, reject) => {
+  return runWithRetry(() => {
     const transaction = db.transaction([PROMPTS_STORE], 'readwrite');
     const store = transaction.objectStore(PROMPTS_STORE);
     const request = store.add(prompt);
 
-    request.onsuccess = () => resolve({ ...prompt, id: request.result });
-    request.onerror = () => reject(request.error);
+    return wrapRequest(request, resolveValue => ({ ...prompt, id: resolveValue }));
   });
 }
 
 // T031: Get prompt by ID
 export async function getPrompt(id) {
-  if (!db) await initPromptDB();
+  await ensureDb();
 
-  return new Promise((resolve, reject) => {
+  return runWithRetry(() => {
     const transaction = db.transaction([PROMPTS_STORE], 'readonly');
     const store = transaction.objectStore(PROMPTS_STORE);
     const request = store.get(id);
-
-    request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(request.error);
+    return wrapRequest(request, value => value);
   });
 }
 
 // T032: Get all prompts
 export async function getAllPrompts() {
-  if (!db) await initPromptDB();
+  await ensureDb();
 
-  return new Promise((resolve, reject) => {
+  return runWithRetry(() => {
     const transaction = db.transaction([PROMPTS_STORE], 'readonly');
     const store = transaction.objectStore(PROMPTS_STORE);
     const request = store.getAll();
-
-    request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(request.error);
+    return wrapRequest(request, value => value || []);
   });
 }
 
 // T033: Update existing prompt
 export async function updatePrompt(id, updates) {
-  if (!db) await initPromptDB();
+  await ensureDb();
 
-  return new Promise(async (resolve, reject) => {
+  return runWithRetry(() => new Promise((resolve, reject) => {
     const transaction = db.transaction([PROMPTS_STORE], 'readwrite');
     const store = transaction.objectStore(PROMPTS_STORE);
 
-    // Get existing prompt first
     const getRequest = store.get(id);
 
     getRequest.onsuccess = () => {
@@ -157,29 +179,70 @@ export async function updatePrompt(id, updates) {
         return;
       }
 
-      // Merge updates
       const updatedPrompt = { ...prompt, ...updates, id };
       const putRequest = store.put(updatedPrompt);
-
-      putRequest.onsuccess = () => resolve(updatedPrompt);
-      putRequest.onerror = () => reject(putRequest.error);
+      wrapRequest(putRequest, () => updatedPrompt).then(resolve).catch(reject);
     };
 
     getRequest.onerror = () => reject(getRequest.error);
-  });
+  }));
 }
 
 // T034: Delete prompt
 export async function deletePrompt(id) {
-  if (!db) await initPromptDB();
+  await ensureDb();
 
-  return new Promise((resolve, reject) => {
+  return runWithRetry(() => {
     const transaction = db.transaction([PROMPTS_STORE], 'readwrite');
     const store = transaction.objectStore(PROMPTS_STORE);
     const request = store.delete(id);
+    return wrapRequest(request, () => true);
+  });
+}
 
-    request.onsuccess = () => resolve(true);
-    request.onerror = () => reject(request.error);
+function runWithRetry(operation, attempt = 1) {
+  return new Promise((resolve, reject) => {
+    try {
+      const result = operation();
+      // Operation may return a wrapped promise already
+      Promise.resolve(result).then(resolve).catch((error) => {
+        handleIdbError(error, operation, attempt, resolve, reject);
+      });
+    } catch (error) {
+      handleIdbError(error, operation, attempt, resolve, reject);
+    }
+  });
+}
+
+function handleIdbError(error, operation, attempt, resolve, reject) {
+  if (isQuotaExceeded(error)) {
+    reject(buildQuotaError());
+    return;
+  }
+
+  if (attempt < MAX_IDB_ATTEMPTS) {
+    const delay = RETRY_DELAY_BASE_MS * Math.pow(2, attempt - 1);
+    setTimeout(() => {
+      runWithRetry(operation, attempt + 1).then(resolve).catch(reject);
+    }, delay);
+  } else {
+    reject(error);
+  }
+}
+
+function wrapRequest(request, mapper) {
+  return new Promise((resolve, reject) => {
+    request.onsuccess = () => {
+      const value = typeof mapper === 'function' ? mapper(request.result) : request.result;
+      resolve(value);
+    };
+    request.onerror = () => {
+      if (isQuotaExceeded(request.error)) {
+        reject(buildQuotaError());
+      } else {
+        reject(request.error);
+      }
+    };
   });
 }
 

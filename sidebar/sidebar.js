@@ -18,6 +18,8 @@ const loadedIframes = new Map();  // providerId -> iframe element
 let currentView = 'providers';  // 'providers' or 'prompt-library'
 let currentEditingPromptId = null;
 let isShowingFavorites = false;
+let isSwitchingProvider = false;
+let pendingProviderId = null;
 const EDGE_SHORTCUT_STORAGE_KEY = 'edgeShortcutReminderDismissed';
 
 // Helper function to detect if dark theme is currently active
@@ -135,9 +137,24 @@ async function renderProviderTabs() {
 
 // T015: Switch to a provider
 async function switchProvider(providerId) {
+  if (isSwitchingProvider) {
+    pendingProviderId = providerId;
+    return;
+  }
+
+  isSwitchingProvider = true;
+  let nextProviderAfterSwitch = null;
   const provider = await getProviderByIdWithSettings(providerId);
   if (!provider) {
     showError(`Provider ${providerId} not found`);
+    isSwitchingProvider = false;
+    if (pendingProviderId) {
+      nextProviderAfterSwitch = pendingProviderId;
+      pendingProviderId = null;
+    }
+    if (nextProviderAfterSwitch) {
+      switchProvider(nextProviderAfterSwitch);
+    }
     return;
   }
 
@@ -180,6 +197,15 @@ async function switchProvider(providerId) {
   await chrome.storage.sync.set({ lastSelectedProvider: providerId });
 
   hideError();
+
+  isSwitchingProvider = false;
+  if (pendingProviderId && pendingProviderId !== providerId) {
+    const next = pendingProviderId;
+    pendingProviderId = null;
+    switchProvider(next);
+  } else {
+    pendingProviderId = null;
+  }
 }
 
 // T016: Create iframe for provider
