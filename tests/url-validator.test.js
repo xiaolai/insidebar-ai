@@ -89,7 +89,7 @@ describe('url-validator module', () => {
     it('should reject empty URLs', () => {
       const result = validateOllamaUrl('');
       expect(result.valid).toBe(false);
-      expect(result.error).toContain('empty');
+      expect(result.error).toContain('required');
     });
 
     it('should reject null/undefined', () => {
