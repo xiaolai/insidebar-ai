@@ -70,8 +70,7 @@
       "matches": ["https://chatgpt.com/*"],
       "js": [
         "content-scripts/enter-behavior-utils.js",
-        "content-scripts/enter-behavior-chatgpt.js",
-        "content-scripts/chatgpt-history-sync.js"
+        "content-scripts/enter-behavior-chatgpt.js"
       ],
       "run_at": "document_end",
       "all_frames": true
