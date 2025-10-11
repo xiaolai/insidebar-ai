@@ -7,7 +7,12 @@
   // Provider-specific selectors
   const PROVIDER_SELECTORS = {
     chatgpt: ['#prompt-textarea'],
-    claude: ['.ProseMirror[role="textbox"]'],
+    claude: [
+      '.ProseMirror[role="textbox"]',
+      '.ProseMirror[contenteditable="true"]',
+      'div[contenteditable="true"].ProseMirror',
+      'div[contenteditable="true"]'
+    ],
     gemini: ['.ql-editor'],
     grok: ['textarea', '.tiptap', '.ProseMirror'],
     deepseek: ['textarea.ds-scroll-area']
@@ -134,17 +139,33 @@
         console.error(`Failed to inject text into ${provider}`);
       }
     } else {
+      // Debug: For Claude, log what elements we can find
+      if (provider === 'claude') {
+        console.log('DEBUG: Claude selectors tried:', selectors);
+        console.log('DEBUG: ProseMirror elements found:', document.querySelectorAll('.ProseMirror').length);
+        console.log('DEBUG: Contenteditable elements found:', document.querySelectorAll('[contenteditable="true"]').length);
+        console.log('DEBUG: First contenteditable:', document.querySelector('[contenteditable="true"]'));
+      }
+
       // Retry after a short delay in case page is still loading
       setTimeout(() => {
         let retryElement = null;
         for (const selector of selectors) {
           retryElement = findTextInputElement(selector);
-          if (retryElement) break;
+          if (retryElement) {
+            if (provider === 'claude') {
+              console.log('DEBUG: Found element on retry with selector:', selector);
+            }
+            break;
+          }
         }
         if (retryElement) {
           injectTextIntoElement(retryElement, event.data.text);
         } else {
           console.error(`${provider} editor not found`);
+          if (provider === 'claude') {
+            console.log('DEBUG: All contenteditable elements:', document.querySelectorAll('[contenteditable="true"]'));
+          }
         }
       }, 1000);
     }
