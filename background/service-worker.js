@@ -103,16 +103,14 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 
       // Capture selected text if available
       const selectedText = info.selectionText || '';
-      console.log('[Background] Selected text:', selectedText ? `"${selectedText}"` : '(empty)');
 
       // Wait for sidebar to load, then send message to switch provider
       setTimeout(() => {
-        console.log('[Background] Sending message to sidebar:', { providerId, selectedText: selectedText ? 'YES' : 'NO' });
         notifyMessage({
           action: 'switchProvider',
           payload: { providerId, selectedText }
         }).catch((error) => {
-          console.warn('[Background] Failed to send message:', error);
+          console.warn('Failed to send message to sidebar:', error);
         });
       }, 100);
     } else if (info.menuItemId === 'open-prompt-library') {
