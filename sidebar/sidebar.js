@@ -45,6 +45,15 @@ async function init() {
 
   // Show shortcut reminder for Edge users once
   await checkEdgeShortcutReminder();
+
+  // T070: Notify background when sidebar closes
+  window.addEventListener('beforeunload', () => {
+    try {
+      chrome.runtime.sendMessage({ action: 'sidePanelClosed', payload: {} });
+    } catch (error) {
+      // Ignore errors during unload
+    }
+  });
 }
 
 // Listen for theme changes and re-render tabs with appropriate icons
@@ -271,8 +280,26 @@ function setupMessageListener() {
           // If there's selected text, show it in the workspace
           if (message.payload?.selectedText) {
             showWorkspaceWithText(message.payload.selectedText);
+          } else {
+            // T069: Check if auto-paste is enabled
+            const settings = await chrome.storage.sync.get({ autoPasteClipboard: false });
+            if (settings.autoPasteClipboard) {
+              try {
+                const clipboardText = await navigator.clipboard.readText();
+                if (clipboardText && clipboardText.trim()) {
+                  showWorkspaceWithText(clipboardText);
+                }
+              } catch (error) {
+                console.warn('Could not read clipboard:', error);
+                // Silently fail - user may not have granted clipboard permission
+              }
+            }
           }
 
+          sendResponse({ success: true });
+        } else if (message.action === 'closeSidePanel') {
+          // T070: Close side panel when requested
+          window.close();
           sendResponse({ success: true });
         }
       } catch (error) {

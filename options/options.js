@@ -89,6 +89,12 @@ async function loadSettings() {
     shortcutToggle.checked = keyboardShortcutEnabled;
   }
   updateShortcutHelperVisibility(keyboardShortcutEnabled);
+
+  // Auto-paste clipboard setting
+  const autoPasteToggle = document.getElementById('auto-paste-toggle');
+  if (autoPasteToggle) {
+    autoPasteToggle.checked = settings.autoPasteClipboard === true;
+  }
 }
 
 // T052-T053: Render provider enable/disable toggles
@@ -184,6 +190,16 @@ function setupEventListeners() {
       await saveSetting('keyboardShortcutEnabled', enabled);
       updateShortcutHelperVisibility(enabled);
       showStatus('success', enabled ? 'Keyboard shortcut enabled' : 'Keyboard shortcut disabled');
+    });
+  }
+
+  // Auto-paste clipboard toggle
+  const autoPasteToggle = document.getElementById('auto-paste-toggle');
+  if (autoPasteToggle) {
+    autoPasteToggle.addEventListener('change', async (e) => {
+      const enabled = e.target.checked;
+      await saveSetting('autoPasteClipboard', enabled);
+      showStatus('success', enabled ? 'Auto-paste enabled' : 'Auto-paste disabled');
     });
   }
 

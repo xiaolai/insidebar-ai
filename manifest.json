@@ -9,7 +9,8 @@
     "storage",
     "contextMenus",
     "declarativeNetRequest",
-    "declarativeNetRequestWithHostAccess"
+    "declarativeNetRequestWithHostAccess",
+    "clipboardRead"
   ],
 
   "host_permissions": [
@@ -54,7 +55,15 @@
       "suggested_key": {
         "default": "Ctrl+Shift+E",
         "mac": "Command+Shift+E"
-      }
+      },
+      "description": "Open insidebar.ai with default provider"
+    },
+    "open-prompt-library": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+P",
+        "mac": "Command+Shift+P"
+      },
+      "description": "Open insidebar.ai Prompt Library"
     }
   },
 

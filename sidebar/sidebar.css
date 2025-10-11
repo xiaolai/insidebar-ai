@@ -322,7 +322,7 @@ body {
 #prompt-workspace-text {
   width: 100%;
   min-height: 120px;
-  max-height: 240px;
+  max-height: 400px;
   padding: 10px;
   border: 1px solid #e0e0e0;
   border-radius: 4px;
@@ -331,6 +331,7 @@ body {
   resize: vertical;
   background: white;
   color: #333;
+  overflow-y: auto;
 }
 
 #prompt-list {

@@ -4,6 +4,9 @@ import { notifyMessage } from '../modules/messaging.js';
 const DEFAULT_SHORTCUT_SETTING = { keyboardShortcutEnabled: true };
 let keyboardShortcutEnabled = true;
 
+// T070: Track side panel state per window
+const sidePanelState = new Map(); // windowId -> boolean (true = open, false = closed)
+
 async function loadShortcutSetting() {
   try {
     const result = await chrome.storage.sync.get(DEFAULT_SHORTCUT_SETTING);
@@ -11,6 +14,36 @@ async function loadShortcutSetting() {
   } catch (error) {
     console.warn('Unable to load shortcut setting, defaulting to enabled.', error);
     keyboardShortcutEnabled = true;
+  }
+}
+
+// T070: Helper to toggle side panel
+async function toggleSidePanel(windowId, action = null) {
+  if (!windowId) {
+    console.error('Invalid windowId for toggleSidePanel');
+    return;
+  }
+
+  const isOpen = sidePanelState.get(windowId) || false;
+
+  if (!isOpen) {
+    // Open the side panel
+    try {
+      await chrome.sidePanel.open({ windowId });
+      sidePanelState.set(windowId, true);
+    } catch (error) {
+      console.error('Error opening side panel:', error);
+    }
+  } else {
+    // Close the side panel by sending message to sidebar
+    try {
+      await notifyMessage({ action: 'closeSidePanel', payload: {} });
+      sidePanelState.set(windowId, false);
+    } catch (error) {
+      console.warn('Error closing side panel:', error);
+      // Even if message fails, assume it's closed
+      sidePanelState.set(windowId, false);
+    }
   }
 }
 
@@ -87,7 +120,7 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
   }
 });
 
-// T009 & T067-T068: Context menu click handler
+// T009 & T067-T068 & T070: Context menu click handler with state tracking
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   try {
     if (!tab || !tab.windowId) {
@@ -98,8 +131,9 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     if (info.menuItemId.startsWith('provider-')) {
       const providerId = info.menuItemId.replace('provider-', '');
 
-      // Open side panel
+      // Open side panel and track state
       await chrome.sidePanel.open({ windowId: tab.windowId });
+      sidePanelState.set(tab.windowId, true);
 
       // Capture selected text if available
       const selectedText = info.selectionText || '';
@@ -114,8 +148,9 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
         });
       }, 100);
     } else if (info.menuItemId === 'open-prompt-library') {
-      // Open side panel with prompt library
+      // Open side panel with prompt library and track state
       await chrome.sidePanel.open({ windowId: tab.windowId });
+      sidePanelState.set(tab.windowId, true);
 
       // Capture selected text if available
       const selectedText = info.selectionText || '';
@@ -135,8 +170,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   }
 });
 
-// T010: Handle action clicks (toolbar or `_execute_action` command) so we can respect
-// the keyboard shortcut setting while keeping side panel toggling responsive.
+// T010 & T070: Handle action clicks (toolbar or `_execute_action` command) with toggle
 chrome.action.onClicked.addListener(async (tab) => {
   if (!tab || !tab.windowId) {
     console.error('Action clicked without valid tab/window context.');
@@ -147,11 +181,7 @@ chrome.action.onClicked.addListener(async (tab) => {
     return;
   }
 
-  try {
-    await chrome.sidePanel.open({ windowId: tab.windowId });
-  } catch (error) {
-    console.error('Error opening side panel from action click:', error);
-  }
+  await toggleSidePanel(tab.windowId);
 });
 
 chrome.storage.onChanged.addListener((changes, namespace) => {
@@ -159,5 +189,64 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
 
   if (changes.keyboardShortcutEnabled) {
     keyboardShortcutEnabled = changes.keyboardShortcutEnabled.newValue !== false;
+  }
+});
+
+// T070: Clean up state when windows are closed
+chrome.windows.onRemoved.addListener((windowId) => {
+  sidePanelState.delete(windowId);
+});
+
+// T070: Listen for sidebar close notifications
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === 'sidePanelClosed') {
+    // Get windowId from sender
+    if (sender.tab && sender.tab.windowId) {
+      sidePanelState.set(sender.tab.windowId, false);
+    }
+    sendResponse({ success: true });
+  }
+  return true;
+});
+
+// T069 & T070: Listen for keyboard shortcuts with toggle support
+chrome.commands.onCommand.addListener(async (command, tab) => {
+  if (!tab || !tab.windowId) {
+    console.error('Command triggered without valid tab/window context.');
+    return;
+  }
+
+  const windowId = tab.windowId;
+  const isOpen = sidePanelState.get(windowId) || false;
+
+  if (command === 'open-prompt-library') {
+    if (!isOpen) {
+      // Open and switch to Prompt Library
+      try {
+        await chrome.sidePanel.open({ windowId });
+        sidePanelState.set(windowId, true);
+
+        // Wait for sidebar to load, then switch to Prompt Library
+        setTimeout(() => {
+          notifyMessage({
+            action: 'openPromptLibrary',
+            payload: {}
+          }).catch(() => {
+            // Sidebar may not be ready yet, ignore error
+          });
+        }, 100);
+      } catch (error) {
+        console.error('Error opening Prompt Library from command:', error);
+      }
+    } else {
+      // Close side panel (toggle off)
+      try {
+        await notifyMessage({ action: 'closeSidePanel', payload: {} });
+        sidePanelState.set(windowId, false);
+      } catch (error) {
+        console.warn('Error closing side panel:', error);
+        sidePanelState.set(windowId, false);
+      }
+    }
   }
 });
