@@ -99,53 +99,69 @@
 
   // Handle text injection message
   function handleTextInjection(event) {
+    console.log('[Content Script] Received message:', event.data);
+
     // Only handle INJECT_TEXT messages
     if (!event.data || event.data.type !== 'INJECT_TEXT' || !event.data.text) {
       return;
     }
 
+    console.log('[Content Script] INJECT_TEXT message received, text length:', event.data.text.length);
+
     const provider = detectProvider();
     if (!provider) {
-      console.warn('Unknown provider, cannot inject text');
+      console.warn('[Content Script] Unknown provider, cannot inject text');
       return;
     }
 
+    console.log('[Content Script] Detected provider:', provider);
+
     const selectors = PROVIDER_SELECTORS[provider];
     if (!selectors) {
-      console.warn('No selectors configured for provider:', provider);
+      console.warn('[Content Script] No selectors configured for provider:', provider);
       return;
     }
+
+    console.log('[Content Script] Trying selectors:', selectors);
 
     // Try each selector until we find an element
     let element = null;
     for (const selector of selectors) {
       element = findTextInputElement(selector);
-      if (element) break;
+      if (element) {
+        console.log('[Content Script] Found element with selector:', selector);
+        break;
+      }
     }
 
     if (element) {
+      console.log('[Content Script] Element found, injecting text...');
       const success = injectTextIntoElement(element, event.data.text);
       if (success) {
-        console.log(`Text injected into ${provider} editor`);
+        console.log(`[Content Script] ✅ Text injected into ${provider} editor`);
       } else {
-        console.error(`Failed to inject text into ${provider}`);
+        console.error(`[Content Script] ❌ Failed to inject text into ${provider}`);
       }
     } else {
-      console.warn(`${provider} editor not found, will retry...`);
+      console.warn(`[Content Script] ${provider} editor not found, will retry in 1s...`);
       // Retry after a short delay in case page is still loading
       setTimeout(() => {
+        console.log('[Content Script] Retry attempt...');
         let retryElement = null;
         for (const selector of selectors) {
           retryElement = findTextInputElement(selector);
-          if (retryElement) break;
+          if (retryElement) {
+            console.log('[Content Script] Found element on retry:', selector);
+            break;
+          }
         }
         if (retryElement) {
           const success = injectTextIntoElement(retryElement, event.data.text);
           if (success) {
-            console.log(`Text injected into ${provider} editor (retry)`);
+            console.log(`[Content Script] ✅ Text injected into ${provider} editor (retry)`);
           }
         } else {
-          console.error(`${provider} editor still not found after retry`);
+          console.error(`[Content Script] ❌ ${provider} editor still not found after retry`);
         }
       }, 1000);
     }

@@ -288,12 +288,14 @@ async function injectTextIntoProvider(providerId, text) {
     return;
   }
 
-  // First, copy text to clipboard so user can paste manually if needed
+  // Try to copy text to clipboard (may fail if document not focused)
   try {
+    // Focus the sidebar window first
+    window.focus();
     await navigator.clipboard.writeText(text);
-    console.log('Selected text copied to clipboard');
+    console.log('[Sidebar] Selected text copied to clipboard');
   } catch (error) {
-    console.warn('Failed to copy text to clipboard:', error);
+    console.warn('[Sidebar] Failed to copy text to clipboard (will still inject):', error.message);
     // Continue with injection even if clipboard fails
   }
 
@@ -301,11 +303,12 @@ async function injectTextIntoProvider(providerId, text) {
   setTimeout(() => {
     const iframe = loadedIframes.get(providerId);
     if (!iframe || !iframe.contentWindow) {
-      console.warn('Provider iframe not found or not ready:', providerId);
+      console.warn('[Sidebar] Provider iframe not found or not ready:', providerId);
       return;
     }
 
     try {
+      console.log('[Sidebar] Sending postMessage to iframe:', { type: 'INJECT_TEXT', textLength: text.length });
       // Send message to content script inside the iframe
       iframe.contentWindow.postMessage(
         {
@@ -314,10 +317,11 @@ async function injectTextIntoProvider(providerId, text) {
         },
         '*' // We're posting to same-origin AI provider domains
       );
+      console.log('[Sidebar] postMessage sent successfully');
     } catch (error) {
-      console.error('Error sending text injection message:', error);
+      console.error('[Sidebar] Error sending text injection message:', error);
     }
-  }, 500); // Wait 500ms for iframe to be ready
+  }, 1500); // Increased to 1500ms to ensure iframe is fully loaded
 }
 
 // T019: Show/hide error message
