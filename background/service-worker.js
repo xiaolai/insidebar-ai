@@ -117,10 +117,14 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
       // Open side panel with prompt library
       await chrome.sidePanel.open({ windowId: tab.windowId });
 
+      // Capture selected text if available
+      const selectedText = info.selectionText || '';
+
       // Wait for sidebar to load, then switch to prompt library
       setTimeout(() => {
         notifyMessage({
-          action: 'openPromptLibrary'
+          action: 'openPromptLibrary',
+          payload: { selectedText }
         }).catch(() => {
           // Sidebar may not be ready yet, ignore error
         });

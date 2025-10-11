@@ -15,6 +15,7 @@ import {
 
 let currentProvider = null;
 const loadedIframes = new Map();  // providerId -> iframe element
+const loadedIframesState = new Map();  // providerId -> 'loading' | 'ready'
 let currentView = 'providers';  // 'providers' or 'prompt-library'
 let currentEditingPromptId = null;
 let isShowingFavorites = false;
@@ -219,12 +220,19 @@ function createProviderIframe(provider) {
   iframe.allow = 'clipboard-read; clipboard-write';
   iframe.loading = 'eager';  // Hint to browser to load immediately
 
+  // Set initial state as loading
+  loadedIframesState.set(provider.id, 'loading');
+
   iframe.addEventListener('load', () => {
     hideLoading();
+    // Mark iframe as ready
+    loadedIframesState.set(provider.id, 'ready');
   });
 
   iframe.addEventListener('error', () => {
     showError(`Failed to load ${provider.name}. Please try again or check your internet connection.`);
+    // Mark as ready even on error to prevent infinite waiting
+    loadedIframesState.set(provider.id, 'ready');
   });
 
   container.appendChild(iframe);
@@ -244,21 +252,36 @@ async function loadDefaultProvider() {
 // T018: Setup message listener
 function setupMessageListener() {
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.action === 'switchProvider') {
-      switchProvider(message.payload.providerId);
+    // Handle async operations properly
+    (async () => {
+      try {
+        if (message.action === 'switchProvider') {
+          await switchProvider(message.payload.providerId);
 
-      // If there's selected text, inject it into the provider iframe
-      if (message.payload.selectedText) {
-        injectTextIntoProvider(message.payload.providerId, message.payload.selectedText);
+          // If there's selected text, inject it into the provider iframe
+          if (message.payload.selectedText) {
+            await injectTextIntoProvider(message.payload.providerId, message.payload.selectedText);
+          }
+
+          sendResponse({ success: true });
+        } else if (message.action === 'openPromptLibrary') {
+          // T048: Switch to Prompt Genie tab
+          switchToView('prompt-library');
+
+          // If there's selected text, show it in the workspace
+          if (message.payload?.selectedText) {
+            showWorkspaceWithText(message.payload.selectedText);
+          }
+
+          sendResponse({ success: true });
+        }
+      } catch (error) {
+        console.error('Error handling message:', error);
+        sendResponse({ success: false, error: error.message });
       }
+    })();
 
-      sendResponse({ success: true });
-    } else if (message.action === 'openPromptLibrary') {
-      // T048: Switch to Prompt Genie tab
-      switchToView('prompt-library');
-      sendResponse({ success: true });
-    }
-    return true;
+    return true; // Keep channel open for async response
   });
 
   // T026: Listen for settings changes to re-render tabs
@@ -274,33 +297,61 @@ function setupMessageListener() {
   });
 }
 
+// Wait for iframe to be fully loaded and ready
+async function waitForIframeReady(providerId) {
+  const iframe = loadedIframes.get(providerId);
+  if (!iframe) {
+    throw new Error(`Iframe for provider ${providerId} not found`);
+  }
+
+  const state = loadedIframesState.get(providerId);
+
+  // If already ready, return immediately
+  if (state === 'ready') {
+    return;
+  }
+
+  // If loading, wait for load event
+  return new Promise((resolve) => {
+    const checkReady = () => {
+      if (loadedIframesState.get(providerId) === 'ready') {
+        resolve();
+      } else {
+        // Check again after a short delay
+        setTimeout(checkReady, 100);
+      }
+    };
+    checkReady();
+  });
+}
+
 // Inject selected text into provider iframe
-function injectTextIntoProvider(providerId, text) {
+async function injectTextIntoProvider(providerId, text) {
   if (!text || !providerId) {
     return;
   }
 
-  // Wait a bit for provider iframe to be fully loaded and ready
-  setTimeout(() => {
+  try {
+    // Wait for iframe to be ready (event-driven, no fixed delay)
+    await waitForIframeReady(providerId);
+
     const iframe = loadedIframes.get(providerId);
     if (!iframe || !iframe.contentWindow) {
       console.warn('Provider iframe not found or not ready:', providerId);
       return;
     }
 
-    try {
-      // Send message to content script inside the iframe
-      iframe.contentWindow.postMessage(
-        {
-          type: 'INJECT_TEXT',
-          text: text
-        },
-        '*' // We're posting to same-origin AI provider domains
-      );
-    } catch (error) {
-      console.error('Error sending text injection message:', error);
-    }
-  }, 1500); // Increased to 1500ms to ensure iframe is fully loaded
+    // Send message to content script inside the iframe
+    iframe.contentWindow.postMessage(
+      {
+        type: 'INJECT_TEXT',
+        text: text
+      },
+      '*' // We're posting to same-origin AI provider domains
+    );
+  } catch (error) {
+    console.error('Error sending text injection message:', error);
+  }
 }
 
 // T019: Show/hide error message
@@ -379,6 +430,12 @@ function setupPromptLibrary() {
       closePromptEditor();
     }
   });
+
+  // Workspace button listeners
+  document.getElementById('workspace-send-btn').addEventListener('click', sendWorkspaceToProvider);
+  document.getElementById('workspace-copy-btn').addEventListener('click', copyWorkspaceText);
+  document.getElementById('workspace-save-btn').addEventListener('click', saveWorkspaceAsPrompt);
+  document.getElementById('workspace-clear-btn').addEventListener('click', clearWorkspace);
 }
 
 function switchToView(view) {
@@ -818,6 +875,116 @@ function openBrowserShortcutSettings(browser) {
   } catch (error) {
     console.warn('Unable to open shortcut settings via chrome.tabs, falling back to window.open', error);
     window.open(url, '_blank');
+  }
+}
+
+// Workspace helper functions
+async function updateWorkspaceProviderSelector() {
+  const select = document.getElementById('workspace-provider-select');
+  if (!select) return;
+
+  const enabledProviders = await getEnabledProviders();
+
+  // Set current provider as default if available
+  const defaultValue = currentProvider || '';
+
+  select.innerHTML = enabledProviders.map(provider =>
+    `<option value="${provider.id}" ${provider.id === defaultValue ? 'selected' : ''}>
+      ${provider.name}
+    </option>`
+  ).join('');
+}
+
+function showWorkspaceWithText(text) {
+  const workspace = document.getElementById('prompt-workspace');
+  const textarea = document.getElementById('prompt-workspace-text');
+
+  if (!workspace || !textarea) return;
+
+  textarea.value = text;
+  workspace.style.display = 'block';
+
+  // Update provider selector when showing workspace
+  updateWorkspaceProviderSelector();
+}
+
+async function copyWorkspaceText() {
+  const textarea = document.getElementById('prompt-workspace-text');
+  const text = textarea.value.trim();
+
+  if (!text) {
+    showToast('Workspace is empty');
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(text);
+    showToast('Copied to clipboard!');
+  } catch (error) {
+    console.error('Error copying to clipboard:', error);
+    showToast('Failed to copy');
+  }
+}
+
+function saveWorkspaceAsPrompt() {
+  const textarea = document.getElementById('prompt-workspace-text');
+  const text = textarea.value.trim();
+
+  if (!text) {
+    showToast('Workspace is empty');
+    return;
+  }
+
+  // Open prompt editor with the workspace text pre-filled
+  openPromptEditor(null);
+
+  // Pre-fill the content field with workspace text
+  setTimeout(() => {
+    document.getElementById('prompt-content-input').value = text;
+  }, 50);
+}
+
+function clearWorkspace() {
+  const textarea = document.getElementById('prompt-workspace-text');
+  const workspace = document.getElementById('prompt-workspace');
+
+  textarea.value = '';
+  workspace.style.display = 'none';
+}
+
+async function sendWorkspaceToProvider() {
+  const select = document.getElementById('workspace-provider-select');
+  const textarea = document.getElementById('prompt-workspace-text');
+
+  const providerId = select.value;
+  const text = textarea.value.trim();
+
+  if (!providerId) {
+    showToast('Please select a provider');
+    return;
+  }
+
+  if (!text) {
+    showToast('Workspace is empty');
+    return;
+  }
+
+  try {
+    // Switch to the selected provider
+    await switchProvider(providerId);
+
+    // Inject the text into the provider (now waits for iframe to be ready)
+    await injectTextIntoProvider(providerId, text);
+
+    // Get provider name for toast
+    const provider = await getProviderByIdWithSettings(providerId);
+    showToast(`Text sent to ${provider.name}!`);
+
+    // Optionally clear workspace after sending
+    // clearWorkspace();
+  } catch (error) {
+    console.error('Error sending workspace text to provider:', error);
+    showToast('Failed to send text');
   }
 }
 

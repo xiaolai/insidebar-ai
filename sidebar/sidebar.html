@@ -43,6 +43,23 @@
         <button id="show-favorites" title="Show favorites">★</button>
       </div>
 
+      <!-- Workspace for editing received text -->
+      <div id="prompt-workspace" style="display: none;">
+        <div class="workspace-header">
+          <span>✏️ Working Text</span>
+          <div class="workspace-actions">
+            <select id="workspace-provider-select" title="Select provider">
+              <option value="">Select provider...</option>
+            </select>
+            <button id="workspace-send-btn" title="Send to selected provider">🚀 Send</button>
+            <button id="workspace-copy-btn" title="Copy to clipboard">📋 Copy</button>
+            <button id="workspace-save-btn" title="Save as new prompt">💾 Save Prompt</button>
+            <button id="workspace-clear-btn" title="Clear">✕</button>
+          </div>
+        </div>
+        <textarea id="prompt-workspace-text" placeholder="Selected text will appear here..."></textarea>
+      </div>
+
       <div id="prompt-list">
         <!-- Prompt items will be dynamically rendered here -->
       </div>
