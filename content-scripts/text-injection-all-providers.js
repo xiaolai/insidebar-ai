@@ -62,14 +62,23 @@
       if (isTextarea) {
         // For textarea/input elements
         const currentValue = element.value || '';
-        element.value = currentValue + text;
+        const newValue = currentValue + text;
 
-        // Trigger input event to notify React/Vue/etc
+        console.log('[Content Script] Setting textarea value. Current length:', currentValue.length, 'New length:', newValue.length);
+
+        // For React - use native setter to bypass React's control
+        const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, 'value').set;
+        nativeInputValueSetter.call(element, newValue);
+
+        // Trigger multiple events to notify React/Vue/etc
         element.dispatchEvent(new Event('input', { bubbles: true }));
+        element.dispatchEvent(new Event('change', { bubbles: true }));
 
         // Focus and move cursor to end
         element.focus();
         element.selectionStart = element.selectionEnd = element.value.length;
+
+        console.log('[Content Script] Textarea value after setting:', element.value.substring(0, 100) + (element.value.length > 100 ? '...' : ''));
       } else {
         // For contenteditable elements
         const currentText = element.textContent || '';
