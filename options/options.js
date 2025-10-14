@@ -1,6 +1,7 @@
 // T050-T064: Settings Page Implementation
 import { PROVIDERS } from '../modules/providers.js';
 import { getSettings, getSetting, saveSettings, saveSetting, resetSettings, exportSettings, importSettings } from '../modules/settings.js';
+import { applyTheme } from '../modules/theme-manager.js';
 import {
   getAllPrompts,
   getFavoritePrompts,
@@ -67,6 +68,7 @@ function updateShortcutHelperVisibility(isEnabled) {
 
 // T050: Initialize settings page
 async function init() {
+  await applyTheme();  // Apply theme first
   await loadSettings();
   await loadDataStats();
   await renderProviderList();
@@ -201,6 +203,7 @@ function setupEventListeners() {
   // Theme change
   document.getElementById('theme-select').addEventListener('change', async (e) => {
     await saveSetting('theme', e.target.value);
+    await applyTheme();  // Re-apply theme immediately
     showStatus('success', 'Theme updated');
   });
 

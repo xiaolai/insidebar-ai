@@ -401,13 +401,20 @@ select:focus {
   text-decoration: underline;
 }
 
-/* Dark Theme */
-@media (prefers-color-scheme: dark) {
-  body {
-    background: #1e1e1e;
-    color: #e0e0e0;
-  }
+/* Dark Theme - both system preference and explicit theme setting */
+@media (prefers-color-scheme: dark),
+[data-theme="dark"] body {
+  background: #1e1e1e;
+  color: #e0e0e0;
+}
 
+[data-theme="dark"] body {
+  background: #1e1e1e;
+  color: #e0e0e0;
+}
+
+@media (prefers-color-scheme: dark),
+[data-theme="dark"] {
   .container {
     background: #2d2d2d;
   }
@@ -423,6 +430,10 @@ select:focus {
 
   .setting-description {
     color: #aaa;
+  }
+
+  .setting-item {
+    border-bottom-color: #3a3a3a;
   }
 
   select {
@@ -447,6 +458,10 @@ select:focus {
     background: #3a3a3a;
   }
 
+  .data-stat-label {
+    color: #aaa;
+  }
+
   .data-stat-value {
     color: #e0e0e0;
   }
@@ -463,6 +478,15 @@ select:focus {
     background: #2d2d2d;
     border-color: #444;
     color: #aaa;
+  }
+
+  .btn-secondary {
+    background: #3a3a3a;
+    color: #aaa;
+  }
+
+  .btn-secondary:hover {
+    background: #444;
   }
 }
 
@@ -527,7 +551,8 @@ select:focus {
   cursor: default;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark),
+[data-theme="dark"] {
   .library-import-card {
     background: #3a3a3a;
     border-color: #444;
@@ -594,7 +619,8 @@ select:focus {
   cursor: pointer;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark),
+[data-theme="dark"] {
   .key-mapping-card {
     background: #2d2d2d;
     border-color: #444;

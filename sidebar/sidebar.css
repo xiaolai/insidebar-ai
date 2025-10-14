@@ -959,6 +959,10 @@ body {
   color: #64b5f6;
 }
 
+[data-theme="dark"] .prompt-item-actions button {
+  color: #e0e0e0;
+}
+
 [data-theme="dark"] .modal-content {
   background: #2d2d2d;
 }
