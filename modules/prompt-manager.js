@@ -249,7 +249,7 @@ function wrapRequest(request, mapper) {
 
 // T035: Search prompts by text (title or content)
 export async function searchPrompts(searchText) {
-  if (!db) await initPromptDB();
+  await ensureDb();
 
   const allPrompts = await getAllPrompts();
   const lowerSearch = searchText.toLowerCase();
@@ -263,22 +263,25 @@ export async function searchPrompts(searchText) {
 
 // T036: Filter prompts by category
 export async function getPromptsByCategory(category) {
-  if (!db) await initPromptDB();
+  await ensureDb();
 
-  return new Promise((resolve, reject) => {
+  // If category is not provided or invalid, return all prompts
+  if (!category || typeof category !== 'string') {
+    return getAllPrompts();
+  }
+
+  return runWithRetry(() => {
     const transaction = db.transaction([PROMPTS_STORE], 'readonly');
     const store = transaction.objectStore(PROMPTS_STORE);
     const index = store.index('category');
     const request = index.getAll(category);
-
-    request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(request.error);
+    return wrapRequest(request, value => value || []);
   });
 }
 
 // T037: Get favorite prompts
 export async function getFavoritePrompts() {
-  if (!db) await initPromptDB();
+  await ensureDb();
 
   // Filter in memory since boolean index queries don't work reliably across browsers
   const allPrompts = await getAllPrompts();
@@ -369,15 +372,13 @@ export async function importPrompts(data, mergeStrategy = 'skip') {
 
 // T044: Clear all prompts (with confirmation)
 export async function clearAllPrompts() {
-  if (!db) await initPromptDB();
+  await ensureDb();
 
-  return new Promise((resolve, reject) => {
+  return runWithRetry(() => {
     const transaction = db.transaction([PROMPTS_STORE], 'readwrite');
     const store = transaction.objectStore(PROMPTS_STORE);
     const request = store.clear();
-
-    request.onsuccess = () => resolve(true);
-    request.onerror = () => reject(request.error);
+    return wrapRequest(request, () => true);
   });
 }
 
