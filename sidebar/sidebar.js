@@ -67,6 +67,7 @@ function setupThemeChangeListener() {
     mutations.forEach((mutation) => {
       if (mutation.attributeName === 'data-theme') {
         renderProviderTabs();
+        updateWorkspaceProviderSelector();
       }
     });
   });
@@ -82,6 +83,7 @@ function setupThemeChangeListener() {
       const theme = document.body.getAttribute('data-theme');
       if (theme === 'auto') {
         renderProviderTabs();
+        updateWorkspaceProviderSelector();
       }
     });
   }
@@ -413,9 +415,6 @@ function setupPromptLibrary() {
   // Note: Prompt library tab is now created in renderProviderTabs()
   // No need to add event listener here as it's done during creation
 
-  // New prompt button
-  document.getElementById('new-prompt-btn').addEventListener('click', () => openPromptEditor());
-
   // Search functionality
   const searchInput = document.getElementById('prompt-search');
   let searchTimeout;
@@ -430,31 +429,114 @@ function setupPromptLibrary() {
     }, 300);
   });
 
-  // Category filter
-  document.getElementById('category-filter').addEventListener('change', (e) => {
-    if (e.target.value) {
-      filterPrompts('category', e.target.value);
-    } else {
-      renderPromptList();
+  // Category filter button
+  const categoryBtn = document.getElementById('category-filter-btn');
+  const categoryPopup = document.getElementById('category-popup');
+
+  categoryBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isVisible = categoryPopup.style.display === 'block';
+    categoryPopup.style.display = isVisible ? 'none' : 'block';
+    categoryBtn.classList.toggle('active', !isVisible);
+  });
+
+  // Close popup when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!categoryBtn.contains(e.target) && !categoryPopup.contains(e.target)) {
+      categoryPopup.style.display = 'none';
+      categoryBtn.classList.remove('active');
     }
   });
 
-  // T071: Sort filter
-  document.getElementById('sort-filter').addEventListener('change', (e) => {
-    currentSortOrder = e.target.value;
-    renderPromptList();
+  // Handle category selection from popup
+  categoryPopup.addEventListener('click', (e) => {
+    if (e.target.classList.contains('category-popup-item')) {
+      const value = e.target.dataset.value;
+
+      // Update selected state
+      categoryPopup.querySelectorAll('.category-popup-item').forEach(item => {
+        item.classList.remove('selected');
+      });
+      e.target.classList.add('selected');
+
+      // Filter prompts
+      if (value) {
+        filterPrompts('category', value);
+      } else {
+        renderPromptList();
+      }
+
+      // Close popup
+      categoryPopup.style.display = 'none';
+      categoryBtn.classList.remove('active');
+    }
+  });
+
+  // T071: Sort buttons with toggle groups
+  document.querySelectorAll('.sort-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      // Check if this is a toggle button
+      if (btn.classList.contains('sort-toggle')) {
+        const currentSort = btn.dataset.sort;
+        const altSort = btn.dataset.altSort;
+
+        // Define icon and title mappings
+        const sortConfig = {
+          'alphabetical': { icon: '↓', title: 'A-Z' },
+          'reverse-alphabetical': { icon: '↑', title: 'Z-A' },
+          'newest': { icon: '⊕', title: 'Newest First' },
+          'oldest': { icon: '⊖', title: 'Oldest First' }
+        };
+
+        // If button is already active, toggle it
+        if (btn.classList.contains('active')) {
+          // Swap the sort orders
+          btn.dataset.sort = altSort;
+          btn.dataset.altSort = currentSort;
+
+          // Update icon and title
+          btn.textContent = sortConfig[altSort].icon;
+          btn.title = sortConfig[altSort].title;
+
+          // Update current sort order
+          currentSortOrder = altSort;
+        } else {
+          // Activate this button
+          document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentSortOrder = currentSort;
+        }
+      } else {
+        // For non-toggle buttons (recent, most-used), behave normally
+        const sortOrder = btn.dataset.sort;
+        document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentSortOrder = sortOrder;
+      }
+
+      renderPromptList();
+    });
   });
 
   // Favorites filter
-  document.getElementById('show-favorites').addEventListener('click', (e) => {
-    isShowingFavorites = !isShowingFavorites;
-    e.target.classList.toggle('active', isShowingFavorites);
-    if (isShowingFavorites) {
-      filterPrompts('favorites');
-    } else {
-      renderPromptList();
-    }
-  });
+  const favoritesBtn = document.getElementById('show-favorites');
+  if (favoritesBtn) {
+    favoritesBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      isShowingFavorites = !isShowingFavorites;
+
+      // Toggle icon between filled and unfilled star
+      favoritesBtn.textContent = isShowingFavorites ? '★' : '☆';
+      favoritesBtn.title = isShowingFavorites ? 'Show all prompts' : 'Show favorites only';
+      favoritesBtn.classList.toggle('active', isShowingFavorites);
+
+      if (isShowingFavorites) {
+        filterPrompts('favorites');
+      } else {
+        renderPromptList();
+      }
+    });
+  }
 
   // Modal controls
   document.getElementById('close-editor').addEventListener('click', closePromptEditor);
@@ -486,6 +568,54 @@ function setupPromptLibrary() {
   document.getElementById('workspace-copy-btn').addEventListener('click', copyWorkspaceText);
   document.getElementById('workspace-save-btn').addEventListener('click', saveWorkspaceAsPrompt);
   document.getElementById('workspace-clear-btn').addEventListener('click', clearWorkspace);
+
+  // Workspace provider selector
+  const workspaceProviderBtn = document.getElementById('workspace-provider-btn');
+  const workspaceProviderPopup = document.getElementById('workspace-provider-popup');
+
+  workspaceProviderBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isVisible = workspaceProviderPopup.style.display === 'block';
+    workspaceProviderPopup.style.display = isVisible ? 'none' : 'block';
+    workspaceProviderBtn.classList.toggle('active', !isVisible);
+  });
+
+  // Close popup when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!workspaceProviderBtn.contains(e.target) && !workspaceProviderPopup.contains(e.target)) {
+      workspaceProviderPopup.style.display = 'none';
+      workspaceProviderBtn.classList.remove('active');
+    }
+  });
+
+  // Handle provider selection from popup - delegate to dynamically added items
+  workspaceProviderPopup.addEventListener('click', async (e) => {
+    const item = e.target.closest('.workspace-provider-popup-item');
+    if (item) {
+      const providerId = item.dataset.providerId;
+
+      // Update selected provider
+      selectedWorkspaceProvider = providerId;
+
+      // Update selected state in popup
+      workspaceProviderPopup.querySelectorAll('.workspace-provider-popup-item').forEach(popupItem => {
+        popupItem.classList.remove('selected');
+      });
+      item.classList.add('selected');
+
+      // Update button icon
+      const icon = workspaceProviderBtn.querySelector('.provider-icon-small');
+      const selectedIcon = item.querySelector('.provider-icon-small');
+      if (icon && selectedIcon) {
+        icon.src = selectedIcon.src;
+        icon.alt = selectedIcon.alt;
+      }
+
+      // Close popup
+      workspaceProviderPopup.style.display = 'none';
+      workspaceProviderBtn.classList.remove('active');
+    }
+  });
 
   // T071: Quick Access Panel toggle listeners
   document.getElementById('toggle-recent').addEventListener('click', (e) => {
@@ -553,8 +683,14 @@ async function renderPromptList(prompts = null) {
       case 'alphabetical':
         return a.title.localeCompare(b.title);
 
+      case 'reverse-alphabetical':
+        return b.title.localeCompare(a.title);
+
       case 'newest':
         return b.createdAt - a.createdAt;
+
+      case 'oldest':
+        return a.createdAt - b.createdAt;
 
       case 'recent':
       default:
@@ -574,10 +710,10 @@ async function renderPromptList(prompts = null) {
           <button class="favorite-btn" data-id="${prompt.id}" title="Toggle favorite">
             ${prompt.isFavorite ? '★' : '☆'}
           </button>
-          <button class="insert-btn" data-id="${prompt.id}" title="Insert to workspace">⬇️</button>
-          <button class="copy-btn" data-id="${prompt.id}" title="Copy to clipboard">📋</button>
-          <button class="edit-btn" data-id="${prompt.id}" title="Edit">✏️</button>
-          <button class="delete-btn" data-id="${prompt.id}" title="Delete">🗑️</button>
+          <button class="insert-btn" data-id="${prompt.id}" title="Insert to workspace">↓</button>
+          <button class="copy-btn" data-id="${prompt.id}" title="Copy to clipboard">⎘</button>
+          <button class="edit-btn" data-id="${prompt.id}" title="Edit">✎</button>
+          <button class="delete-btn" data-id="${prompt.id}" title="Delete">⌫</button>
         </div>
       </div>
       <div class="prompt-item-content">${escapeHtml(prompt.content)}</div>
@@ -656,10 +792,10 @@ async function filterPrompts(filterType, value) {
 
 async function updateCategoryFilter() {
   const categories = await getAllCategories();
-  const select = document.getElementById('category-filter');
+  const popup = document.getElementById('category-popup');
 
-  select.innerHTML = '<option value="">All Categories</option>' +
-    categories.map(cat => `<option value="${escapeHtml(cat)}">${escapeHtml(cat)}</option>`).join('');
+  popup.innerHTML = '<div class="category-popup-item selected" data-value="">All Categories</div>' +
+    categories.map(cat => `<div class="category-popup-item" data-value="${escapeHtml(cat)}">${escapeHtml(cat)}</div>`).join('');
 }
 
 function openPromptEditor(promptId = null) {
@@ -1116,20 +1252,35 @@ function openBrowserShortcutSettings(browser) {
 }
 
 // Workspace helper functions
+let selectedWorkspaceProvider = null;
+
 async function updateWorkspaceProviderSelector() {
-  const select = document.getElementById('workspace-provider-select');
-  if (!select) return;
+  const btn = document.getElementById('workspace-provider-btn');
+  const popup = document.getElementById('workspace-provider-popup');
+
+  if (!btn || !popup) return;
 
   const enabledProviders = await getEnabledProviders();
+  const useDarkIcons = isDarkTheme();
 
   // Set current provider as default if available
-  const defaultValue = currentProvider || '';
+  selectedWorkspaceProvider = currentProvider || enabledProviders[0]?.id || '';
 
-  select.innerHTML = enabledProviders.map(provider =>
-    `<option value="${provider.id}" ${provider.id === defaultValue ? 'selected' : ''}>
-      ${provider.name}
-    </option>`
-  ).join('');
+  // Update button icon
+  const currentProviderData = enabledProviders.find(p => p.id === selectedWorkspaceProvider);
+  if (currentProviderData) {
+    const icon = btn.querySelector('.provider-icon-small');
+    icon.src = useDarkIcons && currentProviderData.iconDark ? currentProviderData.iconDark : currentProviderData.icon;
+    icon.alt = currentProviderData.name;
+  }
+
+  // Populate popup with providers
+  popup.innerHTML = enabledProviders.map(provider => `
+    <div class="workspace-provider-popup-item ${provider.id === selectedWorkspaceProvider ? 'selected' : ''}" data-provider-id="${provider.id}">
+      <img class="provider-icon-small" src="${useDarkIcons && provider.iconDark ? provider.iconDark : provider.icon}" alt="${escapeHtml(provider.name)}">
+      <span>${escapeHtml(provider.name)}</span>
+    </div>
+  `).join('');
 }
 
 function showWorkspaceWithText(text) {
@@ -1187,10 +1338,9 @@ function clearWorkspace() {
 }
 
 async function sendWorkspaceToProvider() {
-  const select = document.getElementById('workspace-provider-select');
   const textarea = document.getElementById('prompt-workspace-text');
 
-  const providerId = select.value;
+  const providerId = selectedWorkspaceProvider;
   const text = textarea.value.trim();
 
   if (!providerId) {

@@ -33,18 +33,23 @@
       <!-- Workspace for editing received text - Always visible at top -->
       <div id="prompt-workspace" style="display: block;">
         <div class="workspace-header">
-          <span>✏️ Working Text</span>
-          <div class="workspace-actions">
-            <select id="workspace-provider-select" title="Select provider">
-              <option value="">Select provider...</option>
-            </select>
-            <button id="workspace-send-btn" title="Send to selected provider">🚀 Send</button>
-            <button id="workspace-copy-btn" title="Copy to clipboard">📋 Copy</button>
-            <button id="workspace-save-btn" title="Save as new prompt">💾 Save Prompt</button>
-            <button id="workspace-clear-btn" title="Clear">✕</button>
-          </div>
+          <span>Editing Prompt</span>
         </div>
         <textarea id="prompt-workspace-text" placeholder="Selected text will appear here..."></textarea>
+        <div class="workspace-actions">
+          <button id="workspace-send-btn" title="Send to selected provider">➤</button>
+          <div id="workspace-provider-wrapper">
+            <button id="workspace-provider-btn" title="Select provider">
+              <img class="provider-icon-small" src="" alt="">
+            </button>
+            <div id="workspace-provider-popup" class="workspace-provider-popup" style="display: none;">
+              <!-- Providers will be dynamically populated here -->
+            </div>
+          </div>
+          <button id="workspace-copy-btn" title="Copy to clipboard">⎘</button>
+          <button id="workspace-save-btn" title="Save as new prompt">⊞</button>
+          <button id="workspace-clear-btn" title="Clear">✕</button>
+        </div>
       </div>
 
       <div id="prompt-library-header">
@@ -52,25 +57,32 @@
       </div>
 
       <div id="prompt-filters">
-        <input type="text" id="prompt-search" placeholder="Search prompts..." />
-        <select id="category-filter">
-          <option value="">All Categories</option>
-        </select>
-        <select id="sort-filter">
-          <option value="recent">Recently Used</option>
-          <option value="most-used">Most Used</option>
-          <option value="alphabetical">A-Z</option>
-          <option value="newest">Newest First</option>
-        </select>
-        <button id="new-prompt-btn" title="Create new prompt">⨁</button>
-        <button id="show-favorites" title="Show favorites">★</button>
+        <div class="filter-row-top">
+          <input type="text" id="prompt-search" placeholder="Search prompts..." />
+        </div>
+        <div class="filter-row-bottom">
+          <div id="category-filter-wrapper">
+            <button id="category-filter-btn" title="Filter by category">☰</button>
+            <div id="category-popup" class="category-popup" style="display: none;">
+              <div class="category-popup-item" data-value="">All Categories</div>
+              <!-- Categories will be dynamically populated here -->
+            </div>
+          </div>
+          <div id="sort-buttons">
+            <button class="sort-btn active" data-sort="recent" title="Recently Used">⌚</button>
+            <button class="sort-btn" data-sort="most-used" title="Most Used">№</button>
+            <button class="sort-btn sort-toggle" data-sort="alphabetical" data-alt-sort="reverse-alphabetical" title="A-Z">↓</button>
+            <button class="sort-btn sort-toggle" data-sort="newest" data-alt-sort="oldest" title="Newest First">⊕</button>
+          </div>
+          <button id="show-favorites" title="Show favorites only">☆</button>
+        </div>
       </div>
 
       <!-- T071: Quick Access Panel -->
       <div id="quick-access-panel" style="display: none;">
         <div class="quick-access-section">
           <div class="quick-access-header">
-            <span class="quick-access-title">⚡ Recently Used</span>
+            <span class="quick-access-title">Recently Used</span>
             <button class="quick-access-toggle" id="toggle-recent" title="Toggle section">−</button>
           </div>
           <div class="quick-access-items" id="recent-prompts-list">
@@ -80,7 +92,7 @@
 
         <div class="quick-access-section">
           <div class="quick-access-header">
-            <span class="quick-access-title">⭐ Top Favorites</span>
+            <span class="quick-access-title">Top Favorites</span>
             <button class="quick-access-toggle" id="toggle-favorites" title="Toggle section">−</button>
           </div>
           <div class="quick-access-items" id="top-favorites-list">
@@ -131,9 +143,9 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button id="insert-beginning-btn" class="primary">⬆️ Insert at Beginning</button>
-            <button id="insert-end-btn" class="primary">⬇️ Insert at End</button>
-            <button id="replace-workspace-btn" class="secondary">🔄 Replace All</button>
+            <button id="insert-beginning-btn" class="primary" title="Insert at beginning">⤒</button>
+            <button id="insert-end-btn" class="primary" title="Insert at end">⤓</button>
+            <button id="replace-workspace-btn" class="secondary" title="Replace all">↻</button>
           </div>
         </div>
       </div>

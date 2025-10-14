@@ -280,15 +280,9 @@ export async function getPromptsByCategory(category) {
 export async function getFavoritePrompts() {
   if (!db) await initPromptDB();
 
-  return new Promise((resolve, reject) => {
-    const transaction = db.transaction([PROMPTS_STORE], 'readonly');
-    const store = transaction.objectStore(PROMPTS_STORE);
-    const index = store.index('isFavorite');
-    const request = index.getAll(true);
-
-    request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(request.error);
-  });
+  // Filter in memory since boolean index queries don't work reliably across browsers
+  const allPrompts = await getAllPrompts();
+  return allPrompts.filter(p => p.isFavorite === true);
 }
 
 // T038: Toggle favorite status
