@@ -1,14 +1,6 @@
 // Perplexity Enter/Shift+Enter behavior swap
 // Supports customizable key combinations via settings
 
-const DEBUG = false; // Set to true for console logging
-
-function log(...args) {
-  if (DEBUG) {
-    console.log('[Perplexity Enter]', ...args);
-  }
-}
-
 function handleEnterSwap(event) {
   // Only handle trusted Enter key events
   if (!event.isTrusted || event.code !== "Enter") {
@@ -16,66 +8,63 @@ function handleEnterSwap(event) {
   }
 
   // Check if this is Perplexity's Lexical editor input
-  // Support multiple detection methods for robustness
   const isPerplexityInput =
     (event.target.id === "ask-input" && event.target.contentEditable === "true") ||
-    (event.target.getAttribute?.('data-lexical-editor') === "true" && event.target.getAttribute?.('role') === "textbox") ||
-    (event.target.closest?.('[data-lexical-editor="true"]')?.getAttribute?.('role') === "textbox");
+    (event.target.getAttribute?.('data-lexical-editor') === "true" && event.target.getAttribute?.('role') === "textbox");
 
   if (!isPerplexityInput) {
     return;
   }
 
-  log('Detected Perplexity input, config:', enterKeyConfig);
-
   if (!enterKeyConfig || !enterKeyConfig.enabled) {
-    log('Enter key customization disabled');
     return;
   }
 
-  // Check if this matches newline action
+  // For Perplexity with "swapped" behavior (default):
+  // - Plain Enter should insert newline (normally sends message)
+  // - Shift+Enter should send message (normally inserts newline)
+
+  // Check if this matches newline action (user wants newline, default is send)
   if (matchesModifiers(event, enterKeyConfig.newlineModifiers)) {
-    log('Newline action triggered, preventing default and dispatching Shift+Enter');
+    // User pressed the key combo for newline, but Perplexity would send
+    // We need to prevent send and allow newline behavior
+    // In Lexical, Shift+Enter creates newline, so if user pressed plain Enter,
+    // we stop propagation and let Shift+Enter behavior happen instead
     event.preventDefault();
-    event.stopImmediatePropagation();
+    event.stopPropagation();
 
-    // For Lexical: Shift+Enter inserts newline
-    const newEvent = new KeyboardEvent("keydown", {
-      key: "Enter",
-      code: "Enter",
-      keyCode: 13,
-      which: 13,
-      bubbles: true,
-      cancelable: true,
-      shiftKey: true,
-      ctrlKey: false,
-      metaKey: false,
-      altKey: false
-    });
-    event.target.dispatchEvent(newEvent);
+    // Insert newline manually by using execCommand or directly manipulating content
+    const selection = window.getSelection();
+    const range = selection.getRangeAt(0);
+    range.deleteContents();
+    const br = document.createElement('br');
+    range.insertNode(br);
+    range.setStartAfter(br);
+    range.setEndAfter(br);
+    selection.removeAllRanges();
+    selection.addRange(range);
+
+    // Trigger input event for Lexical to update its state
+    event.target.dispatchEvent(new Event('input', { bubbles: true }));
+    return;
   }
-  // Check if this matches send action
-  else if (matchesModifiers(event, enterKeyConfig.sendModifiers)) {
-    log('Send action triggered, preventing default and dispatching plain Enter');
-    event.preventDefault();
-    event.stopImmediatePropagation();
 
-    // Plain Enter to send
-    const newEvent = new KeyboardEvent("keydown", {
-      key: "Enter",
-      code: "Enter",
-      keyCode: 13,
-      which: 13,
-      bubbles: true,
-      cancelable: true,
-      shiftKey: false,
-      ctrlKey: false,
-      metaKey: false,
-      altKey: false
-    });
-    event.target.dispatchEvent(newEvent);
-  } else {
-    log('No modifier match, allowing default behavior');
+  // Check if this matches send action (user wants send, default is newline)
+  if (matchesModifiers(event, enterKeyConfig.sendModifiers)) {
+    // User pressed Shift+Enter (wants to send), but Perplexity would add newline
+    // We need to trigger the submit button instead
+    event.preventDefault();
+    event.stopPropagation();
+
+    // Find and click the submit button
+    const submitButton = document.querySelector('[data-testid="submit-button"]') ||
+                        document.querySelector('button[aria-label="Submit"]') ||
+                        document.querySelector('button[type="submit"]');
+
+    if (submitButton && !submitButton.disabled) {
+      submitButton.click();
+    }
+    return;
   }
 }
 
