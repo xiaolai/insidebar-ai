@@ -1,0 +1,57 @@
+CHROME WEB STORE PERMISSION JUSTIFICATIONS
+==========================================
+
+Copy and paste these into the Privacy practices tab when submitting to Chrome Web Store.
+
+---
+
+clipboardRead:
+Required to enable the auto-paste feature in the Prompt Library. When users open the Prompt Library with Ctrl+Shift+P, clipboard content can be automatically pasted into the workspace if the user has enabled this optional feature in settings. This permission is only used when the user explicitly enables auto-paste in settings, and clipboard data is never transmitted or stored.
+
+---
+
+contextMenus:
+Required to add a right-click menu option "Send to insidebar.ai" for quick access to AI providers. This allows users to right-click on any webpage to open the sidebar and select which AI provider to use. No data from the context menu is collected or transmitted.
+
+---
+
+declarativeNetRequest:
+Required to modify HTTP response headers (X-Frame-Options and Content-Security-Policy) for AI provider websites. This is necessary to allow ChatGPT, Claude, Gemini, Grok, and DeepSeek to load in the sidebar iframe. Without this permission, AI provider websites would refuse to load due to iframe restrictions. No user data is accessed or modified.
+
+---
+
+declarativeNetRequestWithHostAccess:
+Required to apply the declarativeNetRequest header modifications specifically to AI provider domains (chat.openai.com, chatgpt.com, claude.ai, gemini.google.com, grok.com, chat.deepseek.com). This permission ensures header modifications only affect AI provider websites and not other sites. No user data is accessed or modified.
+
+---
+
+Host permissions (chat.openai.com, chatgpt.com, claude.ai, gemini.google.com, grok.com, chat.deepseek.com):
+Required to load AI provider websites in the sidebar iframe and enable the extension to function. These permissions allow the extension to display ChatGPT, Claude, Gemini, Grok, and DeepSeek interfaces within the sidebar. The extension does not access, collect, or transmit any data from these websites. Users interact directly with the AI providers using their existing browser sessions and cookies.
+
+---
+
+Remote code (if asked):
+This extension does not use remote code. All code is included in the extension package and executed locally. No external scripts are loaded or executed.
+
+---
+
+sidePanel:
+Required to display the extension's user interface in the Chrome browser's side panel. This permission enables the core functionality of showing AI providers in a sidebar rather than a popup or new tab. No user data is accessed through this permission.
+
+---
+
+storage:
+Required to save user settings and prompt library data locally in the browser. This includes theme preferences, enabled AI providers, keyboard shortcut settings, custom Enter key behavior, and saved prompts. All data is stored locally using Chrome's storage API and is never transmitted to external servers. Users can export, import, and delete their data at any time through the settings page.
+
+---
+
+SINGLE PURPOSE DESCRIPTION:
+Provides unified access to multiple AI chat services in a browser sidebar with local prompt management.
+
+---
+
+DATA USAGE DISCLOSURE:
+Select: "This item does not collect or use user data"
+
+Additional notes:
+This extension does not collect, transmit, or share any user data. All settings and prompts are stored locally in the browser using the Chrome Storage API. No analytics, tracking, or external communication occurs.

@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Refine and Improve a Prompt",
+    "content": "Rewrite the following prompt in clear, natural English and enhance it using AI prompt-writing best practices to ensure more accurate, specific, and useful results.\\n\\n Prompt: {draft}",
+    "category": "Prompt Refinement & Upgrading",
+    "tags": ["refinement", "clarity", "best-practices", "prompt-writing"],
+    "variables": ["draft"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Comprehensive Listing Task",
+    "content": "List as many relevant items, examples, or ideas as possible related to the following topic or question. Aim for completeness, accuracy, and clarity. Topic: {topic}",
+    "category": "Brainstorming & Idea Generation",
+    "tags": ["listing", "brainstorming", "comprehensiveness", "creativity"],
+    "variables": ["topic"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Identify Effective Frameworks",
+    "content": "What are the most effective frameworks, methods, or models to {objective}? For each framework, explain its core idea, advantages, and when it is best applied.",
+    "category": "Analytical Thinking & Problem Solving",
+    "tags": ["frameworks", "analysis", "problem-solving", "methods"],
+    "variables": ["objective"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  }
+]
