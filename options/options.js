@@ -430,7 +430,12 @@ async function importDefaultLibraryHandler() {
 
     // Fetch the default library data
     const response = await fetch(chrome.runtime.getURL('data/prompt-libraries/default-prompts.json'));
-    const libraryData = await response.json();
+    const promptsArray = await response.json();
+
+    // Wrap array in expected format { prompts: [...] }
+    const libraryData = Array.isArray(promptsArray)
+      ? { prompts: promptsArray }
+      : promptsArray;
 
     // Import using the prompt manager
     const result = await importDefaultLibrary(libraryData);
