@@ -136,8 +136,7 @@
       "matches": ["https://www.perplexity.ai/*"],
       "js": [
         "content-scripts/enter-behavior-utils.js",
-        "content-scripts/enter-behavior-perplexity.js",
-        "content-scripts/text-injection-all-providers.js"
+        "content-scripts/enter-behavior-perplexity.js"
       ],
       "run_at": "document_end",
       "all_frames": true
