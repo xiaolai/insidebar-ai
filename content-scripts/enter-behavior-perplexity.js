@@ -1,11 +1,20 @@
 // Perplexity Enter/Shift+Enter behavior swap
 // Supports customizable key combinations via settings
 
+console.log('[Perplexity Enter] Script loaded');
+
 function handleEnterSwap(event) {
-  // Only handle trusted Enter key events
-  if (!event.isTrusted || event.code !== "Enter") {
+  // Only handle Enter key events
+  if (event.code !== "Enter") {
     return;
   }
+
+  console.log('[Perplexity Enter] Enter key detected', {
+    target: event.target,
+    id: event.target.id,
+    isContentEditable: event.target.isContentEditable,
+    shiftKey: event.shiftKey
+  });
 
   // Check if this is Perplexity's Lexical editor input
   const isPerplexityInput =
@@ -13,60 +22,74 @@ function handleEnterSwap(event) {
     (event.target.getAttribute?.('data-lexical-editor') === "true" && event.target.getAttribute?.('role') === "textbox");
 
   if (!isPerplexityInput) {
+    console.log('[Perplexity Enter] Not Perplexity input, ignoring');
     return;
   }
+
+  console.log('[Perplexity Enter] Perplexity input detected!');
 
   if (!enterKeyConfig || !enterKeyConfig.enabled) {
+    console.log('[Perplexity Enter] Config disabled or not loaded', enterKeyConfig);
     return;
   }
 
-  // For Perplexity with "swapped" behavior (default):
-  // - Plain Enter should insert newline (normally sends message)
-  // - Shift+Enter should send message (normally inserts newline)
+  console.log('[Perplexity Enter] Config loaded:', enterKeyConfig);
 
-  // Check if this matches newline action (user wants newline, default is send)
+  // For "swapped" preset (default):
+  // - Plain Enter (no modifiers) should insert newline
+  // - Shift+Enter should send message
+
+  // Check if this matches newline action
   if (matchesModifiers(event, enterKeyConfig.newlineModifiers)) {
-    // User pressed the key combo for newline, but Perplexity would send
-    // We need to prevent send and allow newline behavior
-    // In Lexical, Shift+Enter creates newline, so if user pressed plain Enter,
-    // we stop propagation and let Shift+Enter behavior happen instead
+    console.log('[Perplexity Enter] Newline action - preventing default and inserting <br>');
     event.preventDefault();
-    event.stopPropagation();
+    event.stopImmediatePropagation();
 
-    // Insert newline manually by using execCommand or directly manipulating content
+    // Insert newline manually
     const selection = window.getSelection();
-    const range = selection.getRangeAt(0);
-    range.deleteContents();
-    const br = document.createElement('br');
-    range.insertNode(br);
-    range.setStartAfter(br);
-    range.setEndAfter(br);
-    selection.removeAllRanges();
-    selection.addRange(range);
+    if (selection.rangeCount > 0) {
+      const range = selection.getRangeAt(0);
+      range.deleteContents();
 
-    // Trigger input event for Lexical to update its state
-    event.target.dispatchEvent(new Event('input', { bubbles: true }));
+      const br = document.createElement('br');
+      range.insertNode(br);
+
+      // Add extra br if at end of line for proper cursor positioning
+      const brAfter = document.createElement('br');
+      range.insertNode(brAfter);
+
+      range.setStartAfter(br);
+      range.setEndAfter(br);
+      selection.removeAllRanges();
+      selection.addRange(range);
+
+      // Trigger input event for Lexical
+      event.target.dispatchEvent(new Event('input', { bubbles: true }));
+    }
     return;
   }
 
-  // Check if this matches send action (user wants send, default is newline)
+  // Check if this matches send action
   if (matchesModifiers(event, enterKeyConfig.sendModifiers)) {
-    // User pressed Shift+Enter (wants to send), but Perplexity would add newline
-    // We need to trigger the submit button instead
+    console.log('[Perplexity Enter] Send action - preventing default and clicking submit');
     event.preventDefault();
-    event.stopPropagation();
+    event.stopImmediatePropagation();
 
     // Find and click the submit button
     const submitButton = document.querySelector('[data-testid="submit-button"]') ||
-                        document.querySelector('button[aria-label="Submit"]') ||
-                        document.querySelector('button[type="submit"]');
+                        document.querySelector('button[aria-label="Submit"]');
+
+    console.log('[Perplexity Enter] Submit button found:', submitButton);
 
     if (submitButton && !submitButton.disabled) {
       submitButton.click();
     }
     return;
   }
+
+  console.log('[Perplexity Enter] No modifier match, allowing default behavior');
 }
 
 // Apply the setting on initial load
+console.log('[Perplexity Enter] Calling applyEnterSwapSetting');
 applyEnterSwapSetting();
