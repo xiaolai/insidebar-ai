@@ -32,6 +32,7 @@ build/
 # Extension packaging
 *.crx
 *.pem
+_metadata/
 
 # Test files
 coverage/
