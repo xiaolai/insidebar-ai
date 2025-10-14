@@ -9,7 +9,7 @@ function handleEnterSwap(event) {
 
   // Check if this is Perplexity's Lexical editor input
   const isPerplexityInput =
-    (event.target.id === "ask-input" && event.target.contentEditable === "true") ||
+    (event.target.id === "ask-input" && event.target.isContentEditable) ||
     (event.target.getAttribute?.('data-lexical-editor') === "true" && event.target.getAttribute?.('role') === "textbox");
 
   if (!isPerplexityInput) {
@@ -67,9 +67,6 @@ function handleEnterSwap(event) {
     return;
   }
 }
-
-// Log initialization
-log('Perplexity Enter behavior script loaded');
 
 // Apply the setting on initial load
 applyEnterSwapSetting();
