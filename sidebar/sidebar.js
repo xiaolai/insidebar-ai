@@ -14,11 +14,24 @@ import {
   getRecentlyUsedPrompts,
   getTopFavorites
 } from '../modules/prompt-manager.js';
+import {
+  saveConversation,
+  getConversation,
+  getAllConversations,
+  updateConversation,
+  deleteConversation,
+  searchConversations,
+  getConversationsByProvider,
+  getFavoriteConversations,
+  toggleConversationFavorite,
+  getAllConversationTags,
+  generateAutoTitle
+} from '../modules/history-manager.js';
 
 let currentProvider = null;
 const loadedIframes = new Map();  // providerId -> iframe element
 const loadedIframesState = new Map();  // providerId -> 'loading' | 'ready'
-let currentView = 'providers';  // 'providers' or 'prompt-library'
+let currentView = 'providers';  // 'providers', 'prompt-library', or 'chat-history'
 let currentEditingPromptId = null;
 let currentInsertPromptId = null;  // T071: For insert prompt modal
 let isShowingFavorites = false;
@@ -26,6 +39,11 @@ let currentSortOrder = 'recent';  // T071: Current sort order
 let isSwitchingProvider = false;
 let pendingProviderId = null;
 const EDGE_SHORTCUT_STORAGE_KEY = 'edgeShortcutReminderDismissed';
+
+// Chat History state
+let isShowingHistoryFavorites = false;
+let currentEditingConversationId = null;
+let currentViewingConversationId = null;
 
 // Helper function to detect if dark theme is currently active
 function isDarkTheme() {
@@ -43,6 +61,7 @@ async function init() {
   await loadDefaultProvider();
   setupMessageListener();
   setupPromptLibrary();  // T045: Initialize prompt library
+  setupChatHistory();     // Initialize chat history
 
   // Re-render tabs when theme changes
   setupThemeChangeListener();
@@ -119,7 +138,22 @@ async function renderProviderTabs() {
   separator.className = 'tab-separator';
   tabsContainer.appendChild(separator);
 
-  // Add prompt library tab at the end (right side)
+  // Add chat history tab
+  const historyTab = document.createElement('button');
+  historyTab.id = 'chat-history-tab';
+  historyTab.dataset.view = 'chat-history';
+  historyTab.title = 'Chat History';
+
+  const historyIcon = document.createElement('img');
+  historyIcon.src = useDarkIcons ? '/icons/ui/dark/chat-history.png' : '/icons/ui/chat-history.png';
+  historyIcon.alt = 'History';
+  historyIcon.className = 'provider-icon';
+
+  historyTab.appendChild(historyIcon);
+  historyTab.addEventListener('click', () => switchToView('chat-history'));
+  tabsContainer.appendChild(historyTab);
+
+  // Add prompt library tab
   const promptLibraryTab = document.createElement('button');
   promptLibraryTab.id = 'prompt-library-tab';
   promptLibraryTab.dataset.view = 'prompt-library';
@@ -645,13 +679,19 @@ function switchToView(view) {
   // Hide all views first
   document.getElementById('provider-container').style.display = 'none';
   document.getElementById('prompt-library').style.display = 'none';
+  document.getElementById('chat-history').style.display = 'none';
 
   // Deactivate all tabs
   document.querySelectorAll('#provider-tabs button').forEach(btn => {
     btn.classList.remove('active');
   });
 
-  if (view === 'prompt-library') {
+  if (view === 'chat-history') {
+    document.getElementById('chat-history').style.display = 'flex';
+    document.getElementById('chat-history-tab').classList.add('active');
+    renderConversationList();
+    updateProviderFilter();
+  } else if (view === 'prompt-library') {
     document.getElementById('prompt-library').style.display = 'flex';
     document.getElementById('prompt-library-tab').classList.add('active');
     renderPromptList();
@@ -1392,6 +1432,421 @@ function escapeHtml(text) {
   const div = document.createElement('div');
   div.textContent = text;
   return div.innerHTML;
+}
+
+// Chat History Implementation
+function setupChatHistory() {
+  // Save conversation button
+  const saveBtn = document.getElementById('save-conversation-btn');
+  if (saveBtn) {
+    saveBtn.addEventListener('click', openSaveConversationModal);
+  }
+
+  // Search functionality
+  const searchInput = document.getElementById('history-search');
+  let searchTimeout;
+  searchInput.addEventListener('input', (e) => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+      if (e.target.value.trim()) {
+        filterConversations('search', e.target.value);
+      } else {
+        renderConversationList();
+      }
+    }, 300);
+  });
+
+  // Provider filter button
+  const providerBtn = document.getElementById('provider-filter-btn');
+  const providerPopup = document.getElementById('provider-popup');
+
+  providerBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isVisible = providerPopup.style.display === 'block';
+    providerPopup.style.display = isVisible ? 'none' : 'block';
+    providerBtn.classList.toggle('active', !isVisible);
+  });
+
+  // Close popup when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!providerBtn.contains(e.target) && !providerPopup.contains(e.target)) {
+      providerPopup.style.display = 'none';
+      providerBtn.classList.remove('active');
+    }
+  });
+
+  // Handle provider selection from popup
+  providerPopup.addEventListener('click', (e) => {
+    if (e.target.classList.contains('provider-popup-item')) {
+      const value = e.target.dataset.value;
+
+      // Update selected state
+      providerPopup.querySelectorAll('.provider-popup-item').forEach(item => {
+        item.classList.remove('selected');
+      });
+      e.target.classList.add('selected');
+
+      // Filter conversations
+      if (value) {
+        filterConversations('provider', value);
+      } else {
+        renderConversationList();
+      }
+
+      // Close popup
+      providerPopup.style.display = 'none';
+      providerBtn.classList.remove('active');
+    }
+  });
+
+  // Favorites filter
+  const favoritesBtn = document.getElementById('history-show-favorites');
+  if (favoritesBtn) {
+    favoritesBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      isShowingHistoryFavorites = !isShowingHistoryFavorites;
+
+      const iconSpan = favoritesBtn.querySelector('.material-symbols-outlined');
+      if (iconSpan) {
+        if (isShowingHistoryFavorites) {
+          iconSpan.classList.add('filled');
+        } else {
+          iconSpan.classList.remove('filled');
+        }
+      }
+      favoritesBtn.title = isShowingHistoryFavorites ? 'Show all conversations' : 'Show favorites only';
+      favoritesBtn.classList.toggle('active', isShowingHistoryFavorites);
+
+      if (isShowingHistoryFavorites) {
+        filterConversations('favorites');
+      } else {
+        renderConversationList();
+      }
+    });
+  }
+
+  // Save conversation modal controls
+  document.getElementById('close-save-conversation').addEventListener('click', closeSaveConversationModal);
+  document.getElementById('cancel-save-conversation-btn').addEventListener('click', closeSaveConversationModal);
+  document.getElementById('save-conversation-submit-btn').addEventListener('click', saveConversationFromModal);
+
+  // View conversation modal controls
+  document.getElementById('close-view-conversation').addEventListener('click', closeViewConversationModal);
+  document.getElementById('copy-conversation-btn').addEventListener('click', copyConversationContent);
+  document.getElementById('edit-conversation-btn').addEventListener('click', editConversationFromView);
+  document.getElementById('delete-conversation-from-view-btn').addEventListener('click', deleteConversationFromView);
+
+  // Close modals on outside click
+  document.getElementById('save-conversation-modal').addEventListener('click', (e) => {
+    if (e.target.id === 'save-conversation-modal') {
+      closeSaveConversationModal();
+    }
+  });
+
+  document.getElementById('view-conversation-modal').addEventListener('click', (e) => {
+    if (e.target.id === 'view-conversation-modal') {
+      closeViewConversationModal();
+    }
+  });
+}
+
+async function renderConversationList(conversations = null) {
+  const listContainer = document.getElementById('conversation-list');
+
+  if (!conversations) {
+    conversations = await getAllConversations();
+  }
+
+  if (conversations.length === 0) {
+    listContainer.innerHTML = `
+      <div class="conversation-list-empty">
+        <p>💬 No conversations yet</p>
+        <p>Click "+" to save a conversation</p>
+      </div>
+    `;
+    return;
+  }
+
+  // Sort by timestamp (newest first)
+  conversations.sort((a, b) => b.timestamp - a.timestamp);
+
+  listContainer.innerHTML = conversations.map(conv => {
+    const preview = conv.content.length > 150
+      ? conv.content.substring(0, 150) + '...'
+      : conv.content;
+    const date = new Date(conv.timestamp).toLocaleDateString();
+    const time = new Date(conv.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    return `
+      <div class="conversation-item" data-conversation-id="${conv.id}">
+        <div class="conversation-item-header">
+          <h4 class="conversation-item-title">${escapeHtml(conv.title)}</h4>
+          <div class="conversation-item-actions">
+            <button class="favorite-btn" data-id="${conv.id}" title="Toggle favorite">
+              <span class="material-symbols-outlined ${conv.isFavorite ? 'filled' : ''}">star</span>
+            </button>
+            <button class="delete-conversation-btn" data-id="${conv.id}" title="Delete"><span class="material-symbols-outlined">delete</span></button>
+          </div>
+        </div>
+        <div class="conversation-item-preview">${escapeHtml(preview)}</div>
+        <div class="conversation-item-meta">
+          <span class="conversation-item-provider">${escapeHtml(conv.provider)}</span>
+          <span class="conversation-item-date">${date} ${time}</span>
+          ${conv.tags.length > 0 ? `
+            <div class="conversation-item-tags">
+              ${conv.tags.map(tag => `<span class="conversation-item-tag">${escapeHtml(tag)}</span>`).join('')}
+            </div>
+          ` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Add event listeners
+  listContainer.querySelectorAll('.conversation-item').forEach(item => {
+    const id = parseInt(item.dataset.conversationId);
+
+    // Click on item to view full conversation
+    item.addEventListener('click', async (e) => {
+      if (e.target.closest('button')) return; // Don't trigger on button clicks
+      await viewConversation(id);
+    });
+  });
+
+  listContainer.querySelectorAll('.favorite-btn').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      await toggleConversationFavoriteStatus(parseInt(btn.dataset.id));
+    });
+  });
+
+  listContainer.querySelectorAll('.delete-conversation-btn').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      await deleteConversationWithConfirm(parseInt(btn.dataset.id));
+    });
+  });
+}
+
+async function filterConversations(filterType, value) {
+  let conversations;
+
+  if (filterType === 'search') {
+    conversations = await searchConversations(value);
+  } else if (filterType === 'provider') {
+    conversations = await getConversationsByProvider(value);
+  } else if (filterType === 'favorites') {
+    conversations = await getFavoriteConversations();
+  }
+
+  renderConversationList(conversations);
+}
+
+async function updateProviderFilter() {
+  const enabledProviders = await getEnabledProviders();
+  const popup = document.getElementById('provider-popup');
+
+  popup.innerHTML = '<div class="provider-popup-item selected" data-value="">All Providers</div>' +
+    enabledProviders.map(provider =>
+      `<div class="provider-popup-item" data-value="${escapeHtml(provider.id)}">${escapeHtml(provider.name)}</div>`
+    ).join('');
+}
+
+function openSaveConversationModal() {
+  const modal = document.getElementById('save-conversation-modal');
+
+  // Pre-fill provider with current provider
+  const providerInput = document.getElementById('conversation-provider-input');
+  if (currentProvider) {
+    const provider = PROVIDERS.find(p => p.id === currentProvider);
+    providerInput.value = provider ? provider.name : currentProvider;
+  } else {
+    providerInput.value = '';
+  }
+
+  // Clear other fields
+  document.getElementById('conversation-title-input').value = '';
+  document.getElementById('conversation-content-input').value = '';
+  document.getElementById('conversation-tags-input').value = '';
+  document.getElementById('conversation-notes-input').value = '';
+  document.getElementById('conversation-favorite-input').checked = false;
+
+  modal.style.display = 'flex';
+}
+
+function closeSaveConversationModal() {
+  document.getElementById('save-conversation-modal').style.display = 'none';
+  currentEditingConversationId = null;
+}
+
+async function saveConversationFromModal() {
+  const title = document.getElementById('conversation-title-input').value.trim();
+  const content = document.getElementById('conversation-content-input').value.trim();
+  const provider = document.getElementById('conversation-provider-input').value.trim() || 'unknown';
+  const tagsInput = document.getElementById('conversation-tags-input').value.trim();
+  const notes = document.getElementById('conversation-notes-input').value.trim();
+  const isFavorite = document.getElementById('conversation-favorite-input').checked;
+
+  if (!content) {
+    alert('Please enter conversation content');
+    return;
+  }
+
+  const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()).filter(t => t) : [];
+
+  const conversationData = {
+    title: title || generateAutoTitle(content),
+    content,
+    provider,
+    tags,
+    notes,
+    isFavorite
+  };
+
+  try {
+    if (currentEditingConversationId) {
+      await updateConversation(currentEditingConversationId, conversationData);
+      showToast('Conversation updated!');
+    } else {
+      await saveConversation(conversationData);
+      showToast('Conversation saved!');
+    }
+
+    closeSaveConversationModal();
+    renderConversationList();
+  } catch (error) {
+    console.error('Error saving conversation:', error);
+    alert('Failed to save conversation. ' + error.message);
+  }
+}
+
+async function viewConversation(id) {
+  const conversation = await getConversation(id);
+  if (!conversation) return;
+
+  currentViewingConversationId = id;
+
+  // Update modal content
+  document.getElementById('view-conversation-title').textContent = conversation.title;
+
+  const contentEl = document.getElementById('view-conversation-content');
+  contentEl.textContent = conversation.content;
+
+  const providerEl = document.getElementById('view-conversation-provider');
+  providerEl.innerHTML = `<strong>Provider:</strong> ${escapeHtml(conversation.provider)}`;
+
+  const timestampEl = document.getElementById('view-conversation-timestamp');
+  const date = new Date(conversation.timestamp).toLocaleString();
+  timestampEl.innerHTML = `<strong>Date:</strong> ${date}`;
+
+  const tagsEl = document.getElementById('view-conversation-tags');
+  if (conversation.tags.length > 0) {
+    tagsEl.innerHTML = `<strong>Tags:</strong> ${conversation.tags.map(tag => `<span class="conversation-tag">${escapeHtml(tag)}</span>`).join(' ')}`;
+  } else {
+    tagsEl.innerHTML = '';
+  }
+
+  const notesEl = document.getElementById('view-conversation-notes');
+  if (conversation.notes) {
+    notesEl.innerHTML = `<strong>Notes:</strong> ${escapeHtml(conversation.notes)}`;
+  } else {
+    notesEl.innerHTML = '';
+  }
+
+  // Show modal
+  document.getElementById('view-conversation-modal').style.display = 'flex';
+}
+
+function closeViewConversationModal() {
+  document.getElementById('view-conversation-modal').style.display = 'none';
+  currentViewingConversationId = null;
+}
+
+async function copyConversationContent() {
+  if (!currentViewingConversationId) return;
+
+  const conversation = await getConversation(currentViewingConversationId);
+  if (!conversation) return;
+
+  try {
+    await navigator.clipboard.writeText(conversation.content);
+    showToast('Copied to clipboard!');
+  } catch (error) {
+    console.error('Error copying to clipboard:', error);
+    showToast('Failed to copy');
+  }
+}
+
+async function editConversationFromView() {
+  if (!currentViewingConversationId) return;
+
+  const conversation = await getConversation(currentViewingConversationId);
+  if (!conversation) return;
+
+  // Close view modal
+  closeViewConversationModal();
+
+  // Open save modal with conversation data
+  currentEditingConversationId = currentViewingConversationId;
+
+  document.getElementById('conversation-title-input').value = conversation.title;
+  document.getElementById('conversation-content-input').value = conversation.content;
+  document.getElementById('conversation-provider-input').value = conversation.provider;
+  document.getElementById('conversation-tags-input').value = conversation.tags.join(', ');
+  document.getElementById('conversation-notes-input').value = conversation.notes || '';
+  document.getElementById('conversation-favorite-input').checked = conversation.isFavorite;
+
+  document.getElementById('save-conversation-modal').style.display = 'flex';
+}
+
+async function deleteConversationFromView() {
+  if (!currentViewingConversationId) return;
+
+  const conversation = await getConversation(currentViewingConversationId);
+  if (!conversation) return;
+
+  if (confirm(`Delete conversation "${conversation.title}"?`)) {
+    try {
+      await deleteConversation(currentViewingConversationId);
+      closeViewConversationModal();
+      renderConversationList();
+      showToast('Conversation deleted');
+    } catch (error) {
+      console.error('Error deleting conversation:', error);
+      showToast('Failed to delete conversation');
+    }
+  }
+}
+
+async function toggleConversationFavoriteStatus(id) {
+  try {
+    await toggleConversationFavorite(id);
+
+    // Re-render current view
+    if (isShowingHistoryFavorites) {
+      filterConversations('favorites');
+    } else {
+      renderConversationList();
+    }
+  } catch (error) {
+    console.error('Error toggling favorite:', error);
+  }
+}
+
+async function deleteConversationWithConfirm(id) {
+  const conversation = await getConversation(id);
+  if (!conversation) return;
+
+  if (confirm(`Delete conversation "${conversation.title}"?`)) {
+    try {
+      await deleteConversation(id);
+      renderConversationList();
+      showToast('Conversation deleted');
+    } catch (error) {
+      console.error('Error deleting conversation:', error);
+      showToast('Failed to delete conversation');
+    }
+  }
 }
 
 // Initialize on load

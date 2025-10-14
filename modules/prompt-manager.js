@@ -2,8 +2,9 @@
 // Handles CRUD operations for prompts in the Prompt Library
 
 const DB_NAME = 'SmarterPanelDB';
-const DB_VERSION = 1;
+const DB_VERSION = 2;  // Upgraded to support conversations
 const PROMPTS_STORE = 'prompts';
+const CONVERSATIONS_STORE = 'conversations';
 
 // T069: Input validation constants
 const MAX_TITLE_LENGTH = 200;
@@ -87,20 +88,38 @@ export async function initPromptDB() {
 
     request.onupgradeneeded = (event) => {
       const db = event.target.result;
+      const oldVersion = event.oldVersion;
 
-      // Create prompts object store
-      const promptsStore = db.createObjectStore(PROMPTS_STORE, {
-        keyPath: 'id',
-        autoIncrement: true
-      });
+      // Create prompts object store (version 1)
+      if (oldVersion < 1) {
+        const promptsStore = db.createObjectStore(PROMPTS_STORE, {
+          keyPath: 'id',
+          autoIncrement: true
+        });
 
-      // Create indexes for efficient querying
-      promptsStore.createIndex('title', 'title', { unique: false });
-      promptsStore.createIndex('category', 'category', { unique: false });
-      promptsStore.createIndex('tags', 'tags', { unique: false, multiEntry: true });
-      promptsStore.createIndex('createdAt', 'createdAt', { unique: false });
-      promptsStore.createIndex('lastUsed', 'lastUsed', { unique: false });
-      promptsStore.createIndex('isFavorite', 'isFavorite', { unique: false });
+        // Create indexes for efficient querying
+        promptsStore.createIndex('title', 'title', { unique: false });
+        promptsStore.createIndex('category', 'category', { unique: false });
+        promptsStore.createIndex('tags', 'tags', { unique: false, multiEntry: true });
+        promptsStore.createIndex('createdAt', 'createdAt', { unique: false });
+        promptsStore.createIndex('lastUsed', 'lastUsed', { unique: false });
+        promptsStore.createIndex('isFavorite', 'isFavorite', { unique: false });
+      }
+
+      // Create conversations object store (version 2)
+      if (oldVersion < 2) {
+        const conversationsStore = db.createObjectStore(CONVERSATIONS_STORE, {
+          keyPath: 'id',
+          autoIncrement: true
+        });
+
+        // Create indexes for efficient querying
+        conversationsStore.createIndex('provider', 'provider', { unique: false });
+        conversationsStore.createIndex('timestamp', 'timestamp', { unique: false });
+        conversationsStore.createIndex('tags', 'tags', { unique: false, multiEntry: true });
+        conversationsStore.createIndex('isFavorite', 'isFavorite', { unique: false });
+        conversationsStore.createIndex('searchText', 'searchText', { unique: false });
+      }
     };
   });
 }

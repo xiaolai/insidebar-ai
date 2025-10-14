@@ -31,6 +31,85 @@
       <!-- Iframes will be dynamically inserted here -->
     </div>
 
+    <!-- Chat History UI -->
+    <div id="chat-history" style="display: none;">
+      <div id="history-header">
+        <h2>Chat History</h2>
+        <button id="save-conversation-btn" class="primary-action-btn" title="Save Current Conversation">
+          <span class="material-symbols-outlined">add</span>
+        </button>
+      </div>
+
+      <div id="history-filters">
+        <div class="filter-row-top">
+          <input type="text" id="history-search" placeholder="Search conversations..." />
+        </div>
+        <div class="filter-row-bottom">
+          <div id="provider-filter-wrapper">
+            <button id="provider-filter-btn" title="Filter by provider"><span class="material-symbols-outlined">filter_alt</span></button>
+            <div id="provider-popup" class="provider-popup" style="display: none;">
+              <div class="provider-popup-item" data-value="">All Providers</div>
+              <!-- Providers will be dynamically populated here -->
+            </div>
+          </div>
+          <button id="history-show-favorites" title="Show favorites only"><span class="material-symbols-outlined">star</span></button>
+        </div>
+      </div>
+
+      <div id="conversation-list">
+        <!-- Conversation items will be dynamically rendered here -->
+      </div>
+
+      <!-- Save Conversation Modal -->
+      <div id="save-conversation-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>Save Conversation</h3>
+            <button class="close-btn" id="close-save-conversation"><span class="material-symbols-outlined">close</span></button>
+          </div>
+          <div class="modal-body">
+            <input type="text" id="conversation-title-input" placeholder="Conversation title (auto-generated from content)" />
+            <textarea id="conversation-content-input" placeholder="Paste conversation content here..."></textarea>
+            <input type="text" id="conversation-provider-input" placeholder="Provider (e.g., ChatGPT, Claude)" readonly />
+            <input type="text" id="conversation-tags-input" placeholder="Tags (comma-separated)" />
+            <textarea id="conversation-notes-input" placeholder="Notes (optional)"></textarea>
+            <label>
+              <input type="checkbox" id="conversation-favorite-input" />
+              Mark as favorite
+            </label>
+          </div>
+          <div class="modal-footer">
+            <button id="cancel-save-conversation-btn" class="secondary" title="Cancel"><span class="material-symbols-outlined">close</span></button>
+            <button id="save-conversation-submit-btn" class="primary" title="Save"><span class="material-symbols-outlined">check</span></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- View Conversation Modal -->
+      <div id="view-conversation-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 id="view-conversation-title">Conversation</h3>
+            <button class="close-btn" id="close-view-conversation"><span class="material-symbols-outlined">close</span></button>
+          </div>
+          <div class="modal-body">
+            <div id="view-conversation-content"></div>
+            <div id="view-conversation-meta">
+              <div id="view-conversation-provider"></div>
+              <div id="view-conversation-timestamp"></div>
+              <div id="view-conversation-tags"></div>
+              <div id="view-conversation-notes"></div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="copy-conversation-btn" class="primary" title="Copy content"><span class="material-symbols-outlined">content_copy</span></button>
+            <button id="edit-conversation-btn" class="secondary" title="Edit"><span class="material-symbols-outlined">edit</span></button>
+            <button id="delete-conversation-from-view-btn" class="secondary" title="Delete"><span class="material-symbols-outlined">delete</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- T045: Prompt Genie UI -->
     <div id="prompt-library" style="display: none;">
       <!-- Workspace for editing received text - Always visible at top -->
