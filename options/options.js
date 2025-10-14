@@ -96,6 +96,29 @@ async function loadSettings() {
   if (autoPasteToggle) {
     autoPasteToggle.checked = settings.autoPasteClipboard === true;
   }
+
+  // Enter key behavior settings
+  const enterBehavior = settings.enterKeyBehavior || {
+    enabled: true,
+    preset: 'swapped',
+    newlineModifiers: { shift: false, ctrl: false, alt: false, meta: false },
+    sendModifiers: { shift: true, ctrl: false, alt: false, meta: false }
+  };
+
+  const enterBehaviorToggle = document.getElementById('enter-behavior-toggle');
+  if (enterBehaviorToggle) {
+    enterBehaviorToggle.checked = enterBehavior.enabled;
+    updateEnterBehaviorVisibility(enterBehavior.enabled);
+  }
+
+  const enterPresetSelect = document.getElementById('enter-preset-select');
+  if (enterPresetSelect) {
+    enterPresetSelect.value = enterBehavior.preset || 'swapped';
+    updateCustomEnterSettingsVisibility(enterBehavior.preset);
+  }
+
+  // Load custom settings
+  loadCustomEnterSettings(enterBehavior);
 }
 
 // T052-T053: Render provider enable/disable toggles
@@ -225,6 +248,38 @@ function setupEventListeners() {
 
   // Default library import button
   document.getElementById('import-default-library')?.addEventListener('click', importDefaultLibraryHandler);
+
+  // Enter key behavior toggle
+  const enterBehaviorToggle = document.getElementById('enter-behavior-toggle');
+  if (enterBehaviorToggle) {
+    enterBehaviorToggle.addEventListener('change', async (e) => {
+      const enabled = e.target.checked;
+      const settings = await getSettings();
+      const enterBehavior = settings.enterKeyBehavior || {};
+      enterBehavior.enabled = enabled;
+      await saveSetting('enterKeyBehavior', enterBehavior);
+      updateEnterBehaviorVisibility(enabled);
+      showStatus('success', enabled ? 'Enter key customization enabled' : 'Enter key customization disabled');
+    });
+  }
+
+  // Preset selection
+  const enterPresetSelect = document.getElementById('enter-preset-select');
+  if (enterPresetSelect) {
+    enterPresetSelect.addEventListener('change', async (e) => {
+      await applyEnterKeyPreset(e.target.value);
+      updateCustomEnterSettingsVisibility(e.target.value);
+    });
+  }
+
+  // Custom modifier checkboxes
+  ['newline-shift', 'newline-ctrl', 'newline-alt', 'newline-meta',
+   'send-shift', 'send-ctrl', 'send-alt', 'send-meta'].forEach(id => {
+    const checkbox = document.getElementById(id);
+    if (checkbox) {
+      checkbox.addEventListener('change', saveCustomEnterSettings);
+    }
+  });
 }
 
 // T057: Export all data
@@ -397,6 +452,100 @@ async function importDefaultLibraryHandler() {
     button.disabled = false;
     button.textContent = 'Import Default Prompts';
   }
+}
+
+// Enter Key Behavior Helper Functions
+function updateEnterBehaviorVisibility(enabled) {
+  const settingsDiv = document.getElementById('enter-behavior-settings');
+  if (settingsDiv) {
+    settingsDiv.style.display = enabled ? 'block' : 'none';
+  }
+}
+
+function updateCustomEnterSettingsVisibility(preset) {
+  const customDiv = document.getElementById('custom-enter-settings');
+  if (customDiv) {
+    customDiv.style.display = preset === 'custom' ? 'block' : 'none';
+  }
+}
+
+function loadCustomEnterSettings(enterBehavior) {
+  // Load newline modifiers
+  document.getElementById('newline-shift').checked = enterBehavior.newlineModifiers.shift || false;
+  document.getElementById('newline-ctrl').checked = enterBehavior.newlineModifiers.ctrl || false;
+  document.getElementById('newline-alt').checked = enterBehavior.newlineModifiers.alt || false;
+  document.getElementById('newline-meta').checked = enterBehavior.newlineModifiers.meta || false;
+
+  // Load send modifiers
+  document.getElementById('send-shift').checked = enterBehavior.sendModifiers.shift || false;
+  document.getElementById('send-ctrl').checked = enterBehavior.sendModifiers.ctrl || false;
+  document.getElementById('send-alt').checked = enterBehavior.sendModifiers.alt || false;
+  document.getElementById('send-meta').checked = enterBehavior.sendModifiers.meta || false;
+}
+
+async function applyEnterKeyPreset(preset) {
+  const settings = await getSettings();
+  const enterBehavior = settings.enterKeyBehavior || {};
+
+  enterBehavior.preset = preset;
+
+  // Define preset configurations
+  const presets = {
+    default: {
+      newlineModifiers: { shift: true, ctrl: false, alt: false, meta: false },
+      sendModifiers: { shift: false, ctrl: false, alt: false, meta: false }
+    },
+    swapped: {
+      newlineModifiers: { shift: false, ctrl: false, alt: false, meta: false },
+      sendModifiers: { shift: true, ctrl: false, alt: false, meta: false }
+    },
+    slack: {
+      newlineModifiers: { shift: false, ctrl: true, alt: false, meta: false },
+      sendModifiers: { shift: false, ctrl: false, alt: false, meta: false }
+    },
+    discord: {
+      newlineModifiers: { shift: false, ctrl: false, alt: false, meta: false },
+      sendModifiers: { shift: false, ctrl: true, alt: false, meta: false }
+    }
+  };
+
+  if (preset !== 'custom' && presets[preset]) {
+    enterBehavior.newlineModifiers = presets[preset].newlineModifiers;
+    enterBehavior.sendModifiers = presets[preset].sendModifiers;
+    loadCustomEnterSettings(enterBehavior);
+  }
+
+  await saveSetting('enterKeyBehavior', enterBehavior);
+  showStatus('success', `Preset changed to: ${preset}`);
+}
+
+async function saveCustomEnterSettings() {
+  const settings = await getSettings();
+  const enterBehavior = settings.enterKeyBehavior || {};
+
+  enterBehavior.preset = 'custom';
+  enterBehavior.newlineModifiers = {
+    shift: document.getElementById('newline-shift').checked,
+    ctrl: document.getElementById('newline-ctrl').checked,
+    alt: document.getElementById('newline-alt').checked,
+    meta: document.getElementById('newline-meta').checked
+  };
+  enterBehavior.sendModifiers = {
+    shift: document.getElementById('send-shift').checked,
+    ctrl: document.getElementById('send-ctrl').checked,
+    alt: document.getElementById('send-alt').checked,
+    meta: document.getElementById('send-meta').checked
+  };
+
+  await saveSetting('enterKeyBehavior', enterBehavior);
+
+  // Update preset dropdown to show custom
+  const presetSelect = document.getElementById('enter-preset-select');
+  if (presetSelect) {
+    presetSelect.value = 'custom';
+  }
+
+  showStatus('success', 'Custom key mapping saved');
 }
 
 // Initialize on load

@@ -883,3 +883,235 @@ body {
 [data-theme="dark"] .settings-actions button.secondary:hover {
   background: #3a3a3a;
 }
+
+/* T071: Quick Access Panel Styles */
+#quick-access-panel {
+  margin-bottom: 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background: #fafafa;
+  overflow: hidden;
+}
+
+.quick-access-section {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.quick-access-section:last-child {
+  border-bottom: none;
+}
+
+.quick-access-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: #f5f5f5;
+  cursor: pointer;
+  user-select: none;
+}
+
+.quick-access-header:hover {
+  background: #eeeeee;
+}
+
+.quick-access-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+}
+
+.quick-access-toggle {
+  background: none;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  color: #666;
+  cursor: pointer;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quick-access-toggle:hover {
+  color: #333;
+}
+
+.quick-access-items {
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+}
+
+.quick-access-items::-webkit-scrollbar {
+  height: 6px;
+}
+
+.quick-access-items::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+
+.quick-access-items::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+
+.quick-access-items.collapsed {
+  display: none;
+}
+
+.quick-access-item {
+  flex-shrink: 0;
+  min-width: 180px;
+  max-width: 220px;
+  padding: 10px;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.quick-access-item:hover {
+  border-color: #1a73e8;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.quick-access-item-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.quick-access-item-content {
+  font-size: 11px;
+  color: #666;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.quick-access-item-meta {
+  font-size: 10px;
+  color: #999;
+  margin-top: 6px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.quick-access-empty {
+  padding: 10px;
+  text-align: center;
+  font-size: 12px;
+  color: #999;
+  font-style: italic;
+}
+
+[data-theme="dark"] #quick-access-panel {
+  background: #2d2d2d;
+  border-color: #444;
+}
+
+[data-theme="dark"] .quick-access-section {
+  border-bottom-color: #444;
+}
+
+[data-theme="dark"] .quick-access-header {
+  background: #3a3a3a;
+}
+
+[data-theme="dark"] .quick-access-header:hover {
+  background: #444;
+}
+
+[data-theme="dark"] .quick-access-title {
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .quick-access-toggle {
+  color: #aaa;
+}
+
+[data-theme="dark"] .quick-access-toggle:hover {
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .quick-access-item {
+  background: #1e1e1e;
+  border-color: #444;
+}
+
+[data-theme="dark"] .quick-access-item:hover {
+  border-color: #4285f4;
+}
+
+[data-theme="dark"] .quick-access-item-title {
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .quick-access-item-content {
+  color: #aaa;
+}
+
+[data-theme="dark"] .quick-access-items::-webkit-scrollbar-thumb {
+  background: #555;
+}
+
+[data-theme="dark"] .quick-access-items::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+
+/* T071: Insert Prompt Modal Styles */
+.modal-description {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 12px 0;
+}
+
+.insert-prompt-preview {
+  background: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 12px;
+  max-height: 200px;
+  overflow-y: auto;
+  font-size: 13px;
+  color: #333;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+#insert-prompt-modal .modal-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+#insert-prompt-modal .modal-footer button {
+  flex: 1;
+}
+
+[data-theme="dark"] .modal-description {
+  color: #aaa;
+}
+
+[data-theme="dark"] .insert-prompt-preview {
+  background: #1e1e1e;
+  border-color: #444;
+  color: #e0e0e0;
+}

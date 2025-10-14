@@ -3,7 +3,15 @@ const DEFAULT_SETTINGS = {
   defaultProvider: 'chatgpt',
   lastSelectedProvider: 'chatgpt',
   theme: 'auto',
-  keyboardShortcutEnabled: true
+  keyboardShortcutEnabled: true,
+  enterKeyBehavior: {
+    enabled: true,
+    preset: 'swapped',  // 'default', 'swapped', 'slack', 'discord', 'custom'
+    newlineKey: 'Enter',
+    newlineModifiers: { shift: false, ctrl: false, alt: false, meta: false },
+    sendKey: 'Enter',
+    sendModifiers: { shift: true, ctrl: false, alt: false, meta: false }
+  }
 };
 
 export async function getSettings() {

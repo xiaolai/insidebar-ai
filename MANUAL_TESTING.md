@@ -25,7 +25,7 @@ Users can now select text on any webpage and send it directly to an AI provider'
 1. Navigate to any webpage (e.g., https://wikipedia.org)
 2. Select some text (e.g., a paragraph)
 3. Right-click on the selected text
-4. Hover over "Open in insidebar.ai"
+4. Hover over "Send to insidebar.ai"
 5. Click "ChatGPT"
 
 **Expected Result:**
@@ -38,7 +38,7 @@ Users can now select text on any webpage and send it directly to an AI provider'
 ### Test 2: Basic Text Selection - Claude
 1. Navigate to any webpage
 2. Select some text
-3. Right-click → "Open in insidebar.ai" → "Claude"
+3. Right-click → "Send to insidebar.ai" → "Claude"
 
 **Expected Result:**
 - Sidebar opens
@@ -49,7 +49,7 @@ Users can now select text on any webpage and send it directly to an AI provider'
 ### Test 3: Basic Text Selection - Gemini
 1. Navigate to any webpage
 2. Select some text
-3. Right-click → "Open in insidebar.ai" → "Gemini"
+3. Right-click → "Send to insidebar.ai" → "Gemini"
 
 **Expected Result:**
 - Sidebar opens
@@ -60,7 +60,7 @@ Users can now select text on any webpage and send it directly to an AI provider'
 ### Test 4: Basic Text Selection - Grok
 1. Navigate to any webpage
 2. Select some text
-3. Right-click → "Open in insidebar.ai" → "Grok"
+3. Right-click → "Send to insidebar.ai" → "Grok"
 
 **Expected Result:**
 - Sidebar opens
@@ -71,7 +71,7 @@ Users can now select text on any webpage and send it directly to an AI provider'
 ### Test 5: Basic Text Selection - DeepSeek
 1. Navigate to any webpage
 2. Select some text
-3. Right-click → "Open in insidebar.ai" → "DeepSeek"
+3. Right-click → "Send to insidebar.ai" → "DeepSeek"
 
 **Expected Result:**
 - Sidebar opens
@@ -84,7 +84,7 @@ Users can now select text on any webpage and send it directly to an AI provider'
 2. Type some text manually in the textarea (e.g., "Summarize this: ")
 3. Go back to the webpage tab
 4. Select some text
-5. Right-click → "Open in insidebar.ai" → "ChatGPT"
+5. Right-click → "Send to insidebar.ai" → "ChatGPT"
 
 **Expected Result:**
 - Sidebar switches to ChatGPT (or stays on ChatGPT)
@@ -94,7 +94,7 @@ Users can now select text on any webpage and send it directly to an AI provider'
 
 ### Test 7: Multi-line Text Selection
 1. Select multiple paragraphs from a webpage (with line breaks)
-2. Right-click → "Open in insidebar.ai" → "Claude"
+2. Right-click → "Send to insidebar.ai" → "Claude"
 
 **Expected Result:**
 - All selected text including line breaks is inserted
@@ -103,7 +103,7 @@ Users can now select text on any webpage and send it directly to an AI provider'
 
 ### Test 8: Special Characters
 1. Select text containing special characters: quotes (""), apostrophes ('), emojis (😊), etc.
-2. Right-click → "Open in insidebar.ai" → "Gemini"
+2. Right-click → "Send to insidebar.ai" → "Gemini"
 
 **Expected Result:**
 - All special characters are preserved
@@ -112,7 +112,7 @@ Users can now select text on any webpage and send it directly to an AI provider'
 
 ### Test 9: Large Text Selection
 1. Select a very long piece of text (e.g., entire Wikipedia article)
-2. Right-click → "Open in insidebar.ai" → "ChatGPT"
+2. Right-click → "Send to insidebar.ai" → "ChatGPT"
 
 **Expected Result:**
 - Text is fully inserted (not truncated)
@@ -121,7 +121,7 @@ Users can now select text on any webpage and send it directly to an AI provider'
 
 ### Test 10: No Text Selected
 1. Don't select any text
-2. Right-click anywhere → "Open in insidebar.ai" → "Claude"
+2. Right-click anywhere → "Send to insidebar.ai" → "Claude"
 
 **Expected Result:**
 - Sidebar opens
@@ -131,11 +131,11 @@ Users can now select text on any webpage and send it directly to an AI provider'
 
 ### Test 11: Switch Provider After Selection
 1. Select text
-2. Right-click → "Open in insidebar.ai" → "ChatGPT"
+2. Right-click → "Send to insidebar.ai" → "ChatGPT"
 3. Wait for text to be inserted
 4. Click the Claude tab in the sidebar
 5. Go back and select different text
-6. Right-click → "Open in insidebar.ai" → "Claude"
+6. Right-click → "Send to insidebar.ai" → "Claude"
 
 **Expected Result:**
 - Sidebar switches to Claude
@@ -144,7 +144,7 @@ Users can now select text on any webpage and send it directly to an AI provider'
 
 ### Test 12: Provider Page Not Fully Loaded
 1. Select text
-2. Right-click → "Open in insidebar.ai" → "Grok"
+2. Right-click → "Send to insidebar.ai" → "Grok"
 3. Immediately look at the Grok iframe
 
 **Expected Result:**

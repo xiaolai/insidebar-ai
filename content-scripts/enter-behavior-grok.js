@@ -1,5 +1,5 @@
 // Grok Enter/Shift+Enter behavior swap
-// Makes Enter = newline, Shift+Enter = send
+// Supports customizable key combinations via settings
 
 const DEBUG_GROK_ENTER = false;
 
@@ -10,27 +10,8 @@ function debugLog(...args) {
 }
 
 function handleEnterSwap(event) {
-  // Log every Enter key event
-  if (event.code === "Enter") {
-    debugLog('Enter event fired:', {
-      key: event.key,
-      code: event.code,
-      isTrusted: event.isTrusted,
-      target: event.target,
-      tagName: event.target.tagName,
-      contentEditable: event.target.contentEditable,
-      classList: Array.from(event.target.classList || []),
-      shiftKey: event.shiftKey,
-      ctrlKey: event.ctrlKey,
-      metaKey: event.metaKey
-    });
-  }
-
   // Only handle trusted Enter key events
   if (!event.isTrusted || event.code !== "Enter") {
-    if (event.code === "Enter") {
-      debugLog('Skipped - not trusted Enter');
-    }
     return;
   }
 
@@ -43,88 +24,73 @@ function handleEnterSwap(event) {
 
   const isGrokInput = isTextarea || isTipTap;
 
-  debugLog('Selector check:', {
-    isGrokInput,
-    isTextarea,
-    isTipTap,
-    tagName: event.target.tagName,
-    contentEditable: event.target.contentEditable,
-    classList: Array.from(event.target.classList || [])
-  });
-
   if (!isGrokInput) {
-    debugLog('Not Grok input - ignoring');
     return;
   }
 
-  const isOnlyEnter = !event.ctrlKey && !event.metaKey && !event.shiftKey;
-  const isShiftEnter = event.shiftKey && !event.ctrlKey && !event.metaKey;
+  if (!enterKeyConfig || !enterKeyConfig.enabled) {
+    return;
+  }
 
-  debugLog('Key combination:', { isOnlyEnter, isShiftEnter });
+  debugLog('Key event:', event, enterKeyConfig);
 
-  if (isOnlyEnter || isShiftEnter) {
-    debugLog('✓ Swapping behavior');
+  // Check if this matches newline action
+  if (matchesModifiers(event, enterKeyConfig.newlineModifiers)) {
     event.preventDefault();
     event.stopImmediatePropagation();
 
-    if (isOnlyEnter) {
-      // Enter pressed - want newline
-      debugLog('Enter pressed - dispatching Shift+Enter for newline');
+    debugLog('Newline action triggered');
 
-      // For textarea in iframe, synthetic events may not work - use direct manipulation
-      if (event.target.tagName === "TEXTAREA" && window !== window.top) {
-        debugLog('In iframe - using direct newline insertion');
-        const target = event.target;
-        const start = target.selectionStart;
-        const end = target.selectionEnd;
-        const value = target.value;
+    // For textarea in iframe, use direct manipulation
+    if (event.target.tagName === "TEXTAREA" && window !== window.top) {
+      const target = event.target;
+      const start = target.selectionStart;
+      const end = target.selectionEnd;
+      const value = target.value;
 
-        target.value = value.substring(0, start) + '\n' + value.substring(end);
-        target.selectionStart = target.selectionEnd = start + 1;
-        target.dispatchEvent(new Event('input', { bubbles: true }));
-        debugLog('✓ Newline inserted directly');
-      } else {
-        // Normal page - use event dispatch
-        const newEvent = new KeyboardEvent("keydown", {
-          key: "Enter",
-          code: "Enter",
-          bubbles: true,
-          cancelable: true,
-          shiftKey: true  // Shift+Enter for newline
-        });
-        event.target.dispatchEvent(newEvent);
-        debugLog('✓ Shift+Enter dispatched for newline');
-      }
-    } else if (isShiftEnter) {
-      // Shift+Enter pressed - want to send
-      debugLog('Shift+Enter pressed - dispatching plain Enter to send');
+      target.value = value.substring(0, start) + '\n' + value.substring(end);
+      target.selectionStart = target.selectionEnd = start + 1;
+      target.dispatchEvent(new Event('input', { bubbles: true }));
+    } else {
+      // Use Shift+Enter for newline
       const newEvent = new KeyboardEvent("keydown", {
         key: "Enter",
         code: "Enter",
+        keyCode: 13,
+        which: 13,
         bubbles: true,
         cancelable: true,
-        shiftKey: false  // Plain Enter to send
+        shiftKey: true,
+        ctrlKey: false,
+        metaKey: false,
+        altKey: false
       });
       event.target.dispatchEvent(newEvent);
-      debugLog('✓ Plain Enter dispatched to send');
     }
   }
+  // Check if this matches send action
+  else if (matchesModifiers(event, enterKeyConfig.sendModifiers)) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+    debugLog('Send action triggered');
+
+    // Plain Enter to send
+    const newEvent = new KeyboardEvent("keydown", {
+      key: "Enter",
+      code: "Enter",
+      keyCode: 13,
+      which: 13,
+      bubbles: true,
+      cancelable: true,
+      shiftKey: false,
+      ctrlKey: false,
+      metaKey: false,
+      altKey: false
+    });
+    event.target.dispatchEvent(newEvent);
+  }
 }
-
-// Log script initialization
-debugLog('Script loaded - initializing enter behavior swap');
-debugLog('Document ready state:', document.readyState);
-debugLog('Window location:', window.location.href);
-debugLog('Is iframe:', window !== window.top);
-
-// Test listener to verify events are working at all
-document.addEventListener('keydown', (e) => {
-  debugLog('Raw document keydown:', e.code, e.target);
-}, { capture: true });
-
-window.addEventListener('keydown', (e) => {
-  debugLog('Raw window keydown:', e.code, e.target);
-}, { capture: true });
 
 // Apply the setting on initial load
 applyEnterSwapSetting();

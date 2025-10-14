@@ -130,6 +130,88 @@
 
       </section>
 
+      <!-- Enter Key Behavior Settings -->
+      <section class="section">
+        <h2 class="section-title">Enter Key Behavior</h2>
+        <p style="font-size: 14px; color: #666; margin-bottom: 16px;">
+          Customize how Enter and modifier keys work in AI provider input fields
+        </p>
+
+        <div class="setting-item">
+          <div class="setting-info">
+            <div class="setting-label">Enable Enter Key Customization</div>
+            <div class="setting-description">
+              Customize Enter key behavior in ChatGPT, Claude, Gemini, Grok, DeepSeek, and Perplexity
+            </div>
+          </div>
+          <div class="setting-control">
+            <label class="switch">
+              <input type="checkbox" id="enter-behavior-toggle" checked />
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div id="enter-behavior-settings">
+          <div class="setting-item">
+            <div class="setting-info">
+              <div class="setting-label">Preset</div>
+              <div class="setting-description">Choose a common key combination pattern</div>
+            </div>
+            <div class="setting-control">
+              <select id="enter-preset-select">
+                <option value="default">Default (Enter=Send, Shift+Enter=Newline)</option>
+                <option value="swapped" selected>Swapped (Enter=Newline, Shift+Enter=Send)</option>
+                <option value="slack">Slack-style (Enter=Send, Ctrl+Enter=Newline)</option>
+                <option value="discord">Discord-style (Enter=Newline, Ctrl+Enter=Send)</option>
+                <option value="custom">Custom</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="custom-enter-settings" style="display: none;">
+            <div class="key-mapping-card">
+              <h3>Insert Newline</h3>
+              <div class="key-mapping-controls">
+                <label>
+                  <input type="checkbox" id="newline-shift" /> Shift
+                </label>
+                <label>
+                  <input type="checkbox" id="newline-ctrl" /> Ctrl
+                </label>
+                <label>
+                  <input type="checkbox" id="newline-alt" /> Alt
+                </label>
+                <label>
+                  <input type="checkbox" id="newline-meta" /> ⌘/Win
+                </label>
+                <span style="margin-left: auto;">+ Enter</span>
+              </div>
+            </div>
+
+            <div class="key-mapping-card">
+              <h3>Send Message</h3>
+              <div class="key-mapping-controls">
+                <label>
+                  <input type="checkbox" id="send-shift" /> Shift
+                </label>
+                <label>
+                  <input type="checkbox" id="send-ctrl" /> Ctrl
+                </label>
+                <label>
+                  <input type="checkbox" id="send-alt" /> Alt
+                </label>
+                <label>
+                  <input type="checkbox" id="send-meta" /> ⌘/Win
+                </label>
+                <span style="margin-left: auto;">+ Enter</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
       <!-- Default Prompt Library -->
       <section class="section">
         <h2 class="section-title">Default Prompt Library</h2>

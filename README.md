@@ -93,7 +93,7 @@
 
 **Method 3: Right-Click Context Menu**
 - Right-click anywhere on a webpage
-- Select "Open in insidebar.ai"
+- Select "Send to insidebar.ai"
 - Choose your preferred AI provider
 
 ### Switching Between AI Providers

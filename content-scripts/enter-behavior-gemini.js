@@ -1,5 +1,5 @@
 // Gemini Enter/Shift+Enter behavior swap
-// Makes Enter = newline, Shift+Enter = send
+// Supports customizable key combinations via settings
 
 function handleEnterSwap(event) {
   // Only handle trusted Enter key events
@@ -18,14 +18,14 @@ function handleEnterSwap(event) {
     return;
   }
 
-  const isOnlyEnter = !event.ctrlKey && !event.metaKey && !event.shiftKey;
-  const isShiftEnter = event.shiftKey && !event.ctrlKey && !event.metaKey;
+  if (!enterKeyConfig || !enterKeyConfig.enabled) {
+    return;
+  }
 
-  if (isOnlyEnter || isShiftEnter) {
+  // Check if this matches newline action
+  if (matchesModifiers(event, enterKeyConfig.newlineModifiers)) {
     event.preventDefault();
     event.stopImmediatePropagation();
-
-    if (isOnlyEnter) {
       // Enter pressed - insert newline
       try {
         // Try using execCommand first (works well with Quill)
@@ -61,17 +61,26 @@ function handleEnterSwap(event) {
       } catch (e) {
         console.error('[Gemini Enter] Failed to insert newline:', e);
       }
-    } else if (isShiftEnter) {
-      // Shift+Enter pressed - dispatch plain Enter to send
-      const newEvent = new KeyboardEvent("keydown", {
-        key: "Enter",
-        code: "Enter",
-        bubbles: true,
-        cancelable: true,
-        shiftKey: false
-      });
-      event.target.dispatchEvent(newEvent);
-    }
+  }
+  // Check if this matches send action
+  else if (matchesModifiers(event, enterKeyConfig.sendModifiers)) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+    // Dispatch plain Enter to send
+    const newEvent = new KeyboardEvent("keydown", {
+      key: "Enter",
+      code: "Enter",
+      keyCode: 13,
+      which: 13,
+      bubbles: true,
+      cancelable: true,
+      shiftKey: false,
+      ctrlKey: false,
+      metaKey: false,
+      altKey: false
+    });
+    event.target.dispatchEvent(newEvent);
   }
 }
 

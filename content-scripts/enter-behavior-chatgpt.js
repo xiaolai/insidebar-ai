@@ -1,6 +1,5 @@
 // ChatGPT Enter/Shift+Enter behavior swap
-// Makes Enter = newline, Shift+Enter = send
-// Based on ChatGPT-Ctrl-Enter-Sender implementation
+// Supports customizable key combinations via settings
 
 function handleEnterSwap(event) {
   // Only handle trusted Enter key events on the prompt textarea
@@ -13,38 +12,47 @@ function handleEnterSwap(event) {
     return;
   }
 
-  const isOnlyEnter = !event.ctrlKey && !event.metaKey && !event.shiftKey;
-  const isShiftEnter = event.shiftKey && !event.ctrlKey && !event.metaKey;
+  if (!enterKeyConfig || !enterKeyConfig.enabled) {
+    return;
+  }
 
-  // Enter alone: Convert to Shift+Enter to insert newline
-  if (isOnlyEnter) {
+  // Check if this matches newline action
+  if (matchesModifiers(event, enterKeyConfig.newlineModifiers)) {
     event.preventDefault();
     event.stopImmediatePropagation();
 
+    // For ChatGPT: Shift+Enter inserts newline
     const newEvent = new KeyboardEvent("keydown", {
       key: "Enter",
       code: "Enter",
+      keyCode: 13,
+      which: 13,
       bubbles: true,
       cancelable: true,
+      shiftKey: true,  // ChatGPT treats Shift+Enter as newline
       ctrlKey: false,
       metaKey: false,
-      shiftKey: true  // This makes ChatGPT insert a newline
+      altKey: false
     });
     event.target.dispatchEvent(newEvent);
   }
-  // Shift+Enter: Convert to Meta+Enter to send message
-  else if (isShiftEnter) {
+  // Check if this matches send action
+  else if (matchesModifiers(event, enterKeyConfig.sendModifiers)) {
     event.preventDefault();
     event.stopImmediatePropagation();
 
+    // For ChatGPT: Meta+Enter sends (works in sidebar)
     const newEvent = new KeyboardEvent("keydown", {
       key: "Enter",
       code: "Enter",
+      keyCode: 13,
+      which: 13,
       bubbles: true,
       cancelable: true,
+      metaKey: true,  // Use Meta for send
+      shiftKey: false,
       ctrlKey: false,
-      metaKey: true,  // Use Meta instead of Ctrl for sidebar/narrow view compatibility
-      shiftKey: false
+      altKey: false
     });
     event.target.dispatchEvent(newEvent);
   }

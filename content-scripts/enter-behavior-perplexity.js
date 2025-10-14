@@ -1,5 +1,5 @@
 // Perplexity Enter/Shift+Enter behavior swap
-// Makes Enter = newline, Shift+Enter = send
+// Supports customizable key combinations via settings
 
 function handleEnterSwap(event) {
   // Only handle trusted Enter key events
@@ -15,42 +15,49 @@ function handleEnterSwap(event) {
     return;
   }
 
-  const isOnlyEnter = !event.ctrlKey && !event.metaKey && !event.shiftKey;
-  const isShiftEnter = event.shiftKey && !event.ctrlKey && !event.metaKey;
+  if (!enterKeyConfig || !enterKeyConfig.enabled) {
+    return;
+  }
 
-  if (isOnlyEnter || isShiftEnter) {
+  // Check if this matches newline action
+  if (matchesModifiers(event, enterKeyConfig.newlineModifiers)) {
     event.preventDefault();
     event.stopImmediatePropagation();
 
-    if (isOnlyEnter) {
-      // Enter pressed - convert to Shift+Enter for Lexical (newline)
-      const newEvent = new KeyboardEvent("keydown", {
-        key: "Enter",
-        code: "Enter",
-        keyCode: 13,
-        which: 13,
-        bubbles: true,
-        cancelable: true,
-        shiftKey: true,  // Lexical treats Shift+Enter as line break
-        ctrlKey: false,
-        metaKey: false
-      });
-      event.target.dispatchEvent(newEvent);
-    } else if (isShiftEnter) {
-      // Shift+Enter pressed - convert to plain Enter to send
-      const newEvent = new KeyboardEvent("keydown", {
-        key: "Enter",
-        code: "Enter",
-        keyCode: 13,
-        which: 13,
-        bubbles: true,
-        cancelable: true,
-        shiftKey: false,
-        ctrlKey: false,
-        metaKey: false
-      });
-      event.target.dispatchEvent(newEvent);
-    }
+    // For Lexical: Shift+Enter inserts newline
+    const newEvent = new KeyboardEvent("keydown", {
+      key: "Enter",
+      code: "Enter",
+      keyCode: 13,
+      which: 13,
+      bubbles: true,
+      cancelable: true,
+      shiftKey: true,
+      ctrlKey: false,
+      metaKey: false,
+      altKey: false
+    });
+    event.target.dispatchEvent(newEvent);
+  }
+  // Check if this matches send action
+  else if (matchesModifiers(event, enterKeyConfig.sendModifiers)) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+    // Plain Enter to send
+    const newEvent = new KeyboardEvent("keydown", {
+      key: "Enter",
+      code: "Enter",
+      keyCode: 13,
+      which: 13,
+      bubbles: true,
+      cancelable: true,
+      shiftKey: false,
+      ctrlKey: false,
+      metaKey: false,
+      altKey: false
+    });
+    event.target.dispatchEvent(newEvent);
   }
 }
 
