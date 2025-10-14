@@ -16,10 +16,13 @@ Switch between ChatGPT, Claude, Gemini, Grok, and DeepSeek with a single click. 
 Uses your existing browser login sessions. If you're already logged into ChatGPT or Claude, you're ready to go.
 
 **Prompt Library**
-Save your frequently used prompts. Organize them with categories and tags. Reuse them across any AI provider.
+Save your frequently used prompts. Organize them with categories and tags. Reuse them across any AI provider. Import a default library of 50+ useful prompts to get started.
 
 **Keyboard Shortcuts**
 Open the sidebar instantly with `Ctrl+Shift+E` (or `Cmd+Shift+E` on Mac). Access your prompt library with `Ctrl+Shift+P`.
+
+**Customizable Enter Key Behavior**
+Change how the Enter key works in AI chat inputs. Prefer Enter to send messages and Shift+Enter for new lines? Or vice versa? You can configure it to match your preference.
 
 **Dark Mode Support**
 Automatically matches your system theme, or choose light/dark mode manually.
@@ -102,7 +105,7 @@ Click the circular arrow icon on a prompt to insert it into the workspace. From 
 Use categories (Coding, Writing, Analysis, or create your own). Add tags for easy searching. Filter by favorites using the star icon.
 
 **Import default prompts:**
-Open Settings and click "Import Default Prompts" to load a starter collection of useful prompts.
+Open Settings and click "Import Default Prompts" to load a starter collection of 50+ useful prompts covering coding, writing, analysis, and more.
 
 ### Settings
 
@@ -118,7 +121,9 @@ Click the gear icon at the bottom of the sidebar to open Settings.
 
 **Auto-Paste Clipboard:** When enabled, opening the Prompt Library automatically pastes clipboard content into the workspace
 
-**Enter Key Behavior:** Customize how Enter and Shift+Enter work in AI chat inputs (if supported by the provider)
+**Enter Key Behavior:** Customize how the Enter key works in AI chat inputs. Choose from presets (Default, Swapped, Slack-style, Discord-style) or create your own custom key mapping. This affects how you send messages versus adding new lines.
+
+**Prompt Library:** Import the default prompt library containing 50+ professionally crafted prompts for coding, writing, analysis, and general use. Great starting point for new users.
 
 **Data Management:** Export your prompts and settings as a backup file. Import them later or on another computer. Reset all data if needed.
 
