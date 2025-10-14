@@ -1,7 +1,12 @@
 // Perplexity Enter/Shift+Enter behavior swap
 // Supports customizable key combinations via settings
 
-console.log('[Perplexity Enter] Script loaded');
+(function() {
+  'use strict';
+
+  console.log('[Perplexity Enter] Script loaded at', new Date().toISOString());
+  console.log('[Perplexity Enter] Window location:', window.location.href);
+  console.log('[Perplexity Enter] Document readyState:', document.readyState);
 
 function handleEnterSwap(event) {
   // Only handle Enter key events
@@ -93,3 +98,7 @@ function handleEnterSwap(event) {
 // Apply the setting on initial load
 console.log('[Perplexity Enter] Calling applyEnterSwapSetting');
 applyEnterSwapSetting();
+
+console.log('[Perplexity Enter] Script execution completed');
+
+})();
