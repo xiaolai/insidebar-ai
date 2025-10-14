@@ -42,11 +42,9 @@ Enable only the AI providers you use. Set your default provider. Configure keybo
 
 ## Installation
 
-### From Chrome Web Store (Recommended for Most Users)
+### Self-Hosting Only
 
-Coming soon - the extension is currently under review.
-
-### Self-Hosting (Recommended for Privacy-Conscious Users)
+This extension is not available on the Chrome Web Store and is designed to be self-hosted.
 
 **Why self-host?**
 
