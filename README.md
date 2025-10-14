@@ -274,7 +274,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **Issues**: [GitHub Issues](https://github.com/xiaolai/insidebar-ai/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/xiaolai/insidebar-ai/discussions)
-- **Email**: support@example.com (replace with actual email)
 
 ## 🗺️ Roadmap
 

@@ -1,210 +1,411 @@
-# Manual Testing Guide: Send Selection to Sidebar
+# Manual Testing Procedures
 
-## Feature Overview
-Users can now select text on any webpage and send it directly to an AI provider's input area via the context menu.
+This document outlines manual testing procedures for insidebar.ai extension before production release.
 
-## Prerequisites
-1. Load the extension in Chrome/Edge:
-   - Navigate to `chrome://extensions/` or `edge://extensions/`
-   - Enable "Developer mode"
-   - Click "Load unpacked"
-   - Select the `insidebar-ai` folder
-   - **IMPORTANT: If extension was already loaded, click the reload button (↻) on the extension card**
-   - This ensures the latest code is loaded
+## Pre-Release Checklist
 
-2. Ensure you're logged into at least one AI provider:
-   - ChatGPT (https://chatgpt.com)
-   - Claude (https://claude.ai)
-   - Gemini (https://gemini.google.com)
-   - Grok (https://grok.com)
-   - DeepSeek (https://chat.deepseek.com)
+### 1. Installation & Setup
 
-## Test Scenarios
+- [ ] **Fresh Install on Chrome**
+  - Load unpacked extension in `chrome://extensions/`
+  - Extension icon appears in toolbar
+  - No console errors on installation
 
-### Test 1: Basic Text Selection - ChatGPT
-1. Navigate to any webpage (e.g., https://wikipedia.org)
-2. Select some text (e.g., a paragraph)
-3. Right-click on the selected text
-4. Hover over "Send to insidebar.ai"
-5. Click "ChatGPT"
+- [ ] **Fresh Install on Edge**
+  - Load unpacked extension in `edge://extensions/`
+  - Extension icon appears in toolbar
+  - No console errors on installation
 
-**Expected Result:**
-- Sidebar opens automatically
-- ChatGPT loads in the sidebar
-- Selected text appears in the ChatGPT textarea
-- Cursor is at the end of the inserted text
-- You can edit the text or send it immediately
+### 2. First Run Experience
 
-### Test 2: Basic Text Selection - Claude
-1. Navigate to any webpage
-2. Select some text
-3. Right-click → "Send to insidebar.ai" → "Claude"
+- [ ] **Initial Sidebar Open**
+  - Click extension icon - sidebar opens
+  - Default provider (ChatGPT) loads correctly
+  - Provider iframe displays without errors
+  - No console errors in sidebar DevTools
 
-**Expected Result:**
-- Sidebar opens
-- Claude loads
-- Selected text appears in Claude's ProseMirror editor
-- Text is ready to send or edit
+- [ ] **Keyboard Shortcut Setup**
+  - Edge users see one-time shortcut reminder banner
+  - Banner can be dismissed
+  - Banner opens edge://extensions/shortcuts when clicked
 
-### Test 3: Basic Text Selection - Gemini
-1. Navigate to any webpage
-2. Select some text
-3. Right-click → "Send to insidebar.ai" → "Gemini"
+### 3. Provider Switching
 
-**Expected Result:**
-- Sidebar opens
-- Gemini loads
-- Selected text appears in Gemini's Quill editor
-- Text is ready to send or edit
+- [ ] **Tab Navigation**
+  - All enabled provider tabs appear at bottom
+  - Clicking each provider tab loads correct AI site
+  - Provider iframes load without X-Frame-Options errors
+  - Active tab highlighted correctly
 
-### Test 4: Basic Text Selection - Grok
-1. Navigate to any webpage
-2. Select some text
-3. Right-click → "Send to insidebar.ai" → "Grok"
+- [ ] **Provider URLs Load**
+  - ChatGPT: https://chatgpt.com or https://chat.openai.com
+  - Claude: https://claude.ai
+  - Gemini: https://gemini.google.com
+  - Grok: https://grok.com
+  - DeepSeek: https://chat.deepseek.com
 
-**Expected Result:**
-- Sidebar opens
-- Grok loads
-- Selected text appears in Grok's input area
-- Text is ready to send or edit
+- [ ] **Session Persistence**
+  - Close and reopen sidebar
+  - Last selected provider remembered
+  - No need to reload provider pages
 
-### Test 5: Basic Text Selection - DeepSeek
-1. Navigate to any webpage
-2. Select some text
-3. Right-click → "Send to insidebar.ai" → "DeepSeek"
+### 4. Keyboard Shortcuts
 
-**Expected Result:**
-- Sidebar opens
-- DeepSeek loads
-- Selected text appears in DeepSeek's textarea
-- Text is ready to send or edit
+- [ ] **Toggle Sidebar** (`Cmd+Shift+E` / `Ctrl+Shift+E`)
+  - Opens sidebar when closed
+  - Closes sidebar when open (if enabled in settings)
+  - Works across different browser windows
 
-### Test 6: Appending to Existing Text
-1. Open sidebar and navigate to ChatGPT
-2. Type some text manually in the textarea (e.g., "Summarize this: ")
-3. Go back to the webpage tab
-4. Select some text
-5. Right-click → "Send to insidebar.ai" → "ChatGPT"
+- [ ] **Open Prompt Library** (`Cmd+Shift+P` / `Ctrl+Shift+P`)
+  - Opens sidebar to Prompt Library view
+  - Toggles sidebar if already open
 
-**Expected Result:**
-- Sidebar switches to ChatGPT (or stays on ChatGPT)
-- New text is appended to existing text
-- Both old and new text are visible
-- Cursor is at the end
+### 5. Context Menu
 
-### Test 7: Multi-line Text Selection
-1. Select multiple paragraphs from a webpage (with line breaks)
-2. Right-click → "Send to insidebar.ai" → "Claude"
+- [ ] **Right-Click Menu**
+  - Right-click on page shows "Send to insidebar.ai" option
+  - Submenu shows all enabled providers
+  - Submenu includes "Prompt Library" option
 
-**Expected Result:**
-- All selected text including line breaks is inserted
-- Formatting is preserved (newlines maintained)
-- Text is readable and properly formatted
+- [ ] **Text Selection**
+  - Select text on page → right-click → choose provider
+  - Sidebar opens to selected provider
+  - Selected text injected into provider's input (where supported)
 
-### Test 8: Special Characters
-1. Select text containing special characters: quotes (""), apostrophes ('), emojis (😊), etc.
-2. Right-click → "Send to insidebar.ai" → "Gemini"
+### 6. Prompt Library
 
-**Expected Result:**
-- All special characters are preserved
-- No encoding issues
-- Text displays correctly
+#### Basic Operations
 
-### Test 9: Large Text Selection
-1. Select a very long piece of text (e.g., entire Wikipedia article)
-2. Right-click → "Send to insidebar.ai" → "ChatGPT"
+- [ ] **Create New Prompt**
+  - Click "+ New" button
+  - Fill in title, content, category, tags
+  - Save prompt successfully
+  - Prompt appears in list
 
-**Expected Result:**
-- Text is fully inserted (not truncated)
-- Page remains responsive
-- Textarea scrolls to show cursor position
+- [ ] **Edit Prompt**
+  - Click edit icon on any prompt
+  - Modify fields
+  - Save changes
+  - Changes reflected in list
 
-### Test 10: No Text Selected
-1. Don't select any text
-2. Right-click anywhere → "Send to insidebar.ai" → "Claude"
+- [ ] **Delete Prompt**
+  - Click delete icon
+  - Confirmation dialog appears
+  - Prompt removed from list
 
-**Expected Result:**
-- Sidebar opens
-- Claude loads
-- No text is inserted (input area remains empty or keeps existing content)
-- No errors in console
+- [ ] **Use Prompt**
+  - Click on prompt card
+  - Content copied to clipboard
+  - Toast notification appears
 
-### Test 11: Switch Provider After Selection
-1. Select text
-2. Right-click → "Send to insidebar.ai" → "ChatGPT"
-3. Wait for text to be inserted
-4. Click the Claude tab in the sidebar
-5. Go back and select different text
-6. Right-click → "Send to insidebar.ai" → "Claude"
+#### Search & Filter
 
-**Expected Result:**
-- Sidebar switches to Claude
-- New selected text appears in Claude's editor
-- ChatGPT still has the old text (iframes maintain state)
+- [ ] **Text Search**
+  - Type in search box
+  - Results filter in real-time
+  - Search matches title, content, and tags
 
-### Test 12: Provider Page Not Fully Loaded
-1. Select text
-2. Right-click → "Send to insidebar.ai" → "Grok"
-3. Immediately look at the Grok iframe
+- [ ] **Category Filter**
+  - Click category dropdown
+  - Select category
+  - Only prompts in that category shown
+  - "All Categories" shows all prompts
 
-**Expected Result:**
-- Even if page loads slowly, text injection should work
-- If textarea isn't found immediately, retry mechanism kicks in after 1 second
-- Text eventually appears once page is ready
+- [ ] **Favorites Filter**
+  - Click star icon in filter bar
+  - Only favorite prompts shown
+  - Click again to show all prompts
 
-## Debugging
+#### Sorting
 
-### Check Console Logs
+- [ ] **Sort Options**
+  - Recent (default) - recently used first
+  - Most Used - by use count
+  - Alphabetical A-Z / Z-A toggle
+  - Newest / Oldest toggle
 
-**Sidebar Console (for postMessage sending):**
-- Right-click sidebar → "Inspect"
-- Look for messages about sending text to iframe
+- [ ] **Sort Persistence**
+  - Selected sort order remembered during session
 
-**Provider iframe Console (for text injection):**
-- Right-click inside the provider iframe → "Inspect" (this opens the iframe's console)
-- Look for console messages:
-  - "Text injection listener registered for {provider}" (initialization)
-  - "Text injected into {Provider} editor" (success)
-  - "{Provider} editor not found, will retry..." (waiting for page load)
-  - "Failed to inject text into {Provider}" (error)
-  - "Text injected into {Provider} editor (retry)" (retry success)
+#### Favorites
 
-### Common Issues
+- [ ] **Toggle Favorite**
+  - Click star icon on prompt
+  - Star fills/empties correctly
+  - Favorite count updates
 
-**Issue 1: Text not appearing**
-- Check if you're logged into the AI provider
-- Check console for errors
-- Verify the provider's UI hasn't changed (selector might be outdated)
+- [ ] **Quick Access Panel**
+  - Shows recently used prompts (top 5)
+  - Shows top favorites (top 5)
+  - Sections collapsible
+  - Click prompt opens insert modal
 
-**Issue 2: Sidebar doesn't open**
-- Check if extension is enabled
-- Check browser console for errors
-- Try reloading the extension
+### 7. Prompt Workspace
 
-**Issue 3: Text appears but formatting is wrong**
-- Expected behavior: contenteditable elements may render differently
-- Linebreaks should be preserved
-- Special characters should work
+- [ ] **Insert Prompt**
+  - Click input icon on prompt
+  - Insert modal opens with preview
+  - Choose "Beginning" - text prepended
+  - Choose "End" - text appended
+  - Choose "Replace" - text replaced
 
-**Issue 4: Delay before text appears**
-- Expected: Up to 500ms initial delay + 1000ms retry if needed
-- This ensures iframe is fully loaded
+- [ ] **Copy Workspace**
+  - Add text to workspace
+  - Click copy icon
+  - Text copied to clipboard
+  - Toast notification shown
 
-## Test Coverage
-- ✅ All 5 providers (ChatGPT, Claude, Gemini, Grok, DeepSeek)
-- ✅ Different textarea types (textarea, contenteditable, Quill, ProseMirror)
-- ✅ Empty selection, single word, paragraph, multi-paragraph, large text
-- ✅ Special characters, emojis, line breaks
-- ✅ Appending to existing text
-- ✅ Provider switching
-- ✅ Retry logic for slow-loading pages
+- [ ] **Save as Prompt**
+  - Add text to workspace
+  - Click save icon
+  - Editor opens with content pre-filled
+  - Save successfully
 
-## Automated Tests
-All automated tests pass:
-```
-npm test
-```
+- [ ] **Clear Workspace**
+  - Add text to workspace
+  - Click clear icon
+  - Workspace empties
 
-- 47 tests total (35 existing + 12 new)
-- text-injector.test.js: 12 tests for text injection module
-- All provider, settings, messaging tests still passing
+- [ ] **Send to Provider**
+  - Add text to workspace
+  - Select provider from dropdown
+  - Click send button
+  - Switches to provider view
+  - Text injected into provider
+
+### 8. Settings Page
+
+- [ ] **Open Settings**
+  - Click settings icon (gear) in sidebar
+  - Options page opens in new tab
+  - All sections load correctly
+
+#### Theme Settings
+
+- [ ] **Theme Selection**
+  - Choose Auto - follows system theme
+  - Choose Light - light theme applied
+  - Choose Dark - dark theme applied
+  - Theme changes immediately
+
+#### Provider Settings
+
+- [ ] **Enable/Disable Providers**
+  - Toggle providers on/off
+  - Cannot disable all providers (at least one required)
+  - Sidebar tabs update immediately
+  - Context menu updates
+
+- [ ] **Default Provider**
+  - Select default provider dropdown
+  - Choice saved
+  - Next sidebar open loads that provider
+
+#### Keyboard Shortcuts
+
+- [ ] **Toggle Shortcuts**
+  - Disable shortcuts
+  - Keyboard shortcuts stop working
+  - Re-enable shortcuts
+  - Keyboard shortcuts work again
+
+- [ ] **Shortcut Setup Links**
+  - Click "Configure Shortcuts" button
+  - Opens browser://extensions/shortcuts
+  - (Edge only) Edge-specific button works
+
+#### Auto-Paste Clipboard
+
+- [ ] **Auto-Paste Toggle**
+  - Enable auto-paste
+  - Open Prompt Library with `Cmd+Shift+P`
+  - Clipboard content appears in workspace
+  - Disable - clipboard not pasted
+
+#### Enter Key Behavior
+
+- [ ] **Enable/Disable**
+  - Toggle Enter key customization
+  - Settings show/hide correctly
+
+- [ ] **Preset Selection**
+  - Default: Shift+Enter = newline, Enter = send
+  - Swapped: Enter = newline, Shift+Enter = send
+  - Slack: Enter = send, Ctrl+Enter = newline
+  - Discord: Ctrl+Enter = send, Enter = newline
+  - Custom: Configure manually
+
+- [ ] **Custom Configuration**
+  - Select "Custom" preset
+  - Configure modifier checkboxes
+  - Settings saved correctly
+
+#### Data Management
+
+- [ ] **Import Default Library**
+  - Click "Import Default Prompts"
+  - ~50 prompts imported
+  - Button shows "Imported" state
+  - Stats update
+
+- [ ] **Export Data**
+  - Click "Export Data"
+  - JSON file downloads
+  - File contains prompts and settings
+  - Filename includes timestamp
+
+- [ ] **Import Data**
+  - Export data first
+  - Click "Import Data"
+  - Select exported JSON file
+  - Confirmation dialog shows counts
+  - Data imported successfully
+  - Duplicates skipped
+
+- [ ] **Reset All Data**
+  - Click "Reset All Data"
+  - First confirmation dialog
+  - Second confirmation dialog
+  - All prompts deleted
+  - Settings reset to defaults
+  - Stats show zeros
+
+- [ ] **Data Statistics**
+  - Total prompts count correct
+  - Favorites count correct
+  - Categories count correct
+  - Storage size approximate
+
+### 9. Theme & Icons
+
+- [ ] **Light Theme**
+  - Background is light
+  - Text is dark
+  - Icons use light theme versions
+  - Provider icons load correctly
+
+- [ ] **Dark Theme**
+  - Background is dark
+  - Text is light
+  - Icons use dark theme versions (where available)
+  - Provider icons load correctly
+
+- [ ] **Auto Theme**
+  - System dark mode → extension dark
+  - System light mode → extension light
+  - Theme switches when system changes
+
+- [ ] **Material Symbols**
+  - All icons render correctly (no missing squares)
+  - Icon sizes consistent (28px modals, 20px workspace, 18px filters)
+  - Icon hover states work
+
+### 10. Error Handling
+
+- [ ] **Network Offline**
+  - Disable network
+  - Try loading provider
+  - Appropriate error shown
+  - Can retry when online
+
+- [ ] **Invalid Data Import**
+  - Try importing non-JSON file
+  - Error message shown
+  - No data corrupted
+
+- [ ] **Provider Login Required**
+  - Try using provider while logged out
+  - Provider shows login page in iframe
+  - Can log in and use normally
+
+### 11. Performance
+
+- [ ] **Quick Switching**
+  - Switch between providers rapidly
+  - No lag or freezing
+  - Iframes cached correctly
+
+- [ ] **Large Prompt Library**
+  - Create 100+ prompts
+  - Search/filter still responsive
+  - No noticeable slowdown
+
+- [ ] **Memory Usage**
+  - Open sidebar for extended period
+  - Check browser task manager
+  - No memory leaks
+
+### 12. Browser Compatibility
+
+#### Chrome
+
+- [ ] Chrome 114+ loads extension
+- [ ] All features work correctly
+- [ ] No console errors
+
+#### Edge
+
+- [ ] Edge 114+ loads extension
+- [ ] All features work correctly
+- [ ] No console errors
+- [ ] Edge shortcut reminder appears
+
+### 13. Clean Installation Test
+
+- [ ] Remove extension completely
+- [ ] Clear all extension data
+- [ ] Reinstall extension
+- [ ] All features work from scratch
+- [ ] No leftover data
+
+### 14. Production Checks
+
+- [ ] **No Debug Logging**
+  - Open browser console
+  - Use all major features
+  - No console.log statements appear
+  - Only intentional error messages (if any)
+
+- [ ] **Lint Passes**
+  - Run `npm run lint`
+  - No critical errors
+  - Only expected warnings (Firefox compatibility)
+
+- [ ] **Tests Pass**
+  - Run `npm test`
+  - All tests pass
+  - No test failures
+
+- [ ] **Files Present**
+  - All required files in package
+  - Icons present (16, 32, 48, 128px)
+  - Provider icons present
+  - Default prompt library present
+  - LICENSE file present
+  - README.md complete
+
+---
+
+## Sign-Off
+
+**Tested By:** _______________
+**Date:** _______________
+**Browser:** _______________
+**Version:** _______________
+**Result:** ☐ PASS  ☐ FAIL
+**Notes:** _______________
+
+---
+
+## Known Issues
+
+_(Document any known issues that are acceptable for release)_
+
+---
+
+## Future Testing Needs
+
+- Automated E2E testing setup
+- Cross-browser testing automation
+- Performance benchmarking
+- Accessibility testing (WCAG compliance)

@@ -34,7 +34,7 @@ function openShortcutSettings(browserOverride) {
   try {
     chrome.tabs.create({ url });
   } catch (error) {
-    console.warn('Unable to open shortcuts via chrome.tabs, falling back to window.open', error);
+    // Fallback to window.open if chrome.tabs unavailable
     window.open(url, '_blank');
   }
 }
@@ -188,7 +188,11 @@ async function loadDataStats() {
     const sizeKB = Math.round(dataSize / 1024);
     document.getElementById('stat-storage').textContent = `~${sizeKB} KB`;
   } catch (error) {
-    console.error('Error loading data stats:', error);
+    // Silently handle data stats errors
+    document.getElementById('stat-prompts').textContent = '0';
+    document.getElementById('stat-favorites').textContent = '0';
+    document.getElementById('stat-categories').textContent = '0';
+    document.getElementById('stat-storage').textContent = '0 KB';
   }
 }
 
@@ -310,7 +314,6 @@ async function exportData() {
 
     showStatus('success', 'Data exported successfully');
   } catch (error) {
-    console.error('Export error:', error);
     showStatus('error', 'Failed to export data');
   }
 }
@@ -362,7 +365,6 @@ async function importData(file) {
       showStatus('success', 'Data imported successfully.');
     }
   } catch (error) {
-    console.error('Import error:', error);
     showStatus('error', 'Failed to import data. Please check the file format.');
   }
 }
@@ -398,7 +400,6 @@ async function resetData() {
 
     showStatus('success', 'All data has been reset');
   } catch (error) {
-    console.error('Reset error:', error);
     showStatus('error', 'Failed to reset data');
   }
 }
@@ -447,7 +448,6 @@ async function importDefaultLibraryHandler() {
     await loadDataStats();
 
   } catch (error) {
-    console.error('Default library import error:', error);
     showStatus('error', 'Failed to import default library');
     button.disabled = false;
     button.textContent = 'Import Default Prompts';

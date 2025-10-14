@@ -4,6 +4,13 @@
   "version": "1.2.0",
   "description": "Multi-AI sidebar extension for quick access to ChatGPT, Claude, Gemini, and more",
 
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "insidebar-ai@xiaolai.github.io",
+      "strict_min_version": "115.0"
+    }
+  },
+
   "permissions": [
     "sidePanel",
     "storage",
