@@ -1,2466 +1,702 @@
-{
-  "version": "1.0",
-  "title": "Default Prompt Library",
-  "description": "Curated meta-prompts for AI workflows, research, coding, and analysis",
-  "count": 155,
-  "prompts": [
-    {
-      "title": "Refine the following prompt using best practices (be spec...",
-      "content": "Refine the following prompt using best practices (be specific, define output format, add checks). Keep plain English. Return: {final_prompt} + a 1-line rationale. Input: {draft_prompt}",
-      "category": "Prompt Refinement & Upgrading",
-      "tags": [
-        "refinement",
-        "template"
-      ],
-      "variables": [
-        "draft_prompt",
-        "final_prompt"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Rewrite my prompt in 1-2 imperative sentences that captur...",
-      "content": "Rewrite my prompt in 1-2 imperative sentences that capture the same intent, then show a JSON spec for inputs/outputs. Prompt: {draft}",
-      "category": "Prompt Refinement & Upgrading",
-      "tags": [
-        "refinement",
-        "template"
-      ],
-      "variables": [
-        "draft"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Generalize this prompt so it works across models (OpenAI,...",
-      "content": "Generalize this prompt so it works across models (OpenAI, Anthropic, Gemini). Avoid provider-specific jargon. Prompt: {draft}",
-      "category": "Prompt Refinement & Upgrading",
-      "tags": [
-        "refinement",
-        "template"
-      ],
-      "variables": [
-        "draft"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Generate 5 stylistic variants of this prompt (conservativ...",
-      "content": "Generate 5 stylistic variants of this prompt (conservative, creative, data-centric, safety-strict, speed-first). Note likely trade-offs. Prompt: {draft}",
-      "category": "Prompt Refinement & Upgrading",
-      "tags": [
-        "refinement",
-        "template"
-      ],
-      "variables": [
-        "draft"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "List up to … high-leverage clarifying questions for …. If...",
-      "content": "List up to {Q} high-leverage clarifying questions for {task}. If unanswered, state your assumptions and continue.",
-      "category": "Clarification & Assumptions",
-      "tags": [
-        "clarification",
-        "template"
-      ],
-      "variables": [
-        "Q",
-        "task"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Before solving …, enumerate key assumptions, unknowns, an...",
-      "content": "Before solving {task}, enumerate key assumptions, unknowns, and potential pitfalls as bullets.",
-      "category": "Clarification & Assumptions",
-      "tags": [
-        "clarification",
-        "template"
-      ],
-      "variables": [
-        "task"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Identify ambiguous phrases or missing details in this pro...",
-      "content": "Identify ambiguous phrases or missing details in this prompt and propose precise rewrites. Prompt: {draft}",
-      "category": "Clarification & Assumptions",
-      "tags": [
-        "clarification",
-        "template"
-      ],
-      "variables": [
-        "draft"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Act as a … advising a …. Use domain terminology sparingly...",
-      "content": "Act as a {role} advising a {audience}. Use domain terminology sparingly; define jargon on first use.",
-      "category": "Role & Persona Framing",
-      "tags": [
-        "role",
-        "persona",
-        "template"
-      ],
-      "variables": [
-        "audience",
-        "role"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Explain … first as a … (technical), then as a … for a …-y...",
-      "content": "Explain {topic} first as a {role} (technical), then as a {teacher} for a {age}-year-old.",
-      "category": "Role & Persona Framing",
-      "tags": [
-        "role",
-        "persona",
-        "template"
-      ],
-      "variables": [
-        "age",
-        "role",
-        "teacher",
-        "topic"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Act as a skeptical reviewer for …. Flag weak claims and s...",
-      "content": "Act as a skeptical reviewer for {topic}. Flag weak claims and suggest fixes.",
-      "category": "Role & Persona Framing",
-      "tags": [
-        "role",
-        "persona",
-        "template"
-      ],
-      "variables": [
-        "topic"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Propose a concise plan (3-7 steps) for …. Then execute th...",
-      "content": "Propose a concise plan (3-7 steps) for {task}. Then execute the plan step-by-step, showing each step’s output and a final summary.",
-      "category": "Decomposition & Planning",
-      "tags": [
-        "planning",
-        "template"
-      ],
-      "variables": [
-        "task"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Break … into minimal sub-tasks with owners, inputs, outpu...",
-      "content": "Break {goal} into minimal sub-tasks with owners, inputs, outputs, and acceptance criteria.",
-      "category": "Decomposition & Planning",
-      "tags": [
-        "planning",
-        "template"
-      ],
-      "variables": [
-        "goal"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Outline milestones, dependencies, and top 5 risks with mi...",
-      "content": "Outline milestones, dependencies, and top 5 risks with mitigations for {project}.",
-      "category": "Decomposition & Planning",
-      "tags": [
-        "planning",
-        "template"
-      ],
-      "variables": [
-        "project"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Return ONLY valid JSON matching this schema: …. If info i...",
-      "content": "Return ONLY valid JSON matching this schema: {json_schema}. If info is missing, set null and add missing_notes.",
-      "category": "Output Structure & Schemas",
-      "tags": [
-        "structure",
-        "schemas",
-        "template"
-      ],
-      "variables": [
-        "json_schema"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Produce a Markdown table with columns …. Limit rows to …....",
-      "content": "Produce a Markdown table with columns {columns}. Limit rows to {n}. Include a final 'Notes' row of caveats.",
-      "category": "Output Structure & Schemas",
-      "tags": [
-        "structure",
-        "schemas",
-        "template"
-      ],
-      "variables": [
-        "columns",
-        "n"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Create a report with sections …. Each ≤ … words, with bul...",
-      "content": "Create a report with sections {sections}. Each ≤ {limit} words, with bullet key takeaways at the end.",
-      "category": "Output Structure & Schemas",
-      "tags": [
-        "structure",
-        "schemas",
-        "template"
-      ],
-      "variables": [
-        "limit",
-        "sections"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Grade your own draft against this rubric: …. List gaps, t...",
-      "content": "Grade your own draft against this rubric: {rubric}. List gaps, then deliver a revised version that resolves all gaps.",
-      "category": "Quality Bars & Rubrics",
-      "tags": [
-        "quality",
-        "rubrics",
-        "template"
-      ],
-      "variables": [
-        "rubric"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "State pass/fail checks for …. Then produce the output and...",
-      "content": "State pass/fail checks for {output}. Then produce the output and show the checklist with pass/fail ticks.",
-      "category": "Quality Bars & Rubrics",
-      "tags": [
-        "quality",
-        "rubrics",
-        "template"
-      ],
-      "variables": [
-        "output"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Answer in ≤ … words, prioritize …, and avoid …. If imposs...",
-      "content": "Answer in ≤ {words} words, prioritize {criteria}, and avoid {banned}. If impossible, say why.",
-      "category": "Quality Bars & Rubrics",
-      "tags": [
-        "quality",
-        "rubrics",
-        "template"
-      ],
-      "variables": [
-        "banned",
-        "criteria",
-        "words"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Provide an answer with 2-4 authoritative sources on …. Af...",
-      "content": "Provide an answer with 2-4 authoritative sources on {topic}. After each key claim, include a citation. If uncertain, say so.",
-      "category": "Source Discipline & Fact-Checking",
-      "tags": [
-        "sources",
-        "factcheck",
-        "template"
-      ],
-      "variables": [
-        "topic"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Build a table with Claim | Source | Evidence quality | Co...",
-      "content": "Build a table with Claim | Source | Evidence quality | Counter-evidence | Confidence (0-1) for {topic}.",
-      "category": "Source Discipline & Fact-Checking",
-      "tags": [
-        "sources",
-        "factcheck",
-        "template"
-      ],
-      "variables": [
-        "topic"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "List potential errors or hallucinations in this draft, se...",
-      "content": "List potential errors or hallucinations in this draft, search terms to verify them, and revised statements with hedging where needed. Draft: {draft}",
-      "category": "Source Discipline & Fact-Checking",
-      "tags": [
-        "sources",
-        "factcheck",
-        "template"
-      ],
-      "variables": [
-        "draft"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "If any request is unsafe/disallowed, refuse briefly and p...",
-      "content": "If any request is unsafe/disallowed, refuse briefly and propose a safe alternative pathway to achieve the user’s intent.",
-      "category": "Safety & Scope Guardrails",
-      "tags": [
-        "safety",
-        "scope",
-        "template"
-      ],
-      "variables": [],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Identify parts of the request that exceed …. Propose scop...",
-      "content": "Identify parts of the request that exceed {constraints}. Propose scoped alternatives with impact estimates.",
-      "category": "Safety & Scope Guardrails",
-      "tags": [
-        "safety",
-        "scope",
-        "template"
-      ],
-      "variables": [
-        "constraints"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Generate … diverse ideas for …. Then cluster them into … ...",
-      "content": "Generate {k} diverse ideas for {goal}. Then cluster them into {clusters} themes with pros/cons and wild-card picks.",
-      "category": "Brainstorming & Divergent Thinking",
-      "tags": [
-        "brainstorming",
-        "template"
-      ],
-      "variables": [
-        "clusters",
-        "goal",
-        "k"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Propose ideas that work under extreme constraints: …, …, ...",
-      "content": "Propose ideas that work under extreme constraints: {budget}, {time}, {tools}. Explain why each still works.",
-      "category": "Brainstorming & Divergent Thinking",
-      "tags": [
-        "brainstorming",
-        "template"
-      ],
-      "variables": [
-        "budget",
-        "time",
-        "tools"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Offer … analogies from … that illuminate …. Explain what ...",
-      "content": "Offer {n} analogies from {domains} that illuminate {concept}. Explain what each clarifies or hides.",
-      "category": "Brainstorming & Divergent Thinking",
-      "tags": [
-        "brainstorming",
-        "template"
-      ],
-      "variables": [
-        "concept",
-        "domains",
-        "n"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Score options by … with numeric assumptions and a ranked ...",
-      "content": "Score options by {framework} with numeric assumptions and a ranked list. Highlight sensitivity.",
-      "category": "Convergent Selection & Ranking",
-      "tags": [
-        "selection",
-        "ranking",
-        "template"
-      ],
-      "variables": [
-        "framework"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Run a best-of-three tournament between top … ideas. Show ...",
-      "content": "Run a best-of-three tournament between top {m} ideas. Show semifinalists, finalists, and the champion with reasons.",
-      "category": "Convergent Selection & Ranking",
-      "tags": [
-        "selection",
-        "ranking",
-        "template"
-      ],
-      "variables": [
-        "m"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "For each option, ask the single killer question most like...",
-      "content": "For each option, ask the single killer question most likely to invalidate it, and estimate survivability.",
-      "category": "Convergent Selection & Ranking",
-      "tags": [
-        "selection",
-        "ranking",
-        "template"
-      ],
-      "variables": [],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Compare … across criteria …. Weight criteria … and comput...",
-      "content": "Compare {options} across criteria {criteria}. Weight criteria {weights} and compute weighted ranks.",
-      "category": "Compare/Contrast & Trade-offs",
-      "tags": [
-        "compare",
-        "tradeoffs",
-        "template"
-      ],
-      "variables": [
-        "criteria",
-        "options",
-        "weights"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Identify options on the Pareto frontier for …. Explain im...",
-      "content": "Identify options on the Pareto frontier for {decision}. Explain implications.",
-      "category": "Compare/Contrast & Trade-offs",
-      "tags": [
-        "compare",
-        "tradeoffs",
-        "template"
-      ],
-      "variables": [
-        "decision"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Summarize … three ways: (1) executive 5 bullets; (2) tech...",
-      "content": "Summarize {text} three ways: (1) executive 5 bullets; (2) technical précis; (3) risks & unknowns.",
-      "category": "Summarization & Distillation",
-      "tags": [
-        "summarization",
-        "template"
-      ],
-      "variables": [
-        "text"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Give a …-word lossy summary and a lossless outline with k...",
-      "content": "Give a {words}-word lossy summary and a lossless outline with key terms preserved for {text}.",
-      "category": "Summarization & Distillation",
-      "tags": [
-        "summarization",
-        "template"
-      ],
-      "variables": [
-        "text",
-        "words"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Summarize … while keeping author names, dates, and quoted...",
-      "content": "Summarize {text} while keeping author names, dates, and quoted numbers intact. Flag uncertainties.",
-      "category": "Summarization & Distillation",
-      "tags": [
-        "summarization",
-        "template"
-      ],
-      "variables": [
-        "text"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Translate … to …. Preserve technical terms; add bracketed...",
-      "content": "Translate {text} to {language}. Preserve technical terms; add bracketed glosses for ambiguous phrases.",
-      "category": "Translation & Style Transfer",
-      "tags": [
-        "translation",
-        "style",
-        "template"
-      ],
-      "variables": [
-        "language",
-        "text"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Rewrite … in style traits … (syntax, rhythm, form), avoid...",
-      "content": "Rewrite {text} in style traits {traits} (syntax, rhythm, form), avoiding imitation of living authors’ signature content.",
-      "category": "Translation & Style Transfer",
-      "tags": [
-        "translation",
-        "style",
-        "template"
-      ],
-      "variables": [
-        "text",
-        "traits"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Rewrite … for … at …; keep facts and hedging.",
-      "content": "Rewrite {text} for {audience} at {reading_level}; keep facts and hedging.",
-      "category": "Translation & Style Transfer",
-      "tags": [
-        "translation",
-        "style",
-        "template"
-      ],
-      "variables": [
-        "audience",
-        "reading_level",
-        "text"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Teach …. Start with 3 common misconceptions, then a simpl...",
-      "content": "Teach {topic}. Start with 3 common misconceptions, then a simple explanation, then a 3-question check.",
-      "category": "Teaching & Socratic Tutoring",
-      "tags": [
-        "teaching",
-        "socratic",
-        "template"
-      ],
-      "variables": [
-        "topic"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Design a 30-minute learning path: concept → micro-exercis...",
-      "content": "Design a 30-minute learning path: concept → micro-exercise → solution → reflection for {topic}.",
-      "category": "Teaching & Socratic Tutoring",
-      "tags": [
-        "teaching",
-        "socratic",
-        "template"
-      ],
-      "variables": [
-        "topic"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Explain … to a …-year-old using everyday examples and a 1...",
-      "content": "Explain {topic} to a {age}-year-old using everyday examples and a 1-minute metaphor.",
-      "category": "Teaching & Socratic Tutoring",
-      "tags": [
-        "teaching",
-        "socratic",
-        "template"
-      ],
-      "variables": [
-        "age",
-        "topic"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Turn these requirements into user stories with acceptance...",
-      "content": "Turn these requirements into user stories with acceptance criteria and edge cases. Input: {notes}.",
-      "category": "Requirements → Specification (Software)",
-      "tags": [
-        "reqs",
-        "to",
-        "spec",
-        "template"
-      ],
-      "variables": [
-        "notes"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Draft an OpenAPI 3.1 spec for endpoints …, including auth...",
-      "content": "Draft an OpenAPI 3.1 spec for endpoints {endpoints}, including auth, error codes, and rate limits.",
-      "category": "Requirements → Specification (Software)",
-      "tags": [
-        "reqs",
-        "to",
-        "spec",
-        "template"
-      ],
-      "variables": [
-        "endpoints"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "List performance, security, observability, and reliabilit...",
-      "content": "List performance, security, observability, and reliability requirements for {system} with measurable targets.",
-      "category": "Requirements → Specification (Software)",
-      "tags": [
-        "reqs",
-        "to",
-        "spec",
-        "template"
-      ],
-      "variables": [
-        "system"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Generate a minimal, idiomatic … project scaffold with fol...",
-      "content": "Generate a minimal, idiomatic {language} project scaffold with folders, a build script, linters, and a README.",
-      "category": "Implementation Prompts (Code)",
-      "tags": [
-        "implementation",
-        "code",
-        "template"
-      ],
-      "variables": [
-        "language"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Define interfaces/types for …. Provide 2 usage examples a...",
-      "content": "Define interfaces/types for {module}. Provide 2 usage examples and a failing test that drives implementation.",
-      "category": "Implementation Prompts (Code)",
-      "tags": [
-        "implementation",
-        "code",
-        "template"
-      ],
-      "variables": [
-        "module"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Implement …. Include input validation, error handling, an...",
-      "content": "Implement {function}. Include input validation, error handling, and docstring examples.",
-      "category": "Implementation Prompts (Code)",
-      "tags": [
-        "implementation",
-        "code",
-        "template"
-      ],
-      "variables": [
-        "function"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Generate unit, property, and fuzz test ideas for …. Mark ...",
-      "content": "Generate unit, property, and fuzz test ideas for {module}. Mark high-value cases with *.",
-      "category": "Testing & QA",
-      "tags": [
-        "testing",
-        "qa",
-        "template"
-      ],
-      "variables": [
-        "module"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Given this bug report, write a deterministic reproduction...",
-      "content": "Given this bug report, write a deterministic reproduction script and the smallest failing test. Report: {bug_report}.",
-      "category": "Testing & QA",
-      "tags": [
-        "testing",
-        "qa",
-        "template"
-      ],
-      "variables": [
-        "bug_report"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Create golden outputs for … representative inputs and a c...",
-      "content": "Create golden outputs for {N} representative inputs and a comparator that ignores whitespace and ordering.",
-      "category": "Testing & QA",
-      "tags": [
-        "testing",
-        "qa",
-        "template"
-      ],
-      "variables": [
-        "N"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "List top hypotheses for this failure …, required evidence...",
-      "content": "List top hypotheses for this failure {failure}, required evidence, and quick experiments to rule them in/out.",
-      "category": "Debugging & Diagnostics",
-      "tags": [
-        "debug",
-        "diagnostics",
-        "template"
-      ],
-      "variables": [
-        "failure"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Reduce this to the smallest reproducible case. Show the d...",
-      "content": "Reduce this to the smallest reproducible case. Show the diff from original and why it still fails. Input: {repo_path}.",
-      "category": "Debugging & Diagnostics",
-      "tags": [
-        "debug",
-        "diagnostics",
-        "template"
-      ],
-      "variables": [
-        "repo_path"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Propose structured logs with fields … and 5 queries that ...",
-      "content": "Propose structured logs with fields {fields} and 5 queries that reveal the issue.",
-      "category": "Debugging & Diagnostics",
-      "tags": [
-        "debug",
-        "diagnostics",
-        "template"
-      ],
-      "variables": [
-        "fields"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Propose a safe refactor plan for …. Identify seams, write...",
-      "content": "Propose a safe refactor plan for {file}. Identify seams, write integration tests first, then refactor.",
-      "category": "Refactoring & Performance",
-      "tags": [
-        "refactor",
-        "performance",
-        "template"
-      ],
-      "variables": [
-        "file"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Optimize …. State current complexity, target, and trade-o...",
-      "content": "Optimize {function}. State current complexity, target, and trade-offs. Provide benchmarks.",
-      "category": "Refactoring & Performance",
-      "tags": [
-        "refactor",
-        "performance",
-        "template"
-      ],
-      "variables": [
-        "function"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Offer two versions (low-memory vs high-speed) for … and w...",
-      "content": "Offer two versions (low-memory vs high-speed) for {algorithm} and when to choose each.",
-      "category": "Refactoring & Performance",
-      "tags": [
-        "refactor",
-        "performance",
-        "template"
-      ],
-      "variables": [
-        "algorithm"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Plan an exploratory analysis for …: schema check, missing...",
-      "content": "Plan an exploratory analysis for {dataset}: schema check, missingness, distributions, outliers, target leakage.",
-      "category": "Data Analysis & Visualization",
-      "tags": [
-        "data",
-        "viz",
-        "template"
-      ],
-      "variables": [
-        "dataset"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Recommend chart types for answering …. Output: chart → wh...",
-      "content": "Recommend chart types for answering {questions}. Output: chart → why → pitfalls.",
-      "category": "Data Analysis & Visualization",
-      "tags": [
-        "data",
-        "viz",
-        "template"
-      ],
-      "variables": [
-        "questions"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Produce a chart spec in … and a 3-sentence narrative for ...",
-      "content": "Produce a chart spec in {tool} and a 3-sentence narrative for non-experts.",
-      "category": "Data Analysis & Visualization",
-      "tags": [
-        "data",
-        "viz",
-        "template"
-      ],
-      "variables": [
-        "tool"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Create a concept map of …: sub-areas, seminal papers (wit...",
-      "content": "Create a concept map of {field}: sub-areas, seminal papers (with years), and current debates.",
-      "category": "Research Maps & Literature",
-      "tags": [
-        "research",
-        "literature",
-        "template"
-      ],
-      "variables": [
-        "field"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Draft a PRISMA-style search protocol with inclusion/exclu...",
-      "content": "Draft a PRISMA-style search protocol with inclusion/exclusion criteria and databases to query for {topic}.",
-      "category": "Research Maps & Literature",
-      "tags": [
-        "research",
-        "literature",
-        "template"
-      ],
-      "variables": [
-        "topic"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Rank sources by evidence strength for …, from RCTs/system...",
-      "content": "Rank sources by evidence strength for {claim}, from RCTs/systematic reviews to expert opinion.",
-      "category": "Research Maps & Literature",
-      "tags": [
-        "research",
-        "literature",
-        "template"
-      ],
-      "variables": [
-        "claim"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Propose an OKR-style plan for Q…: 3 Objectives, each with...",
-      "content": "Propose an OKR-style plan for Q{q}: 3 Objectives, each with 3-5 measurable Key Results and owners.",
-      "category": "Planning & Road-mapping",
-      "tags": [
-        "roadmapping",
-        "template"
-      ],
-      "variables": [
-        "q"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Describe success in … months, then backcast milestones to...",
-      "content": "Describe success in {T} months, then backcast milestones to today with leading indicators.",
-      "category": "Planning & Road-mapping",
-      "tags": [
-        "roadmapping",
-        "template"
-      ],
-      "variables": [
-        "T"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Build a risk register with likelihood, impact, owner, tri...",
-      "content": "Build a risk register with likelihood, impact, owner, trigger, mitigation for {project}.",
-      "category": "Planning & Road-mapping",
-      "tags": [
-        "roadmapping",
-        "template"
-      ],
-      "variables": [
-        "project"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Turn this skeleton into a hierarchical outline with topic...",
-      "content": "Turn this skeleton into a hierarchical outline with topic sentences and transitions. Input: {bullets}.",
-      "category": "Writing & Editing",
-      "tags": [
-        "writing",
-        "editing",
-        "template"
-      ],
-      "variables": [
-        "bullets"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Edit for a consistent voice: …. Show a before/after pair ...",
-      "content": "Edit for a consistent voice: {traits}. Show a before/after pair for one paragraph.",
-      "category": "Writing & Editing",
-      "tags": [
-        "writing",
-        "editing",
-        "template"
-      ],
-      "variables": [
-        "traits"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Tighten to … words by removing redundancy and weak hedgin...",
-      "content": "Tighten to {words} words by removing redundancy and weak hedging; keep citations and numbers.",
-      "category": "Writing & Editing",
-      "tags": [
-        "writing",
-        "editing",
-        "template"
-      ],
-      "variables": [
-        "words"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Write jobs-to-be-done from interviews. Input: ….",
-      "content": "Write jobs-to-be-done from interviews. Input: {notes}.",
-      "category": "Product & UX",
-      "tags": [
-        "product",
-        "ux",
-        "template"
-      ],
-      "variables": [
-        "notes"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Design 5 usability tasks with success criteria, time-on-t...",
-      "content": "Design 5 usability tasks with success criteria, time-on-task targets, and post-task questions for {feature}.",
-      "category": "Product & UX",
-      "tags": [
-        "product",
-        "ux",
-        "template"
-      ],
-      "variables": [
-        "feature"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Draft empty-state messages for … with guidance and 1 CTA ...",
-      "content": "Draft empty-state messages for {features} with guidance and 1 CTA each.",
-      "category": "Product & UX",
-      "tags": [
-        "product",
-        "ux",
-        "template"
-      ],
-      "variables": [
-        "features"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Build a simple unit-economics table (CAC, LTV, payback) w...",
-      "content": "Build a simple unit-economics table (CAC, LTV, payback) with assumptions and sensitivity described for {business}.",
-      "category": "Business & Finance",
-      "tags": [
-        "business",
-        "finance",
-        "template"
-      ],
-      "variables": [
-        "business"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Analyze moat factors (network effects, switching costs, s...",
-      "content": "Analyze moat factors (network effects, switching costs, scale) for {company}; rate each 1-5 with evidence.",
-      "category": "Business & Finance",
-      "tags": [
-        "business",
-        "finance",
-        "template"
-      ],
-      "variables": [
-        "company"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Model bear/base/bull narratives for … with triggers to mo...",
-      "content": "Model bear/base/bull narratives for {asset} with triggers to move between scenarios.",
-      "category": "Business & Finance",
-      "tags": [
-        "business",
-        "finance",
-        "template"
-      ],
-      "variables": [
-        "asset"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Try to find ways this request could lead to unsafe or bia...",
-      "content": "Try to find ways this request could lead to unsafe or biased outputs. Suggest safe reformulations. Request: {request}.",
-      "category": "Safety-First Rewrites",
-      "tags": [
-        "safety",
-        "rewrites",
-        "template"
-      ],
-      "variables": [
-        "request"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Rewrite the prompt to avoid collecting or inferring sensi...",
-      "content": "Rewrite the prompt to avoid collecting or inferring sensitive personal data while meeting the goal. Prompt: {draft}.",
-      "category": "Safety-First Rewrites",
-      "tags": [
-        "safety",
-        "rewrites",
-        "template"
-      ],
-      "variables": [
-        "draft"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "First produce a neutral, detailed description of the imag...",
-      "content": "First produce a neutral, detailed description of the image(s). Then perform {task} using only that description.",
-      "category": "Multimodal (Images/Video)",
-      "tags": [
-        "multimodal",
-        "template"
-      ],
-      "variables": [
-        "task"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "For …, output a shot list: subject, framing, lighting, ba...",
-      "content": "For {visual_goal}, output a shot list: subject, framing, lighting, background, action, constraints.",
-      "category": "Multimodal (Images/Video)",
-      "tags": [
-        "multimodal",
-        "template"
-      ],
-      "variables": [
-        "visual_goal"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Summarize key events in the video with timestamps and cau...",
-      "content": "Summarize key events in the video with timestamps and causal links; flag uncertain segments.",
-      "category": "Multimodal (Images/Video)",
-      "tags": [
-        "multimodal",
-        "template"
-      ],
-      "variables": [],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Use ONLY the provided context to answer. If missing, say ...",
-      "content": "Use ONLY the provided context to answer. If missing, say 'not in context.' Cite chunk IDs you used. Context: {docs}.",
-      "category": "Retrieval & Context Use",
-      "tags": [
-        "retrieval",
-        "context",
-        "template"
-      ],
-      "variables": [
-        "docs"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Propose search queries to retrieve the missing facts for ...",
-      "content": "Propose search queries to retrieve the missing facts for {question}, ranked by expected signal.",
-      "category": "Retrieval & Context Use",
-      "tags": [
-        "retrieval",
-        "context",
-        "template"
-      ],
-      "variables": [
-        "question"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Ask 5 questions to calibrate tone, depth, and prior knowl...",
-      "content": "Ask 5 questions to calibrate tone, depth, and prior knowledge for {audience}. Then restate the profile you'll use.",
-      "category": "Memory & Personalization",
-      "tags": [
-        "memory",
-        "personalization",
-        "template"
-      ],
-      "variables": [
-        "audience"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Summarize what you’ve learned about my preferences in thi...",
-      "content": "Summarize what you’ve learned about my preferences in this session, and how you’ll apply them next time.",
-      "category": "Memory & Personalization",
-      "tags": [
-        "memory",
-        "personalization",
-        "template"
-      ],
-      "variables": [],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Produce a draft for …, then switch to critical reviewer t...",
-      "content": "Produce a draft for {task}, then switch to critical reviewer to list weaknesses, then deliver a corrected V2.",
-      "category": "Meta-Loops (Critic → Fix → Verify)",
-      "tags": [
-        "meta",
-        "loops",
-        "template"
-      ],
-      "variables": [
-        "task"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Run PDCA: plan …, do (produce output), check (compare vs ...",
-      "content": "Run PDCA: plan {goal}, do (produce output), check (compare vs criteria), act (final revised output).",
-      "category": "Meta-Loops (Critic → Fix → Verify)",
-      "tags": [
-        "meta",
-        "loops",
-        "template"
-      ],
-      "variables": [
-        "goal"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "After each step of …, decide whether more iterations are ...",
-      "content": "After each step of {workflow}, decide whether more iterations are worth it; justify in one sentence.",
-      "category": "Meta-Loops (Critic → Fix → Verify)",
-      "tags": [
-        "meta",
-        "loops",
-        "template"
-      ],
-      "variables": [
-        "workflow"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Propose a plan that fits … and …. If not feasible, give t...",
-      "content": "Propose a plan that fits {budget} and {deadline}. If not feasible, give the closest feasible plan and gap notes.",
-      "category": "Constraint-Heavy Tasks",
-      "tags": [
-        "constraints",
-        "template"
-      ],
-      "variables": [
-        "budget",
-        "deadline"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Solve … assuming no internet, no external libraries, and ...",
-      "content": "Solve {task} assuming no internet, no external libraries, and {device} limits.",
-      "category": "Constraint-Heavy Tasks",
-      "tags": [
-        "constraints",
-        "template"
-      ],
-      "variables": [
-        "device",
-        "task"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Given two answers, judge them against criteria …, assign ...",
-      "content": "Given two answers, judge them against criteria {criteria}, assign scores with 1-sentence justifications, and pick a winner.",
-      "category": "Evaluation & Meta-Judging",
-      "tags": [
-        "evaluation",
-        "template"
-      ],
-      "variables": [
-        "criteria"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Build a 5-criterion rubric for evaluating …, each with 3 ...",
-      "content": "Build a 5-criterion rubric for evaluating {artifact}, each with 3 anchor levels (poor/ok/excellent).",
-      "category": "Evaluation & Meta-Judging",
-      "tags": [
-        "evaluation",
-        "template"
-      ],
-      "variables": [
-        "artifact"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Show a brief 3-bullet plan for …, then give the final ans...",
-      "content": "Show a brief 3-bullet plan for {task}, then give the final answer. Avoid revealing lengthy internal reasoning.",
-      "category": "Reasoning Without Long Chains",
-      "tags": [
-        "concise",
-        "reasoning",
-        "template"
-      ],
-      "variables": [
-        "task"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "List only the key steps that would change the outcome if ...",
-      "content": "List only the key steps that would change the outcome if wrong for {task}; then present the result.",
-      "category": "Reasoning Without Long Chains",
-      "tags": [
-        "concise",
-        "reasoning",
-        "template"
-      ],
-      "variables": [
-        "task"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Create a one-page briefing (Problem, Options, Recommendat...",
-      "content": "Create a one-page briefing (Problem, Options, Recommendation, Risks, Next Steps) with a {word_limit}-word executive summary.",
-      "category": "Executive & Board-Ready",
-      "tags": [
-        "executive",
-        "board",
-        "template"
-      ],
-      "variables": [
-        "word_limit"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Anticipate 10 tough board questions about … and prepare c...",
-      "content": "Anticipate 10 tough board questions about {proposal} and prepare crisp, defensible answers.",
-      "category": "Executive & Board-Ready",
-      "tags": [
-        "executive",
-        "board",
-        "template"
-      ],
-      "variables": [
-        "proposal"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Convert … into a do-confirm checklist with triggers, role...",
-      "content": "Convert {procedure} into a do-confirm checklist with triggers, roles, and failure handoffs.",
-      "category": "Checklists & SOPs",
-      "tags": [
-        "checklists",
-        "sops",
-        "template"
-      ],
-      "variables": [
-        "procedure"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Draft an incident playbook (detect, triage, contain, reme...",
-      "content": "Draft an incident playbook (detect, triage, contain, remediate, postmortem) for {failure_mode}.",
-      "category": "Checklists & SOPs",
-      "tags": [
-        "checklists",
-        "sops",
-        "template"
-      ],
-      "variables": [
-        "failure_mode"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Draft three versions (direct, diplomatic, inspirational) ...",
-      "content": "Draft three versions (direct, diplomatic, inspirational) of a message to {audience} about {topic}.",
-      "category": "Negotiation & Communication",
-      "tags": [
-        "negotiation",
-        "communication",
-        "template"
-      ],
-      "variables": [
-        "audience",
-        "topic"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "List likely objections from … and evidence-based response...",
-      "content": "List likely objections from {stakeholder} and evidence-based responses; note what would change our mind.",
-      "category": "Negotiation & Communication",
-      "tags": [
-        "negotiation",
-        "communication",
-        "template"
-      ],
-      "variables": [
-        "stakeholder"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Map … to relevant policies/regulations with obligations, ...",
-      "content": "Map {activity} to relevant policies/regulations with obligations, evidence to collect, and audit cadence.",
-      "category": "Compliance & Policy",
-      "tags": [
-        "compliance",
-        "policy",
-        "template"
-      ],
-      "variables": [
-        "activity"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Create a data-classification matrix for …, with handling ...",
-      "content": "Create a data-classification matrix for {org}, with handling rules and DLP guardrails.",
-      "category": "Compliance & Policy",
-      "tags": [
-        "compliance",
-        "policy",
-        "template"
-      ],
-      "variables": [
-        "org"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Design an A/B test for …. Include MDE, sample size estima...",
-      "content": "Design an A/B test for {metric}. Include MDE, sample size estimate, guardrail metrics, and stop criteria.",
-      "category": "Analytics & Experimentation",
-      "tags": [
-        "analytics",
-        "experiments",
-        "template"
-      ],
-      "variables": [
-        "metric"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Given observational data for …, list threats to validity ...",
-      "content": "Given observational data for {question}, list threats to validity and suitable methods (diff-in-diff, IV, matching).",
-      "category": "Analytics & Experimentation",
-      "tags": [
-        "analytics",
-        "experiments",
-        "template"
-      ],
-      "variables": [
-        "question"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Estimate … with a clear decomposition, 2 alternative assu...",
-      "content": "Estimate {quantity} with a clear decomposition, 2 alternative assumptions, and a sanity check.",
-      "category": "Back-of-the-Envelope & Fermi",
-      "tags": [
-        "fermi",
-        "template"
-      ],
-      "variables": [
-        "quantity"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Provide an order-of-magnitude bound for … and identify th...",
-      "content": "Provide an order-of-magnitude bound for {problem} and identify the dominant term.",
-      "category": "Back-of-the-Envelope & Fermi",
-      "tags": [
-        "fermi",
-        "template"
-      ],
-      "variables": [
-        "problem"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Turn this to-do list into a time-blocked schedule for …, ...",
-      "content": "Turn this to-do list into a time-blocked schedule for {day}, with energy matching and buffers. List: {tasks}.",
-      "category": "Personal Productivity",
-      "tags": [
-        "productivity",
-        "template"
-      ],
-      "variables": [
-        "day",
-        "tasks"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Split … into a 20-minute starter, define a minimum viable...",
-      "content": "Split {task} into a 20-minute starter, define a minimum viable win, and a reward/penalty.",
-      "category": "Personal Productivity",
-      "tags": [
-        "productivity",
-        "template"
-      ],
-      "variables": [
-        "task"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "State the problem in one sentence, then list … success cr...",
-      "content": "State the problem in one sentence, then list {n} success criteria and define the audience {audience}.",
-      "category": "Orient & Scope",
-      "tags": [
-        "orient-scope",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "audience",
-        "n"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Rewrite the research question using … and list measurable...",
-      "content": "Rewrite the research question using {framework} and list measurable variables and outcomes.",
-      "category": "Orient & Scope",
-      "tags": [
-        "orient-scope",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "framework"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Generate … search strings for … covering synonyms, Boolea...",
-      "content": "Generate {k} search strings for {engine} covering synonyms, Boolean operators, fields, and date filters for {topic}. Explain rationale for each string.",
-      "category": "Query Planning & Search Strategy",
-      "tags": [
-        "query-planning",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "engine",
-        "k",
-        "topic"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Propose a two-pass search: pass A for high recall, pass B...",
-      "content": "Propose a two-pass search: pass A for high recall, pass B for high precision, with stop rules and logging format.",
-      "category": "Query Planning & Search Strategy",
-      "tags": [
-        "query-planning",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Perform a lateral reading pass: identify author/org, fund...",
-      "content": "Perform a lateral reading pass: identify author/org, funding, independent references, and credibility signals for {source}. Output a brief verdict with caveats.",
-      "category": "Lateral Reading & Source Vetting",
-      "tags": [
-        "lateral-reading",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "source"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "List … independent sources that profile or evaluate … and...",
-      "content": "List {m} independent sources that profile or evaluate {organization/person/claim} and summarize convergence/divergence.",
-      "category": "Lateral Reading & Source Vetting",
-      "tags": [
-        "lateral-reading",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "m",
-        "organization/person/claim"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Create title/abstract screening rules for … and apply to ...",
-      "content": "Create title/abstract screening rules for {topic} and apply to {N} citations. Output keep/maybe/drop with one-line reasons.",
-      "category": "Screening & Tracking (PRISMA-style)",
-      "tags": [
-        "screening-tracking",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "N",
-        "topic"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Produce a PRISMA-like log (identification→screening→eligi...",
-      "content": "Produce a PRISMA-like log (identification→screening→eligibility→included) for this batch of records: {records}.",
-      "category": "Screening & Tracking (PRISMA-style)",
-      "tags": [
-        "screening-tracking",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "records"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Score each source on Currency, Relevance, Authority, Accu...",
-      "content": "Score each source on Currency, Relevance, Authority, Accuracy, and Purpose (1–5) for {topic}; justify each score.",
-      "category": "Credibility Appraisal (CRAAP/CARS)",
-      "tags": [
-        "credibility-appraisal",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "topic"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Create a quick credibility rubric tailored to … and apply...",
-      "content": "Create a quick credibility rubric tailored to {domain} and apply it to {N} sources.",
-      "category": "Credibility Appraisal (CRAAP/CARS)",
-      "tags": [
-        "credibility-appraisal",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "N",
-        "domain"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Classify study design and rate certainty of evidence usin...",
-      "content": "Classify study design and rate certainty of evidence using {system} for claims about {claim}. Explain any downgrades/upgrades.",
-      "category": "Evidence Levels & Certainty (GRADE/LoE)",
-      "tags": [
-        "evidence-certainty",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "claim",
-        "system"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Build a table: Claim | Study Type | Risk of Bias | Consis...",
-      "content": "Build a table: Claim | Study Type | Risk of Bias | Consistency | Directness | Precision | Overall Certainty.",
-      "category": "Evidence Levels & Certainty (GRADE/LoE)",
-      "tags": [
-        "evidence-certainty",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Run … on this text: output Survey questions, key answers ...",
-      "content": "Run {method} on this text: output Survey questions, key answers from Read, Recite bullets, and a {word_limit}-word Review.",
-      "category": "Active Reading (SQ3R/PQ4R)",
-      "tags": [
-        "active-reading",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "method",
-        "word_limit"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Extract key terms and define each; attach the exemplar se...",
-      "content": "Extract key terms and define each; attach the exemplar sentence from the text for context.",
-      "category": "Active Reading (SQ3R/PQ4R)",
-      "tags": [
-        "active-reading",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Produce 50-, 150-, and 400-word summaries of …; list top ...",
-      "content": "Produce 50-, 150-, and 400-word summaries of {text}; list top 3 takeaways and 2 uncertainties with page/section references.",
-      "category": "Summarization & Distillation",
-      "tags": [
-        "summarization",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "text"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Create a ‘lossy’ summary (≤… words) and a ‘lossless’ outl...",
-      "content": "Create a ‘lossy’ summary (≤{words} words) and a ‘lossless’ outline preserving terminology and numbers.",
-      "category": "Summarization & Distillation",
-      "tags": [
-        "summarization",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "words"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Turn the reading into Cornell Notes: Cues, Notes, Summary...",
-      "content": "Turn the reading into Cornell Notes: Cues, Notes, Summary (≤{summary_words} words).",
-      "category": "Note-Taking & Knowledge Structures",
-      "tags": [
-        "notes-structures",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "summary_words"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Create Zettelkasten-style atomic notes from …: one idea p...",
-      "content": "Create Zettelkasten-style atomic notes from {text}: one idea per note with links (see also) and source citation.",
-      "category": "Note-Taking & Knowledge Structures",
-      "tags": [
-        "notes-structures",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "text"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Build a synthesis matrix: rows=sources, cols=…. Fill with...",
-      "content": "Build a synthesis matrix: rows=sources, cols={themes}. Fill with evidence snippets + citation IDs.",
-      "category": "Synthesis Matrix & Concept Mapping",
-      "tags": [
-        "synthesis-maps",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "themes"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "List nodes and labeled edges for a concept map of …; incl...",
-      "content": "List nodes and labeled edges for a concept map of {topic}; include {p} core propositions.",
-      "category": "Synthesis Matrix & Concept Mapping",
-      "tags": [
-        "synthesis-maps",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "p",
-        "topic"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Extract Claim, Data, Warrant, Backing, Qualifier, Rebutta...",
-      "content": "Extract Claim, Data, Warrant, Backing, Qualifier, Rebuttal for each main argument in {text}.",
-      "category": "Argument Analysis (Toulmin)",
-      "tags": [
-        "argument-analysis",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "text"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Identify causal claims and rewrite them as testable state...",
-      "content": "Identify causal claims and rewrite them as testable statements; list potential confounders.",
-      "category": "Argument Analysis (Toulmin)",
-      "tags": [
-        "argument-analysis",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Compare … across criteria …. Apply weights … and compute ...",
-      "content": "Compare {options} across criteria {criteria}. Apply weights {weights} and compute a ranked decision table.",
-      "category": "Compare/Contrast & Decision Tables",
-      "tags": [
-        "compare-contrast",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "criteria",
-        "options",
-        "weights"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Identify options on the Pareto frontier for … and explain...",
-      "content": "Identify options on the Pareto frontier for {decision} and explain trade-offs.",
-      "category": "Compare/Contrast & Decision Tables",
-      "tags": [
-        "compare-contrast",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "decision"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "List contradictions across sources about …; propose tests...",
-      "content": "List contradictions across sources about {topic}; propose tests or evidence needed to reconcile them.",
-      "category": "Conflict Resolution & Gap Finding",
-      "tags": [
-        "conflicts-gaps",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "topic"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Identify research gaps and formulate … sharp questions or...",
-      "content": "Identify research gaps and formulate {k} sharp questions or experiments to close them.",
-      "category": "Conflict Resolution & Gap Finding",
-      "tags": [
-        "conflicts-gaps",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "k"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Write a synthesis stating consensus, major disagreements,...",
-      "content": "Write a synthesis stating consensus, major disagreements, and research gaps; include inline citations after each claim.",
-      "category": "Synthesis & Communication",
-      "tags": [
-        "synthesis-comms",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Create a one-page brief (Problem, Evidence snapshot, Opti...",
-      "content": "Create a one-page brief (Problem, Evidence snapshot, Options, Recommendation, Risks, Next steps) for {audience}.",
-      "category": "Synthesis & Communication",
-      "tags": [
-        "synthesis-comms",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "audience"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "For each key claim in …, provide … authoritative sources....",
-      "content": "For each key claim in {draft}, provide {2_to_4} authoritative sources. Mark claim-level confidence (0–1) and note any uncertainties.",
-      "category": "Fact-Checking & Verification",
-      "tags": [
-        "fact-checking",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "2_to_4",
-        "draft"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Build an evidence matrix: Claim | Source | Evidence quote...",
-      "content": "Build an evidence matrix: Claim | Source | Evidence quote | Counter-evidence | Assessment | Confidence (0–1).",
-      "category": "Fact-Checking & Verification",
-      "tags": [
-        "fact-checking",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Run a verification pass: list likely hallucinations or we...",
-      "content": "Run a verification pass: list likely hallucinations or weakly-supported statements and propose targeted search terms to verify them.",
-      "category": "Fact-Checking & Verification",
-      "tags": [
-        "fact-checking",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Convert raw references into a consistent style …; de-dupl...",
-      "content": "Convert raw references into a consistent style {style}; de-duplicate, fix author/year/title fields, and add DOIs/URLs when available.",
-      "category": "Citation Management & Reference Hygiene",
-      "tags": [
-        "citation-hygiene",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "style"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Validate each in-text citation maps to a reference entry;...",
-      "content": "Validate each in-text citation maps to a reference entry; flag missing/extra references and produce a fix plan.",
-      "category": "Citation Management & Reference Hygiene",
-      "tags": [
-        "citation-hygiene",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Check references for retraction/expressions of concern; o...",
-      "content": "Check references for retraction/expressions of concern; output a table with status, date, and replacement suggestions.",
-      "category": "Retractions & Integrity Checks",
-      "tags": [
-        "retractions-integrity",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Scan for plagiarism risk by locating close paraphrases/qu...",
-      "content": "Scan for plagiarism risk by locating close paraphrases/quotes lacking citation in {draft}; list fixes.",
-      "category": "Retractions & Integrity Checks",
-      "tags": [
-        "retractions-integrity",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "draft"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Audit time-sensitive claims in …; for each, specify last-...",
-      "content": "Audit time-sensitive claims in {draft}; for each, specify last-known-good date and whether an update search is required.",
-      "category": "Temporal Validity & Update Checks",
-      "tags": [
-        "temporal-validity",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "draft"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Propose an update plan: search cadence, key sources/feeds...",
-      "content": "Propose an update plan: search cadence, key sources/feeds, and change-log format for {topic}.",
-      "category": "Temporal Validity & Update Checks",
-      "tags": [
-        "temporal-validity",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "topic"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Validate stated numbers (rates, percentages, denominators...",
-      "content": "Validate stated numbers (rates, percentages, denominators). Recompute and show work; flag rounding or base-rate errors.",
-      "category": "Statistical Sanity & Numeracy Checks",
-      "tags": [
-        "statistical-sanity",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Check statistical claims for misuse (p-values, confidence...",
-      "content": "Check statistical claims for misuse (p-values, confidence intervals, multiple comparisons) and suggest clearer phrasing.",
-      "category": "Statistical Sanity & Numeracy Checks",
-      "tags": [
-        "statistical-sanity",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Detect internal contradictions within … and cross-documen...",
-      "content": "Detect internal contradictions within {draft} and cross-document inconsistencies against {corpus}. Provide reconciliations or corrections.",
-      "category": "Contradiction & Consistency Checks",
-      "tags": [
-        "consistency-checks",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "corpus",
-        "draft"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "List assumptions used across sections and verify they rem...",
-      "content": "List assumptions used across sections and verify they remain consistent; note any scope creep.",
-      "category": "Contradiction & Consistency Checks",
-      "tags": [
-        "consistency-checks",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Assess diversity of sources by type (primary/secondary), ...",
-      "content": "Assess diversity of sources by type (primary/secondary), geography, time, and viewpoint for {topic}; identify blind spots.",
-      "category": "Source Diversity & Coverage Audit",
-      "tags": [
-        "coverage-audit",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "topic"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Recommend … additional sources to balance coverage, with ...",
-      "content": "Recommend {k} additional sources to balance coverage, with a short justification for each.",
-      "category": "Source Diversity & Coverage Audit",
-      "tags": [
-        "coverage-audit",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "k"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "From current results, infer missing facets and generate r...",
-      "content": "From current results, infer missing facets and generate refined queries; explain expected marginal value.",
-      "category": "Query Refinement & Relevance Feedback",
-      "tags": [
-        "query-refinement",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Run a relevance-feedback loop: label top … results as rel...",
-      "content": "Run a relevance-feedback loop: label top {N} results as relevant/irrelevant and propose the next query batch.",
-      "category": "Query Refinement & Relevance Feedback",
-      "tags": [
-        "query-refinement",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "N"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Extract structured data from …: Study ID, Population, Int...",
-      "content": "Extract structured data from {papers}: Study ID, Population, Intervention/Exposure, Comparator, Outcomes, Effect sizes, Notes.",
-      "category": "Data Extraction & Evidence Tables",
-      "tags": [
-        "data-extraction",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "papers"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Build a summary table with standardized effect metrics an...",
-      "content": "Build a summary table with standardized effect metrics and interpret heterogeneity qualitatively.",
-      "category": "Data Extraction & Evidence Tables",
-      "tags": [
-        "data-extraction",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Create a methods log: search strings, dates, databases, i...",
-      "content": "Create a methods log: search strings, dates, databases, inclusion/exclusion rules, and screening outcomes for {topic}.",
-      "category": "Reproducibility & Audit Trail",
-      "tags": [
-        "reproducibility",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "topic"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    },
-    {
-      "title": "Produce a change log listing each revision to …, its reas...",
-      "content": "Produce a change log listing each revision to {draft}, its reason, and evidence triggering the change.",
-      "category": "Reproducibility & Audit Trail",
-      "tags": [
-        "reproducibility",
-        "meta-prompt",
-        "research"
-      ],
-      "variables": [
-        "draft"
-      ],
-      "isFavorite": false,
-      "useCount": 0,
-      "lastUsed": null
-    }
-  ]
-}
+[
+  {
+    "title": "Refine and Improve a Prompt",
+    "content": "Rewrite the following prompt in clear, natural English and enhance it using AI prompt-writing best practices to ensure more accurate, specific, and useful results.\\n\\n Prompt: {draft}",
+    "category": "Prompt Refinement & Upgrading",
+    "tags": ["refinement", "clarity", "best-practices", "prompt-writing"],
+    "variables": ["draft"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Comprehensive Listing Task",
+    "content": "List as many relevant items, examples, or ideas as possible related to the following topic or question. Aim for completeness, accuracy, and clarity. Topic: {topic}",
+    "category": "Brainstorming & Idea Generation",
+    "tags": ["listing", "brainstorming", "comprehensiveness", "creativity"],
+    "variables": ["topic"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Identify Effective Frameworks",
+    "content": "What are the most effective frameworks, methods, or models to {objective}? For each framework, explain its core idea, advantages, and when it is best applied.",
+    "category": "Analytical Thinking & Problem Solving",
+    "tags": ["frameworks", "analysis", "problem-solving", "methods"],
+    "variables": ["objective"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Decompose a Big Goal",
+    "content": "Break down the goal '{goal}' into a hierarchy: outcomes → milestones → deliverables → tasks. Include dependencies, required resources, estimated effort, risks, and success metrics. Conclude with a 2-week starter plan that fits {timeframe} and {constraints}.",
+    "category": "Planning & Execution",
+    "tags": ["goal-setting", "planning", "work-breakdown", "roadmap"],
+    "variables": ["goal", "timeframe", "constraints"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Socratic Tutor Session",
+    "content": "Act as a Socratic tutor for the topic '{topic}'. Ask me one question at a time, escalating from fundamentals to applications. If I answer incorrectly, give a brief hint and a simpler checkpoint question. Finish with a concise summary and 3 practice problems tailored to my level: {level}.",
+    "category": "Learning & Teaching",
+    "tags": ["socratic", "tutoring", "learning", "practice"],
+    "variables": ["topic", "level"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Compare-and-Contrast Matrix",
+    "content": "Create a comparison matrix for these items: {items}. Columns: criteria {criteria}. Rows: items. Fill with concise, evidence-based notes. Conclude with: (1) key trade-offs, (2) recommended choice for {context}, (3) one-sentence rationale.",
+    "category": "Analysis",
+    "tags": ["comparison", "decision-making", "trade-offs"],
+    "variables": ["items", "criteria", "context"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Explain Twice: ELI5 then Technical",
+    "content": "Explain '{topic}' in two passes: (1) ELI5 using familiar analogies; (2) A technical explanation for a knowledgeable audience, including definitions, equations or algorithms if relevant, and a tiny example.",
+    "category": "Explaining Concepts",
+    "tags": ["ELI5", "technical", "communication"],
+    "variables": ["topic"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Reverse-Engineer an Exemplar",
+    "content": "Analyze this exemplar work: {exemplar}. Identify its structure, patterns, voice, and tactics. Produce a style guide with do's/don'ts and a reusable outline template that would generate similar quality results for {use_case}.",
+    "category": "Writing & Craft",
+    "tags": ["reverse-engineering", "style", "templates"],
+    "variables": ["exemplar", "use_case"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Generate Multi-Analogies",
+    "content": "Create 7 distinct analogies/metaphors to explain '{concept}' from different domains (nature, sports, finance, engineering, art, everyday life, history). For each, state the mapping and one limitation of the analogy.",
+    "category": "Creativity & Understanding",
+    "tags": ["analogies", "metaphors", "learning"],
+    "variables": ["concept"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Error-Finding and Correction Pass",
+    "content": "Proofread and edit the following text for clarity, correctness, and concision. List errors by type (grammar, logic, citation, math), propose fixes, and provide a clean revised version. Text: {text}",
+    "category": "Editing & Quality",
+    "tags": ["editing", "proofreading", "quality"],
+    "variables": ["text"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Reading-to-Notes Pipeline",
+    "content": "Transform this source into structured notes. Steps: (1) key points; (2) definitions; (3) claims with supporting evidence; (4) open questions; (5) 3 flashcards (Q/A); (6) 1-paragraph synthesis. Source: {source_text}",
+    "category": "Research & Note-Taking",
+    "tags": ["notes", "synthesis", "flashcards"],
+    "variables": ["source_text"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Decision Brief (One Page)",
+    "content": "Draft a decision brief for {decision}. Include: context, options, criteria, weighted scoring table, top risks, mitigations, and a clear recommendation with next steps for the next {time_window}.",
+    "category": "Decision Making",
+    "tags": ["brief", "scoring", "recommendation"],
+    "variables": ["decision", "time_window"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "First Principles Derivation",
+    "content": "Reframe the problem '{problem}' from first principles. List assumptions, question each, derive solution paths that do not rely on convention, and propose a minimally sufficient experiment to test the most uncertain assumption.",
+    "category": "Problem Solving",
+    "tags": ["first-principles", "assumptions", "experimentation"],
+    "variables": ["problem"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Deliberate Practice Plan",
+    "content": "Design a 4-week deliberate practice plan to improve {skill} from {current_level} to {target_level} with {time_budget} per week. Include drills, feedback loops, metrics, and weekly reflection prompts.",
+    "category": "Skill Building",
+    "tags": ["practice", "feedback", "metrics"],
+    "variables": ["skill", "current_level", "target_level", "time_budget"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Systematic Research Plan",
+    "content": "For the question '{research_question}', outline a systematic mini-review: search strategy, inclusion/exclusion criteria, screening steps, data extraction schema, and synthesis method. Conclude with expected biases and how to mitigate them.",
+    "category": "Research Methods",
+    "tags": ["systematic-review", "methods", "bias"],
+    "variables": ["research_question"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Fermi Estimate with Sensitivity",
+    "content": "Provide a Fermi estimate for: {estimation_question}. Show assumptions, a back-of-the-envelope calculation, low/base/high scenarios, and a sensitivity table highlighting which variable drives the result the most.",
+    "category": "Quantitative Reasoning",
+    "tags": ["estimation", "sensitivity", "quantitative"],
+    "variables": ["estimation_question"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Steelman Counterarguments",
+    "content": "Given the claim '{claim}', produce the strongest counterarguments from at least three distinct perspectives. For each, list the best evidence, where the original claim is most vulnerable, and what would change your mind.",
+    "category": "Critical Thinking",
+    "tags": ["steelman", "debate", "bias"],
+    "variables": ["claim"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Red Team Review",
+    "content": "Act as a 'red team' to stress-test this plan: {plan}. Identify failure modes, hidden assumptions, adversarial scenarios, and ethical risks. Provide prioritized fixes and a quick validation checklist.",
+    "category": "Risk & Reliability",
+    "tags": ["red-team", "risks", "assumptions"],
+    "variables": ["plan"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Rubric Builder",
+    "content": "Create a scoring rubric for {task}. Include 4–6 criteria, each with 4 levels (excellent/good/fair/poor) and behavioral anchors. Provide a one-line usage guide and a sample graded example.",
+    "category": "Evaluation & Assessment",
+    "tags": ["rubric", "assessment", "grading"],
+    "variables": ["task"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Teach-Back Test",
+    "content": "Teach the topic '{topic}' as a step-by-step mini-lesson for {audience}. Then propose a 5-question teach-back quiz and model ideal answers.",
+    "category": "Learning & Teaching",
+    "tags": ["instructional-design", "quiz", "teach-back"],
+    "variables": ["topic", "audience"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Reasoning Summary (No Hidden Steps)",
+    "content": "Provide a concise, high-level rationale for your answer to '{question}' using 3–5 bullet points. Avoid revealing step-by-step internal thought; focus on key factors, trade-offs, and final conclusion.",
+    "category": "Reasoning & Communication",
+    "tags": ["rationale", "summary", "clarity"],
+    "variables": ["question"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Multi-Source Synthesis",
+    "content": "Synthesize the following sources {sources} into a coherent summary. Extract overlapping insights, disagreements, and novel contributions. End with a reconciled viewpoint and 2 follow-up research questions.",
+    "category": "Research & Synthesis",
+    "tags": ["synthesis", "literature", "comparison"],
+    "variables": ["sources"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Reformat to JSON Schema",
+    "content": "Convert the following specification into a JSON Schema draft-2020-12, including types, required fields, enum constraints, and example instances. Spec: {description}",
+    "category": "Data & Modeling",
+    "tags": ["json", "schema", "validation"],
+    "variables": ["description"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Entity and Relation Extraction",
+    "content": "From the text below, extract entities (with types) and relations as triples (subject, relation, object). Return JSON arrays 'entities' and 'relations'. Text: {text}",
+    "category": "NLP & Information Extraction",
+    "tags": ["entities", "relations", "nlp"],
+    "variables": ["text"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Glossary Builder",
+    "content": "Create a compact glossary for the domain '{domain}' at the '{level}' level (beginner/intermediate/advanced). For each term: definition, why it matters, and 1 example.",
+    "category": "Knowledge Organization",
+    "tags": ["glossary", "definitions", "learning"],
+    "variables": ["domain", "level"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Misconception Refuter",
+    "content": "List the top misconceptions about '{topic}'. For each: why it's appealing, what's wrong, the correct view, and a memorable correction analogy.",
+    "category": "Critical Thinking",
+    "tags": ["misconceptions", "debunking", "education"],
+    "variables": ["topic"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Trade-off Analysis",
+    "content": "Analyze the trade-offs between {approach_a} and {approach_b} for {context}. Consider cost, complexity, scalability, performance, security, and time-to-value. End with a decision rule.",
+    "category": "Architecture & Strategy",
+    "tags": ["trade-offs", "strategy", "decision"],
+    "variables": ["approach_a", "approach_b", "context"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "30-60-90 Day Plan",
+    "content": "Draft a 30-60-90 day plan for {role_or_goal}. Include learning objectives, quick wins, relationship map, systems/processes to build, and metrics for each phase.",
+    "category": "Onboarding & Planning",
+    "tags": ["plan", "milestones", "metrics"],
+    "variables": ["role_or_goal"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Pre-Mortem Workshop",
+    "content": "Imagine the project '{project}' failed spectacularly in 6 months. List plausible causes by category (technical, people, process, external). For each, propose a prevention or early warning signal.",
+    "category": "Risk Management",
+    "tags": ["pre-mortem", "risk", "planning"],
+    "variables": ["project"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Post-Mortem Template",
+    "content": "Write a blameless post-mortem for incident '{incident}'. Sections: summary, impact, timeline, root causes (5 Whys), what went well, what went poorly, action items with owners and dates.",
+    "category": "Operations & Reliability",
+    "tags": ["post-mortem", "reliability", "process"],
+    "variables": ["incident"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Socratic Self-Coaching",
+    "content": "Help me work through this dilemma: {dilemma}. Ask reflective questions to surface values, constraints, and options. After 6–8 questions, summarize insights and suggest a small next step.",
+    "category": "Personal Development",
+    "tags": ["coaching", "reflection", "decisions"],
+    "variables": ["dilemma"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "4-Week Learning Syllabus",
+    "content": "Create a 4-week syllabus for {subject} with {hours_per_week} hours/week. Include weekly objectives, readings/resources, exercises, and an end-of-week check. Provide a final project brief.",
+    "category": "Curriculum Design",
+    "tags": ["syllabus", "learning", "practice"],
+    "variables": ["subject", "hours_per_week"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Test-First Spec",
+    "content": "Write test cases first for the following specification in {language}. Include unit and property tests with clear inputs/outputs and edge cases. Spec: {spec}",
+    "category": "Software Quality",
+    "tags": ["testing", "tdd", "specification"],
+    "variables": ["language", "spec"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "API Contract Sketch",
+    "content": "Draft an API contract for {api_name}. Provide endpoints, methods, request/response JSON, status codes, error model, idempotency guidance, and 2 example client calls.",
+    "category": "API Design",
+    "tags": ["api", "contracts", "design"],
+    "variables": ["api_name"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Data Cleaning Plan",
+    "content": "Given this dataset description: {dataset_description}, outline a cleaning plan: schema checks, missingness strategy, outlier handling, normalization, validations, and a reproducible pipeline sketch.",
+    "category": "Data Engineering",
+    "tags": ["data-quality", "pipelines", "validation"],
+    "variables": ["dataset_description"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Explain a Code Diff",
+    "content": "Summarize what changed in the following diff and why it matters. Note risks, performance/security implications, and suggested follow-up tests. Diff: {diff}",
+    "category": "Code Review",
+    "tags": ["diff", "review", "risk"],
+    "variables": ["diff"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Refactor Plan",
+    "content": "Propose a refactor plan for this codebase fragment: {code}. Identify smells, propose target design, incremental steps, safety nets (tests), and expected benefits.",
+    "category": "Software Design",
+    "tags": ["refactoring", "design", "code-smells"],
+    "variables": ["code"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Performance Profiling Hypotheses",
+    "content": "For the system '{system_description}', list likely performance bottlenecks, hypothesize root causes, identify key metrics, and propose a profiling/benchmark plan. End with 3 low-risk optimizations.",
+    "category": "Performance Engineering",
+    "tags": ["profiling", "optimization", "metrics"],
+    "variables": ["system_description"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Security Threat Modeling (STRIDE)",
+    "content": "Perform a STRIDE threat model for {system}. For each category, list threats, impacted assets, likelihood/impact, and mitigations. Provide a prioritized top-5 action list.",
+    "category": "Security",
+    "tags": ["threat-modeling", "stride", "mitigation"],
+    "variables": ["system"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Decision Tree Builder",
+    "content": "Construct a decision tree for choosing among {options} given factors {factors}. Show thresholds/branches textually and summarize the implied decision policy.",
+    "category": "Decision Science",
+    "tags": ["decision-tree", "policy", "thresholds"],
+    "variables": ["options", "factors"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "OKR Draft",
+    "content": "Draft 3 Objectives and 3–4 Key Results each for the mission '{mission}'. Ensure Key Results are outcome-focused, measurable, and time-bounded. Include 2 anti-goals to avoid.",
+    "category": "Strategy & Execution",
+    "tags": ["okr", "metrics", "strategy"],
+    "variables": ["mission"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Snowflake Story Outline",
+    "content": "Using the Snowflake method, expand the story/piece '{premise}' from a one-sentence idea to a detailed scene list: sentence → paragraph → character synopses → scene beats.",
+    "category": "Writing & Story",
+    "tags": ["outline", "story-structure", "snowflake"],
+    "variables": ["premise"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Tone & Audience Rewriter",
+    "content": "Rewrite the draft for {audience} with the desired tone '{tone}'. Keep the core meaning, improve clarity, and provide 2 alternative openings and 2 closings. Draft: {draft}",
+    "category": "Editing & Style",
+    "tags": ["tone", "audience", "rewrite"],
+    "variables": ["audience", "tone", "draft"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Summary with Fact-Check Flags",
+    "content": "Summarize the text below in 5–7 bullets. Flag any statements that look like claims of fact and add a '[VERIFY]' note. Text: {text}",
+    "category": "Summarization & QA",
+    "tags": ["summary", "fact-check", "verification"],
+    "variables": ["text"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Cross-Language Styled Translation",
+    "content": "Translate the following into {target_language} while matching the style '{style}'. Preserve technical terms and provide footnotes for culture-bound references. Text: {text}",
+    "category": "Translation",
+    "tags": ["translation", "style", "localization"],
+    "variables": ["target_language", "style", "text"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Prompt Audit & Risk Check",
+    "content": "Audit this prompt for ambiguity, missing constraints, and potential bias. Propose improvements and a safer alternative if relevant. Prompt: {prompt}",
+    "category": "Prompt Engineering",
+    "tags": ["audit", "safety", "clarity"],
+    "variables": ["prompt"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Synthesize Debate & Common Ground",
+    "content": "Given these opposing positions {positions}, map areas of agreement, precise points of contention, and bridge proposals. Conclude with a joint experiment that could move both sides forward.",
+    "category": "Mediation & Debate",
+    "tags": ["debate", "synthesis", "mediation"],
+    "variables": ["positions"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "MVP Scope Cut & Prioritization",
+    "content": "For the product idea '{product_idea}', define an MVP by removing or deferring features. Use MoSCoW or RICE briefly, list the riskiest assumptions, and propose a single high-leverage user test.",
+    "category": "Product Strategy",
+    "tags": ["mvp", "prioritization", "product"],
+    "variables": ["product_idea"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Knowledge Gaps Map & Reading List",
+    "content": "For the topic '{topic}', list prerequisite concepts, current gaps, and a staged reading list (foundational → intermediate → advanced). Include one 'capstone' application task.",
+    "category": "Learning Strategy",
+    "tags": ["reading-list", "prerequisites", "skills"],
+    "variables": ["topic"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Back-of-the-Envelope Calculator",
+    "content": "Quickly estimate '{question}' with a back-of-the-envelope calculation. Show variables, ballpark values, the calculation, and sanity checks. State the main caveat.",
+    "category": "Estimation",
+    "tags": ["estimation", "approximation", "sanity-check"],
+    "variables": ["question"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Memory Palace Builder",
+    "content": "Turn the items {items} into a memory palace: pick a familiar location, map loci, create vivid hooks for each item, and provide a rehearsal schedule.",
+    "category": "Memory & Study",
+    "tags": ["mnemonics", "memory-palace", "learning"],
+    "variables": ["items"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Visualize a Concept Three Ways",
+    "content": "For the concept '{concept}', propose three alternative visuals: (1) diagram, (2) timeline/flow, (3) table/matrix. For each, list elements, layout, and the key takeaway.",
+    "category": "Communication Design",
+    "tags": ["visualization", "diagrams", "explanation"],
+    "variables": ["concept"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Spaced Repetition Card Generator",
+    "content": "From the content below, generate 10 high-quality flashcards (active recall, minimal information). Add hints and 'extra' fields for context. Content: {content_block}",
+    "category": "Learning Tools",
+    "tags": ["flashcards", "spacing", "active-recall"],
+    "variables": ["content_block"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Heuristic Checklist",
+    "content": "Create a checklist of heuristics ('rules of thumb') for {domain_decision}. Organize by stage, include a 'when it fails' note for each heuristic.",
+    "category": "Decision Aids",
+    "tags": ["heuristics", "checklist", "practical"],
+    "variables": ["domain_decision"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Case Study Template",
+    "content": "Draft a case study template tailored to {audience} for {product_or_project}. Sections: problem, context, intervention, results (with metrics), lesson learned, and reusable assets.",
+    "category": "Content & Marketing",
+    "tags": ["case-study", "template", "metrics"],
+    "variables": ["audience", "product_or_project"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Ethical Impact Scan",
+    "content": "Assess the ethical implications of {initiative}. Consider stakeholders, consent, privacy, fairness, transparency, and long-term effects. Suggest mitigations and a communication plan.",
+    "category": "Ethics & Policy",
+    "tags": ["ethics", "impact", "policy"],
+    "variables": ["initiative"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Assumption Inventory",
+    "content": "List explicit and implicit assumptions behind {plan_or_model}. Tag each as critical/non-critical and testable/non-testable. Propose the fastest test for the top 3 critical assumptions.",
+    "category": "Strategy & Validation",
+    "tags": ["assumptions", "validation", "testing"],
+    "variables": ["plan_or_model"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Algorithmic Walkthrough",
+    "content": "Explain how to solve '{problem}' with an algorithm. Provide a step-by-step outline, complexity analysis, and a small worked example.",
+    "category": "Algorithms & CS",
+    "tags": ["algorithm", "complexity", "example"],
+    "variables": ["problem"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Dataset Documentation (Data Card)",
+    "content": "Write a data card for dataset '{dataset_name}': purpose, composition, collection method, preprocessing, intended uses, known limitations, and maintenance plan.",
+    "category": "Data Governance",
+    "tags": ["documentation", "dataset", "governance"],
+    "variables": ["dataset_name"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Hypothesis to Experiment",
+    "content": "Turn the hypothesis '{hypothesis}' into a minimal experiment: variables, control, measurement, success criteria, and timeline. Add likely confounders and how to handle them.",
+    "category": "Science & Testing",
+    "tags": ["experiment", "hypothesis", "design"],
+    "variables": ["hypothesis"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Product Requirements Outline",
+    "content": "Create a PRD for '{feature}'. Include problem, user stories, acceptance criteria, non-functional requirements, risks, and out-of-scope.",
+    "category": "Product Management",
+    "tags": ["prd", "requirements", "user-stories"],
+    "variables": ["feature"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Customer Interview Guide",
+    "content": "Write a 20-minute interview guide to learn about {topic} from {persona}. Include warm-ups, core questions, probing follow-ups, and a closing ask. Avoid leading questions.",
+    "category": "UX Research",
+    "tags": ["interview", "ux", "research"],
+    "variables": ["topic", "persona"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Storyboard the User Journey",
+    "content": "Create a 6-panel storyboard of the user journey for {scenario}. For each panel: user goal, action, emotion, and friction point. End with two opportunity areas.",
+    "category": "Design & UX",
+    "tags": ["storyboard", "journey", "ux"],
+    "variables": ["scenario"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Heuristic Redesign Suggestions",
+    "content": "Evaluate the interface/workflow '{ui_or_flow}' with Nielsen's heuristics. List violations, severity, examples, and concrete fixes.",
+    "category": "Design Critique",
+    "tags": ["heuristics", "usability", "redesign"],
+    "variables": ["ui_or_flow"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Learning-by-Doing Project Brief",
+    "content": "Design a hands-on project to learn {skill}. Describe deliverables, constraints, evaluation criteria, and a peer-review rubric.",
+    "category": "Experiential Learning",
+    "tags": ["project", "learning", "rubric"],
+    "variables": ["skill"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Constraint-Based Creativity",
+    "content": "Generate 10 creative ideas for {goal} under these constraints: {constraints}. For each idea, include why it might work and one small next step.",
+    "category": "Creativity",
+    "tags": ["ideation", "constraints", "innovation"],
+    "variables": ["goal", "constraints"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Narrative Arc Mapper",
+    "content": "Map a narrative arc for '{story}' using a classic structure (Freytag or Hero's Journey). Provide beat-by-beat events and emotional stakes.",
+    "category": "Story Craft",
+    "tags": ["narrative", "structure", "beats"],
+    "variables": ["story"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Rhetorical Style Transfer",
+    "content": "Rewrite {text} in the rhetorical style '{style}' while preserving meaning. Highlight the stylistic choices used (diction, syntax, devices).",
+    "category": "Writing & Style",
+    "tags": ["style-transfer", "rhetoric", "editing"],
+    "variables": ["text", "style"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Argument Map",
+    "content": "Convert the following argument into a structured map: claims, premises, evidence, counterarguments, and rebuttals. Return as nested bullets. Argument: {argument}",
+    "category": "Logic & Reasoning",
+    "tags": ["argument", "mapping", "logic"],
+    "variables": ["argument"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  },
+  {
+    "title": "Evidence Strength Rating",
+    "content": "Given these claims {claims}, rate the strength of evidence (high/medium/low) and explain why. Suggest the single best study or data that would most change the rating.",
+    "category": "Evidence & Evaluation",
+    "tags": ["evidence", "evaluation", "research"],
+    "variables": ["claims"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  }
+]
