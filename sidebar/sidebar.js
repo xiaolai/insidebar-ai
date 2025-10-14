@@ -10,7 +10,9 @@ import {
   getFavoritePrompts,
   toggleFavorite,
   recordPromptUsage,
-  getAllCategories
+  getAllCategories,
+  getRecentlyUsedPrompts,
+  getTopFavorites
 } from '../modules/prompt-manager.js';
 
 let currentProvider = null;
@@ -18,7 +20,9 @@ const loadedIframes = new Map();  // providerId -> iframe element
 const loadedIframesState = new Map();  // providerId -> 'loading' | 'ready'
 let currentView = 'providers';  // 'providers' or 'prompt-library'
 let currentEditingPromptId = null;
+let currentInsertPromptId = null;  // T071: For insert prompt modal
 let isShowingFavorites = false;
+let currentSortOrder = 'recent';  // T071: Current sort order
 let isSwitchingProvider = false;
 let pendingProviderId = null;
 const EDGE_SHORTCUT_STORAGE_KEY = 'edgeShortcutReminderDismissed';
@@ -435,6 +439,12 @@ function setupPromptLibrary() {
     }
   });
 
+  // T071: Sort filter
+  document.getElementById('sort-filter').addEventListener('change', (e) => {
+    currentSortOrder = e.target.value;
+    renderPromptList();
+  });
+
   // Favorites filter
   document.getElementById('show-favorites').addEventListener('click', (e) => {
     isShowingFavorites = !isShowingFavorites;
@@ -458,11 +468,35 @@ function setupPromptLibrary() {
     }
   });
 
+  // T071: Insert Prompt Modal listeners
+  document.getElementById('close-insert-modal').addEventListener('click', closeInsertPromptModal);
+  document.getElementById('insert-beginning-btn').addEventListener('click', () => insertPromptToWorkspace('beginning'));
+  document.getElementById('insert-end-btn').addEventListener('click', () => insertPromptToWorkspace('end'));
+  document.getElementById('replace-workspace-btn').addEventListener('click', () => insertPromptToWorkspace('replace'));
+
+  // Close insert modal on outside click
+  document.getElementById('insert-prompt-modal').addEventListener('click', (e) => {
+    if (e.target.id === 'insert-prompt-modal') {
+      closeInsertPromptModal();
+    }
+  });
+
   // Workspace button listeners
   document.getElementById('workspace-send-btn').addEventListener('click', sendWorkspaceToProvider);
   document.getElementById('workspace-copy-btn').addEventListener('click', copyWorkspaceText);
   document.getElementById('workspace-save-btn').addEventListener('click', saveWorkspaceAsPrompt);
   document.getElementById('workspace-clear-btn').addEventListener('click', clearWorkspace);
+
+  // T071: Quick Access Panel toggle listeners
+  document.getElementById('toggle-recent').addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleQuickAccessSection('recent');
+  });
+
+  document.getElementById('toggle-favorites').addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleQuickAccessSection('favorites');
+  });
 }
 
 function switchToView(view) {
@@ -481,6 +515,7 @@ function switchToView(view) {
     document.getElementById('prompt-library').style.display = 'flex';
     document.getElementById('prompt-library-tab').classList.add('active');
     renderPromptList();
+    renderQuickAccessPanel();  // T071: Render quick access panel
     updateCategoryFilter();
   } else {
     // Switch back to providers view
@@ -509,12 +544,26 @@ async function renderPromptList(prompts = null) {
     return;
   }
 
-  // Sort by most recently used, then by created date
+  // T071: Sort based on currentSortOrder
   prompts.sort((a, b) => {
-    if (a.lastUsed && b.lastUsed) return b.lastUsed - a.lastUsed;
-    if (a.lastUsed) return -1;
-    if (b.lastUsed) return 1;
-    return b.createdAt - a.createdAt;
+    switch (currentSortOrder) {
+      case 'most-used':
+        return (b.useCount || 0) - (a.useCount || 0);
+
+      case 'alphabetical':
+        return a.title.localeCompare(b.title);
+
+      case 'newest':
+        return b.createdAt - a.createdAt;
+
+      case 'recent':
+      default:
+        // Recently used first, then by created date
+        if (a.lastUsed && b.lastUsed) return b.lastUsed - a.lastUsed;
+        if (a.lastUsed) return -1;
+        if (b.lastUsed) return 1;
+        return b.createdAt - a.createdAt;
+    }
   });
 
   listContainer.innerHTML = prompts.map(prompt => `
@@ -525,6 +574,7 @@ async function renderPromptList(prompts = null) {
           <button class="favorite-btn" data-id="${prompt.id}" title="Toggle favorite">
             ${prompt.isFavorite ? '★' : '☆'}
           </button>
+          <button class="insert-btn" data-id="${prompt.id}" title="Insert to workspace">⬇️</button>
           <button class="copy-btn" data-id="${prompt.id}" title="Copy to clipboard">📋</button>
           <button class="edit-btn" data-id="${prompt.id}" title="Edit">✏️</button>
           <button class="delete-btn" data-id="${prompt.id}" title="Delete">🗑️</button>
@@ -565,6 +615,13 @@ async function renderPromptList(prompts = null) {
     btn.addEventListener('click', async (e) => {
       e.stopPropagation();
       await copyPromptToClipboard(parseInt(btn.dataset.id));
+    });
+  });
+
+  listContainer.querySelectorAll('.insert-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openInsertPromptModal(parseInt(btn.dataset.id));
     });
   });
 
@@ -707,6 +764,7 @@ async function usePrompt(promptId) {
 
     // Re-render to update use count
     renderPromptList();
+    renderQuickAccessPanel();  // T071: Update quick access panel
   } catch (error) {
     console.error('Error using prompt:', error);
     showToast('Failed to copy prompt');
@@ -760,6 +818,158 @@ async function deletePromptWithConfirm(promptId) {
       showToast('Failed to delete prompt');
     }
   }
+}
+
+// T071: Insert Prompt Modal functions
+async function openInsertPromptModal(promptId) {
+  const prompts = await getAllPrompts();
+  const prompt = prompts.find(p => p.id === promptId);
+
+  if (!prompt) return;
+
+  currentInsertPromptId = promptId;
+
+  // Show prompt preview in modal
+  const previewEl = document.getElementById('insert-prompt-preview');
+  previewEl.textContent = prompt.content;
+
+  // Update workspace provider selector (workspace is always visible now)
+  await updateWorkspaceProviderSelector();
+
+  // Show modal
+  const modal = document.getElementById('insert-prompt-modal');
+  modal.style.display = 'flex';
+}
+
+function closeInsertPromptModal() {
+  document.getElementById('insert-prompt-modal').style.display = 'none';
+  currentInsertPromptId = null;
+}
+
+async function insertPromptToWorkspace(position) {
+  if (!currentInsertPromptId) return;
+
+  const prompts = await getAllPrompts();
+  const prompt = prompts.find(p => p.id === currentInsertPromptId);
+
+  if (!prompt) return;
+
+  const textarea = document.getElementById('prompt-workspace-text');
+  const currentText = textarea.value.trim();
+  const promptContent = prompt.content.trim();
+
+  let newText;
+  if (position === 'beginning') {
+    newText = currentText
+      ? `${promptContent}\n\n${currentText}`
+      : promptContent;
+  } else if (position === 'end') {
+    newText = currentText
+      ? `${currentText}\n\n${promptContent}`
+      : promptContent;
+  } else if (position === 'replace') {
+    newText = promptContent;
+  }
+
+  // Update textarea
+  textarea.value = newText;
+
+  // Record usage
+  await recordPromptUsage(currentInsertPromptId);
+
+  // Close modal
+  closeInsertPromptModal();
+
+  // Show feedback
+  showToast('Prompt inserted to workspace!');
+
+  // Re-render prompt list to update use count
+  renderPromptList();
+
+  // Re-render quick access panel to update counts
+  renderQuickAccessPanel();
+}
+
+// T071: Quick Access Panel functions
+async function renderQuickAccessPanel() {
+  const recentPrompts = await getRecentlyUsedPrompts(5);
+  const topFavorites = await getTopFavorites(5);
+
+  // Show panel only if there's content to display
+  const panel = document.getElementById('quick-access-panel');
+  if (recentPrompts.length === 0 && topFavorites.length === 0) {
+    panel.style.display = 'none';
+    return;
+  }
+
+  panel.style.display = 'block';
+
+  // Render recently used
+  renderQuickAccessSection('recent-prompts-list', recentPrompts, 'recently used');
+
+  // Render top favorites
+  renderQuickAccessSection('top-favorites-list', topFavorites, 'favorite');
+}
+
+function renderQuickAccessSection(containerId, prompts, emptyMessage) {
+  const container = document.getElementById(containerId);
+
+  if (prompts.length === 0) {
+    container.innerHTML = `<div class="quick-access-empty">No ${emptyMessage} prompts yet</div>`;
+    return;
+  }
+
+  container.innerHTML = prompts.map(prompt => {
+    const lastUsedText = prompt.lastUsed
+      ? formatRelativeTime(prompt.lastUsed)
+      : '';
+
+    return `
+      <div class="quick-access-item" data-prompt-id="${prompt.id}">
+        <div class="quick-access-item-title">${escapeHtml(prompt.title)}</div>
+        <div class="quick-access-item-content">${escapeHtml(prompt.content)}</div>
+        <div class="quick-access-item-meta">
+          ${prompt.useCount > 0 ? `<span>Used ${prompt.useCount}×</span>` : ''}
+          ${lastUsedText ? `<span>${lastUsedText}</span>` : ''}
+          ${prompt.isFavorite ? '<span>★</span>' : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Add click listeners
+  container.querySelectorAll('.quick-access-item').forEach(item => {
+    const promptId = parseInt(item.dataset.promptId);
+    item.addEventListener('click', () => {
+      openInsertPromptModal(promptId);
+    });
+  });
+}
+
+function toggleQuickAccessSection(section) {
+  const listId = section === 'recent' ? 'recent-prompts-list' : 'top-favorites-list';
+  const toggleBtnId = section === 'recent' ? 'toggle-recent' : 'toggle-favorites';
+
+  const list = document.getElementById(listId);
+  const toggleBtn = document.getElementById(toggleBtnId);
+
+  list.classList.toggle('collapsed');
+  toggleBtn.textContent = list.classList.contains('collapsed') ? '+' : '−';
+}
+
+function formatRelativeTime(timestamp) {
+  const now = Date.now();
+  const diff = now - timestamp;
+
+  const seconds = Math.floor(diff / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  if (days > 0) return `${days}d ago`;
+  if (hours > 0) return `${hours}h ago`;
+  if (minutes > 0) return `${minutes}m ago`;
+  return 'just now';
 }
 
 function showToast(message) {
@@ -923,15 +1133,13 @@ async function updateWorkspaceProviderSelector() {
 }
 
 function showWorkspaceWithText(text) {
-  const workspace = document.getElementById('prompt-workspace');
   const textarea = document.getElementById('prompt-workspace-text');
 
-  if (!workspace || !textarea) return;
+  if (!textarea) return;
 
   textarea.value = text;
-  workspace.style.display = 'block';
 
-  // Update provider selector when showing workspace
+  // Update provider selector (workspace is always visible now)
   updateWorkspaceProviderSelector();
 }
 
@@ -973,10 +1181,9 @@ function saveWorkspaceAsPrompt() {
 
 function clearWorkspace() {
   const textarea = document.getElementById('prompt-workspace-text');
-  const workspace = document.getElementById('prompt-workspace');
 
   textarea.value = '';
-  workspace.style.display = 'none';
+  // Workspace stays visible - no longer hide it
 }
 
 async function sendWorkspaceToProvider() {

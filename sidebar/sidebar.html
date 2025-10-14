@@ -30,21 +30,8 @@
 
     <!-- T045: Prompt Genie UI -->
     <div id="prompt-library" style="display: none;">
-      <div id="prompt-library-header">
-        <h2>📚 Prompt Genie</h2>
-        <button id="new-prompt-btn" title="Create new prompt">+ New</button>
-      </div>
-
-      <div id="prompt-filters">
-        <input type="text" id="prompt-search" placeholder="Search prompts..." />
-        <select id="category-filter">
-          <option value="">All Categories</option>
-        </select>
-        <button id="show-favorites" title="Show favorites">★</button>
-      </div>
-
-      <!-- Workspace for editing received text -->
-      <div id="prompt-workspace" style="display: none;">
+      <!-- Workspace for editing received text - Always visible at top -->
+      <div id="prompt-workspace" style="display: block;">
         <div class="workspace-header">
           <span>✏️ Working Text</span>
           <div class="workspace-actions">
@@ -58,6 +45,48 @@
           </div>
         </div>
         <textarea id="prompt-workspace-text" placeholder="Selected text will appear here..."></textarea>
+      </div>
+
+      <div id="prompt-library-header">
+        <h2>Prompt Genie</h2>
+      </div>
+
+      <div id="prompt-filters">
+        <input type="text" id="prompt-search" placeholder="Search prompts..." />
+        <select id="category-filter">
+          <option value="">All Categories</option>
+        </select>
+        <select id="sort-filter">
+          <option value="recent">Recently Used</option>
+          <option value="most-used">Most Used</option>
+          <option value="alphabetical">A-Z</option>
+          <option value="newest">Newest First</option>
+        </select>
+        <button id="new-prompt-btn" title="Create new prompt">⨁</button>
+        <button id="show-favorites" title="Show favorites">★</button>
+      </div>
+
+      <!-- T071: Quick Access Panel -->
+      <div id="quick-access-panel" style="display: none;">
+        <div class="quick-access-section">
+          <div class="quick-access-header">
+            <span class="quick-access-title">⚡ Recently Used</span>
+            <button class="quick-access-toggle" id="toggle-recent" title="Toggle section">−</button>
+          </div>
+          <div class="quick-access-items" id="recent-prompts-list">
+            <!-- Recently used prompts will be rendered here -->
+          </div>
+        </div>
+
+        <div class="quick-access-section">
+          <div class="quick-access-header">
+            <span class="quick-access-title">⭐ Top Favorites</span>
+            <button class="quick-access-toggle" id="toggle-favorites" title="Toggle section">−</button>
+          </div>
+          <div class="quick-access-items" id="top-favorites-list">
+            <!-- Top favorites will be rendered here -->
+          </div>
+        </div>
       </div>
 
       <div id="prompt-list">
@@ -84,6 +113,27 @@
           <div class="modal-footer">
             <button id="cancel-edit-btn" class="secondary">Cancel</button>
             <button id="save-prompt-btn" class="primary">Save</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- T071: Insert Prompt Modal -->
+      <div id="insert-prompt-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>Insert Prompt to Workspace</h3>
+            <button class="close-btn" id="close-insert-modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p class="modal-description">Choose where to insert this prompt:</p>
+            <div class="insert-prompt-preview" id="insert-prompt-preview">
+              <!-- Prompt preview will be shown here -->
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="insert-beginning-btn" class="primary">⬆️ Insert at Beginning</button>
+            <button id="insert-end-btn" class="primary">⬇️ Insert at End</button>
+            <button id="replace-workspace-btn" class="secondary">🔄 Replace All</button>
           </div>
         </div>
       </div>
