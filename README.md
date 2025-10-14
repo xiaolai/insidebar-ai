@@ -42,44 +42,115 @@ Enable only the AI providers you use. Set your default provider. Configure keybo
 
 ## Installation
 
-### Self-Hosting Only
+**This extension is NOT available on the Chrome Web Store.** You need to install it manually using "Developer Mode" - it's easy and takes just 2 minutes!
 
-This extension is not available on the Chrome Web Store and is designed to be self-hosted.
+### Why Manual Installation?
 
-**Why self-host?**
+This extension requires permissions that Chrome Web Store restricts, specifically the ability to load AI provider websites in iframes. By installing manually, you get:
 
-While this extension collects no data and respects your privacy, self-hosting gives you complete control and transparency:
+- **Full functionality** - All features work as intended
+- **Complete transparency** - Review the source code before installing
+- **No store policies** - No risk of sudden removal or policy changes
+- **Privacy control** - You decide when to update
+- **It's safe** - All code is open source and visible on GitHub
 
-- **Full source code access** - Review every line of code before installation
-- **No automatic updates** - You decide when and what to update
-- **Complete control** - Modify the extension to suit your needs
-- **No store policies** - Avoid potential future policy changes from Chrome Web Store
-- **Educational value** - Learn how browser extensions work
-- **Maximum privacy** - No connection to any store or update servers
+### How to Install (Step-by-Step)
 
-This extension is designed to be easily self-hosted. All code is vanilla JavaScript with no build process required.
+#### For Google Chrome
 
-**Installation Steps:**
+**Step 1: Download the Extension**
 
-#### Microsoft Edge
+Click the green **"Code"** button at the top of this page → Select **"Download ZIP"**
 
-1. Download this repository (click the green "Code" button → "Download ZIP")
-2. Extract the ZIP file to a folder on your computer
-3. Open Edge and go to `edge://extensions/`
-4. Enable "Developer mode" in the left sidebar
-5. Click "Load unpacked" and select the extracted folder
-6. The sidebar icon will appear in your browser toolbar
+Or use this direct link: https://github.com/xiaolai/insidebar-ai/archive/refs/heads/main.zip
 
-#### Google Chrome
+**Step 2: Extract the ZIP File**
 
-1. Download this repository (click the green "Code" button → "Download ZIP")
-2. Extract the ZIP file to a folder on your computer
-3. Open Chrome and go to `chrome://extensions/`
-4. Enable "Developer mode" in the top right
-5. Click "Load unpacked" and select the extracted folder
-6. The sidebar icon will appear in your browser toolbar
+- Find the downloaded `insidebar-ai-main.zip` file (usually in your Downloads folder)
+- Right-click it and select "Extract All..." (Windows) or double-click it (Mac)
+- Remember where you extracted it
 
-**Note:** Self-hosted extensions will show a "Developer mode" warning in your browser. This is normal and does not affect functionality.
+**Step 3: Open Chrome Extensions Page**
+
+- Open Google Chrome
+- Type `chrome://extensions/` in the address bar and press Enter
+- Or go to Menu (⋮) → Extensions → Manage Extensions
+
+**Step 4: Enable Developer Mode**
+
+- Look for the **"Developer mode"** toggle in the top right corner
+- Click it to turn it ON (it should be blue/enabled)
+
+**Step 5: Load the Extension**
+
+- Click the **"Load unpacked"** button (appears after enabling Developer mode)
+- Navigate to the folder where you extracted the ZIP file
+- Select the `insidebar-ai-main` folder (the one containing `manifest.json`)
+- Click "Select Folder" or "Open"
+
+**Step 6: You're Done!**
+
+The extension icon will appear in your browser toolbar. Click it or press `Ctrl+Shift+E` to start using it!
+
+---
+
+#### For Microsoft Edge
+
+**Step 1: Download the Extension**
+
+Click the green **"Code"** button at the top of this page → Select **"Download ZIP"**
+
+**Step 2: Extract the ZIP File**
+
+- Find the downloaded `insidebar-ai-main.zip` file
+- Right-click and extract it
+- Remember the location
+
+**Step 3: Open Edge Extensions Page**
+
+- Open Microsoft Edge
+- Type `edge://extensions/` in the address bar and press Enter
+- Or go to Menu (⋯) → Extensions → Manage Extensions
+
+**Step 4: Enable Developer Mode**
+
+- Look for **"Developer mode"** toggle in the left sidebar
+- Click it to turn it ON
+
+**Step 5: Load the Extension**
+
+- Click **"Load unpacked"**
+- Navigate to the extracted folder
+- Select the `insidebar-ai-main` folder
+- Click "Select Folder"
+
+**Step 6: You're Done!**
+
+The extension is now installed and ready to use!
+
+---
+
+### Common Questions
+
+**Q: Why does it say "Developer mode extensions"?**
+
+This is normal for manually installed extensions. It doesn't mean the extension is unsafe - it just means it wasn't installed from the store.
+
+**Q: Will this work permanently?**
+
+Yes! Once installed, it stays installed. Chrome/Edge may show a warning banner about developer mode extensions - you can dismiss it or keep it.
+
+**Q: How do I update the extension?**
+
+Download the latest version from GitHub, remove the old extension, and install the new one following the same steps. Your settings and prompts are stored separately and won't be deleted.
+
+**Q: Is this safe?**
+
+Yes! All code is open source and visible on GitHub. You can review it before installing. The extension runs locally and doesn't send any data to external servers.
+
+**Q: Can I remove the "Developer mode" banner?**
+
+The banner appears because Chrome/Edge wants to remind you that you have manually installed extensions. You can dismiss it each time it appears, but it may come back when you restart the browser. This is a browser security feature and doesn't affect the extension's functionality.
 
 ## First-Time Setup
 
