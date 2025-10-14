@@ -4,6 +4,67 @@
   box-sizing: border-box;
 }
 
+/* Material Symbols Icon Utilities */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'liga';
+  transition: font-variation-settings 0.2s ease;
+  /* Default variable axes */
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+/* Theme-aware gradient adjustment for Material Symbols */
+[data-theme="light"] .material-symbols-outlined,
+body:not([data-theme]) .material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+[data-theme="dark"] .material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' -25,
+    'opsz' 24;
+}
+
+/* Filled state for icons (e.g., filled star for favorites) */
+.material-symbols-outlined.filled {
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+[data-theme="dark"] .material-symbols-outlined.filled {
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' -25,
+    'opsz' 24;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   width: 100%;
@@ -223,22 +284,28 @@ body {
 
 #category-filter-btn {
   padding: 8px 12px;
-  border: 1px solid #e0e0e0;
+  border: none;
   border-radius: 4px;
-  background: white;
+  background: transparent;
   cursor: pointer;
-  font-size: 16px;
-  transition: background 0.2s;
+  transition: background 0.2s, opacity 0.2s;
   min-width: 44px;
+  opacity: 0.7;
+}
+
+/* All icons in category filter wrapper (button and popup) */
+#category-filter-wrapper .material-symbols-outlined {
+  font-size: 18px !important;
 }
 
 #category-filter-btn:hover {
   background: #f5f5f5;
+  opacity: 1;
 }
 
 #category-filter-btn.active {
   background: #e3f2fd;
-  border-color: #1976d2;
+  opacity: 1;
 }
 
 .category-popup {
@@ -283,46 +350,69 @@ body {
 
 .sort-btn {
   padding: 8px 10px;
-  border: 1px solid #e0e0e0;
+  border: none;
   border-radius: 4px;
-  background: white;
+  background: transparent;
   cursor: pointer;
-  font-size: 16px;
-  transition: background 0.2s, border-color 0.2s;
+  transition: background 0.2s, opacity 0.2s;
   min-width: 36px;
+  opacity: 0.7;
+}
+
+.sort-btn .material-symbols-outlined {
+  font-size: 18px;
 }
 
 .sort-btn:hover {
   background: #f5f5f5;
-  border-color: #ccc;
+  opacity: 1;
 }
 
 .sort-btn.active {
   background: #e3f2fd;
-  border-color: #1976d2;
   color: #1976d2;
+  opacity: 1;
 }
 
 #show-favorites {
   padding: 8px 10px;
-  border: 1px solid #e0e0e0;
+  border: none;
   border-radius: 4px;
-  background: white;
+  background: transparent;
   cursor: pointer;
-  font-size: 18px;
-  transition: background 0.2s, border-color 0.2s;
+  transition: background 0.2s, opacity 0.2s;
   min-width: 36px;
+  opacity: 0.7;
+}
+
+#show-favorites .material-symbols-outlined {
+  font-size: 18px;
 }
 
 #show-favorites:hover {
   background: #f5f5f5;
-  border-color: #ccc;
+  opacity: 1;
 }
 
 #show-favorites.active {
   background: #fff9c4;
-  border-color: #fbc02d;
   color: #f57c00;
+  opacity: 1;
+}
+
+/* Workspace header */
+#workspace-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+#workspace-header h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
 }
 
 /* Workspace for editing received text */
@@ -334,21 +424,24 @@ body {
   margin-bottom: 16px;
 }
 
-.workspace-header {
-  margin-bottom: 8px;
-}
-
-.workspace-header span {
-  font-size: 14px;
-  font-weight: 500;
-  color: #333;
-}
-
 .workspace-actions {
   display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
   margin-top: 8px;
+}
+
+.workspace-actions-left {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.workspace-actions-right {
+  display: flex;
+  gap: 6px;
+  align-items: center;
 }
 
 #workspace-provider-wrapper {
@@ -357,30 +450,31 @@ body {
 
 #workspace-provider-btn {
   padding: 6px 10px;
-  border: 1px solid #e0e0e0;
+  border: none;
   border-radius: 4px;
-  background: white;
+  background: transparent;
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s;
+  transition: background 0.2s, opacity 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
   min-width: 36px;
+  opacity: 0.8;
 }
 
 #workspace-provider-btn:hover {
   background: #f5f5f5;
-  border-color: #ccc;
+  opacity: 1;
 }
 
 #workspace-provider-btn.active {
   background: #e3f2fd;
-  border-color: #1976d2;
+  opacity: 1;
 }
 
 .provider-icon-small {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   object-fit: contain;
   display: block;
 }
@@ -423,29 +517,40 @@ body {
 
 .workspace-actions button {
   padding: 6px 10px;
-  border: 1px solid #e0e0e0;
+  border: none;
   border-radius: 4px;
-  background: white;
+  background: transparent;
   cursor: pointer;
   font-size: 12px;
   color: #666;
-  transition: background 0.2s, border-color 0.2s;
+  transition: background 0.2s, opacity 0.2s;
 }
 
 .workspace-actions button:hover {
   background: #f5f5f5;
-  border-color: #ccc;
+  opacity: 1;
+}
+
+.workspace-actions .material-symbols-outlined {
+  font-size: 20px;
 }
 
 #workspace-send-btn {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 4px;
   background: #1a73e8;
   color: white;
-  border-color: #1a73e8;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
 }
 
 #workspace-send-btn:hover {
   background: #1557b0;
-  border-color: #1557b0;
 }
 
 #prompt-workspace-text {
@@ -506,7 +611,7 @@ body {
 }
 
 .prompt-item-actions button {
-  padding: 4px 8px;
+  padding: 4px 6px;
   border: none;
   background: transparent;
   cursor: pointer;
@@ -517,6 +622,10 @@ body {
 
 .prompt-item-actions button:hover {
   opacity: 1;
+}
+
+.prompt-item-actions .material-symbols-outlined {
+  font-size: 18px;
 }
 
 .prompt-item-content {
@@ -697,8 +806,7 @@ body {
 }
 
 [data-theme="dark"] #category-filter-btn {
-  background: #2d2d2d;
-  border-color: #444;
+  background: transparent;
 }
 
 [data-theme="dark"] #category-filter-btn:hover {
@@ -707,7 +815,6 @@ body {
 
 [data-theme="dark"] #category-filter-btn.active {
   background: #1a3a5a;
-  border-color: #4285f4;
 }
 
 [data-theme="dark"] .category-popup {
@@ -730,37 +837,35 @@ body {
 }
 
 [data-theme="dark"] .sort-btn {
-  background: #2d2d2d;
-  border-color: #444;
+  background: transparent;
   color: #e0e0e0;
 }
 
 [data-theme="dark"] .sort-btn:hover {
   background: #3a3a3a;
-  border-color: #555;
 }
 
 [data-theme="dark"] .sort-btn.active {
   background: #1a3a5a;
-  border-color: #4285f4;
   color: #64b5f6;
 }
 
 [data-theme="dark"] #show-favorites {
-  background: #2d2d2d;
-  border-color: #444;
+  background: transparent;
   color: #e0e0e0;
 }
 
 [data-theme="dark"] #show-favorites:hover {
   background: #3a3a3a;
-  border-color: #555;
 }
 
 [data-theme="dark"] #show-favorites.active {
   background: #4a3a00;
-  border-color: #fbc02d;
   color: #fbc02d;
+}
+
+[data-theme="dark"] #workspace-header h2 {
+  color: #e0e0e0;
 }
 
 [data-theme="dark"] #prompt-workspace {
@@ -768,23 +873,16 @@ body {
   border-color: #444;
 }
 
-[data-theme="dark"] .workspace-header span {
-  color: #e0e0e0;
-}
-
 [data-theme="dark"] #workspace-provider-btn {
-  background: #1e1e1e;
-  border-color: #444;
+  background: transparent;
 }
 
 [data-theme="dark"] #workspace-provider-btn:hover {
   background: #3a3a3a;
-  border-color: #555;
 }
 
 [data-theme="dark"] #workspace-provider-btn.active {
   background: #1a3a5a;
-  border-color: #4285f4;
 }
 
 [data-theme="dark"] .provider-icon-small {
@@ -811,25 +909,21 @@ body {
 }
 
 [data-theme="dark"] .workspace-actions button {
-  background: #1e1e1e;
-  border-color: #444;
+  background: transparent;
   color: #aaa;
 }
 
 [data-theme="dark"] .workspace-actions button:hover {
   background: #3a3a3a;
-  border-color: #555;
 }
 
 [data-theme="dark"] #workspace-send-btn {
   background: #1a73e8;
   color: white;
-  border-color: #1a73e8;
 }
 
 [data-theme="dark"] #workspace-send-btn:hover {
   background: #1557b0;
-  border-color: #1557b0;
 }
 
 [data-theme="dark"] #prompt-workspace-text {
@@ -1293,7 +1387,7 @@ body {
 .modal-description {
   font-size: 14px;
   color: #666;
-  margin: 0 0 12px 0;
+  margin: 12px 0 0 0;
 }
 
 .insert-prompt-preview {
@@ -1301,7 +1395,8 @@ body {
   border: 1px solid #e0e0e0;
   border-radius: 4px;
   padding: 12px;
-  max-height: 200px;
+  min-height: calc(8 * 1.5em);
+  max-height: 300px;
   overflow-y: auto;
   font-size: 13px;
   color: #333;
@@ -1310,14 +1405,37 @@ body {
   word-break: break-word;
 }
 
-#insert-prompt-modal .modal-footer {
+#insert-prompt-modal .modal-footer,
+#prompt-editor-modal .modal-footer {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 8px;
 }
 
-#insert-prompt-modal .modal-footer button {
+#insert-prompt-modal .modal-footer button,
+#prompt-editor-modal .modal-footer button {
   flex: 1;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  transition: opacity 0.2s;
+  opacity: 0.7;
+}
+
+#insert-prompt-modal .modal-footer button:hover,
+#prompt-editor-modal .modal-footer button:hover {
+  opacity: 1;
+}
+
+#insert-prompt-modal .modal-footer .material-symbols-outlined,
+#prompt-editor-modal .modal-footer .material-symbols-outlined {
+  font-size: 28px;
 }
 
 [data-theme="dark"] .modal-description {
@@ -1327,5 +1445,10 @@ body {
 [data-theme="dark"] .insert-prompt-preview {
   background: #1e1e1e;
   border-color: #444;
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] #insert-prompt-modal .modal-footer button,
+[data-theme="dark"] #prompt-editor-modal .modal-footer button {
   color: #e0e0e0;
 }

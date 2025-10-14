@@ -480,12 +480,12 @@ function setupPromptLibrary() {
         const currentSort = btn.dataset.sort;
         const altSort = btn.dataset.altSort;
 
-        // Define icon and title mappings
+        // Define icon and title mappings (Material Symbols)
         const sortConfig = {
-          'alphabetical': { icon: '↓', title: 'A-Z' },
-          'reverse-alphabetical': { icon: '↑', title: 'Z-A' },
-          'newest': { icon: '⊕', title: 'Newest First' },
-          'oldest': { icon: '⊖', title: 'Oldest First' }
+          'alphabetical': { icon: 'sort_by_alpha', title: 'A-Z' },
+          'reverse-alphabetical': { icon: 'sort_by_alpha', title: 'Z-A' },
+          'newest': { icon: 'new_releases', title: 'Newest First' },
+          'oldest': { icon: 'history', title: 'Oldest First' }
         };
 
         // If button is already active, toggle it
@@ -495,7 +495,10 @@ function setupPromptLibrary() {
           btn.dataset.altSort = currentSort;
 
           // Update icon and title
-          btn.textContent = sortConfig[altSort].icon;
+          const iconSpan = btn.querySelector('.material-symbols-outlined');
+          if (iconSpan) {
+            iconSpan.textContent = sortConfig[altSort].icon;
+          }
           btn.title = sortConfig[altSort].title;
 
           // Update current sort order
@@ -525,8 +528,15 @@ function setupPromptLibrary() {
       e.stopPropagation();
       isShowingFavorites = !isShowingFavorites;
 
-      // Toggle icon between filled and unfilled star
-      favoritesBtn.textContent = isShowingFavorites ? '★' : '☆';
+      // Toggle icon between filled and unfilled star (Material Symbols)
+      const iconSpan = favoritesBtn.querySelector('.material-symbols-outlined');
+      if (iconSpan) {
+        if (isShowingFavorites) {
+          iconSpan.classList.add('filled');
+        } else {
+          iconSpan.classList.remove('filled');
+        }
+      }
       favoritesBtn.title = isShowingFavorites ? 'Show all prompts' : 'Show favorites only';
       favoritesBtn.classList.toggle('active', isShowingFavorites);
 
@@ -647,6 +657,7 @@ function switchToView(view) {
     renderPromptList();
     renderQuickAccessPanel();  // T071: Render quick access panel
     updateCategoryFilter();
+    updateWorkspaceProviderSelector();  // Initialize provider selector with icons
   } else {
     // Switch back to providers view
     document.getElementById('provider-container').style.display = 'flex';
@@ -708,12 +719,12 @@ async function renderPromptList(prompts = null) {
         <h4 class="prompt-item-title">${escapeHtml(prompt.title)}</h4>
         <div class="prompt-item-actions">
           <button class="favorite-btn" data-id="${prompt.id}" title="Toggle favorite">
-            ${prompt.isFavorite ? '★' : '☆'}
+            <span class="material-symbols-outlined ${prompt.isFavorite ? 'filled' : ''}">star</span>
           </button>
-          <button class="insert-btn" data-id="${prompt.id}" title="Insert to workspace">↓</button>
-          <button class="copy-btn" data-id="${prompt.id}" title="Copy to clipboard">⎘</button>
-          <button class="edit-btn" data-id="${prompt.id}" title="Edit">✎</button>
-          <button class="delete-btn" data-id="${prompt.id}" title="Delete">⌫</button>
+          <button class="insert-btn" data-id="${prompt.id}" title="Insert to workspace"><span class="material-symbols-outlined">input_circle</span></button>
+          <button class="copy-btn" data-id="${prompt.id}" title="Copy to clipboard"><span class="material-symbols-outlined">content_copy</span></button>
+          <button class="edit-btn" data-id="${prompt.id}" title="Edit"><span class="material-symbols-outlined">edit</span></button>
+          <button class="delete-btn" data-id="${prompt.id}" title="Delete"><span class="material-symbols-outlined">delete</span></button>
         </div>
       </div>
       <div class="prompt-item-content">${escapeHtml(prompt.content)}</div>
@@ -1067,7 +1078,7 @@ function renderQuickAccessSection(containerId, prompts, emptyMessage) {
         <div class="quick-access-item-meta">
           ${prompt.useCount > 0 ? `<span>Used ${prompt.useCount}×</span>` : ''}
           ${lastUsedText ? `<span>${lastUsedText}</span>` : ''}
-          ${prompt.isFavorite ? '<span>★</span>' : ''}
+          ${prompt.isFavorite ? '<span class="material-symbols-outlined filled" style="font-size: 14px;">star</span>' : ''}
         </div>
       </div>
     `;
@@ -1090,7 +1101,12 @@ function toggleQuickAccessSection(section) {
   const toggleBtn = document.getElementById(toggleBtnId);
 
   list.classList.toggle('collapsed');
-  toggleBtn.textContent = list.classList.contains('collapsed') ? '+' : '−';
+
+  // Update Material Symbols icon
+  const iconSpan = toggleBtn.querySelector('.material-symbols-outlined');
+  if (iconSpan) {
+    iconSpan.textContent = list.classList.contains('collapsed') ? 'add' : 'remove';
+  }
 }
 
 function formatRelativeTime(timestamp) {

@@ -6,6 +6,9 @@
   <title>insidebar.ai</title>
   <link rel="stylesheet" href="sidebar.css">
 
+  <!-- Material Symbols font -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" rel="stylesheet">
+
   <!-- DNS prefetch and preconnect for faster loading -->
   <link rel="dns-prefetch" href="https://chatgpt.com">
   <link rel="dns-prefetch" href="https://claude.ai">
@@ -31,24 +34,29 @@
     <!-- T045: Prompt Genie UI -->
     <div id="prompt-library" style="display: none;">
       <!-- Workspace for editing received text - Always visible at top -->
+      <div id="workspace-header">
+        <h2>Editing Prompt</h2>
+      </div>
+
       <div id="prompt-workspace" style="display: block;">
-        <div class="workspace-header">
-          <span>Editing Prompt</span>
-        </div>
         <textarea id="prompt-workspace-text" placeholder="Selected text will appear here..."></textarea>
         <div class="workspace-actions">
-          <button id="workspace-send-btn" title="Send to selected provider">➤</button>
-          <div id="workspace-provider-wrapper">
-            <button id="workspace-provider-btn" title="Select provider">
-              <img class="provider-icon-small" src="" alt="">
-            </button>
-            <div id="workspace-provider-popup" class="workspace-provider-popup" style="display: none;">
-              <!-- Providers will be dynamically populated here -->
-            </div>
+          <div class="workspace-actions-left">
+            <button id="workspace-save-btn" title="Save as new prompt"><span class="material-symbols-outlined">add_2</span></button>
+            <button id="workspace-copy-btn" title="Copy to clipboard"><span class="material-symbols-outlined">content_copy</span></button>
+            <button id="workspace-clear-btn" title="Clear"><span class="material-symbols-outlined">close</span></button>
           </div>
-          <button id="workspace-copy-btn" title="Copy to clipboard">⎘</button>
-          <button id="workspace-save-btn" title="Save as new prompt">⊞</button>
-          <button id="workspace-clear-btn" title="Clear">✕</button>
+          <div class="workspace-actions-right">
+            <div id="workspace-provider-wrapper">
+              <button id="workspace-provider-btn" title="Select provider">
+                <img class="provider-icon-small" src="" alt="">
+              </button>
+              <div id="workspace-provider-popup" class="workspace-provider-popup" style="display: none;">
+                <!-- Providers will be dynamically populated here -->
+              </div>
+            </div>
+            <button id="workspace-send-btn" title="Send to selected provider"><span class="material-symbols-outlined">keyboard_return</span></button>
+          </div>
         </div>
       </div>
 
@@ -62,19 +70,19 @@
         </div>
         <div class="filter-row-bottom">
           <div id="category-filter-wrapper">
-            <button id="category-filter-btn" title="Filter by category">☰</button>
+            <button id="category-filter-btn" title="Filter by category"><span class="material-symbols-outlined">category</span></button>
             <div id="category-popup" class="category-popup" style="display: none;">
               <div class="category-popup-item" data-value="">All Categories</div>
               <!-- Categories will be dynamically populated here -->
             </div>
           </div>
           <div id="sort-buttons">
-            <button class="sort-btn active" data-sort="recent" title="Recently Used">⌚</button>
-            <button class="sort-btn" data-sort="most-used" title="Most Used">№</button>
-            <button class="sort-btn sort-toggle" data-sort="alphabetical" data-alt-sort="reverse-alphabetical" title="A-Z">↓</button>
-            <button class="sort-btn sort-toggle" data-sort="newest" data-alt-sort="oldest" title="Newest First">⊕</button>
+            <button class="sort-btn active" data-sort="recent" title="Recently Used"><span class="material-symbols-outlined">schedule</span></button>
+            <button class="sort-btn" data-sort="most-used" title="Most Used"><span class="material-symbols-outlined">numbers</span></button>
+            <button class="sort-btn sort-toggle" data-sort="alphabetical" data-alt-sort="reverse-alphabetical" title="A-Z"><span class="material-symbols-outlined">sort_by_alpha</span></button>
+            <button class="sort-btn sort-toggle" data-sort="newest" data-alt-sort="oldest" title="Newest First"><span class="material-symbols-outlined">new_releases</span></button>
           </div>
-          <button id="show-favorites" title="Show favorites only">☆</button>
+          <button id="show-favorites" title="Show favorites only"><span class="material-symbols-outlined">star</span></button>
         </div>
       </div>
 
@@ -83,7 +91,7 @@
         <div class="quick-access-section">
           <div class="quick-access-header">
             <span class="quick-access-title">Recently Used</span>
-            <button class="quick-access-toggle" id="toggle-recent" title="Toggle section">−</button>
+            <button class="quick-access-toggle" id="toggle-recent" title="Toggle section"><span class="material-symbols-outlined">remove</span></button>
           </div>
           <div class="quick-access-items" id="recent-prompts-list">
             <!-- Recently used prompts will be rendered here -->
@@ -93,7 +101,7 @@
         <div class="quick-access-section">
           <div class="quick-access-header">
             <span class="quick-access-title">Top Favorites</span>
-            <button class="quick-access-toggle" id="toggle-favorites" title="Toggle section">−</button>
+            <button class="quick-access-toggle" id="toggle-favorites" title="Toggle section"><span class="material-symbols-outlined">remove</span></button>
           </div>
           <div class="quick-access-items" id="top-favorites-list">
             <!-- Top favorites will be rendered here -->
@@ -110,7 +118,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h3 id="editor-title">New Prompt</h3>
-            <button class="close-btn" id="close-editor">&times;</button>
+            <button class="close-btn" id="close-editor"><span class="material-symbols-outlined">close</span></button>
           </div>
           <div class="modal-body">
             <input type="text" id="prompt-title-input" placeholder="Prompt title" />
@@ -123,8 +131,8 @@
             </label>
           </div>
           <div class="modal-footer">
-            <button id="cancel-edit-btn" class="secondary">Cancel</button>
-            <button id="save-prompt-btn" class="primary">Save</button>
+            <button id="cancel-edit-btn" class="secondary" title="Cancel"><span class="material-symbols-outlined">close</span></button>
+            <button id="save-prompt-btn" class="primary" title="Save"><span class="material-symbols-outlined">check</span></button>
           </div>
         </div>
       </div>
@@ -133,19 +141,19 @@
       <div id="insert-prompt-modal" class="modal" style="display: none;">
         <div class="modal-content">
           <div class="modal-header">
-            <h3>Insert Prompt to Workspace</h3>
-            <button class="close-btn" id="close-insert-modal">&times;</button>
+            <h3>Insert text to Prompt Workspace Area</h3>
+            <button class="close-btn" id="close-insert-modal"><span class="material-symbols-outlined">close</span></button>
           </div>
           <div class="modal-body">
-            <p class="modal-description">Choose where to insert this prompt:</p>
             <div class="insert-prompt-preview" id="insert-prompt-preview">
               <!-- Prompt preview will be shown here -->
             </div>
+            <p class="modal-description">Choose how to insert this prompt: at the beginning, at the end, or replace the existing text entirely?</p>
           </div>
           <div class="modal-footer">
-            <button id="insert-beginning-btn" class="primary" title="Insert at beginning">⤒</button>
-            <button id="insert-end-btn" class="primary" title="Insert at end">⤓</button>
-            <button id="replace-workspace-btn" class="secondary" title="Replace all">↻</button>
+            <button id="insert-beginning-btn" class="primary" title="Insert at beginning"><span class="material-symbols-outlined">vertical_align_top</span></button>
+            <button id="insert-end-btn" class="primary" title="Insert at end"><span class="material-symbols-outlined">vertical_align_bottom</span></button>
+            <button id="replace-workspace-btn" class="secondary" title="Replace all"><span class="material-symbols-outlined">sync</span></button>
           </div>
         </div>
       </div>
