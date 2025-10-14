@@ -19,7 +19,8 @@
     "https://claude.ai/*",
     "https://gemini.google.com/*",
     "https://grok.com/*",
-    "https://chat.deepseek.com/*"
+    "https://chat.deepseek.com/*",
+    "https://www.perplexity.ai/*"
   ],
 
   "optional_host_permissions": [
@@ -122,6 +123,15 @@
         "content-scripts/text-injection-all-providers.js"
       ],
       "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://www.perplexity.ai/*"],
+      "js": [
+        "content-scripts/enter-behavior-utils.js",
+        "content-scripts/enter-behavior-perplexity.js"
+      ],
+      "run_at": "document_end",
       "all_frames": true
     }
   ],
