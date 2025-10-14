@@ -42,7 +42,28 @@ Enable only the AI providers you use. Set your default provider. Configure keybo
 
 ## Installation
 
-### Microsoft Edge
+### From Chrome Web Store (Recommended for Most Users)
+
+Coming soon - the extension is currently under review.
+
+### Self-Hosting (Recommended for Privacy-Conscious Users)
+
+**Why self-host?**
+
+While this extension collects no data and respects your privacy, self-hosting gives you complete control and transparency:
+
+- **Full source code access** - Review every line of code before installation
+- **No automatic updates** - You decide when and what to update
+- **Complete control** - Modify the extension to suit your needs
+- **No store policies** - Avoid potential future policy changes from Chrome Web Store
+- **Educational value** - Learn how browser extensions work
+- **Maximum privacy** - No connection to any store or update servers
+
+This extension is designed to be easily self-hosted. All code is vanilla JavaScript with no build process required.
+
+**Installation Steps:**
+
+#### Microsoft Edge
 
 1. Download this repository (click the green "Code" button → "Download ZIP")
 2. Extract the ZIP file to a folder on your computer
@@ -51,7 +72,7 @@ Enable only the AI providers you use. Set your default provider. Configure keybo
 5. Click "Load unpacked" and select the extracted folder
 6. The sidebar icon will appear in your browser toolbar
 
-### Google Chrome
+#### Google Chrome
 
 1. Download this repository (click the green "Code" button → "Download ZIP")
 2. Extract the ZIP file to a folder on your computer
@@ -59,6 +80,8 @@ Enable only the AI providers you use. Set your default provider. Configure keybo
 4. Enable "Developer mode" in the top right
 5. Click "Load unpacked" and select the extracted folder
 6. The sidebar icon will appear in your browser toolbar
+
+**Note:** Self-hosted extensions will show a "Developer mode" warning in your browser. This is normal and does not affect functionality.
 
 ## First-Time Setup
 
