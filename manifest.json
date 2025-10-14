@@ -131,16 +131,6 @@
       ],
       "run_at": "document_start",
       "all_frames": true
-    },
-    {
-      "matches": ["https://www.perplexity.ai/*"],
-      "js": [
-        "content-scripts/enter-behavior-utils.js",
-        "content-scripts/enter-behavior-perplexity.js"
-      ],
-      "run_at": "document_start",
-      "all_frames": false,
-      "world": "MAIN"
     }
   ],
 
