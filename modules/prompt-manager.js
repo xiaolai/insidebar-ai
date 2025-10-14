@@ -123,10 +123,11 @@ export async function savePrompt(promptData) {
     tags: Array.isArray(promptData.tags)
       ? promptData.tags.slice(0, MAX_TAGS_COUNT).map(tag => sanitizeString(tag, MAX_TAG_LENGTH)).filter(t => t)
       : [],
+    variables: Array.isArray(promptData.variables) ? promptData.variables : [],
     isFavorite: Boolean(promptData.isFavorite),
-    createdAt: Date.now(),
-    lastUsed: null,
-    useCount: 0
+    createdAt: promptData.createdAt || Date.now(),
+    lastUsed: promptData.lastUsed || null,
+    useCount: promptData.useCount || 0
   };
 
   return runWithRetry(() => {
@@ -384,6 +385,67 @@ export async function clearAllPrompts() {
     request.onsuccess = () => resolve(true);
     request.onerror = () => reject(request.error);
   });
+}
+
+// T071: Get recently used prompts (ordered by lastUsed DESC)
+export async function getRecentlyUsedPrompts(limit = 5) {
+  const allPrompts = await getAllPrompts();
+  return allPrompts
+    .filter(p => p.lastUsed !== null && p.lastUsed !== undefined)
+    .sort((a, b) => b.lastUsed - a.lastUsed)
+    .slice(0, limit);
+}
+
+// T072: Get top favorites (ordered by useCount DESC, favorites only)
+export async function getTopFavorites(limit = 5) {
+  const favorites = await getFavoritePrompts();
+  return favorites
+    .sort((a, b) => (b.useCount || 0) - (a.useCount || 0))
+    .slice(0, limit);
+}
+
+// Import default library with title-based deduplication
+export async function importDefaultLibrary(libraryData) {
+  if (!libraryData || !libraryData.prompts || !Array.isArray(libraryData.prompts)) {
+    throw new Error('Invalid library data format');
+  }
+
+  const results = {
+    imported: 0,
+    skipped: 0,
+    errors: []
+  };
+
+  // Get all existing prompts for deduplication check
+  const allPrompts = await getAllPrompts();
+  const existingTitles = new Set(
+    allPrompts.map(p => p.title.toLowerCase().trim())
+  );
+
+  for (const promptData of libraryData.prompts) {
+    try {
+      // Check if already imported by title
+      const titleKey = promptData.title.toLowerCase().trim();
+      if (existingTitles.has(titleKey)) {
+        results.skipped++;
+        continue;
+      }
+
+      // Save the prompt
+      await savePrompt(promptData);
+      results.imported++;
+
+      // Add to existing titles to avoid duplicates in same batch
+      existingTitles.add(titleKey);
+    } catch (error) {
+      results.errors.push({
+        prompt: promptData.title,
+        error: error.message
+      });
+    }
+  }
+
+  return results;
 }
 
 // Initialize DB on module load

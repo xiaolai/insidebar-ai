@@ -7,7 +7,8 @@ import {
   getAllCategories,
   exportPrompts,
   importPrompts,
-  clearAllPrompts
+  clearAllPrompts,
+  importDefaultLibrary
 } from '../modules/prompt-manager.js';
 const DEFAULT_ENABLED_PROVIDERS = ['chatgpt', 'claude', 'gemini', 'grok', 'deepseek'];
 
@@ -221,6 +222,9 @@ function setupEventListeners() {
 
   // Reset data
   document.getElementById('reset-btn').addEventListener('click', resetData);
+
+  // Default library import button
+  document.getElementById('import-default-library')?.addEventListener('click', importDefaultLibraryHandler);
 }
 
 // T057: Export all data
@@ -355,6 +359,44 @@ function showStatus(type, message) {
   setTimeout(() => {
     element.classList.remove('show');
   }, 3000);
+}
+
+// Import Default Prompt Library
+async function importDefaultLibraryHandler() {
+  const button = document.getElementById('import-default-library');
+
+  try {
+    button.disabled = true;
+    button.textContent = 'Importing...';
+
+    // Fetch the default library data
+    const response = await fetch(chrome.runtime.getURL('data/prompt-libraries/default-prompts.json'));
+    const libraryData = await response.json();
+
+    // Import using the prompt manager
+    const result = await importDefaultLibrary(libraryData);
+
+    // Update UI
+    if (result.imported > 0) {
+      button.textContent = '✓ Imported';
+      button.style.background = '#4caf50';
+      button.style.color = 'white';
+      showStatus('success', `Successfully imported ${result.imported} prompts${result.skipped > 0 ? ` (${result.skipped} already existed)` : ''}`);
+    } else {
+      button.textContent = 'Already Imported';
+      button.disabled = true;
+      showStatus('success', 'All prompts already exist in your library');
+    }
+
+    // Refresh stats
+    await loadDataStats();
+
+  } catch (error) {
+    console.error('Default library import error:', error);
+    showStatus('error', 'Failed to import default library');
+    button.disabled = false;
+    button.textContent = 'Import Default Prompts';
+  }
 }
 
 // Initialize on load
