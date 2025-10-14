@@ -1,302 +1,163 @@
-# 🤖 insidebar.ai
+# insidebar.ai
 
-> A multi-AI sidebar extension for Microsoft Edge and Google Chrome
+> Access multiple AI assistants in one convenient sidebar
 
 ![Version](https://img.shields.io/badge/version-1.2.0-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
-## 📖 Overview
+**insidebar.ai** is a browser extension that brings ChatGPT, Claude, Gemini, Grok, and DeepSeek together in a single sidebar. No more switching between tabs or windows—just open the sidebar and start chatting with your favorite AI.
 
-**insidebar.ai** brings together multiple AI assistants in one convenient sidebar interface. Access ChatGPT, Claude, Gemini, Grok, and DeepSeek without leaving your current tab or juggling multiple windows.
+## What You Get
 
-### ✨ Key Features
+**Multiple AI Providers in One Place**
+Switch between ChatGPT, Claude, Gemini, Grok, and DeepSeek with a single click. All your AI conversations accessible from one sidebar.
 
-- 🎯 **Multi-AI Access**: All major AI providers in one place
-- 🔐 **Cookie-Based Authentication**: Uses your existing browser sessions (no API keys needed!)
-- ⌨️ **Keyboard Shortcuts**: Quick access with customizable shortcuts
-- 📝 **Prompt Library**: Save, organize, and reuse your favorite prompts
-- 🎨 **Dark/Light Mode**: Automatic theme detection with manual override
-- 🔧 **Highly Customizable**: Enable/disable providers, set defaults, and more
+**No API Keys Required**
+Uses your existing browser login sessions. If you're already logged into ChatGPT or Claude, you're ready to go.
 
-## 🚀 Supported AI Providers
+**Prompt Library**
+Save your frequently used prompts. Organize them with categories and tags. Reuse them across any AI provider.
 
-| Provider | URL | Status |
-|----------|-----|--------|
-| ChatGPT | https://chat.openai.com | ✅ Supported |
-| Claude | https://claude.ai | ✅ Supported |
-| Gemini | https://gemini.google.com | ✅ Supported |
-| Grok | https://grok.com | ✅ Supported |
-| DeepSeek | https://chat.deepseek.com | ✅ Supported |
+**Keyboard Shortcuts**
+Open the sidebar instantly with `Ctrl+Shift+E` (or `Cmd+Shift+E` on Mac). Access your prompt library with `Ctrl+Shift+P`.
 
-## 📦 Installation
+**Dark Mode Support**
+Automatically matches your system theme, or choose light/dark mode manually.
 
-### For Microsoft Edge
+**Customizable**
+Enable only the AI providers you use. Set your default provider. Configure keyboard shortcuts. Everything stays in your browser—no cloud sync required.
 
-1. **Download the Extension**
-   ```bash
-   git clone https://github.com/xiaolai/insidebar-ai.git
-   cd insidebar-ai
-   ```
+## Supported AI Providers
 
-2. **Open Edge Extensions Page**
-   - Navigate to `edge://extensions/`
-   - Enable "Developer mode" (toggle in the left sidebar)
+| Provider | Website |
+|----------|---------|
+| ChatGPT | https://chat.openai.com |
+| Claude | https://claude.ai |
+| Gemini | https://gemini.google.com |
+| Grok | https://grok.com |
+| DeepSeek | https://chat.deepseek.com |
 
-3. **Load the Extension**
-   - Click "Load unpacked"
-   - Select the `insidebar-ai` folder
+## Installation
 
-4. **Configure (Optional)**
-   - Click the extension icon to open the sidebar
-   - Navigate to Settings (⚙️ tab) to customize
+### Microsoft Edge
 
-### For Google Chrome
+1. Download this repository (click the green "Code" button → "Download ZIP")
+2. Extract the ZIP file to a folder on your computer
+3. Open Edge and go to `edge://extensions/`
+4. Enable "Developer mode" in the left sidebar
+5. Click "Load unpacked" and select the extracted folder
+6. The sidebar icon will appear in your browser toolbar
 
-1. **Download the Extension** (same as above)
+### Google Chrome
 
-2. **Open Chrome Extensions Page**
-   - Navigate to `chrome://extensions/`
-   - Enable "Developer mode" (toggle in the top right)
+1. Download this repository (click the green "Code" button → "Download ZIP")
+2. Extract the ZIP file to a folder on your computer
+3. Open Chrome and go to `chrome://extensions/`
+4. Enable "Developer mode" in the top right
+5. Click "Load unpacked" and select the extracted folder
+6. The sidebar icon will appear in your browser toolbar
 
-3. **Load the Extension**
-   - Click "Load unpacked"
-   - Select the `insidebar-ai` folder
+## First-Time Setup
 
-4. **Configure (Optional)**
-   - Click the extension icon to open the sidebar
-   - Navigate to Settings (⚙️ tab) to customize
+**1. Log into your AI providers**
+Visit the websites of the AI providers you want to use (ChatGPT, Claude, etc.) and log in. The extension will use these existing login sessions.
 
-## 🔧 Setup & Configuration
+**2. Open the sidebar**
+Click the extension icon in your toolbar, or press `Ctrl+Shift+E` (Windows/Linux) or `Cmd+Shift+E` (Mac).
 
-### First Time Setup
+**3. Start chatting**
+Select an AI provider from the tabs at the bottom of the sidebar. The AI interface loads directly in the sidebar—same as using it in a regular tab.
 
-1. **Login to AI Providers**
-   - Visit each AI provider's website in a regular tab
-   - Log in with your credentials
-   - The extension will automatically use these login sessions
+**4. Configure shortcuts (optional)**
+- Chrome: Go to `chrome://extensions/shortcuts`
+- Edge: Go to `edge://extensions/shortcuts`
+- Customize the keyboard shortcuts if the defaults don't work for you
 
-2. **Configure Keyboard Shortcuts** (Optional)
-   - Navigate to `chrome://extensions/shortcuts` (Chrome) or `edge://extensions/shortcuts` (Edge)
-   - Customize the shortcuts for:
-     - **Open insidebar.ai**: Default `Ctrl+Shift+E` (macOS: `Cmd+Shift+E`)
-     - **Open Prompt Library**: Default `Ctrl+Shift+P` (macOS: `Cmd+Shift+P`)
-
-## 📚 Usage Guide
+## How to Use
 
 ### Opening the Sidebar
 
-**Method 1: Keyboard Shortcut**
-- Press `Ctrl+Shift+E` (Windows/Linux) or `Cmd+Shift+E` (macOS)
+**Keyboard shortcut:** `Ctrl+Shift+E` (or `Cmd+Shift+E` on Mac)
+**Extension icon:** Click the icon in your browser toolbar
+**Right-click menu:** Right-click on any webpage → "Send to insidebar.ai" → choose a provider
 
-**Method 2: Extension Icon**
-- Click the insidebar.ai icon in your browser toolbar
+### Switching AI Providers
 
-**Method 3: Right-Click Context Menu**
-- Right-click anywhere on a webpage
-- Select "Send to insidebar.ai"
-- Choose your preferred AI provider
-
-### Switching Between AI Providers
-
-Click the icon tabs at the bottom of the sidebar:
-- 🤖 ChatGPT
-- 💬 Claude
-- ✨ Gemini
-- 🚀 Grok
-- 🔍 DeepSeek
-- ✏️ Prompt Genie
-- ⚙️ Settings
+The bottom of the sidebar shows tabs for each enabled provider. Click a tab to switch to that AI. Your sessions persist—switching back returns you to where you left off.
 
 ### Using the Prompt Library
 
-1. **Open Prompt Genie**
-   - Click the ✏️ tab or press `Ctrl+Shift+P`
+Press `Ctrl+Shift+P` (or `Cmd+Shift+P`) to open the Prompt Library, or click the notebook icon at the bottom of the sidebar.
 
-2. **Add a New Prompt**
-   - Click the ➕ button
-   - Fill in title, category, tags, and prompt content
-   - Click "Save Prompt"
+**Create a prompt:**
+Click "New Prompt", enter a title, content, and optional category/tags. Save it.
 
-3. **Use a Saved Prompt**
-   - Click on any prompt card
-   - The prompt is copied to your clipboard
-   - Paste it into the active AI provider
+**Use a prompt:**
+Click any prompt card to copy it to your clipboard, then paste it into the AI chat.
 
-4. **Organize Prompts**
-   - Use categories: Coding, Writing, Analysis, Custom
-   - Add tags for better searchability
-   - Search using the search bar
+**Insert into workspace:**
+Click the circular arrow icon on a prompt to insert it into the workspace. From there, you can compose multi-part prompts or send them to any AI provider.
 
-### Settings & Customization
+**Organize prompts:**
+Use categories (Coding, Writing, Analysis, or create your own). Add tags for easy searching. Filter by favorites using the star icon.
 
-1. **Open Settings**
-   - Click the ⚙️ tab in the sidebar
-   - Or right-click extension icon → Options
+**Import default prompts:**
+Open Settings and click "Import Default Prompts" to load a starter collection of useful prompts.
 
-2. **Enable/Disable Providers**
-   - Toggle providers on/off
-   - Disabled providers won't appear in tabs
+### Settings
 
-3. **Set Default Provider**
-   - Choose which AI loads when opening the sidebar
+Click the gear icon at the bottom of the sidebar to open Settings.
 
-4. **Data Management**
-   - Export/Import settings and prompts
-   - Backup your prompt library
-   - Reset all data if needed
+**Theme:** Choose Auto (follows system), Light, or Dark mode
 
-## 🎨 Project Structure
+**AI Providers:** Enable or disable specific providers. Only enabled providers appear in the sidebar tabs.
 
-```
-insidebar-ai/
-├── manifest.json              # Extension manifest (MV3)
-├── sidebar/
-│   ├── sidebar.html          # Main sidebar UI
-│   ├── sidebar.css           # Sidebar styles
-│   └── sidebar.js            # Sidebar logic
-├── modules/
-│   ├── providers.js          # Provider configurations
-│   ├── prompt-manager.js     # IndexedDB prompt storage
-│   ├── settings.js           # Settings management
-│   └── inject-styles.js      # CSS injection utilities
-├── background/
-│   └── service-worker.js     # Background service worker
-├── options/
-│   ├── options.html          # Full options page
-│   ├── options.css           # Options page styles
-│   └── options.js            # Options page logic
-├── rules/
-│   └── bypass-headers.json   # Header bypass rules
-└── icons/
-    ├── icon-16.png           # Extension icons
-    ├── icon-32.png
-    ├── icon-48.png
-    ├── icon-128.png
-    └── providers/            # Provider icons (optional)
-```
+**Default Provider:** Select which AI loads when you first open the sidebar
 
-## 🔐 Security & Privacy
+**Keyboard Shortcuts:** Toggle shortcuts on/off, or customize them in your browser's extension settings
 
-### Cookie-Based Authentication
+**Auto-Paste Clipboard:** When enabled, opening the Prompt Library automatically pastes clipboard content into the workspace
 
-- **No API Keys**: Extension uses your existing browser login sessions
-- **No Data Collection**: All data stored locally in your browser
-- **No External Servers**: Direct communication with AI providers only
+**Enter Key Behavior:** Customize how Enter and Shift+Enter work in AI chat inputs (if supported by the provider)
 
-### How It Works
+**Data Management:** Export your prompts and settings as a backup file. Import them later or on another computer. Reset all data if needed.
 
-1. Extension uses `declarativeNetRequest` API to bypass X-Frame-Options headers
-2. AI providers load in iframes using your browser's cookies
-3. You interact with the real AI websites, not copies or proxies
+## Privacy & Security
 
-### Permissions Explained
+**Your data stays local.** All prompts and settings are stored in your browser's local storage. Nothing is sent to external servers.
 
-| Permission | Purpose |
-|------------|---------|
-| `sidePanel` | Display extension in browser sidebar |
-| `storage` | Save settings and prompts locally |
-| `contextMenus` | Right-click menu integration |
-| `declarativeNetRequest` | Bypass iframe restrictions |
-| `declarativeNetRequestWithHostAccess` | Modify headers for specific domains |
-| Host permissions | Access AI provider websites |
+**No API keys required.** The extension uses your existing browser login sessions. It loads the real AI websites in the sidebar using your cookies.
 
+**No tracking.** The extension doesn't collect analytics, usage data, or any personal information.
 
-## 🛠️ Development
+**How it works:** The extension uses Chrome's `declarativeNetRequest` API to bypass X-Frame-Options headers, allowing AI provider websites to load in the sidebar iframe. This is the same security feature that extensions like password managers use.
 
-### Prerequisites
+## Troubleshooting
 
-- Node.js (optional, for development tools)
-- Modern browser (Edge 114+ or Chrome 114+)
+**The extension won't load**
+Make sure you're using a recent version of Chrome (114+) or Edge (114+). Older versions don't support the required APIs.
 
-### Building from Source
+**An AI provider won't load**
+First, log into that provider's website in a regular browser tab. The extension needs an active login session. If still not working, try clearing your browser cache and cookies for that provider.
 
-```bash
-# Clone repository
-git clone https://github.com/xiaolai/insidebar-ai.git
-cd insidebar-ai
+**Keyboard shortcuts don't work**
+Check if another extension is using the same shortcut. Go to `chrome://extensions/shortcuts` (or `edge://extensions/shortcuts`) to see all shortcuts and change them if needed.
 
-# No build step required - pure JavaScript!
-# Just load the extension in your browser
-```
+**The sidebar closes when I use the keyboard shortcut**
+This is configurable in Settings. Some users prefer the shortcut to toggle the sidebar (open/close), while others prefer it only opens. Check "Allow shortcut to close sidebar" in Settings.
 
-### Testing
+**Dark mode isn't working**
+Open Settings and check the Theme dropdown. If set to "Auto", it follows your system theme. Change it to "Dark" to force dark mode.
 
-1. Install dev dependencies (once): `npm install`
-2. Run automated lint checks: `npm run lint`
-3. Load the extension (see installation instructions)
-4. Open DevTools: Right-click sidebar → Inspect
-5. Check Console: Look for initialization messages
-6. Test Providers: Switch between different AI tabs
-7. Test Prompts: Create, edit, delete prompts
+## Support
 
-### Contributing
+If you encounter bugs or have feature requests, please open an issue on GitHub:
+https://github.com/xiaolai/insidebar-ai/issues
 
-Contributions are welcome! Please follow these guidelines:
+## License
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 🐛 Troubleshooting
-
-### Extension Won't Load
-
-- **Solution**: Make sure you're using Edge 114+ or Chrome 114+
-- Check browser console for errors
-- Verify all files are present in the extension folder
-
-### AI Provider Won't Load
-
-- **Solution**: Log into the provider's website in a regular tab first
-- Clear browser cache and cookies
-- Check if provider changed their URL
-- Verify provider is enabled in settings
-
-### Keyboard Shortcuts Not Working
-
-- **Solution**: Check `chrome://extensions/shortcuts`
-- Make sure shortcuts don't conflict with other extensions
-- Reassign shortcuts if needed
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- Built with ❤️ by [Xiaolai](https://github.com/xiaolai)
-- Inspired by the need for unified AI access
-- Thanks to all AI providers for their amazing services
-
-## 📞 Support
-
-- **Issues**: [GitHub Issues](https://github.com/xiaolai/insidebar-ai/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/xiaolai/insidebar-ai/discussions)
-
-## 🗺️ Roadmap
-
-### Version 1.0 ✅
-- [x] Multi-AI sidebar interface
-- [x] Prompt library with IndexedDB
-- [x] Settings management
-- [x] Keyboard shortcuts
-- [x] Context menu integration
-
-### Version 1.1 (Planned)
-- [ ] Webpage text extraction
-- [ ] Quick send to AI (selected text)
-- [ ] Multi-provider comparison mode
-- [ ] Prompt templates
-- [ ] Cloud sync for prompts (optional)
-
-### Version 2.0 (Future)
-- [ ] Custom workflows
-- [ ] AI response history
-- [ ] Browser automation integrations[text](README.md)
-- [ ] Plugin system for extensibility
+MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-**Made with ❤️ for the AI community**
+Built by [Xiaolai](https://github.com/xiaolai)
