@@ -1907,6 +1907,12 @@ a.conversation-link:hover {
   color: #666;
 }
 
+#view-conversation-meta > div {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 #view-conversation-meta strong {
   color: #333;
 }
@@ -1914,8 +1920,7 @@ a.conversation-link:hover {
 #view-conversation-meta .provider-icon-small {
   width: 16px;
   height: 16px;
-  vertical-align: middle;
-  margin-right: 4px;
+  display: inline-block;
 }
 
 .conversation-tag {
