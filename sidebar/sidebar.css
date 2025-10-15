@@ -1746,6 +1746,102 @@ a.conversation-item-link:hover {
   margin-bottom: 16px;
 }
 
+/* Markdown-rendered content styling */
+#view-conversation-modal .markdown-content {
+  white-space: normal;
+}
+
+#view-conversation-modal .markdown-content h1,
+#view-conversation-modal .markdown-content h2,
+#view-conversation-modal .markdown-content h3,
+#view-conversation-modal .markdown-content h4,
+#view-conversation-modal .markdown-content h5,
+#view-conversation-modal .markdown-content h6 {
+  font-weight: 600;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  line-height: 1.3;
+  color: #1a1a1a;
+}
+
+#view-conversation-modal .markdown-content h1 { font-size: 18px; }
+#view-conversation-modal .markdown-content h2 { font-size: 16px; }
+#view-conversation-modal .markdown-content h3 { font-size: 15px; }
+#view-conversation-modal .markdown-content h4 { font-size: 14px; }
+#view-conversation-modal .markdown-content h5,
+#view-conversation-modal .markdown-content h6 { font-size: 13px; }
+
+#view-conversation-modal .markdown-content p {
+  margin: 8px 0;
+}
+
+#view-conversation-modal .markdown-content ul,
+#view-conversation-modal .markdown-content ol {
+  margin: 8px 0;
+  padding-left: 24px;
+}
+
+#view-conversation-modal .markdown-content li {
+  margin: 4px 0;
+}
+
+#view-conversation-modal .markdown-content code {
+  background: #f0f0f0;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 12px;
+}
+
+#view-conversation-modal .markdown-content pre {
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  padding: 10px;
+  overflow-x: auto;
+  margin: 12px 0;
+}
+
+#view-conversation-modal .markdown-content pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  display: block;
+  line-height: 1.4;
+}
+
+#view-conversation-modal .markdown-content blockquote {
+  border-left: 3px solid #1976d2;
+  padding-left: 12px;
+  margin: 12px 0;
+  color: #666;
+  font-style: italic;
+}
+
+#view-conversation-modal .markdown-content a {
+  color: #1976d2;
+  text-decoration: none;
+  transition: text-decoration 0.2s;
+}
+
+#view-conversation-modal .markdown-content a:hover {
+  text-decoration: underline;
+}
+
+#view-conversation-modal .markdown-content strong {
+  font-weight: 600;
+}
+
+#view-conversation-modal .markdown-content em {
+  font-style: italic;
+}
+
+#view-conversation-modal .markdown-content hr {
+  border: none;
+  border-top: 1px solid #e0e0e0;
+  margin: 16px 0;
+}
+
 #view-conversation-meta {
   display: flex;
   flex-direction: column;
@@ -1869,6 +1965,39 @@ a.conversation-item-link:hover {
   background: #1e1e1e;
   border-color: #444;
   color: #e0e0e0;
+}
+
+/* Dark theme for markdown content */
+[data-theme="dark"] #view-conversation-modal .markdown-content h1,
+[data-theme="dark"] #view-conversation-modal .markdown-content h2,
+[data-theme="dark"] #view-conversation-modal .markdown-content h3,
+[data-theme="dark"] #view-conversation-modal .markdown-content h4,
+[data-theme="dark"] #view-conversation-modal .markdown-content h5,
+[data-theme="dark"] #view-conversation-modal .markdown-content h6 {
+  color: #f0f0f0;
+}
+
+[data-theme="dark"] #view-conversation-modal .markdown-content code {
+  background: #2d2d2d;
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] #view-conversation-modal .markdown-content pre {
+  background: #2d2d2d;
+  border-color: #444;
+}
+
+[data-theme="dark"] #view-conversation-modal .markdown-content blockquote {
+  border-left-color: #64b5f6;
+  color: #aaa;
+}
+
+[data-theme="dark"] #view-conversation-modal .markdown-content a {
+  color: #64b5f6;
+}
+
+[data-theme="dark"] #view-conversation-modal .markdown-content hr {
+  border-top-color: #444;
 }
 
 [data-theme="dark"] #view-conversation-meta {

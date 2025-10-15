@@ -243,42 +243,136 @@
     };
   }
 
-  // Extract content while preserving code blocks and formatting
+  // Extract content while preserving markdown formatting
   function extractContentWithFormatting(element) {
-    let content = '';
+    // Clone the element so we don't modify the original DOM
+    const clone = element.cloneNode(true);
 
-    // Handle code blocks specially
-    const codeBlocks = element.querySelectorAll('pre code, pre');
-    const codeBlocksMap = new Map();
+    return extractMarkdownFromElement(clone);
+  }
 
-    codeBlocks.forEach((block, index) => {
-      const placeholder = `__CODE_BLOCK_${index}__`;
-      const codeContent = block.textContent;
-      const language = block.className.match(/language-(\w+)/)?.[1] || '';
+  // Recursively extract markdown from DOM elements
+  function extractMarkdownFromElement(node) {
+    if (!node) return '';
 
-      codeBlocksMap.set(placeholder, {
-        content: codeContent,
-        language
-      });
+    // Text node - return text content
+    if (node.nodeType === Node.TEXT_NODE) {
+      return node.textContent;
+    }
 
-      // Replace code block with placeholder
-      const replacement = document.createTextNode(placeholder);
-      block.parentElement.replaceChild(replacement, block);
-    });
+    // Element node - convert to markdown based on tag type
+    if (node.nodeType === Node.ELEMENT_NODE) {
+      const tagName = node.tagName.toLowerCase();
+      let result = '';
 
-    // Get text content
-    content = element.textContent;
+      // Code blocks (highest priority)
+      if (tagName === 'pre') {
+        const codeElement = node.querySelector('code');
+        if (codeElement) {
+          const language = codeElement.className.match(/language-(\w+)/)?.[1] || '';
+          const codeContent = codeElement.textContent;
+          return language
+            ? `\n\`\`\`${language}\n${codeContent}\n\`\`\`\n\n`
+            : `\n\`\`\`\n${codeContent}\n\`\`\`\n\n`;
+        }
+        return `\n\`\`\`\n${node.textContent}\n\`\`\`\n\n`;
+      }
 
-    // Restore code blocks with markdown formatting
-    codeBlocksMap.forEach((codeData, placeholder) => {
-      const formattedCode = codeData.language
-        ? `\`\`\`${codeData.language}\n${codeData.content}\n\`\`\``
-        : `\`\`\`\n${codeData.content}\n\`\`\``;
+      // Inline code
+      if (tagName === 'code') {
+        return `\`${node.textContent}\``;
+      }
 
-      content = content.replace(placeholder, formattedCode);
-    });
+      // Headings
+      if (tagName.match(/^h[1-6]$/)) {
+        const level = tagName.charAt(1);
+        const hashes = '#'.repeat(parseInt(level));
+        return `\n${hashes} ${getChildrenText(node)}\n\n`;
+      }
 
-    return content;
+      // Bold/Strong
+      if (tagName === 'strong' || tagName === 'b') {
+        return `**${getChildrenText(node)}**`;
+      }
+
+      // Italic/Emphasis
+      if (tagName === 'em' || tagName === 'i') {
+        return `*${getChildrenText(node)}*`;
+      }
+
+      // Links
+      if (tagName === 'a') {
+        const href = node.getAttribute('href') || '';
+        const text = getChildrenText(node);
+        return `[${text}](${href})`;
+      }
+
+      // Lists
+      if (tagName === 'ul') {
+        let listText = '\n';
+        Array.from(node.children).forEach(li => {
+          if (li.tagName.toLowerCase() === 'li') {
+            listText += `- ${extractMarkdownFromElement(li).trim()}\n`;
+          }
+        });
+        return listText + '\n';
+      }
+
+      if (tagName === 'ol') {
+        let listText = '\n';
+        Array.from(node.children).forEach((li, index) => {
+          if (li.tagName.toLowerCase() === 'li') {
+            listText += `${index + 1}. ${extractMarkdownFromElement(li).trim()}\n`;
+          }
+        });
+        return listText + '\n';
+      }
+
+      // Blockquotes
+      if (tagName === 'blockquote') {
+        const text = getChildrenText(node);
+        return `\n> ${text}\n\n`;
+      }
+
+      // Line breaks
+      if (tagName === 'br') {
+        return '\n';
+      }
+
+      // Paragraphs
+      if (tagName === 'p') {
+        return `${getChildrenMarkdown(node)}\n\n`;
+      }
+
+      // Divs - just process children
+      if (tagName === 'div') {
+        return getChildrenMarkdown(node);
+      }
+
+      // Default: process children
+      return getChildrenMarkdown(node);
+    }
+
+    return '';
+  }
+
+  // Helper to get text from all children (for simple formatting)
+  function getChildrenText(node) {
+    return Array.from(node.childNodes)
+      .map(child => {
+        if (child.nodeType === Node.TEXT_NODE) {
+          return child.textContent;
+        }
+        return child.textContent || '';
+      })
+      .join('');
+  }
+
+  // Helper to get markdown from all children (for complex formatting)
+  function getChildrenMarkdown(node) {
+    return Array.from(node.childNodes)
+      .map(child => extractMarkdownFromElement(child))
+      .join('');
   }
 
   // Format messages as text

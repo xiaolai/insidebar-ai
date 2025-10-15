@@ -1439,6 +1439,40 @@ function escapeHtml(text) {
   return div.innerHTML;
 }
 
+// Sanitize HTML to prevent XSS attacks
+// Allows safe markdown-generated tags but strips dangerous attributes and scripts
+function sanitizeHtml(html) {
+  const temp = document.createElement('div');
+  temp.innerHTML = html;
+
+  // Remove script tags and event handlers
+  const scripts = temp.querySelectorAll('script');
+  scripts.forEach(script => script.remove());
+
+  // Remove potentially dangerous attributes
+  const allElements = temp.querySelectorAll('*');
+  allElements.forEach(el => {
+    // Remove event handler attributes
+    Array.from(el.attributes).forEach(attr => {
+      if (attr.name.startsWith('on')) {
+        el.removeAttribute(attr.name);
+      }
+    });
+
+    // Remove dangerous attributes
+    ['javascript:', 'data:', 'vbscript:'].forEach(protocol => {
+      ['href', 'src', 'action', 'formaction'].forEach(attr => {
+        const value = el.getAttribute(attr);
+        if (value && value.toLowerCase().includes(protocol)) {
+          el.removeAttribute(attr);
+        }
+      });
+    });
+  });
+
+  return temp.innerHTML;
+}
+
 // Chat History Implementation
 function setupChatHistory() {
   // Save conversation button
@@ -1795,7 +1829,32 @@ async function viewConversation(id) {
   document.getElementById('view-conversation-title').textContent = conversation.title;
 
   const contentEl = document.getElementById('view-conversation-content');
-  contentEl.textContent = conversation.content;
+  // Render markdown content using marked library
+  if (typeof marked !== 'undefined' && conversation.content) {
+    try {
+      // Configure marked for better security
+      marked.setOptions({
+        breaks: true, // Convert line breaks to <br>
+        gfm: true,    // GitHub Flavored Markdown
+        headerIds: false, // Don't add IDs to headers
+        mangle: false // Don't escape email addresses
+      });
+
+      // Parse and render markdown
+      const htmlContent = marked.parse(conversation.content);
+      contentEl.innerHTML = sanitizeHtml(htmlContent);
+      contentEl.classList.add('markdown-content');
+    } catch (error) {
+      console.error('[Sidebar] Error rendering markdown:', error);
+      // Fallback to plain text if markdown parsing fails
+      contentEl.textContent = conversation.content;
+      contentEl.classList.remove('markdown-content');
+    }
+  } else {
+    // Fallback if marked is not available
+    contentEl.textContent = conversation.content;
+    contentEl.classList.remove('markdown-content');
+  }
 
   const providerEl = document.getElementById('view-conversation-provider');
   providerEl.innerHTML = `<strong>Provider:</strong> ${escapeHtml(conversation.provider)}`;
