@@ -368,6 +368,12 @@ function setupMessageListener() {
           // Switch to chat history view after save
           switchToView('chat-history');
           sendResponse({ success: true });
+        } else if (message.action === 'refreshChatHistory') {
+          // Refresh chat history view if currently displayed
+          if (currentView === 'chat-history') {
+            await renderConversationList();
+          }
+          sendResponse({ success: true });
         }
       } catch (error) {
         console.error('Error handling message:', error);

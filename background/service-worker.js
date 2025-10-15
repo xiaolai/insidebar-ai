@@ -259,6 +259,18 @@ async function handleSaveConversation(conversationData, sender) {
     const savedConversation = await saveConversation(conversationData);
     console.log('[Background] Conversation saved to database:', savedConversation?.id);
 
+    // Notify sidebar to refresh chat history if it's open
+    try {
+      await notifyMessage({
+        action: 'refreshChatHistory',
+        payload: { conversationId: savedConversation.id }
+      });
+      console.log('[Background] Refresh notification sent to sidebar');
+    } catch (error) {
+      // Sidebar may not be open, that's okay
+      console.log('[Background] Sidebar not available for refresh notification');
+    }
+
     // Get user setting for auto-opening sidebar
     const settings = await chrome.storage.sync.get({
       autoOpenSidebarOnSave: false
