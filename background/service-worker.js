@@ -247,17 +247,8 @@ async function handleCheckDuplicate(payload) {
 // Handle saving conversation - now with direct database access
 async function handleSaveConversation(conversationData, sender) {
   try {
-    console.log('[Background] handleSaveConversation called with data:', {
-      title: conversationData?.title,
-      provider: conversationData?.provider,
-      messageCount: conversationData?.messages?.length,
-      conversationId: conversationData?.conversationId,
-      overwriteId: conversationData?.overwriteId
-    });
-
     // Save directly to IndexedDB without requiring sidebar
     const savedConversation = await saveConversation(conversationData);
-    console.log('[Background] Conversation saved to database:', savedConversation?.id);
 
     // Notify sidebar to refresh chat history if it's open
     try {
@@ -265,10 +256,8 @@ async function handleSaveConversation(conversationData, sender) {
         action: 'refreshChatHistory',
         payload: { conversationId: savedConversation.id }
       });
-      console.log('[Background] Refresh notification sent to sidebar');
     } catch (error) {
       // Sidebar may not be open, that's okay
-      console.log('[Background] Sidebar not available for refresh notification');
     }
 
     // Get user setting for auto-opening sidebar
@@ -286,7 +275,6 @@ async function handleSaveConversation(conversationData, sender) {
           // This will work because it's within the user gesture flow
           await chrome.sidePanel.open({ windowId });
           sidePanelState.set(windowId, true);
-          console.log('[Background] Sidebar opened after save');
 
           // Wait for sidebar to load, then switch to chat history
           setTimeout(() => {
@@ -307,7 +295,6 @@ async function handleSaveConversation(conversationData, sender) {
     return { success: true, data: savedConversation };
   } catch (error) {
     console.error('[Background] Error saving conversation:', error);
-    console.error('[Background] Error stack:', error.stack);
     return { success: false, error: error.message };
   }
 }

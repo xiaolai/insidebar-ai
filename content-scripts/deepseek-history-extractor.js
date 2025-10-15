@@ -6,8 +6,6 @@
 (function() {
   'use strict';
 
-  console.log('[DeepSeek Extractor] Script loaded');
-
   // Import shared utilities from global namespace
   const {
     extractMarkdownFromElement,
@@ -30,9 +28,6 @@
   }
 
   function init() {
-    console.log('[DeepSeek Extractor] Initializing...');
-    console.log('[DeepSeek Extractor] In iframe?', window !== window.top);
-    console.log('[DeepSeek Extractor] URL:', window.location.href);
 
     // COMMENTED OUT: Save button insertion disabled for DeepSeek due to DOM extraction issues
     // Only run on conversation pages (not homepage)
@@ -184,7 +179,6 @@
       if (titleDiv) {
         const title = titleDiv.textContent.trim();
         if (title && title.length > 0) {
-          console.log('[DeepSeek Extractor] Found title from current chat:', title);
           return title;
         }
       }
@@ -196,7 +190,6 @@
       return `DeepSeek Conversation ${urlMatch[1].substring(0, 8)}`;
     }
 
-    console.log('[DeepSeek Extractor] No title found, using default');
     return 'Untitled DeepSeek Conversation';
   }
 
@@ -327,8 +320,6 @@
       e.stopPropagation();
     }
 
-    console.log('[DeepSeek Extractor] Save button clicked');
-
     if (!saveButton) return;
 
     if (typeof chrome === 'undefined' || !chrome.runtime) {
@@ -344,13 +335,6 @@
 
     try {
       const conversation = extractConversation();
-      console.log('[DeepSeek Extractor] Extracted conversation:', {
-        title: conversation.title,
-        messageCount: conversation.messages.length,
-        contentLength: conversation.content.length,
-        url: conversation.url,
-        provider: conversation.provider
-      });
 
       // Generate conversation ID for deduplication
       const conversationId = generateConversationId(conversation.url, conversation.title);
@@ -399,7 +383,6 @@
         }
 
         if (response && response.success) {
-          console.log('[DeepSeek Extractor] Conversation saved successfully');
           // Success notification now shown in sidebar
         } else {
           const errorMsg = response?.error || 'Unknown error';

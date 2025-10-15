@@ -1791,21 +1791,9 @@ async function saveConversationFromModal() {
 // Handle extracted conversation from ChatGPT content script
 async function handleExtractedConversation(conversationData) {
   try {
-    console.log('[Sidebar] handleExtractedConversation called');
-    console.log('[Sidebar] Received conversation data:', {
-      title: conversationData?.title,
-      provider: conversationData?.provider,
-      contentLength: conversationData?.content?.length,
-      messageCount: conversationData?.messages?.length,
-      timestamp: conversationData?.timestamp,
-      url: conversationData?.url
-    });
-
     // Switch to chat history view
-    console.log('[Sidebar] Switching to chat-history view...');
     switchToView('chat-history');
 
-    console.log('[Sidebar] Preparing conversation data for save...');
     const conversationToSave = {
       title: conversationData.title || generateAutoTitle(conversationData.content),
       content: conversationData.content,
@@ -1819,21 +1807,15 @@ async function handleExtractedConversation(conversationData) {
       overwriteId: conversationData.overwriteId
     };
 
-    console.log('[Sidebar] Saving conversation to database...');
     // Save conversation directly to database
     await saveConversation(conversationToSave);
 
-    console.log('[Sidebar] Conversation saved, refreshing list...');
     // Refresh conversation list and show success
     await renderConversationList();
 
-    console.log('[Sidebar] Showing success toast...');
     showToast('Conversation saved successfully!');
-
-    console.log('[Sidebar] handleExtractedConversation completed successfully');
   } catch (error) {
     console.error('[Sidebar] Error in handleExtractedConversation:', error);
-    console.error('[Sidebar] Error stack:', error.stack);
     showToast('Failed to save conversation: ' + error.message);
     throw error;
   }
