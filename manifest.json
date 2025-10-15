@@ -125,8 +125,10 @@
       "js": [
         "content-scripts/enter-behavior-utils.js",
         "content-scripts/enter-behavior-grok.js",
-        "content-scripts/text-injection-all-providers.js"
+        "content-scripts/text-injection-all-providers.js",
+        "content-scripts/grok-history-extractor.js"
       ],
+      "css": ["content-scripts/grok-save-button.css"],
       "run_at": "document_start",
       "all_frames": true
     },
