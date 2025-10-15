@@ -148,28 +148,46 @@
 
   // Extract conversation title from active chat in sidebar
   function getConversationTitle() {
-    // Find the active/current chat link with text-primary class
-    const activeChat = document.querySelector('a[href^="/c/"].text-primary');
+    // Priority 1: Extract conversation ID from URL and find matching sidebar link
+    const urlMatch = window.location.pathname.match(/\/c\/([^\/]+)/);
 
-    if (activeChat) {
-      const titleSpan = activeChat.querySelector('span.flex-1');
-      if (titleSpan) {
-        const title = titleSpan.textContent.trim();
-        if (title && title.length > 0) {
-          console.log('[Grok Extractor] Found title from active chat:', title);
-          return title;
+    if (urlMatch) {
+      const conversationId = urlMatch[1];
+
+      // Find the sidebar link that matches this conversation ID
+      const matchingLink = document.querySelector(`a[href^="/c/${conversationId}"]`);
+
+      if (matchingLink) {
+        const titleSpan = matchingLink.querySelector('span.flex-1');
+        if (titleSpan) {
+          const title = titleSpan.textContent.trim();
+          if (title && title.length > 0) {
+            console.log('[Grok Extractor] Found title from URL-matched sidebar link:', title);
+            return title;
+          }
         }
       }
+
+      // Fallback: Try the old method (text-primary class)
+      const activeChat = document.querySelector('a[href^="/c/"].text-primary');
+      if (activeChat) {
+        const titleSpan = activeChat.querySelector('span.flex-1');
+        if (titleSpan) {
+          const title = titleSpan.textContent.trim();
+          if (title && title.length > 0) {
+            console.log('[Grok Extractor] Found title from active chat (text-primary fallback):', title);
+            return title;
+          }
+        }
+      }
+
+      // Ultimate fallback: Use URL-based title
+      console.log('[Grok Extractor] Falling back to URL-based title');
+      return `Grok Conversation ${conversationId.substring(0, 8)}`;
     }
 
-    // Fallback: Try to extract from URL
-    const urlMatch = window.location.pathname.match(/\/c\/([^\/]+)/);
-    if (urlMatch) {
-      return `Grok Conversation ${urlMatch[1].substring(0, 8)}`;
-    }
-
-    // Ultimate fallback
-    console.log('[Grok Extractor] No title found, using default');
+    // No URL match - use default
+    console.log('[Grok Extractor] No conversation ID in URL, using default');
     return 'Untitled Grok Conversation';
   }
 

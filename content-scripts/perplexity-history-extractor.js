@@ -155,28 +155,50 @@
 
   // Extract conversation title from current thread in sidebar
   function getConversationTitle() {
-    // Find the current thread (has opacity-100 in hover div)
-    const currentThread = document.querySelector('a[data-testid*="thread-title-"]');
+    // Priority 1: Extract conversation ID from URL and find matching thread
+    const urlMatch = window.location.pathname.match(/\/search\/([^\/]+)/);
 
-    if (currentThread) {
-      const titleSpan = currentThread.querySelector('span');
-      if (titleSpan) {
-        const title = titleSpan.textContent.trim();
-        if (title && title.length > 0) {
-          console.log('[Perplexity Extractor] Found title from current thread:', title);
-          return title;
+    if (urlMatch) {
+      const fullPath = urlMatch[1]; // e.g., "some-title-abc123def456"
+
+      // Find the thread link that matches this path
+      const matchingThread = document.querySelector(`a[href*="/search/${fullPath}"]`);
+
+      if (matchingThread) {
+        const titleSpan = matchingThread.querySelector('span');
+        if (titleSpan) {
+          const title = titleSpan.textContent.trim();
+          if (title && title.length > 0) {
+            console.log('[Perplexity Extractor] Found title from URL-matched thread:', title);
+            return title;
+          }
         }
       }
+
+      // Fallback: Try the old method (data-testid pattern)
+      const currentThread = document.querySelector('a[data-testid*="thread-title-"]');
+      if (currentThread) {
+        const titleSpan = currentThread.querySelector('span');
+        if (titleSpan) {
+          const title = titleSpan.textContent.trim();
+          if (title && title.length > 0) {
+            console.log('[Perplexity Extractor] Found title from current thread (data-testid fallback):', title);
+            return title;
+          }
+        }
+      }
+
+      // Ultimate fallback: URL-based title
+      console.log('[Perplexity Extractor] Falling back to URL-based title');
+      const idMatch = fullPath.match(/-([^-]+)$/);
+      if (idMatch) {
+        return `Perplexity Search ${idMatch[1].substring(0, 8)}`;
+      }
+      return `Perplexity Search ${fullPath.substring(0, 8)}`;
     }
 
-    // Fallback: Try to extract from URL
-    const urlMatch = window.location.pathname.match(/\/search\/[^\/]+-([^\/]+)/);
-    if (urlMatch) {
-      return `Perplexity Search ${urlMatch[1].substring(0, 8)}`;
-    }
-
-    // Ultimate fallback
-    console.log('[Perplexity Extractor] No title found, using default');
+    // No URL match - use default
+    console.log('[Perplexity Extractor] No conversation ID in URL, using default');
     return 'Untitled Perplexity Search';
   }
 

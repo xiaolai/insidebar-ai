@@ -152,27 +152,48 @@
 
   // Extract conversation title from selected conversation in sidebar
   function getConversationTitle() {
-    // Try to get title from selected conversation in sidebar
-    const selectedConversation = document.querySelector('[data-test-id="conversation"].selected');
-    if (selectedConversation) {
-      const titleDiv = selectedConversation.querySelector('.conversation-title');
-      if (titleDiv) {
-        const title = titleDiv.textContent.trim();
-        if (title && title.length > 0) {
-          console.log('[Gemini Extractor] Found title from selected conversation:', title);
-          return title;
+    // Priority 1: Extract conversation ID from URL and find matching sidebar element
+    const urlMatch = window.location.pathname.match(/\/app\/([^\/]+)/);
+
+    if (urlMatch) {
+      const conversationId = urlMatch[1];
+
+      // Try to find a conversation element with matching ID
+      // Gemini might use data attributes or href patterns
+      const matchingConversation = document.querySelector(`[data-test-id="conversation"][href*="${conversationId}"]`) ||
+                                    document.querySelector(`a[href*="/app/${conversationId}"]`);
+
+      if (matchingConversation) {
+        const titleDiv = matchingConversation.querySelector('.conversation-title');
+        if (titleDiv) {
+          const title = titleDiv.textContent.trim();
+          if (title && title.length > 0) {
+            console.log('[Gemini Extractor] Found title from URL-matched conversation:', title);
+            return title;
+          }
         }
       }
+
+      // Fallback: Try the old method (.selected class)
+      const selectedConversation = document.querySelector('[data-test-id="conversation"].selected');
+      if (selectedConversation) {
+        const titleDiv = selectedConversation.querySelector('.conversation-title');
+        if (titleDiv) {
+          const title = titleDiv.textContent.trim();
+          if (title && title.length > 0) {
+            console.log('[Gemini Extractor] Found title from selected conversation (class fallback):', title);
+            return title;
+          }
+        }
+      }
+
+      // Ultimate fallback: Use URL-based title
+      console.log('[Gemini Extractor] Falling back to URL-based title');
+      return `Gemini Conversation ${conversationId.substring(0, 8)}`;
     }
 
-    // Fallback: Try to extract from URL
-    const urlMatch = window.location.pathname.match(/\/app\/([^\/]+)/);
-    if (urlMatch) {
-      return `Gemini Conversation ${urlMatch[1].substring(0, 8)}`;
-    }
-
-    // Ultimate fallback
-    console.log('[Gemini Extractor] No title found, using default');
+    // No URL match - use default
+    console.log('[Gemini Extractor] No conversation ID in URL, using default');
     return 'Untitled Gemini Conversation';
   }
 

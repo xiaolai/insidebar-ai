@@ -142,27 +142,46 @@
 
   // Extract conversation title from URL or active chat item
   function getConversationTitle() {
-    // Try to get title from active chat in sidebar
-    const activeChat = document.querySelector('a[class*="!bg-bg-400"]');
-    if (activeChat) {
-      const titleSpan = activeChat.querySelector('span[class*="truncate"]');
-      if (titleSpan) {
-        const title = titleSpan.textContent.trim();
-        if (title && title.length > 0) {
-          console.log('[Claude Extractor] Found title from active chat:', title);
-          return title;
+    // Priority 1: Extract conversation ID from URL and find matching sidebar link
+    const urlMatch = window.location.pathname.match(/\/chat\/([^\/]+)/);
+
+    if (urlMatch) {
+      const conversationId = urlMatch[1];
+
+      // Find the sidebar link that matches this conversation ID
+      const matchingLink = document.querySelector(`a[href*="/chat/${conversationId}"]`);
+
+      if (matchingLink) {
+        const titleSpan = matchingLink.querySelector('span[class*="truncate"]');
+        if (titleSpan) {
+          const title = titleSpan.textContent.trim();
+          if (title && title.length > 0) {
+            console.log('[Claude Extractor] Found title from URL-matched sidebar link:', title);
+            return title;
+          }
         }
       }
+
+      // Fallback: Try the old method (!bg-bg-400 class)
+      const activeChat = document.querySelector('a[class*="!bg-bg-400"]');
+      if (activeChat) {
+        const titleSpan = activeChat.querySelector('span[class*="truncate"]');
+        if (titleSpan) {
+          const title = titleSpan.textContent.trim();
+          if (title && title.length > 0) {
+            console.log('[Claude Extractor] Found title from active chat (bg-bg-400 fallback):', title);
+            return title;
+          }
+        }
+      }
+
+      // Ultimate fallback: Use URL-based title
+      console.log('[Claude Extractor] Falling back to URL-based title');
+      return `Claude Conversation ${conversationId.substring(0, 8)}`;
     }
 
-    // Fallback: Try to extract from URL
-    const urlMatch = window.location.pathname.match(/\/chat\/([^\/]+)/);
-    if (urlMatch) {
-      return `Claude Conversation ${urlMatch[1].substring(0, 8)}`;
-    }
-
-    // Ultimate fallback
-    console.log('[Claude Extractor] No title found, using default');
+    // No URL match - use default
+    console.log('[Claude Extractor] No conversation ID in URL, using default');
     return 'Untitled Claude Conversation';
   }
 

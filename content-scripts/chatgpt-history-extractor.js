@@ -140,8 +140,40 @@
 
   // Extract conversation title
   function getConversationTitle() {
-    // Priority 1: Try to get active (focused) conversation from #history sidebar
-    // The current chat has a data-active attribute
+    // Priority 1: Extract conversation ID from URL and find matching sidebar link
+    const urlMatch = window.location.pathname.match(/\/c\/([^\/]+)/);
+
+    if (urlMatch) {
+      const conversationId = urlMatch[1];
+      const historyList = document.getElementById('history');
+
+      if (historyList) {
+        console.log('[ChatGPT Extractor] Found #history list, looking for conversation ID:', conversationId);
+
+        // Find the sidebar link that matches this conversation ID
+        const matchingLink = historyList.querySelector(`a[href*="${conversationId}"]`);
+
+        if (matchingLink) {
+          const titleSpan = matchingLink.querySelector('span[dir="auto"]');
+          if (titleSpan) {
+            const title = titleSpan.textContent.trim();
+            if (title && !title.includes('New chat') && title.length > 0) {
+              console.log('[ChatGPT Extractor] Found title from URL-matched sidebar link:', title);
+              return title;
+            }
+          }
+
+          // Fallback: use the entire link text content
+          const title = matchingLink.textContent.trim();
+          if (title && !title.includes('New chat') && title.length > 0) {
+            console.log('[ChatGPT Extractor] Found title from URL-matched link (fallback):', title);
+            return title;
+          }
+        }
+      }
+    }
+
+    // Priority 2: Try to get active conversation using data-active attribute
     const historyList = document.getElementById('history');
 
     if (historyList) {
@@ -156,7 +188,7 @@
         if (titleSpan) {
           const title = titleSpan.textContent.trim();
           if (title && !title.includes('New chat') && title.length > 0) {
-            console.log('[ChatGPT Extractor] Found title from active item:', title);
+            console.log('[ChatGPT Extractor] Found title from active item ([data-active] fallback):', title);
             return title;
           }
         }
@@ -164,7 +196,7 @@
         // Fallback: use the entire text content
         const title = activeItem.textContent.trim();
         if (title && !title.includes('New chat') && title.length > 0) {
-          console.log('[ChatGPT Extractor] Found title from active item (fallback):', title);
+          console.log('[ChatGPT Extractor] Found title from active item (content fallback):', title);
           return title;
         }
       } else {
@@ -174,7 +206,7 @@
       console.log('[ChatGPT Extractor] #history list not found');
     }
 
-    // Fallback: Try other selectors
+    // Priority 3: Try other selectors
     const fallbackSelectors = [
       'nav [aria-current="page"]',
       'h1',
