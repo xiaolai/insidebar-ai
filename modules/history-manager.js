@@ -287,8 +287,15 @@ export async function findConversationByConversationId(conversationId) {
     return null;
   }
 
-  const allConversations = await getAllConversations();
-  return allConversations.find(c => c.conversationId === conversationId) || null;
+  await ensureDb();
+
+  return runWithRetry(() => {
+    const transaction = db.transaction([CONVERSATIONS_STORE], 'readonly');
+    const store = transaction.objectStore(CONVERSATIONS_STORE);
+    const index = store.index('conversationId');
+    const request = index.get(conversationId);
+    return wrapRequest(request, value => value || null);
+  });
 }
 
 // Export conversations as JSON

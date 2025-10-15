@@ -2,7 +2,7 @@
 // Handles CRUD operations for prompts in the Prompt Library
 
 const DB_NAME = 'SmarterPanelDB';
-const DB_VERSION = 2;  // Upgraded to support conversations
+const DB_VERSION = 3;  // Upgraded to add conversationId index
 const PROMPTS_STORE = 'prompts';
 const CONVERSATIONS_STORE = 'conversations';
 
@@ -119,6 +119,15 @@ export async function initPromptDB() {
         conversationsStore.createIndex('tags', 'tags', { unique: false, multiEntry: true });
         conversationsStore.createIndex('isFavorite', 'isFavorite', { unique: false });
         conversationsStore.createIndex('searchText', 'searchText', { unique: false });
+      }
+
+      // Add conversationId index (version 3)
+      if (oldVersion < 3) {
+        const transaction = event.target.transaction;
+        const conversationsStore = transaction.objectStore(CONVERSATIONS_STORE);
+
+        // Add index for conversationId to enable efficient duplicate checking
+        conversationsStore.createIndex('conversationId', 'conversationId', { unique: false });
       }
     };
   });
