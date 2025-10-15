@@ -1,13 +1,7 @@
 // Grok Enter/Shift+Enter behavior swap
 // Supports customizable key combinations via settings
 
-const DEBUG_GROK_ENTER = false;
-
-function debugLog(...args) {
-  if (DEBUG_GROK_ENTER) {
-    console.log('[Grok Debug]', ...args);
-  }
-}
+// Debug logging removed in production
 
 function handleEnterSwap(event) {
   // Only handle trusted Enter key events
@@ -32,14 +26,14 @@ function handleEnterSwap(event) {
     return;
   }
 
-  debugLog('Key event:', event, enterKeyConfig);
+  // Debug logging removed
 
   // Check if this matches newline action
   if (matchesModifiers(event, enterKeyConfig.newlineModifiers)) {
     event.preventDefault();
     event.stopImmediatePropagation();
 
-    debugLog('Newline action triggered');
+    // Newline action triggered
 
     // For textarea in iframe, use direct manipulation
     if (event.target.tagName === "TEXTAREA" && window !== window.top) {
@@ -73,7 +67,7 @@ function handleEnterSwap(event) {
     event.preventDefault();
     event.stopImmediatePropagation();
 
-    debugLog('Send action triggered');
+    // Send action triggered
 
     // Plain Enter to send
     const newEvent = new KeyboardEvent("keydown", {
