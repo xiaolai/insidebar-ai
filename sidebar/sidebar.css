@@ -767,31 +767,24 @@ body {
 }
 
 .modal-footer button {
-  padding: 8px 16px;
+  padding: 8px;
   border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: 500;
+  background: transparent;
   cursor: pointer;
-  transition: background 0.2s;
-}
-
-.modal-footer button.primary {
-  background: #1a73e8;
-  color: white;
-}
-
-.modal-footer button.primary:hover {
-  background: #1557b0;
-}
-
-.modal-footer button.secondary {
-  background: #f5f5f5;
+  transition: opacity 0.2s;
   color: #666;
+  opacity: 0.7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.modal-footer button.secondary:hover {
-  background: #e0e0e0;
+.modal-footer button:hover {
+  opacity: 1;
+}
+
+.modal-footer button .material-symbols-outlined {
+  font-size: 24px;
 }
 
 /* Dark theme for Prompt Library */
@@ -990,13 +983,13 @@ body {
   border-top-color: #444;
 }
 
-[data-theme="dark"] .modal-footer button.secondary {
-  background: #3a3a3a;
+[data-theme="dark"] .modal-footer button {
+  background: transparent;
   color: #aaa;
 }
 
-[data-theme="dark"] .modal-footer button.secondary:hover {
-  background: #444;
+[data-theme="dark"] .modal-footer button:hover {
+  opacity: 1;
 }
 
 /* Empty state */

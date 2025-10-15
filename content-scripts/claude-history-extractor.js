@@ -71,13 +71,13 @@
     button.textContent = 'Save';
     button.type = 'button';
     button.title = 'Save this conversation to insidebar.ai';
-    button.style.marginRight = '8px';
+    button.style.marginLeft = '8px';
     button.addEventListener('click', handleSaveClick);
 
     return button;
   }
 
-  // Insert save button before share button
+  // Insert save button after share button
   function insertSaveButton() {
     // Check if button already exists
     if (document.getElementById('insidebar-save-conversation')) {
@@ -105,11 +105,11 @@
       return;
     }
 
-    // Create and insert save button before share button
+    // Create and insert save button after share button
     saveButton = createSaveButton();
-    shareButton.parentElement.insertBefore(saveButton, shareButton);
+    shareButton.parentElement.insertBefore(saveButton, shareButton.nextSibling);
 
-    console.log('[Claude Extractor] Save button inserted before share button');
+    console.log('[Claude Extractor] Save button inserted after share button');
   }
 
   // Detect if there's a conversation on the page
