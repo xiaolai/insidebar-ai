@@ -2,7 +2,7 @@
 
 > Access multiple AI assistants in one convenient sidebar
 
-![Version](https://img.shields.io/badge/version-1.2.0-blue.svg)
+![Version](https://img.shields.io/badge/version-1.3.0-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
 **insidebar.ai** is a browser extension that brings ChatGPT, Claude, Gemini, Grok, and DeepSeek together in a single sidebar. No more switching between tabs or windows—just open the sidebar and start chatting with your favorite AI.
@@ -16,7 +16,7 @@ Switch between ChatGPT, Claude, Gemini, Grok, and DeepSeek with a single click. 
 Uses your existing browser login sessions. If you're already logged into ChatGPT or Claude, you're ready to go.
 
 **Prompt Library**
-Save your frequently used prompts. Organize them with categories and tags. Reuse them across any AI provider. Import a default library of 50+ useful prompts to get started.
+Save your frequently used prompts. Organize them with categories and tags. Reuse them across any AI provider. Import a default library of 70 curated prompts to get started, or import your own custom prompt libraries.
 
 **Keyboard Shortcuts**
 Open the sidebar instantly with `Ctrl+Shift+E` (or `Cmd+Shift+E` on Mac). Access your prompt library with `Ctrl+Shift+P`.
@@ -197,7 +197,10 @@ Click the circular arrow icon on a prompt to insert it into the workspace. From 
 Use categories (Coding, Writing, Analysis, or create your own). Add tags for easy searching. Filter by favorites using the star icon.
 
 **Import default prompts:**
-Open Settings and click "Import Default Prompts" to load a starter collection of 50+ useful prompts covering coding, writing, analysis, and more.
+Open Settings and click "Import Default Prompts" to load a starter collection of 70 curated prompts covering coding, writing, analysis, and more.
+
+**Import custom prompts:**
+Click "Import Custom Prompts" to load your own prompt libraries. Files must be in JSON format matching the structure of default-prompts.json. The extension validates the format and shows helpful error messages if the structure is incorrect.
 
 ### Settings
 
@@ -215,7 +218,9 @@ Click the gear icon at the bottom of the sidebar to open Settings.
 
 **Enter Key Behavior:** Customize how the Enter key works in AI chat inputs. Choose from presets (Default, Swapped, Slack-style, Discord-style) or create your own custom key mapping. This affects how you send messages versus adding new lines.
 
-**Prompt Library:** Import the default prompt library containing 50+ professionally crafted prompts for coding, writing, analysis, and general use. Great starting point for new users.
+**Prompt Library:** Import the default prompt library containing 70 professionally crafted prompts for coding, writing, analysis, and general use. Great starting point for new users. You can also import your own custom prompt libraries - the extension validates the JSON structure and provides helpful error messages.
+
+**Chat History:** Save and organize conversations from ChatGPT, Claude, Gemini, Grok, and Perplexity. View saved conversations with full markdown rendering, search and filter by provider, and access original conversation URLs.
 
 **Data Management:** Export your prompts and settings as a backup file. Import them later or on another computer. Reset all data if needed.
 
