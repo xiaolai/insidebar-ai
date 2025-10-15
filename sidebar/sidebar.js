@@ -1637,11 +1637,8 @@ async function renderConversationList(conversations = null) {
     const date = new Date(conv.timestamp).toLocaleDateString();
     const time = new Date(conv.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-    // Extract URL from notes if available (format: "Extracted from: URL")
-    let conversationUrl = null;
-    if (conv.notes && conv.notes.startsWith('Extracted from: ')) {
-      conversationUrl = conv.notes.substring('Extracted from: '.length).trim();
-    }
+    // Use URL field directly if available
+    const conversationUrl = conv.url;
 
     // Create date/time display - make it a link if URL is available
     const dateTimeDisplay = conversationUrl
@@ -1864,11 +1861,8 @@ async function viewConversation(id) {
   const providerEl = document.getElementById('view-conversation-provider');
   providerEl.innerHTML = `<strong>Provider:</strong> ${escapeHtml(conversation.provider)}`;
 
-  // Extract URL from notes if available (format: "Extracted from: URL")
-  let conversationUrl = null;
-  if (conversation.notes && conversation.notes.startsWith('Extracted from: ')) {
-    conversationUrl = conversation.notes.substring('Extracted from: '.length).trim();
-  }
+  // Use URL field directly if available
+  const conversationUrl = conversation.url;
 
   // Create timestamp display - make it a link if URL is available
   const timestampEl = document.getElementById('view-conversation-timestamp');
