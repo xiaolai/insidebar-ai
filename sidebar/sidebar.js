@@ -1630,6 +1630,9 @@ async function renderConversationList(conversations = null) {
   // Sort by timestamp (newest first)
   conversations.sort((a, b) => b.timestamp - a.timestamp);
 
+  // Get dark theme status
+  const useDarkIcons = isDarkTheme();
+
   listContainer.innerHTML = conversations.map(conv => {
     const preview = conv.content.length > 150
       ? conv.content.substring(0, 150) + '...'
@@ -1645,6 +1648,15 @@ async function renderConversationList(conversations = null) {
       ? `<a href="${escapeHtml(conversationUrl)}" target="_blank" class="conversation-item-date conversation-item-link" title="Open original conversation">${date} ${time}</a>`
       : `<span class="conversation-item-date">${date} ${time}</span>`;
 
+    // Get provider data for icon
+    const provider = getProviderById(conv.provider.toLowerCase());
+    const providerIconSrc = provider
+      ? (useDarkIcons && provider.iconDark ? provider.iconDark : provider.icon)
+      : '';
+    const providerIconHtml = providerIconSrc
+      ? `<img class="provider-icon-small" src="${providerIconSrc}" alt="${escapeHtml(conv.provider)}">`
+      : '';
+
     return `
       <div class="conversation-item" data-conversation-id="${conv.id}">
         <div class="conversation-item-header">
@@ -1658,7 +1670,7 @@ async function renderConversationList(conversations = null) {
         </div>
         <div class="conversation-item-preview">${escapeHtml(preview)}</div>
         <div class="conversation-item-meta">
-          <span class="conversation-item-provider">${escapeHtml(conv.provider)}</span>
+          <span class="conversation-item-provider">${providerIconHtml}${escapeHtml(conv.provider)}</span>
           ${dateTimeDisplay}
           ${conv.tags.length > 0 ? `
             <div class="conversation-item-tags">
@@ -1859,7 +1871,18 @@ async function viewConversation(id) {
   }
 
   const providerEl = document.getElementById('view-conversation-provider');
-  providerEl.innerHTML = `<strong>Provider:</strong> ${escapeHtml(conversation.provider)}`;
+
+  // Get provider data for icon
+  const useDarkIcons = isDarkTheme();
+  const provider = getProviderById(conversation.provider.toLowerCase());
+  const providerIconSrc = provider
+    ? (useDarkIcons && provider.iconDark ? provider.iconDark : provider.icon)
+    : '';
+  const providerIconHtml = providerIconSrc
+    ? `<img class="provider-icon-small" src="${providerIconSrc}" alt="${escapeHtml(conversation.provider)}">`
+    : '';
+
+  providerEl.innerHTML = `<strong>Provider:</strong> ${providerIconHtml}${escapeHtml(conversation.provider)}`;
 
   // Use URL field directly if available
   const conversationUrl = conversation.url;

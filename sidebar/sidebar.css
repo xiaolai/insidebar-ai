@@ -1723,6 +1723,14 @@ body {
   color: #1976d2;
   border-radius: 3px;
   font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.conversation-item-provider .provider-icon-small {
+  width: 16px;
+  height: 16px;
 }
 
 .conversation-item-date {
@@ -1901,6 +1909,13 @@ a.conversation-link:hover {
 
 #view-conversation-meta strong {
   color: #333;
+}
+
+#view-conversation-meta .provider-icon-small {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  margin-right: 4px;
 }
 
 .conversation-tag {
