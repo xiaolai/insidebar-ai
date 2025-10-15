@@ -102,6 +102,8 @@
     {
       "matches": ["https://claude.ai/*"],
       "js": [
+        "content-scripts/enter-behavior-utils.js",
+        "content-scripts/enter-behavior-claude.js",
         "content-scripts/text-injection-all-providers.js",
         "content-scripts/conversation-extractor-utils.js",
         "content-scripts/claude-history-extractor.js"
