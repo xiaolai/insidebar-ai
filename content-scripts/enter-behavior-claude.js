@@ -4,8 +4,6 @@
 // CRITICAL: Uses window.addEventListener with capture:true to intercept
 // Enter keys BEFORE ProseMirror sees them (based on working extension pattern)
 
-console.log('[Claude Enter] Script loaded');
-
 function handleEnterSwap(event) {
   // Only handle trusted Enter key events
   if (!event.isTrusted || event.code !== "Enter") {
@@ -31,12 +29,8 @@ function handleEnterSwap(event) {
     return;
   }
 
-  console.log('[Claude Enter] Enter key on ProseMirror, config enabled');
-
   // Check if this matches newline action
   if (matchesModifiers(event, enterKeyConfig.newlineModifiers)) {
-    console.log('[Claude Enter] Newline action triggered');
-
     // CRITICAL: Stop the event IMMEDIATELY before ProseMirror sees it
     event.stopImmediatePropagation();
     event.preventDefault();
@@ -53,15 +47,12 @@ function handleEnterSwap(event) {
       altKey: false
     });
 
-    console.log('[Claude Enter] Dispatching synthetic Shift+Enter');
     activeElement.dispatchEvent(enterEvent);
     return;
   }
 
   // Check if this matches send action
   if (matchesModifiers(event, enterKeyConfig.sendModifiers)) {
-    console.log('[Claude Enter] Send action triggered');
-
     // Stop the original event
     event.stopImmediatePropagation();
     event.preventDefault();
@@ -72,11 +63,9 @@ function handleEnterSwap(event) {
                        document.querySelector('[data-testid="send-button"]');
 
     if (sendButton && !sendButton.disabled) {
-      console.log('[Claude Enter] Clicking send button');
       sendButton.click();
     } else {
       // Fallback: dispatch plain Enter
-      console.log('[Claude Enter] Send button not found, dispatching Enter');
       const enterEvent = new KeyboardEvent('keydown', {
         key: 'Enter',
         code: 'Enter',
@@ -91,8 +80,6 @@ function handleEnterSwap(event) {
     }
     return;
   }
-
-  console.log('[Claude Enter] No modifier match, allowing default');
 }
 
 // CRITICAL: Use window with capture:true to intercept BEFORE ProseMirror
