@@ -713,6 +713,36 @@ body {
   color: #333;
 }
 
+.modal-header-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.header-action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.header-action-btn:hover {
+  color: #333;
+}
+
+[data-theme="dark"] .header-action-btn {
+  color: #999;
+}
+
+[data-theme="dark"] .header-action-btn:hover {
+  color: #e0e0e0;
+}
+
 .close-btn {
   background: none;
   border: none;

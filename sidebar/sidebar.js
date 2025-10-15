@@ -1503,12 +1503,6 @@ function sanitizeHtml(html) {
 
 // Chat History Implementation
 function setupChatHistory() {
-  // Save conversation button
-  const saveBtn = document.getElementById('save-conversation-btn');
-  if (saveBtn) {
-    saveBtn.addEventListener('click', openSaveConversationModal);
-  }
-
   // Search functionality
   const searchInput = document.getElementById('history-search');
   let searchTimeout;
@@ -1728,28 +1722,6 @@ async function updateProviderFilter() {
     enabledProviders.map(provider =>
       `<div class="provider-popup-item" data-value="${escapeHtml(provider.id)}">${escapeHtml(provider.name)}</div>`
     ).join('');
-}
-
-function openSaveConversationModal() {
-  const modal = document.getElementById('save-conversation-modal');
-
-  // Pre-fill provider with current provider
-  const providerInput = document.getElementById('conversation-provider-input');
-  if (currentProvider) {
-    const provider = PROVIDERS.find(p => p.id === currentProvider);
-    providerInput.value = provider ? provider.name : currentProvider;
-  } else {
-    providerInput.value = '';
-  }
-
-  // Clear other fields
-  document.getElementById('conversation-title-input').value = '';
-  document.getElementById('conversation-content-input').value = '';
-  document.getElementById('conversation-tags-input').value = '';
-  document.getElementById('conversation-notes-input').value = '';
-  document.getElementById('conversation-favorite-input').checked = false;
-
-  modal.style.display = 'flex';
 }
 
 function closeSaveConversationModal() {

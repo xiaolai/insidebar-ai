@@ -35,9 +35,6 @@
     <div id="chat-history" style="display: none;">
       <div id="history-header">
         <h2>Chat History</h2>
-        <button id="save-conversation-btn" class="primary-action-btn" title="Save Current Conversation">
-          <span class="material-symbols-outlined">add</span>
-        </button>
       </div>
 
       <div id="history-filters">
@@ -90,7 +87,11 @@
         <div class="modal-content">
           <div class="modal-header">
             <h3 id="view-conversation-title">Conversation</h3>
-            <button class="close-btn" id="close-view-conversation"><span class="material-symbols-outlined">close</span></button>
+            <div class="modal-header-actions">
+              <button id="copy-conversation-btn" class="header-action-btn" title="Copy content"><span class="material-symbols-outlined" style="font-size: 20px;">content_copy</span></button>
+              <button id="delete-conversation-from-view-btn" class="header-action-btn" title="Delete"><span class="material-symbols-outlined" style="font-size: 20px;">delete</span></button>
+              <button class="close-btn" id="close-view-conversation"><span class="material-symbols-outlined">close</span></button>
+            </div>
           </div>
           <div class="modal-body">
             <div id="view-conversation-content"></div>
@@ -100,10 +101,6 @@
               <div id="view-conversation-tags"></div>
               <div id="view-conversation-notes"></div>
             </div>
-          </div>
-          <div class="modal-footer">
-            <button id="copy-conversation-btn" class="primary" title="Copy content"><span class="material-symbols-outlined">content_copy</span></button>
-            <button id="delete-conversation-from-view-btn" class="secondary" title="Delete"><span class="material-symbols-outlined">delete</span></button>
           </div>
         </div>
       </div>
