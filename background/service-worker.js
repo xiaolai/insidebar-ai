@@ -1,4 +1,8 @@
 import { notifyMessage } from '../modules/messaging.js';
+import {
+  saveConversation,
+  findConversationByConversationId
+} from '../modules/history-manager.js';
 
 // T008 & T065: Install event - setup context menus and configure side panel
 const DEFAULT_SHORTCUT_SETTING = { keyboardShortcutEnabled: true };
@@ -213,7 +217,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   return true;
 });
 
-// Handle duplicate conversation check
+// Handle duplicate conversation check - now with direct database access
 async function handleCheckDuplicate(payload) {
   try {
     const { conversationId } = payload;
@@ -222,98 +226,73 @@ async function handleCheckDuplicate(payload) {
       return { isDuplicate: false };
     }
 
-    // Query IndexedDB via sidebar
-    const response = await notifyMessage({
-      action: 'checkDuplicateConversation',
-      payload: { conversationId }
-    });
+    // Query IndexedDB directly without requiring sidebar
+    const existingConversation = await findConversationByConversationId(conversationId);
 
-    return response || { isDuplicate: false };
+    if (existingConversation) {
+      return {
+        isDuplicate: true,
+        existingConversation: existingConversation
+      };
+    }
+
+    return { isDuplicate: false };
   } catch (error) {
     console.error('[Background] Error checking duplicate:', error);
-    // If check fails, assume no duplicate to allow save
-    return { isDuplicate: false };
+    // Propagate error instead of silently returning false
+    throw error;
   }
 }
 
-// Handle saving conversation from ChatGPT page
+// Handle saving conversation - now with direct database access
 async function handleSaveConversation(conversationData, sender) {
   try {
     console.log('[Background] handleSaveConversation called with data:', {
       title: conversationData?.title,
       provider: conversationData?.provider,
       messageCount: conversationData?.messages?.length,
-      hasSender: !!sender,
-      hasTab: !!sender?.tab,
-      hasFrameId: sender?.frameId !== undefined,
-      frameId: sender?.frameId,
-      url: sender?.url
+      conversationId: conversationData?.conversationId,
+      overwriteId: conversationData?.overwriteId
     });
 
-    // Get the window ID
-    // If sender is from an iframe (like sidebar), we need to get the window differently
-    let windowId = null;
+    // Save directly to IndexedDB without requiring sidebar
+    const savedConversation = await saveConversation(conversationData);
+    console.log('[Background] Conversation saved to database:', savedConversation?.id);
 
-    if (sender.tab) {
-      // Message from a regular tab
-      windowId = sender.tab.windowId;
-      console.log('[Background] Got window ID from tab:', windowId);
-    } else {
-      // Message from an iframe (likely sidebar)
-      // In this case, we can get the current window
-      console.log('[Background] No tab found, getting current window...');
-      try {
-        const currentWindow = await chrome.windows.getCurrent();
-        windowId = currentWindow.id;
-        console.log('[Background] Got current window ID:', windowId);
-      } catch (error) {
-        console.error('[Background] Error getting current window:', error);
+    // Get user setting for auto-opening sidebar
+    const settings = await chrome.storage.sync.get({
+      autoOpenSidebarOnSave: false
+    });
+
+    // Optionally open sidebar and switch to chat history
+    if (settings.autoOpenSidebarOnSave && sender.tab) {
+      const windowId = sender.tab.windowId;
+      const isOpen = sidePanelState.get(windowId) || false;
+
+      if (!isOpen && windowId) {
+        try {
+          // This will work because it's within the user gesture flow
+          await chrome.sidePanel.open({ windowId });
+          sidePanelState.set(windowId, true);
+          console.log('[Background] Sidebar opened after save');
+
+          // Wait for sidebar to load, then switch to chat history
+          setTimeout(() => {
+            notifyMessage({
+              action: 'switchToChatHistory',
+              payload: { conversationId: savedConversation.id }
+            }).catch(() => {
+              // Sidebar may not be ready, ignore
+            });
+          }, 300);
+        } catch (error) {
+          // If sidebar opening fails, it's okay - the save already succeeded
+          console.warn('[Background] Could not open sidebar after save:', error.message);
+        }
       }
     }
 
-    if (!windowId) {
-      console.error('[Background] No window ID found after all attempts');
-      // If we still don't have a window ID, try to send directly to sidebar
-      // without opening it (it's probably already open if we got a message from iframe)
-      console.log('[Background] Attempting direct message to sidebar...');
-      try {
-        const response = await notifyMessage({
-          action: 'saveExtractedConversation',
-          payload: conversationData
-        });
-        console.log('[Background] Direct response from sidebar:', response);
-        return { success: true, data: response };
-      } catch (directError) {
-        console.error('[Background] Direct message failed:', directError);
-        return { success: false, error: 'No window ID and direct message failed' };
-      }
-    }
-
-    console.log('[Background] Window ID:', windowId);
-
-    // Open side panel if not already open
-    const isOpen = sidePanelState.get(windowId) || false;
-    console.log('[Background] Side panel open:', isOpen);
-
-    if (!isOpen) {
-      console.log('[Background] Opening side panel...');
-      await chrome.sidePanel.open({ windowId });
-      sidePanelState.set(windowId, true);
-      // Wait for sidebar to load
-      await new Promise(resolve => setTimeout(resolve, 500));
-    }
-
-    console.log('[Background] Sending message to sidebar...');
-
-    // Send conversation data to sidebar
-    const response = await notifyMessage({
-      action: 'saveExtractedConversation',
-      payload: conversationData
-    });
-
-    console.log('[Background] Response from sidebar:', response);
-
-    return { success: true, data: response };
+    return { success: true, data: savedConversation };
   } catch (error) {
     console.error('[Background] Error saving conversation:', error);
     console.error('[Background] Error stack:', error.stack);

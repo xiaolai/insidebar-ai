@@ -215,8 +215,9 @@
     return response;
   } catch (error) {
     console.error('[Extractor Utils] Error checking for duplicate:', error);
-    // If check fails, assume not duplicate to allow saving
-    return { isDuplicate: false, existingConversation: null };
+    // Re-throw error to let caller handle it appropriately
+    // With direct database access in service worker, this should not fail
+    throw new Error(`Failed to check for duplicate: ${error.message}`);
   }
   };
 

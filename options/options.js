@@ -99,6 +99,12 @@ async function loadSettings() {
     autoPasteToggle.checked = settings.autoPasteClipboard === true;
   }
 
+  // Auto-open sidebar after save setting
+  const autoOpenSidebarToggle = document.getElementById('auto-open-sidebar-toggle');
+  if (autoOpenSidebarToggle) {
+    autoOpenSidebarToggle.checked = settings.autoOpenSidebarOnSave === true;
+  }
+
   // Enter key behavior settings
   const enterBehavior = settings.enterKeyBehavior || {
     enabled: true,
@@ -231,6 +237,16 @@ function setupEventListeners() {
       const enabled = e.target.checked;
       await saveSetting('autoPasteClipboard', enabled);
       showStatus('success', enabled ? 'Auto-paste enabled' : 'Auto-paste disabled');
+    });
+  }
+
+  // Auto-open sidebar after save toggle
+  const autoOpenSidebarToggle = document.getElementById('auto-open-sidebar-toggle');
+  if (autoOpenSidebarToggle) {
+    autoOpenSidebarToggle.addEventListener('change', async (e) => {
+      const enabled = e.target.checked;
+      await saveSetting('autoOpenSidebarOnSave', enabled);
+      showStatus('success', enabled ? 'Auto-open sidebar enabled' : 'Auto-open sidebar disabled');
     });
   }
 

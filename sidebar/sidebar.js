@@ -364,6 +364,10 @@ function setupMessageListener() {
           } else {
             sendResponse({ isDuplicate: false });
           }
+        } else if (message.action === 'switchToChatHistory') {
+          // Switch to chat history view after save
+          switchToView('chat-history');
+          sendResponse({ success: true });
         }
       } catch (error) {
         console.error('Error handling message:', error);
