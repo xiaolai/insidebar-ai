@@ -357,7 +357,14 @@
       }, (response) => {
         if (chrome.runtime.lastError) {
           console.error('[Perplexity Extractor] Chrome runtime error:', chrome.runtime.lastError);
-          showNotification('Failed to save: ' + chrome.runtime.lastError.message, 'error');
+          const errorMsg = chrome.runtime.lastError.message;
+
+          // Provide user-friendly message for context invalidation
+          if (errorMsg.includes('Extension context invalidated')) {
+            showNotification('Extension was reloaded. Please reload this page and try saving again.', 'error');
+          } else {
+            showNotification('Failed to save: ' + errorMsg, 'error');
+          }
           saveButton.disabled = false;
           labelDiv.textContent = originalText;
           return;
