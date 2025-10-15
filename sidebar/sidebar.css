@@ -691,6 +691,14 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
+/* View conversation modal - larger size (80% width and height) */
+#view-conversation-modal .modal-content {
+  width: 80%;
+  max-width: none;
+  height: 80vh;
+  max-height: 80vh;
+}
+
 .modal-header {
   display: flex;
   justify-content: space-between;
@@ -1729,7 +1737,7 @@ a.conversation-item-link:hover {
   border: 1px solid #e0e0e0;
   border-radius: 4px;
   padding: 12px;
-  max-height: 300px;
+  flex: 1;
   overflow-y: auto;
   font-size: 13px;
   color: #333;

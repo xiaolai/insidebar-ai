@@ -1600,7 +1600,6 @@ function setupChatHistory() {
   // View conversation modal controls
   document.getElementById('close-view-conversation').addEventListener('click', closeViewConversationModal);
   document.getElementById('copy-conversation-btn').addEventListener('click', copyConversationContent);
-  document.getElementById('edit-conversation-btn').addEventListener('click', editConversationFromView);
   document.getElementById('delete-conversation-from-view-btn').addEventListener('click', deleteConversationFromView);
 
   // Close modals on outside click
