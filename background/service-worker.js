@@ -193,7 +193,7 @@ chrome.windows.onRemoved.addListener((windowId) => {
   sidePanelState.delete(windowId);
 });
 
-// T070: Listen for sidebar close notifications and conversation saves
+// T070: Listen for sidebar close notifications, conversation saves, and duplicate checks
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'sidePanelClosed') {
     // Get windowId from sender
@@ -205,9 +205,36 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     // Handle conversation save from ChatGPT page
     handleSaveConversation(message.payload, sender).then(sendResponse);
     return true; // Keep channel open for async response
+  } else if (message.action === 'checkDuplicateConversation') {
+    // Handle duplicate check request
+    handleCheckDuplicate(message.payload).then(sendResponse);
+    return true; // Keep channel open for async response
   }
   return true;
 });
+
+// Handle duplicate conversation check
+async function handleCheckDuplicate(payload) {
+  try {
+    const { conversationId } = payload;
+
+    if (!conversationId) {
+      return { isDuplicate: false };
+    }
+
+    // Query IndexedDB via sidebar
+    const response = await notifyMessage({
+      action: 'checkDuplicateConversation',
+      payload: { conversationId }
+    });
+
+    return response || { isDuplicate: false };
+  } catch (error) {
+    console.error('[Background] Error checking duplicate:', error);
+    // If check fails, assume no duplicate to allow save
+    return { isDuplicate: false };
+  }
+}
 
 // Handle saving conversation from ChatGPT page
 async function handleSaveConversation(conversationData, sender) {

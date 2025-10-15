@@ -102,6 +102,26 @@ export async function saveConversation(conversationData) {
     throw new Error(validationErrors.join(', '));
   }
 
+  // Check if we should overwrite an existing conversation
+  if (conversationData.overwriteId) {
+    // Update existing conversation instead of creating new one
+    const existingConversation = await getConversation(conversationData.overwriteId);
+    if (existingConversation) {
+      return await updateConversation(conversationData.overwriteId, {
+        title: sanitizeString(conversationData.title || generateAutoTitle(conversationData.content), MAX_TITLE_LENGTH),
+        content: sanitizeString(conversationData.content, MAX_CONTENT_LENGTH),
+        provider: sanitizeString(conversationData.provider || 'unknown', 20),
+        timestamp: conversationData.timestamp || Date.now(),
+        tags: Array.isArray(conversationData.tags)
+          ? conversationData.tags.slice(0, MAX_TAGS_COUNT).map(tag => sanitizeString(tag, MAX_TAG_LENGTH)).filter(t => t)
+          : [],
+        notes: sanitizeString(conversationData.notes || '', MAX_NOTES_LENGTH),
+        conversationId: sanitizeString(conversationData.conversationId || '', 200),
+        url: sanitizeString(conversationData.url || '', 500)
+      });
+    }
+  }
+
   // Sanitize and prepare conversation
   const conversation = {
     title: sanitizeString(conversationData.title || generateAutoTitle(conversationData.content), MAX_TITLE_LENGTH),
@@ -113,6 +133,8 @@ export async function saveConversation(conversationData) {
       : [],
     isFavorite: Boolean(conversationData.isFavorite),
     notes: sanitizeString(conversationData.notes || '', MAX_NOTES_LENGTH),
+    conversationId: sanitizeString(conversationData.conversationId || '', 200),
+    url: sanitizeString(conversationData.url || '', 500),
     searchText: ''  // Will be set below
   };
 
@@ -257,6 +279,16 @@ export async function getAllConversationTags() {
   const tags = new Set();
   conversations.forEach(c => c.tags.forEach(tag => tags.add(tag)));
   return Array.from(tags).sort();
+}
+
+// Check for duplicate conversation by conversationId
+export async function findConversationByConversationId(conversationId) {
+  if (!conversationId) {
+    return null;
+  }
+
+  const allConversations = await getAllConversations();
+  return allConversations.find(c => c.conversationId === conversationId) || null;
 }
 
 // Export conversations as JSON

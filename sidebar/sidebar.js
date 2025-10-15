@@ -25,7 +25,8 @@ import {
   getFavoriteConversations,
   toggleConversationFavorite,
   getAllConversationTags,
-  generateAutoTitle
+  generateAutoTitle,
+  findConversationByConversationId
 } from '../modules/history-manager.js';
 
 let currentProvider = null;
@@ -346,6 +347,23 @@ function setupMessageListener() {
           // Handle extracted conversation from ChatGPT page
           await handleExtractedConversation(message.payload);
           sendResponse({ success: true });
+        } else if (message.action === 'checkDuplicateConversation') {
+          // Handle duplicate conversation check
+          const { conversationId } = message.payload;
+          const existingConversation = await findConversationByConversationId(conversationId);
+
+          if (existingConversation) {
+            sendResponse({
+              isDuplicate: true,
+              existingConversation: {
+                id: existingConversation.id,
+                title: existingConversation.title,
+                timestamp: existingConversation.timestamp
+              }
+            });
+          } else {
+            sendResponse({ isDuplicate: false });
+          }
         }
       } catch (error) {
         console.error('Error handling message:', error);

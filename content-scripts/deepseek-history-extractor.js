@@ -1,10 +1,24 @@
 // DeepSeek Conversation History Extractor
 // Extracts current conversation from DeepSeek DOM and saves to extension
+//
+// IMPORTANT: Requires conversation-extractor-utils.js to be loaded first
 
 (function() {
   'use strict';
 
   console.log('[DeepSeek Extractor] Script loaded');
+
+  // Import shared utilities from global namespace
+  const {
+    extractMarkdownFromElement,
+    formatMessagesAsText,
+    generateConversationId,
+    checkForDuplicate,
+    showDuplicateWarning,
+    showNotification,
+    setupKeyboardShortcut,
+    observeUrlChanges
+  } = window.ConversationExtractorUtils;
 
   let saveButton = null;
 
@@ -75,7 +89,6 @@
     }
 
     // Find the share/upload button (has upload/share icon SVG)
-    // Look for icon button with the upload icon path
     const shareButtons = document.querySelectorAll('.ds-icon-button._57370c5._5dedc1e');
 
     console.log('[DeepSeek Extractor] Looking for share button...');
@@ -110,27 +123,19 @@
 
     // Get the parent container
     const parentContainer = shareButton.parentElement;
-    console.log('[DeepSeek Extractor] Parent container:', parentContainer?.tagName, parentContainer?.className);
-
     const shareStyle = window.getComputedStyle(shareButton);
-    console.log('[DeepSeek Extractor] Share button position:', shareStyle.position);
-    console.log('[DeepSeek Extractor] Share button right:', shareStyle.right);
-    console.log('[DeepSeek Extractor] Share button top:', shareStyle.top);
 
     // Create save button with exact same positioning as share button
     saveButton = createSaveButton();
 
     // If share button is absolutely positioned, we need to position save button accordingly
     if (shareStyle.position === 'absolute' || shareStyle.position === 'fixed') {
-      const shareRect = shareButton.getBoundingClientRect();
       saveButton.style.position = shareStyle.position;
       saveButton.style.top = shareStyle.top;
 
       // Calculate right position: share button's right + button width + gap
       const rightValue = parseFloat(shareStyle.right) || 0;
       saveButton.style.right = (rightValue + 34 + 8) + 'px'; // 34px button width + 8px gap
-
-      console.log('[DeepSeek Extractor] Positioning save button at right:', saveButton.style.right);
     }
 
     // Insert after share button in DOM
@@ -145,7 +150,6 @@
 
   // Detect if there's a conversation on the page
   function detectConversation() {
-    // Look for messages in DeepSeek's structure
     const messages = getMessages();
     return messages && messages.length > 0;
   }
@@ -153,10 +157,8 @@
   // Observe DOM for changes
   function observeForChanges() {
     const observer = new MutationObserver(() => {
-      // Try to insert button if it doesn't exist
       insertSaveButton();
 
-      // Remove button if conversation no longer exists or not on conversation page
       const existingButton = document.getElementById('insidebar-save-conversation');
       if (existingButton) {
         if (!window.location.href.includes('https://chat.deepseek.com/a/chat/')) {
@@ -166,7 +168,6 @@
       }
     });
 
-    // Observe the entire document for changes
     observer.observe(document.body, {
       childList: true,
       subtree: true
@@ -175,7 +176,6 @@
 
   // Extract conversation title from current chat in sidebar
   function getConversationTitle() {
-    // Find the current/active chat link
     const currentChat = document.querySelector('a._546d736.b64fb9ae');
 
     if (currentChat) {
@@ -195,7 +195,6 @@
       return `DeepSeek Conversation ${urlMatch[1].substring(0, 8)}`;
     }
 
-    // Ultimate fallback
     console.log('[DeepSeek Extractor] No title found, using default');
     return 'Untitled DeepSeek Conversation';
   }
@@ -203,33 +202,14 @@
   // Extract all messages from the conversation
   function getMessages() {
     const messages = [];
+    let mainContent = document.querySelector('main') || document.querySelector('[role="main"]') || document.body;
 
-    // Try multiple approaches to find the chat area
-    let mainContent = document.querySelector('main');
-    console.log('[DeepSeek Extractor] Found main tag?', !!mainContent);
-
-    if (!mainContent) {
-      mainContent = document.querySelector('[role="main"]');
-      console.log('[DeepSeek Extractor] Found role=main?', !!mainContent);
-    }
-
-    if (!mainContent) {
-      // Just use body as fallback
-      mainContent = document.body;
-      console.log('[DeepSeek Extractor] Using body as fallback');
-    }
-
-    // Log the main content structure
-    console.log('[DeepSeek Extractor] Main content:', mainContent?.tagName, mainContent?.className);
-
-    // Try multiple selector strategies
     const selectorStrategies = [
       '[data-role="user"], [data-role="assistant"]',
       '[class*="message-"]',
       '[class*="chat-item"]',
       '[class*="turn"]',
       'article',
-      // Very broad: any div that looks like it has message content
       'div[class]'
     ];
 
@@ -239,60 +219,40 @@
       messageContainers = Array.from(mainContent.querySelectorAll(selector));
 
       if (selector === 'div[class]') {
-        // Filter to only divs that look like messages
         messageContainers = messageContainers.filter(div => {
           const text = div.textContent?.trim();
           const hasSubstantialText = text && text.length > 50;
-          const hasButtons = div.querySelector('button');
           const hasInput = div.querySelector('input, textarea');
-          const isLikelyMessage = hasSubstantialText && !hasInput;
-          return isLikelyMessage;
+          return hasSubstantialText && !hasInput;
         });
       }
 
-      console.log(`[DeepSeek Extractor] Trying selector "${selector}": found ${messageContainers.length}`);
-
-      if (messageContainers.length > 0) {
-        console.log('[DeepSeek Extractor] Sample container:', {
-          tag: messageContainers[0]?.tagName,
-          classes: messageContainers[0]?.className,
-          dataRole: messageContainers[0]?.getAttribute('data-role'),
-          textPreview: messageContainers[0]?.textContent?.trim().substring(0, 100)
-        });
-        break;
-      }
+      if (messageContainers.length > 0) break;
     }
-
-    console.log('[DeepSeek Extractor] Final message containers count:', messageContainers.length);
 
     messageContainers.forEach((container, index) => {
       try {
         const message = extractMessageFromContainer(container, index);
         if (message) {
           messages.push(message);
-          console.log(`[DeepSeek Extractor] Message ${index}:`, message.role, message.content.substring(0, 50));
         }
       } catch (error) {
         console.warn('[DeepSeek Extractor] Error extracting message:', error);
       }
     });
 
-    console.log('[DeepSeek Extractor] Total messages extracted:', messages.length);
     return messages;
   }
 
   // Extract a single message from its container
   function extractMessageFromContainer(container, index) {
-    // Determine role based on multiple indicators
     let role = 'unknown';
 
-    // Try data attributes
     const messageRole = container.getAttribute('data-role') || container.getAttribute('data-message-role');
     if (messageRole) {
       role = messageRole;
     }
 
-    // Try class-based detection
     if (role === 'unknown') {
       const className = container.className || '';
       if (className.includes('user')) {
@@ -302,7 +262,6 @@
       }
     }
 
-    // Try to detect from content structure
     if (role === 'unknown') {
       const hasUserIndicator = container.querySelector('[data-role="user"], [class*="user-message"]');
       const hasAssistantIndicator = container.querySelector('[data-role="assistant"], [class*="assistant-message"]');
@@ -314,24 +273,17 @@
       }
     }
 
-    // Try to detect based on position (alternating pattern)
     if (role === 'unknown') {
       const allMessages = Array.from(container.parentElement?.children || []);
-      const index = allMessages.indexOf(container);
-      role = index % 2 === 0 ? 'user' : 'assistant';
+      const idx = allMessages.indexOf(container);
+      role = idx % 2 === 0 ? 'user' : 'assistant';
     }
 
-    // Get message content
     const contentElement = container.querySelector('[data-message-content], .markdown, [class*="message-content"], [class*="prose"]') || container;
-
     if (!contentElement) return null;
 
-    // Extract markdown from the content
     const content = extractMarkdownFromElement(contentElement);
-
     if (!content.trim()) return null;
-
-    console.log('[DeepSeek Extractor] Extracted message:', { role, contentLength: content.length });
 
     return {
       role,
@@ -339,139 +291,7 @@
     };
   }
 
-  // Recursively extract markdown from DOM elements
-  function extractMarkdownFromElement(node) {
-    if (!node) return '';
-
-    // Text node - return text content
-    if (node.nodeType === Node.TEXT_NODE) {
-      return node.textContent;
-    }
-
-    // Element node - convert to markdown based on tag type
-    if (node.nodeType === Node.ELEMENT_NODE) {
-      const tagName = node.tagName.toLowerCase();
-
-      // Code blocks (highest priority)
-      if (tagName === 'pre') {
-        const codeElement = node.querySelector('code');
-        if (codeElement) {
-          const language = codeElement.className.match(/language-(\w+)/)?.[1] || '';
-          const codeContent = codeElement.textContent;
-          return language
-            ? `\n\`\`\`${language}\n${codeContent}\n\`\`\`\n\n`
-            : `\n\`\`\`\n${codeContent}\n\`\`\`\n\n`;
-        }
-        return `\n\`\`\`\n${node.textContent}\n\`\`\`\n\n`;
-      }
-
-      // Inline code
-      if (tagName === 'code') {
-        return `\`${node.textContent}\``;
-      }
-
-      // Headings
-      if (tagName.match(/^h[1-6]$/)) {
-        const level = tagName.charAt(1);
-        const hashes = '#'.repeat(parseInt(level));
-        return `\n${hashes} ${getChildrenText(node)}\n\n`;
-      }
-
-      // Bold/Strong
-      if (tagName === 'strong' || tagName === 'b') {
-        return `**${getChildrenText(node)}**`;
-      }
-
-      // Italic/Emphasis
-      if (tagName === 'em' || tagName === 'i') {
-        return `*${getChildrenText(node)}*`;
-      }
-
-      // Links
-      if (tagName === 'a') {
-        const href = node.getAttribute('href') || '';
-        const text = getChildrenText(node);
-        return `[${text}](${href})`;
-      }
-
-      // Lists
-      if (tagName === 'ul') {
-        let listText = '\n';
-        Array.from(node.children).forEach(li => {
-          if (li.tagName.toLowerCase() === 'li') {
-            listText += `- ${extractMarkdownFromElement(li).trim()}\n`;
-          }
-        });
-        return listText + '\n';
-      }
-
-      if (tagName === 'ol') {
-        let listText = '\n';
-        Array.from(node.children).forEach((li, index) => {
-          if (li.tagName.toLowerCase() === 'li') {
-            listText += `${index + 1}. ${extractMarkdownFromElement(li).trim()}\n`;
-          }
-        });
-        return listText + '\n';
-      }
-
-      // Blockquotes
-      if (tagName === 'blockquote') {
-        const text = getChildrenText(node);
-        return `\n> ${text}\n\n`;
-      }
-
-      // Line breaks
-      if (tagName === 'br') {
-        return '\n';
-      }
-
-      // Paragraphs
-      if (tagName === 'p') {
-        return `${getChildrenMarkdown(node)}\n\n`;
-      }
-
-      // Divs - just process children
-      if (tagName === 'div') {
-        return getChildrenMarkdown(node);
-      }
-
-      // Default: process children
-      return getChildrenMarkdown(node);
-    }
-
-    return '';
-  }
-
-  // Helper to get text from all children (for simple formatting)
-  function getChildrenText(node) {
-    return Array.from(node.childNodes)
-      .map(child => {
-        if (child.nodeType === Node.TEXT_NODE) {
-          return child.textContent;
-        }
-        return child.textContent || '';
-      })
-      .join('');
-  }
-
-  // Helper to get markdown from all children (for complex formatting)
-  function getChildrenMarkdown(node) {
-    return Array.from(node.childNodes)
-      .map(child => extractMarkdownFromElement(child))
-      .join('');
-  }
-
-  // Format messages as text
-  function formatMessagesAsText(messages) {
-    return messages.map(msg => {
-      const roleLabel = msg.role === 'user' ? 'User' :
-                       msg.role === 'assistant' ? 'Assistant' :
-                       msg.role.charAt(0).toUpperCase() + msg.role.slice(1);
-
-      return `${roleLabel}:\n${msg.content}`;
-    }).join('\n\n---\n\n');
-  }
+  // NOTE: Markdown extraction and formatting functions moved to conversation-extractor-utils.js
 
   // Extract full conversation data
   function extractConversation() {
@@ -501,16 +321,15 @@
 
   // Handle save button click
   async function handleSaveClick(e) {
-    e.preventDefault();
-    e.stopPropagation();
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
 
     console.log('[DeepSeek Extractor] Save button clicked');
-    console.log('[DeepSeek Extractor] chrome object exists?', typeof chrome !== 'undefined');
-    console.log('[DeepSeek Extractor] chrome.runtime exists?', typeof chrome?.runtime !== 'undefined');
 
     if (!saveButton) return;
 
-    // Check if chrome API is available
     if (typeof chrome === 'undefined' || !chrome.runtime) {
       console.error('[DeepSeek Extractor] Chrome extension API not available');
       showNotification('Extension API not available. Try reloading the page.', 'error');
@@ -532,6 +351,36 @@
         provider: conversation.provider
       });
 
+      // Generate conversation ID for deduplication
+      const conversationId = generateConversationId(conversation.url, conversation.title);
+      conversation.conversationId = conversationId;
+
+      // Check for duplicates
+      const duplicateCheck = await checkForDuplicate(conversationId);
+
+      if (duplicateCheck.isDuplicate) {
+        // Re-enable button first
+        saveButton.setAttribute('aria-disabled', 'false');
+        saveButton.style.opacity = '1';
+        saveButton.style.cursor = 'pointer';
+
+        // Show warning and get user choice
+        const userChoice = await showDuplicateWarning(conversation.title, duplicateCheck.existingConversation);
+
+        if (userChoice === 'skip') {
+          return;
+        }
+
+        if (userChoice === 'overwrite') {
+          conversation.overwriteId = duplicateCheck.existingConversation.id;
+        }
+
+        // Re-disable button for actual save
+        saveButton.setAttribute('aria-disabled', 'true');
+        saveButton.style.opacity = '0.6';
+        saveButton.style.cursor = 'not-allowed';
+      }
+
       // Send to background script
       chrome.runtime.sendMessage({
         action: 'saveConversationFromPage',
@@ -546,13 +395,10 @@
           return;
         }
 
-        console.log('[DeepSeek Extractor] Response from background:', response);
-
         if (response && response.success) {
           console.log('[DeepSeek Extractor] Conversation saved successfully');
-          showNotification('Conversation saved to insidebar.ai!', 'success');
+          // Success notification now shown in sidebar
         } else {
-          console.error('[DeepSeek Extractor] Save failed. Response:', response);
           const errorMsg = response?.error || 'Unknown error';
           showNotification('Failed to save: ' + errorMsg, 'error');
         }
@@ -564,78 +410,33 @@
       });
     } catch (error) {
       console.error('[DeepSeek Extractor] Error during extraction:', error);
-      console.error('[DeepSeek Extractor] Error stack:', error.stack);
       showNotification('Failed to extract conversation: ' + error.message, 'error');
-
-      // Re-enable button
       saveButton.setAttribute('aria-disabled', 'false');
       saveButton.style.opacity = '1';
       saveButton.style.cursor = 'pointer';
     }
   }
 
-  // Show notification to user
-  function showNotification(message, type = 'info') {
-    const notification = document.createElement('div');
-    notification.className = `insidebar-notification insidebar-notification-${type}`;
-    notification.textContent = message;
-    notification.style.cssText = `
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      padding: 12px 20px;
-      border-radius: 6px;
-      font-size: 14px;
-      font-weight: 500;
-      z-index: 10000;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      animation: slideIn 0.3s ease;
-      ${type === 'success' ? 'background: #10b981; color: white;' : ''}
-      ${type === 'error' ? 'background: #ef4444; color: white;' : ''}
-      ${type === 'info' ? 'background: #3b82f6; color: white;' : ''}
-    `;
-
-    document.body.appendChild(notification);
-
-    // Remove after 3 seconds
-    setTimeout(() => {
-      notification.style.animation = 'slideOut 0.3s ease';
-      setTimeout(() => {
-        notification.remove();
-      }, 300);
-    }, 3000);
-  }
-
-  // Listen for keyboard shortcut (Ctrl+Shift+S or Cmd+Shift+S)
-  document.addEventListener('keydown', (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'S') {
-      e.preventDefault();
-      if (detectConversation() && window.location.href.includes('https://chat.deepseek.com/a/chat/')) {
-        handleSaveClick(e);
-      }
+  // Setup keyboard shortcut (Ctrl+Shift+S or Cmd+Shift+S)
+  setupKeyboardShortcut(() => {
+    if (window.location.href.includes('https://chat.deepseek.com/a/chat/')) {
+      handleSaveClick();
     }
-  });
+  }, detectConversation);
 
   // Listen for URL changes (DeepSeek is a SPA)
-  let lastUrl = window.location.href;
-  new MutationObserver(() => {
-    const currentUrl = window.location.href;
-    if (currentUrl !== lastUrl) {
-      lastUrl = currentUrl;
-      console.log('[DeepSeek Extractor] URL changed to:', currentUrl);
+  observeUrlChanges((url) => {
+    console.log('[DeepSeek Extractor] URL changed to:', url);
 
-      // Remove button if leaving conversation page
-      if (!currentUrl.includes('https://chat.deepseek.com/a/chat/')) {
-        const existingButton = document.getElementById('insidebar-save-conversation');
-        if (existingButton) {
-          existingButton.remove();
-          saveButton = null;
-        }
-      } else {
-        // Try to insert button on conversation page
-        setTimeout(() => insertSaveButton(), 1000);
+    if (!url.includes('https://chat.deepseek.com/a/chat/')) {
+      const existingButton = document.getElementById('insidebar-save-conversation');
+      if (existingButton) {
+        existingButton.remove();
+        saveButton = null;
       }
+    } else {
+      setTimeout(() => insertSaveButton(), 1000);
     }
-  }).observe(document, { subtree: true, childList: true });
+  });
 
 })();

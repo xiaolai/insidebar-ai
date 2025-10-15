@@ -1,10 +1,23 @@
 // ChatGPT Conversation History Extractor
 // Extracts current conversation from ChatGPT.com DOM and saves to extension
+//
+// IMPORTANT: Requires conversation-extractor-utils.js to be loaded first
 
 (function() {
   'use strict';
 
   console.log('[ChatGPT Extractor] Script loaded');
+
+  // Import shared utilities from global namespace
+  const {
+    extractMarkdownFromElement,
+    formatMessagesAsText,
+    generateConversationId,
+    checkForDuplicate,
+    showDuplicateWarning,
+    showNotification,
+    setupKeyboardShortcut
+  } = window.ConversationExtractorUtils;
 
   let saveButton = null;
 
@@ -251,140 +264,7 @@
     return extractMarkdownFromElement(clone);
   }
 
-  // Recursively extract markdown from DOM elements
-  function extractMarkdownFromElement(node) {
-    if (!node) return '';
-
-    // Text node - return text content
-    if (node.nodeType === Node.TEXT_NODE) {
-      return node.textContent;
-    }
-
-    // Element node - convert to markdown based on tag type
-    if (node.nodeType === Node.ELEMENT_NODE) {
-      const tagName = node.tagName.toLowerCase();
-      let result = '';
-
-      // Code blocks (highest priority)
-      if (tagName === 'pre') {
-        const codeElement = node.querySelector('code');
-        if (codeElement) {
-          const language = codeElement.className.match(/language-(\w+)/)?.[1] || '';
-          const codeContent = codeElement.textContent;
-          return language
-            ? `\n\`\`\`${language}\n${codeContent}\n\`\`\`\n\n`
-            : `\n\`\`\`\n${codeContent}\n\`\`\`\n\n`;
-        }
-        return `\n\`\`\`\n${node.textContent}\n\`\`\`\n\n`;
-      }
-
-      // Inline code
-      if (tagName === 'code') {
-        return `\`${node.textContent}\``;
-      }
-
-      // Headings
-      if (tagName.match(/^h[1-6]$/)) {
-        const level = tagName.charAt(1);
-        const hashes = '#'.repeat(parseInt(level));
-        return `\n${hashes} ${getChildrenText(node)}\n\n`;
-      }
-
-      // Bold/Strong
-      if (tagName === 'strong' || tagName === 'b') {
-        return `**${getChildrenText(node)}**`;
-      }
-
-      // Italic/Emphasis
-      if (tagName === 'em' || tagName === 'i') {
-        return `*${getChildrenText(node)}*`;
-      }
-
-      // Links
-      if (tagName === 'a') {
-        const href = node.getAttribute('href') || '';
-        const text = getChildrenText(node);
-        return `[${text}](${href})`;
-      }
-
-      // Lists
-      if (tagName === 'ul') {
-        let listText = '\n';
-        Array.from(node.children).forEach(li => {
-          if (li.tagName.toLowerCase() === 'li') {
-            listText += `- ${extractMarkdownFromElement(li).trim()}\n`;
-          }
-        });
-        return listText + '\n';
-      }
-
-      if (tagName === 'ol') {
-        let listText = '\n';
-        Array.from(node.children).forEach((li, index) => {
-          if (li.tagName.toLowerCase() === 'li') {
-            listText += `${index + 1}. ${extractMarkdownFromElement(li).trim()}\n`;
-          }
-        });
-        return listText + '\n';
-      }
-
-      // Blockquotes
-      if (tagName === 'blockquote') {
-        const text = getChildrenText(node);
-        return `\n> ${text}\n\n`;
-      }
-
-      // Line breaks
-      if (tagName === 'br') {
-        return '\n';
-      }
-
-      // Paragraphs
-      if (tagName === 'p') {
-        return `${getChildrenMarkdown(node)}\n\n`;
-      }
-
-      // Divs - just process children
-      if (tagName === 'div') {
-        return getChildrenMarkdown(node);
-      }
-
-      // Default: process children
-      return getChildrenMarkdown(node);
-    }
-
-    return '';
-  }
-
-  // Helper to get text from all children (for simple formatting)
-  function getChildrenText(node) {
-    return Array.from(node.childNodes)
-      .map(child => {
-        if (child.nodeType === Node.TEXT_NODE) {
-          return child.textContent;
-        }
-        return child.textContent || '';
-      })
-      .join('');
-  }
-
-  // Helper to get markdown from all children (for complex formatting)
-  function getChildrenMarkdown(node) {
-    return Array.from(node.childNodes)
-      .map(child => extractMarkdownFromElement(child))
-      .join('');
-  }
-
-  // Format messages as text
-  function formatMessagesAsText(messages) {
-    return messages.map(msg => {
-      const roleLabel = msg.role === 'user' ? 'User' :
-                       msg.role === 'assistant' ? 'Assistant' :
-                       msg.role.charAt(0).toUpperCase() + msg.role.slice(1);
-
-      return `${roleLabel}:\n${msg.content}`;
-    }).join('\n\n---\n\n');
-  }
+  // NOTE: Markdown extraction and formatting functions moved to conversation-extractor-utils.js
 
   // Extract full conversation data
   function extractConversation() {
@@ -414,8 +294,10 @@
 
   // Handle save button click
   async function handleSaveClick(e) {
-    e.preventDefault();
-    e.stopPropagation();
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
 
     console.log('[ChatGPT Extractor] Save button clicked');
     console.log('[ChatGPT Extractor] chrome object exists?', typeof chrome !== 'undefined');
@@ -445,6 +327,41 @@
         provider: conversation.provider
       });
 
+      // Generate conversation ID for deduplication
+      const conversationId = generateConversationId(conversation.url, conversation.title);
+      conversation.conversationId = conversationId;
+
+      console.log('[ChatGPT Extractor] Generated conversation ID:', conversationId);
+
+      // Check for duplicates
+      const duplicateCheck = await checkForDuplicate(conversationId);
+      console.log('[ChatGPT Extractor] Duplicate check result:', duplicateCheck);
+
+      if (duplicateCheck.isDuplicate) {
+        console.log('[ChatGPT Extractor] Duplicate found, showing warning...');
+
+        // Re-enable button first
+        saveButton.disabled = false;
+        saveButton.innerHTML = originalHTML;
+
+        // Show warning and get user choice
+        const userChoice = await showDuplicateWarning(conversation.title, duplicateCheck.existingConversation);
+        console.log('[ChatGPT Extractor] User choice:', userChoice);
+
+        if (userChoice === 'skip') {
+          console.log('[ChatGPT Extractor] User chose to skip save');
+          return;
+        }
+
+        if (userChoice === 'overwrite') {
+          conversation.overwriteId = duplicateCheck.existingConversation.id;
+        }
+
+        // Re-disable button for actual save
+        saveButton.disabled = true;
+        saveButton.innerHTML = '<div class="flex w-full items-center justify-center gap-1.5"><span>Saving...</span></div>';
+      }
+
       // Send to background script
       chrome.runtime.sendMessage({
         action: 'saveConversationFromPage',
@@ -462,7 +379,7 @@
 
         if (response && response.success) {
           console.log('[ChatGPT Extractor] Conversation saved successfully');
-          showNotification('Conversation saved to insidebar.ai!', 'success');
+          // Success notification now shown in sidebar
         } else {
           console.error('[ChatGPT Extractor] Save failed. Response:', response);
           const errorMsg = response?.error || 'Unknown error';
@@ -484,36 +401,7 @@
     }
   }
 
-  // Show notification to user
-  function showNotification(message, type = 'info') {
-    const notification = document.createElement('div');
-    notification.className = `insidebar-notification insidebar-notification-${type}`;
-    notification.textContent = message;
-
-    document.body.appendChild(notification);
-
-    // Trigger animation
-    setTimeout(() => {
-      notification.classList.add('show');
-    }, 10);
-
-    // Remove after 3 seconds
-    setTimeout(() => {
-      notification.classList.remove('show');
-      setTimeout(() => {
-        notification.remove();
-      }, 300);
-    }, 3000);
-  }
-
-  // Listen for keyboard shortcut (Ctrl+Shift+S or Cmd+Shift+S)
-  document.addEventListener('keydown', (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'S') {
-      e.preventDefault();
-      if (detectConversation()) {
-        handleSaveClick();
-      }
-    }
-  });
+  // Setup keyboard shortcut (Ctrl+Shift+S or Cmd+Shift+S)
+  setupKeyboardShortcut(handleSaveClick, detectConversation);
 
 })();

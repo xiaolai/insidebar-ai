@@ -1,10 +1,24 @@
 // Gemini Conversation History Extractor
 // Extracts current conversation from Gemini DOM and saves to extension
+//
+// IMPORTANT: Requires conversation-extractor-utils.js to be loaded first
 
 (function() {
   'use strict';
 
   console.log('[Gemini Extractor] Script loaded');
+
+  // Import shared utilities from global namespace
+  const {
+    extractMarkdownFromElement,
+    formatMessagesAsText,
+    generateConversationId,
+    checkForDuplicate,
+    showDuplicateWarning,
+    showNotification,
+    setupKeyboardShortcut,
+    observeUrlChanges
+  } = window.ConversationExtractorUtils;
 
   let saveButton = null;
 
@@ -216,139 +230,7 @@
     };
   }
 
-  // Recursively extract markdown from DOM elements
-  function extractMarkdownFromElement(node) {
-    if (!node) return '';
-
-    // Text node - return text content
-    if (node.nodeType === Node.TEXT_NODE) {
-      return node.textContent;
-    }
-
-    // Element node - convert to markdown based on tag type
-    if (node.nodeType === Node.ELEMENT_NODE) {
-      const tagName = node.tagName.toLowerCase();
-
-      // Code blocks (highest priority)
-      if (tagName === 'pre') {
-        const codeElement = node.querySelector('code');
-        if (codeElement) {
-          const language = codeElement.className.match(/language-(\w+)/)?.[1] || '';
-          const codeContent = codeElement.textContent;
-          return language
-            ? `\n\`\`\`${language}\n${codeContent}\n\`\`\`\n\n`
-            : `\n\`\`\`\n${codeContent}\n\`\`\`\n\n`;
-        }
-        return `\n\`\`\`\n${node.textContent}\n\`\`\`\n\n`;
-      }
-
-      // Inline code
-      if (tagName === 'code') {
-        return `\`${node.textContent}\``;
-      }
-
-      // Headings
-      if (tagName.match(/^h[1-6]$/)) {
-        const level = tagName.charAt(1);
-        const hashes = '#'.repeat(parseInt(level));
-        return `\n${hashes} ${getChildrenText(node)}\n\n`;
-      }
-
-      // Bold/Strong
-      if (tagName === 'strong' || tagName === 'b') {
-        return `**${getChildrenText(node)}**`;
-      }
-
-      // Italic/Emphasis
-      if (tagName === 'em' || tagName === 'i') {
-        return `*${getChildrenText(node)}*`;
-      }
-
-      // Links
-      if (tagName === 'a') {
-        const href = node.getAttribute('href') || '';
-        const text = getChildrenText(node);
-        return `[${text}](${href})`;
-      }
-
-      // Lists
-      if (tagName === 'ul') {
-        let listText = '\n';
-        Array.from(node.children).forEach(li => {
-          if (li.tagName.toLowerCase() === 'li') {
-            listText += `- ${extractMarkdownFromElement(li).trim()}\n`;
-          }
-        });
-        return listText + '\n';
-      }
-
-      if (tagName === 'ol') {
-        let listText = '\n';
-        Array.from(node.children).forEach((li, index) => {
-          if (li.tagName.toLowerCase() === 'li') {
-            listText += `${index + 1}. ${extractMarkdownFromElement(li).trim()}\n`;
-          }
-        });
-        return listText + '\n';
-      }
-
-      // Blockquotes
-      if (tagName === 'blockquote') {
-        const text = getChildrenText(node);
-        return `\n> ${text}\n\n`;
-      }
-
-      // Line breaks
-      if (tagName === 'br') {
-        return '\n';
-      }
-
-      // Paragraphs
-      if (tagName === 'p') {
-        return `${getChildrenMarkdown(node)}\n\n`;
-      }
-
-      // Divs - just process children
-      if (tagName === 'div') {
-        return getChildrenMarkdown(node);
-      }
-
-      // Default: process children
-      return getChildrenMarkdown(node);
-    }
-
-    return '';
-  }
-
-  // Helper to get text from all children (for simple formatting)
-  function getChildrenText(node) {
-    return Array.from(node.childNodes)
-      .map(child => {
-        if (child.nodeType === Node.TEXT_NODE) {
-          return child.textContent;
-        }
-        return child.textContent || '';
-      })
-      .join('');
-  }
-
-  // Helper to get markdown from all children (for complex formatting)
-  function getChildrenMarkdown(node) {
-    return Array.from(node.childNodes)
-      .map(child => extractMarkdownFromElement(child))
-      .join('');
-  }
-
-  // Format messages as text
-  function formatMessagesAsText(messages) {
-    return messages.map(msg => {
-      const roleLabel = msg.role === 'user' ? 'User' :
-                       msg.role === 'assistant' ? 'Assistant' :
-                       msg.role.charAt(0).toUpperCase() + msg.role.slice(1);
-
-      return `${roleLabel}:\n${msg.content}`;
-    }).join('\n\n---\n\n');
-  }
+  // NOTE: Markdown extraction and formatting functions moved to conversation-extractor-utils.js
 
   // Extract full conversation data
   function extractConversation() {
@@ -378,12 +260,12 @@
 
   // Handle save button click
   async function handleSaveClick(e) {
-    e.preventDefault();
-    e.stopPropagation();
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
 
     console.log('[Gemini Extractor] Save button clicked');
-    console.log('[Gemini Extractor] chrome object exists?', typeof chrome !== 'undefined');
-    console.log('[Gemini Extractor] chrome.runtime exists?', typeof chrome?.runtime !== 'undefined');
 
     if (!saveButton) return;
 
@@ -410,6 +292,34 @@
         provider: conversation.provider
       });
 
+      // Generate conversation ID for deduplication
+      const conversationId = generateConversationId(conversation.url, conversation.title);
+      conversation.conversationId = conversationId;
+
+      // Check for duplicates
+      const duplicateCheck = await checkForDuplicate(conversationId);
+
+      if (duplicateCheck.isDuplicate) {
+        // Re-enable button first
+        saveButton.disabled = false;
+        labelSpan.textContent = originalText;
+
+        // Show warning and get user choice
+        const userChoice = await showDuplicateWarning(conversation.title, duplicateCheck.existingConversation);
+
+        if (userChoice === 'skip') {
+          return;
+        }
+
+        if (userChoice === 'overwrite') {
+          conversation.overwriteId = duplicateCheck.existingConversation.id;
+        }
+
+        // Re-disable button for actual save
+        saveButton.disabled = true;
+        labelSpan.textContent = 'Saving...';
+      }
+
       // Send to background script
       chrome.runtime.sendMessage({
         action: 'saveConversationFromPage',
@@ -423,13 +333,10 @@
           return;
         }
 
-        console.log('[Gemini Extractor] Response from background:', response);
-
         if (response && response.success) {
           console.log('[Gemini Extractor] Conversation saved successfully');
-          showNotification('Conversation saved to insidebar.ai!', 'success');
+          // Success notification now shown in sidebar
         } else {
-          console.error('[Gemini Extractor] Save failed. Response:', response);
           const errorMsg = response?.error || 'Unknown error';
           showNotification('Failed to save: ' + errorMsg, 'error');
         }
@@ -440,77 +347,34 @@
       });
     } catch (error) {
       console.error('[Gemini Extractor] Error during extraction:', error);
-      console.error('[Gemini Extractor] Error stack:', error.stack);
       showNotification('Failed to extract conversation: ' + error.message, 'error');
-
-      // Re-enable button
       saveButton.disabled = false;
       labelSpan.textContent = originalText;
     }
   }
 
-  // Show notification to user
-  function showNotification(message, type = 'info') {
-    const notification = document.createElement('div');
-    notification.className = `insidebar-notification insidebar-notification-${type}`;
-    notification.textContent = message;
-    notification.style.cssText = `
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      padding: 12px 20px;
-      border-radius: 6px;
-      font-size: 14px;
-      font-weight: 500;
-      z-index: 10000;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      animation: slideIn 0.3s ease;
-      ${type === 'success' ? 'background: #10b981; color: white;' : ''}
-      ${type === 'error' ? 'background: #ef4444; color: white;' : ''}
-      ${type === 'info' ? 'background: #3b82f6; color: white;' : ''}
-    `;
-
-    document.body.appendChild(notification);
-
-    // Remove after 3 seconds
-    setTimeout(() => {
-      notification.style.animation = 'slideOut 0.3s ease';
-      setTimeout(() => {
-        notification.remove();
-      }, 300);
-    }, 3000);
-  }
-
-  // Listen for keyboard shortcut (Ctrl+Shift+S or Cmd+Shift+S)
-  document.addEventListener('keydown', (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'S') {
-      e.preventDefault();
-      if (detectConversation() && window.location.href.includes('https://gemini.google.com/app/')) {
-        handleSaveClick(e);
-      }
+  // Setup keyboard shortcut (Ctrl+Shift+S or Cmd+Shift+S)
+  setupKeyboardShortcut(() => {
+    if (window.location.href.includes('https://gemini.google.com/app/')) {
+      handleSaveClick();
     }
-  });
+  }, detectConversation);
 
   // Listen for URL changes (Gemini is a SPA)
-  let lastUrl = window.location.href;
-  new MutationObserver(() => {
-    const currentUrl = window.location.href;
-    if (currentUrl !== lastUrl) {
-      lastUrl = currentUrl;
-      console.log('[Gemini Extractor] URL changed to:', currentUrl);
+  observeUrlChanges((url) => {
+    console.log('[Gemini Extractor] URL changed to:', url);
 
-      // Remove button container if leaving conversation page
-      if (!currentUrl.includes('https://gemini.google.com/app/')) {
-        const existingContainer = document.querySelector('[data-test-id="insidebar-save-container"]');
-        if (existingContainer) {
-          existingContainer.remove();
-          saveButton = null;
-        }
-      } else {
-        // Try to insert button on conversation page
-        setTimeout(() => insertSaveButton(), 1000);
+    // Remove button container if leaving conversation page
+    if (!url.includes('https://gemini.google.com/app/')) {
+      const existingContainer = document.querySelector('[data-test-id="insidebar-save-container"]');
+      if (existingContainer) {
+        existingContainer.remove();
+        saveButton = null;
       }
+    } else {
+      // Try to insert button on conversation page
+      setTimeout(() => insertSaveButton(), 1000);
     }
-  }).observe(document, { subtree: true, childList: true });
+  });
 
 })();
