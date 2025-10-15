@@ -167,7 +167,7 @@ body {
 .tab-separator {
   flex: 1;
   width: 1px;
-  background: #d0d0d0;
+  background: transparent;
   margin: 8px 4px;
 }
 
@@ -232,7 +232,7 @@ body {
 }
 
 [data-theme="dark"] .tab-separator {
-  background: #555;
+  background: transparent;
 }
 
 /* T045: Prompt Library Styles */
