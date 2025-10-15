@@ -348,16 +348,13 @@
         const userChoice = await showDuplicateWarning(conversation.title, duplicateCheck.existingConversation);
         console.log('[ChatGPT Extractor] User choice:', userChoice);
 
-        if (userChoice === 'skip') {
-          console.log('[ChatGPT Extractor] User chose to skip save');
+        if (userChoice === 'cancel') {
+          console.log('[ChatGPT Extractor] User cancelled save');
           return;
         }
 
         if (userChoice === 'overwrite') {
           conversation.overwriteId = duplicateCheck.existingConversation.id;
-        } else if (userChoice === 'save-new') {
-          // Generate a new unique conversation ID to avoid duplicate detection
-          conversation.conversationId = generateConversationId(conversation.url, conversation.title, true);
         }
 
         // Re-disable button for actual save

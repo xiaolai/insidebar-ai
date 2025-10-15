@@ -176,18 +176,13 @@
 
   /**
    * Generate a unique conversation ID from URL or title hash
+   * Uses the full URL as the primary identifier for deduplication
    * @param {string} url - Conversation URL (if available)
    * @param {string} title - Conversation title
    * @returns {string} Unique conversation ID
    */
-  window.ConversationExtractorUtils.generateConversationId = function(url, title, forceUnique = false) {
-  // If forceUnique is true, always generate a unique ID with timestamp
-  if (forceUnique) {
-    const baseId = url ? url.match(/\/(c|chat)\/([a-zA-Z0-9-]+)/)?.[2] || url : title;
-    return `${baseId}_${Date.now()}`;
-  }
-
-  // Prefer URL-based ID for uniqueness
+  window.ConversationExtractorUtils.generateConversationId = function(url, title) {
+  // Prefer URL-based ID for uniqueness and reliability
   if (url) {
     // Extract conversation ID from URL if present
     // ChatGPT: https://chatgpt.com/c/abc123
@@ -200,8 +195,8 @@
     return url;
   }
 
-  // Fallback: Create hash from title + timestamp (less ideal for deduplication)
-  // This won't catch duplicates effectively, but better than nothing
+  // Fallback: Create ID from title + timestamp
+  // This won't catch duplicates effectively, but prevents collisions
   return `${title}_${Date.now()}`;
   };
 
@@ -229,7 +224,7 @@
    * Show duplicate warning modal and get user choice
    * @param {string} title - Conversation title
    * @param {Object} existingConversation - The existing conversation data
-   * @returns {Promise<string>} User choice: 'skip', 'overwrite', or 'save-new'
+   * @returns {Promise<string>} User choice: 'cancel' or 'overwrite'
    */
   window.ConversationExtractorUtils.showDuplicateWarning = function(title, existingConversation) {
   return new Promise((resolve) => {
@@ -264,20 +259,21 @@
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
       ">
         <h3 style="margin: 0 0 16px 0; font-size: 18px; font-weight: 600;">
-          Duplicate Conversation Detected
+          Conversation Already Saved
         </h3>
         <p style="margin: 0 0 8px 0; font-size: 14px; line-height: 1.5;">
-          A conversation with this title already exists:
+          This conversation was previously saved:
         </p>
         <p style="margin: 0 0 16px 0; font-size: 13px; color: #666; font-weight: 500;">
           "${title}"<br>
           <span style="font-size: 12px;">Saved: ${existingDate}</span>
         </p>
         <p style="margin: 0 0 20px 0; font-size: 14px; line-height: 1.5;">
-          What would you like to do?
+          Do you want to overwrite it with the current version?
         </p>
-        <div style="display: flex; gap: 8px; flex-direction: column;">
-          <button id="insidebar-dup-skip" style="
+        <div style="display: flex; gap: 12px;">
+          <button id="insidebar-dup-cancel" style="
+            flex: 1;
             padding: 10px 16px;
             border: 1px solid #ddd;
             border-radius: 6px;
@@ -287,9 +283,10 @@
             cursor: pointer;
             font-weight: 500;
           ">
-            Skip (Don't Save)
+            Cancel
           </button>
           <button id="insidebar-dup-overwrite" style="
+            flex: 1;
             padding: 10px 16px;
             border: none;
             border-radius: 6px;
@@ -299,19 +296,7 @@
             cursor: pointer;
             font-weight: 500;
           ">
-            Overwrite Existing
-          </button>
-          <button id="insidebar-dup-save-new" style="
-            padding: 10px 16px;
-            border: none;
-            border-radius: 6px;
-            background: #10b981;
-            color: white;
-            font-size: 14px;
-            cursor: pointer;
-            font-weight: 500;
-          ">
-            Save as New Anyway
+            Overwrite
           </button>
         </div>
       </div>
@@ -325,14 +310,13 @@
       resolve(choice);
     };
 
-    document.getElementById('insidebar-dup-skip').addEventListener('click', () => cleanup('skip'));
+    document.getElementById('insidebar-dup-cancel').addEventListener('click', () => cleanup('cancel'));
     document.getElementById('insidebar-dup-overwrite').addEventListener('click', () => cleanup('overwrite'));
-    document.getElementById('insidebar-dup-save-new').addEventListener('click', () => cleanup('save-new'));
 
-    // Close on outside click
+    // Close on outside click (same as cancel)
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
-        cleanup('skip');
+        cleanup('cancel');
       }
     });
   });
