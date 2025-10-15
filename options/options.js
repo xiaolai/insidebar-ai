@@ -71,6 +71,7 @@ async function init() {
   await applyTheme();  // Apply theme first
   await loadSettings();
   await loadDataStats();
+  await loadLibraryCount();  // Load default library count
   await renderProviderList();
   setupEventListeners();
   setupShortcutHelpers();
@@ -201,6 +202,22 @@ async function loadDataStats() {
     document.getElementById('stat-favorites').textContent = '0';
     document.getElementById('stat-categories').textContent = '0';
     document.getElementById('stat-storage').textContent = '0 KB';
+  }
+}
+
+// Load default library count
+async function loadLibraryCount() {
+  const countElement = document.getElementById('library-count');
+  if (!countElement) return;
+
+  try {
+    const response = await fetch(chrome.runtime.getURL('data/prompt-libraries/default-prompts.json'));
+    const promptsArray = await response.json();
+    const count = Array.isArray(promptsArray) ? promptsArray.length : 0;
+    countElement.textContent = `${count} prompts`;
+  } catch (error) {
+    console.error('Failed to load library count:', error);
+    countElement.textContent = 'Unknown count';
   }
 }
 

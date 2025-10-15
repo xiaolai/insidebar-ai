@@ -751,7 +751,8 @@ async function renderPromptList(prompts = null) {
   if (prompts.length === 0) {
     listContainer.innerHTML = `
       <div class="prompt-list-empty">
-        <p>📝 No prompts yet</p>
+        <p><span class="material-symbols-outlined" style="font-size: 48px; opacity: 0.5;">description</span></p>
+        <p>No prompts yet</p>
         <p>Click "+ New" to create your first prompt</p>
       </div>
     `;
@@ -1620,7 +1621,8 @@ async function renderConversationList(conversations = null) {
   if (conversations.length === 0) {
     listContainer.innerHTML = `
       <div class="conversation-list-empty">
-        <p>💬 No conversations yet</p>
+        <p><span class="material-symbols-outlined" style="font-size: 48px; opacity: 0.5;">chat_bubble</span></p>
+        <p>No conversations yet</p>
         <p>Click "+" to save a conversation</p>
       </div>
     `;
