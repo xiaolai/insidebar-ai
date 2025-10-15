@@ -5,6 +5,28 @@ All notable changes to insidebar.ai will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2025-10-16
+
+### Added
+- **Claude.ai Enter Key Customization**: Full support for enter key behavior customization on Claude.ai
+  - Uses window capture pattern to intercept events before ProseMirror
+  - Supports all presets: Default, Swapped, Slack-style, Discord-style, Custom
+  - For newline: dispatches Shift+Enter (ProseMirror native)
+  - For send: clicks send button programmatically (more reliable)
+- **Test Suites**: Added comprehensive tests for core utilities
+  - html-utils.test.js: Tests for HTML content extraction and formatting
+  - prompt-manager.test.js: Tests for prompt management operations
+
+### Changed
+- **Security Improvements**: Audit fixes for dependencies and code quality
+  - Updated npm dependencies to latest secure versions
+  - Removed debug console.log statements from production code
+  - Optimized package-lock.json (reduced from 3336 to 1701 lines)
+
+### Fixed
+- Claude.ai enter key behavior now respects user configuration
+- Removed unnecessary debug logging from Grok enter behavior handler
+
 ## [1.2.0] - 2025-01-14
 
 ### Added
@@ -91,6 +113,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+[1.3.0]: https://github.com/xiaolai/insidebar-ai/releases/tag/v1.3.0
 [1.2.0]: https://github.com/xiaolai/insidebar-ai/releases/tag/v1.2.0
 [1.1.0]: https://github.com/xiaolai/insidebar-ai/releases/tag/v1.1.0
 [1.0.0]: https://github.com/xiaolai/insidebar-ai/releases/tag/v1.0.0
