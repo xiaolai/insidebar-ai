@@ -21,20 +21,22 @@
   ],
 
   "host_permissions": [
-    "https://chatgpt.com/*",
-    "https://chat.openai.com/*",
-    "https://claude.ai/*",
-    "https://gemini.google.com/*",
-    "https://grok.com/*",
-    "https://chat.deepseek.com/*",
-    "https://www.perplexity.ai/*"
+    "*://chatgpt.com/*",
+    "*://chat.openai.com/*",
+    "*://claude.ai/*",
+    "*://gemini.google.com/*",
+    "*://grok.com/*",
+    "*://chat.deepseek.com/*",
+    "*://www.perplexity.ai/*",
+    "*://perplexity.ai/*",
+    "*://www.perplexity.ai/*",
+    "*://perplexity.ai/*"
   ],
 
   "optional_host_permissions": [
-    "http://localhost/*",
-    "http://127.0.0.1/*",
-    "http://*/*",
-    "https://*/*"
+    "*://localhost/*",
+    "*://127.0.0.1/*",
+    "*://*/*"
   ],
 
   "background": {
@@ -130,6 +132,15 @@
         "content-scripts/text-injection-all-providers.js"
       ],
       "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://www.perplexity.ai/*"],
+      "js": [
+        "content-scripts/enter-behavior-utils.js",
+        "content-scripts/enter-behavior-perplexity.js"
+      ],
+      "run_at": "document_end",
       "all_frames": true
     }
   ],

@@ -11,7 +11,7 @@ import {
   clearAllPrompts,
   importDefaultLibrary
 } from '../modules/prompt-manager.js';
-const DEFAULT_ENABLED_PROVIDERS = ['chatgpt', 'claude', 'gemini', 'grok', 'deepseek'];
+const DEFAULT_ENABLED_PROVIDERS = ['chatgpt', 'claude', 'gemini', 'grok', 'deepseek', 'perplexity'];
 
 function getEnabledProvidersOrDefault(settings) {
   if (settings.enabledProviders && Array.isArray(settings.enabledProviders)) {
