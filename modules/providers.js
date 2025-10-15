@@ -38,14 +38,6 @@ export const PROVIDERS = [
     icon: '/icons/providers/deepseek.png',
     iconDark: '/icons/providers/dark/deepseek.png',
     enabled: true
-  },
-  {
-    id: 'perplexity',
-    name: 'Perplexity',
-    url: 'https://www.perplexity.ai',
-    icon: '/icons/providers/perplexity.png',
-    iconDark: '/icons/providers/dark/perplexity.png',
-    enabled: true
   }
 ];
 
@@ -62,7 +54,7 @@ export async function getProviderByIdWithSettings(id) {
 
 export async function getEnabledProviders() {
   const settings = await chrome.storage.sync.get({
-    enabledProviders: ['chatgpt', 'claude', 'gemini', 'grok', 'deepseek', 'perplexity']
+    enabledProviders: ['chatgpt', 'claude', 'gemini', 'grok', 'deepseek']
   });
 
   return PROVIDERS
