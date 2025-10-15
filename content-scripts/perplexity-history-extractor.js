@@ -347,6 +347,9 @@
 
         if (userChoice === 'overwrite') {
           conversation.overwriteId = duplicateCheck.existingConversation.id;
+        } else if (userChoice === 'save-new') {
+          // Generate a new unique conversation ID to avoid duplicate detection
+          conversation.conversationId = generateConversationId(conversation.url, conversation.title, true);
         }
 
         // Re-disable button for actual save

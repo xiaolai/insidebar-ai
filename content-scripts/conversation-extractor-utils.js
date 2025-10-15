@@ -180,7 +180,13 @@
    * @param {string} title - Conversation title
    * @returns {string} Unique conversation ID
    */
-  window.ConversationExtractorUtils.generateConversationId = function(url, title) {
+  window.ConversationExtractorUtils.generateConversationId = function(url, title, forceUnique = false) {
+  // If forceUnique is true, always generate a unique ID with timestamp
+  if (forceUnique) {
+    const baseId = url ? url.match(/\/(c|chat)\/([a-zA-Z0-9-]+)/)?.[2] || url : title;
+    return `${baseId}_${Date.now()}`;
+  }
+
   // Prefer URL-based ID for uniqueness
   if (url) {
     // Extract conversation ID from URL if present
