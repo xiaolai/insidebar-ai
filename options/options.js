@@ -289,6 +289,19 @@ function setupEventListeners() {
   // Default library import button
   document.getElementById('import-default-library')?.addEventListener('click', importDefaultLibraryHandler);
 
+  // Custom library import button
+  document.getElementById('import-custom-library')?.addEventListener('click', () => {
+    document.getElementById('import-custom-library-file').click();
+  });
+
+  document.getElementById('import-custom-library-file')?.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      await importCustomLibraryHandler(file);
+      e.target.value = ''; // Reset file input
+    }
+  });
+
   // Enter key behavior toggle
   const enterBehaviorToggle = document.getElementById('enter-behavior-toggle');
   if (enterBehaviorToggle) {
@@ -451,6 +464,144 @@ function showStatus(type, message) {
   setTimeout(() => {
     element.classList.remove('show');
   }, 3000);
+}
+
+// Validate prompt structure against expected format
+function validatePromptStructure(prompt) {
+  const errors = [];
+
+  // Required fields
+  if (!prompt.title || typeof prompt.title !== 'string') {
+    errors.push('Missing or invalid "title" (string)');
+  }
+  if (!prompt.content || typeof prompt.content !== 'string') {
+    errors.push('Missing or invalid "content" (string)');
+  }
+  if (!prompt.category || typeof prompt.category !== 'string') {
+    errors.push('Missing or invalid "category" (string)');
+  }
+
+  // Tags should be array
+  if (!Array.isArray(prompt.tags)) {
+    errors.push('"tags" must be an array of strings');
+  }
+
+  // Variables should be array (can be empty)
+  if (!Array.isArray(prompt.variables)) {
+    errors.push('"variables" must be an array');
+  }
+
+  // Optional but typed fields
+  if (prompt.isFavorite !== undefined && typeof prompt.isFavorite !== 'boolean') {
+    errors.push('"isFavorite" should be boolean');
+  }
+  if (prompt.useCount !== undefined && typeof prompt.useCount !== 'number') {
+    errors.push('"useCount" should be number');
+  }
+  if (prompt.lastUsed !== undefined && prompt.lastUsed !== null && typeof prompt.lastUsed !== 'number') {
+    errors.push('"lastUsed" should be number or null');
+  }
+
+  return errors;
+}
+
+// Generate example prompt structure
+function getPromptStructureExample() {
+  return `Expected JSON structure (array of prompt objects):
+
+[
+  {
+    "title": "Short descriptive title",
+    "content": "Full prompt text. Use {variables} for placeholders.",
+    "category": "Category name",
+    "tags": ["tag1", "tag2"],
+    "variables": ["variable1", "variable2"],
+    "isFavorite": false,
+    "useCount": 0,
+    "lastUsed": null
+  }
+]
+
+Required fields:
+- title (string)
+- content (string)
+- category (string)
+- tags (array of strings)
+- variables (array of strings)
+
+Optional fields:
+- isFavorite (boolean, default: false)
+- useCount (number, default: 0)
+- lastUsed (number or null, default: null)
+
+See: data/prompt-libraries/Generate_a_Basic_Prompt_Library.md`;
+}
+
+// Import Custom Prompt Library
+async function importCustomLibraryHandler(file) {
+  try {
+    const text = await file.text();
+    const data = JSON.parse(text);
+
+    // Check if it's an array
+    if (!Array.isArray(data)) {
+      showStatus('error', 'Invalid format: File must contain a JSON array of prompts');
+      alert(`Invalid Format\n\n${getPromptStructureExample()}`);
+      return;
+    }
+
+    // Validate first prompt as a sample
+    if (data.length > 0) {
+      const errors = validatePromptStructure(data[0]);
+      if (errors.length > 0) {
+        const errorMsg = `Invalid prompt structure:\n\n${errors.join('\n')}\n\n${getPromptStructureExample()}`;
+        showStatus('error', 'Invalid prompt structure - see alert for details');
+        alert(errorMsg);
+        return;
+      }
+    }
+
+    // Validate all prompts
+    const validationErrors = [];
+    data.forEach((prompt, index) => {
+      const errors = validatePromptStructure(prompt);
+      if (errors.length > 0) {
+        validationErrors.push(`Prompt #${index + 1}: ${errors.join(', ')}`);
+      }
+    });
+
+    if (validationErrors.length > 0) {
+      const errorMsg = `Found ${validationErrors.length} invalid prompts:\n\n${validationErrors.slice(0, 5).join('\n')}${validationErrors.length > 5 ? '\n...' : ''}\n\n${getPromptStructureExample()}`;
+      showStatus('error', `${validationErrors.length} prompts have validation errors`);
+      alert(errorMsg);
+      return;
+    }
+
+    // Wrap in expected format
+    const libraryData = { prompts: data };
+
+    // Import using the prompt manager
+    const result = await importDefaultLibrary(libraryData);
+
+    // Show results
+    if (result.imported > 0) {
+      showStatus('success', `Successfully imported ${result.imported} custom prompts${result.skipped > 0 ? ` (${result.skipped} already existed)` : ''}`);
+    } else {
+      showStatus('success', 'All prompts already exist in your library');
+    }
+
+    // Refresh stats
+    await loadDataStats();
+
+  } catch (error) {
+    if (error instanceof SyntaxError) {
+      showStatus('error', 'Invalid JSON file format');
+      alert(`JSON Parse Error\n\nThe file is not valid JSON. Please check the file format.\n\n${getPromptStructureExample()}`);
+    } else {
+      showStatus('error', 'Failed to import custom prompts');
+      console.error('Import error:', error);
+    }
+  }
 }
 
 // Import Default Prompt Library

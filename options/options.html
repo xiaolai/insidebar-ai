@@ -239,21 +239,25 @@
 
       <!-- Default Prompt Library -->
       <section class="section">
-        <h2 class="section-title">Default Prompt Library</h2>
+        <h2 class="section-title">Prompt Library</h2>
         <p style="font-size: 14px; color: #666; margin-bottom: 16px;">
           Import curated meta-prompts for AI workflows, research, coding, and analysis
         </p>
 
         <div class="library-import-card">
           <div class="library-header">
-            <h3><span class="material-symbols-outlined" style="vertical-align: middle; margin-right: 4px;">library_books</span>Default Prompt Library</h3>
+            <h3>Default Prompt Library</h3>
             <span class="library-count" id="library-count">Loading...</span>
           </div>
           <p class="library-description">
             Meta-prompts for prompt refinement, planning, coding, testing, research, writing, and more.
             Includes variables support for dynamic templates.
           </p>
-          <button class="btn btn-primary" id="import-default-library">Import Default Prompts</button>
+          <div class="btn-group">
+            <button class="btn btn-primary" id="import-default-library">Import Default Prompts</button>
+            <button class="btn btn-secondary" id="import-custom-library">Import Custom Prompts</button>
+          </div>
+          <input type="file" id="import-custom-library-file" accept=".json" style="display: none;" />
         </div>
       </section>
 
