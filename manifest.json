@@ -113,8 +113,10 @@
       "js": [
         "content-scripts/enter-behavior-utils.js",
         "content-scripts/enter-behavior-gemini.js",
-        "content-scripts/text-injection-all-providers.js"
+        "content-scripts/text-injection-all-providers.js",
+        "content-scripts/gemini-history-extractor.js"
       ],
+      "css": ["content-scripts/gemini-save-button.css"],
       "run_at": "document_start",
       "all_frames": true
     },
