@@ -1814,7 +1814,10 @@ async function handleExtractedConversation(conversationData) {
       timestamp: conversationData.timestamp || Date.now(),
       tags: [],
       notes: conversationData.url ? `Extracted from: ${conversationData.url}` : '',
-      isFavorite: false
+      isFavorite: false,
+      conversationId: conversationData.conversationId,
+      url: conversationData.url,
+      overwriteId: conversationData.overwriteId
     };
 
     console.log('[Sidebar] Saving conversation to database...');
