@@ -1744,6 +1744,18 @@ a.conversation-item-link:hover {
   text-decoration: underline;
 }
 
+/* Clickable timestamp link in modal view */
+a.conversation-link {
+  color: #1976d2;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+a.conversation-link:hover {
+  color: #1557b0;
+  text-decoration: underline;
+}
+
 .conversation-item-tags {
   display: flex;
   gap: 4px;
@@ -1987,6 +1999,15 @@ a.conversation-item-link:hover {
 [data-theme="dark"] a.conversation-item-link:hover {
   background: #1a3a5a;
   color: #64b5f6;
+}
+
+[data-theme="dark"] a.conversation-link {
+  color: #64b5f6;
+}
+
+[data-theme="dark"] a.conversation-link:hover {
+  color: #90caf9;
+  text-decoration: underline;
 }
 
 [data-theme="dark"] .conversation-item-tag {
