@@ -52,17 +52,8 @@ function validateConversationData(data) {
     errors.push('Conversation content is required');
   }
 
-  if (data.content && data.content.length > MAX_CONTENT_LENGTH) {
-    errors.push(`Content must be less than ${MAX_CONTENT_LENGTH} characters`);
-  }
-
-  if (data.title && data.title.length > MAX_TITLE_LENGTH) {
-    errors.push(`Title must be less than ${MAX_TITLE_LENGTH} characters`);
-  }
-
-  if (data.notes && data.notes.length > MAX_NOTES_LENGTH) {
-    errors.push(`Notes must be less than ${MAX_NOTES_LENGTH} characters`);
-  }
+  // Note: Content length is auto-truncated by sanitizeString(), no validation needed
+  // Title, notes, and tags are also auto-truncated for consistency
 
   if (data.tags && data.tags.length > MAX_TAGS_COUNT) {
     errors.push(`Maximum ${MAX_TAGS_COUNT} tags allowed`);
