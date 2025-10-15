@@ -101,8 +101,10 @@
     {
       "matches": ["https://claude.ai/*"],
       "js": [
-        "content-scripts/text-injection-all-providers.js"
+        "content-scripts/text-injection-all-providers.js",
+        "content-scripts/claude-history-extractor.js"
       ],
+      "css": ["content-scripts/claude-save-button.css"],
       "run_at": "document_end",
       "all_frames": true
     },
