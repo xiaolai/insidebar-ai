@@ -338,28 +338,24 @@
       console.log('[ChatGPT Extractor] Duplicate check result:', duplicateCheck);
 
       if (duplicateCheck.isDuplicate) {
-        console.log('[ChatGPT Extractor] Duplicate found, showing warning...');
+        console.log('[ChatGPT Extractor] Duplicate found, comparing content...');
 
-        // Re-enable button first
-        saveButton.disabled = false;
-        saveButton.innerHTML = originalHTML;
+        // Compare content to decide whether to save
+        const existingContent = (duplicateCheck.existingConversation.content || '').trim();
+        const newContent = (conversation.content || '').trim();
 
-        // Show warning and get user choice
-        const userChoice = await showDuplicateWarning(conversation.title, duplicateCheck.existingConversation);
-        console.log('[ChatGPT Extractor] User choice:', userChoice);
-
-        if (userChoice === 'cancel') {
-          console.log('[ChatGPT Extractor] User cancelled save');
+        if (existingContent === newContent) {
+          // Content identical - silently skip save
+          console.log('[ChatGPT Extractor] Content identical, skipping save');
+          saveButton.disabled = false;
+          saveButton.innerHTML = originalHTML;
           return;
         }
 
-        if (userChoice === 'overwrite') {
-          conversation.overwriteId = duplicateCheck.existingConversation.id;
-        }
-
-        // Re-disable button for actual save
-        saveButton.disabled = true;
-        saveButton.innerHTML = '<div class="flex w-full items-center justify-center gap-1.5"><span>Saving...</span></div>';
+        // Content changed - automatically overwrite with original timestamp
+        console.log('[ChatGPT Extractor] Content changed, will overwrite with original timestamp');
+        conversation.overwriteId = duplicateCheck.existingConversation.id;
+        conversation.timestamp = duplicateCheck.existingConversation.timestamp;
       }
 
       // Send to background script

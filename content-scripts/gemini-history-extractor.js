@@ -300,24 +300,20 @@
       const duplicateCheck = await checkForDuplicate(conversationId);
 
       if (duplicateCheck.isDuplicate) {
-        // Re-enable button first
-        saveButton.disabled = false;
-        labelSpan.textContent = originalText;
+        // Compare content to decide whether to save
+        const existingContent = (duplicateCheck.existingConversation.content || '').trim();
+        const newContent = (conversation.content || '').trim();
 
-        // Show warning and get user choice
-        const userChoice = await showDuplicateWarning(conversation.title, duplicateCheck.existingConversation);
-
-        if (userChoice === 'cancel') {
+        if (existingContent === newContent) {
+          // Content identical - silently skip save
+          saveButton.disabled = false;
+          labelSpan.textContent = originalText;
           return;
         }
 
-        if (userChoice === 'overwrite') {
-          conversation.overwriteId = duplicateCheck.existingConversation.id;
-        }
-
-        // Re-disable button for actual save
-        saveButton.disabled = true;
-        labelSpan.textContent = 'Saving...';
+        // Content changed - automatically overwrite with original timestamp
+        conversation.overwriteId = duplicateCheck.existingConversation.id;
+        conversation.timestamp = duplicateCheck.existingConversation.timestamp;
       }
 
       // Send to background script

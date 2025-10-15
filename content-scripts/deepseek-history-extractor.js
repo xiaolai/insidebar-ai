@@ -359,26 +359,21 @@
       const duplicateCheck = await checkForDuplicate(conversationId);
 
       if (duplicateCheck.isDuplicate) {
-        // Re-enable button first
-        saveButton.setAttribute('aria-disabled', 'false');
-        saveButton.style.opacity = '1';
-        saveButton.style.cursor = 'pointer';
+        // Compare content to decide whether to save
+        const existingContent = (duplicateCheck.existingConversation.content || '').trim();
+        const newContent = (conversation.content || '').trim();
 
-        // Show warning and get user choice
-        const userChoice = await showDuplicateWarning(conversation.title, duplicateCheck.existingConversation);
-
-        if (userChoice === 'cancel') {
+        if (existingContent === newContent) {
+          // Content identical - silently skip save
+          saveButton.setAttribute('aria-disabled', 'false');
+          saveButton.style.opacity = '1';
+          saveButton.style.cursor = 'pointer';
           return;
         }
 
-        if (userChoice === 'overwrite') {
-          conversation.overwriteId = duplicateCheck.existingConversation.id;
-        }
-
-        // Re-disable button for actual save
-        saveButton.setAttribute('aria-disabled', 'true');
-        saveButton.style.opacity = '0.6';
-        saveButton.style.cursor = 'not-allowed';
+        // Content changed - automatically overwrite with original timestamp
+        conversation.overwriteId = duplicateCheck.existingConversation.id;
+        conversation.timestamp = duplicateCheck.existingConversation.timestamp;
       }
 
       // Send to background script

@@ -111,7 +111,7 @@ export async function saveConversation(conversationData) {
         title: sanitizeString(conversationData.title || generateAutoTitle(conversationData.content), MAX_TITLE_LENGTH),
         content: sanitizeString(conversationData.content, MAX_CONTENT_LENGTH),
         provider: sanitizeString(conversationData.provider || 'unknown', 20),
-        timestamp: conversationData.timestamp || Date.now(),
+        timestamp: conversationData.timestamp,  // Preserve original timestamp (no fallback)
         tags: Array.isArray(conversationData.tags)
           ? conversationData.tags.slice(0, MAX_TAGS_COUNT).map(tag => sanitizeString(tag, MAX_TAG_LENGTH)).filter(t => t)
           : [],
