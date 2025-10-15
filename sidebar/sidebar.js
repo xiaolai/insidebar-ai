@@ -1718,8 +1718,11 @@ async function updateProviderFilter() {
   const enabledProviders = await getEnabledProviders();
   const popup = document.getElementById('provider-popup');
 
+  // Filter out DeepSeek since we don't have a reliable extractor for it
+  const filterableProviders = enabledProviders.filter(p => p.id !== 'deepseek');
+
   popup.innerHTML = '<div class="provider-popup-item selected" data-value="">All Providers</div>' +
-    enabledProviders.map(provider =>
+    filterableProviders.map(provider =>
       `<div class="provider-popup-item" data-value="${escapeHtml(provider.id)}">${escapeHtml(provider.name)}</div>`
     ).join('');
 }
