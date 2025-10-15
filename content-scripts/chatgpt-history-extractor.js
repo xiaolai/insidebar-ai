@@ -127,21 +127,59 @@
 
   // Extract conversation title
   function getConversationTitle() {
-    // Try multiple selectors for title
-    const titleSelectors = [
+    // Priority 1: Try to get active (focused) conversation from #history sidebar
+    // The current chat has a data-active attribute
+    const historyList = document.getElementById('history');
+
+    if (historyList) {
+      console.log('[ChatGPT Extractor] Found #history list, looking for active item...');
+
+      // Look for the active item with data-active attribute
+      const activeItem = historyList.querySelector('[data-active]');
+
+      if (activeItem) {
+        // Find the span with the title text inside the active item
+        const titleSpan = activeItem.querySelector('span[dir="auto"]');
+        if (titleSpan) {
+          const title = titleSpan.textContent.trim();
+          if (title && !title.includes('New chat') && title.length > 0) {
+            console.log('[ChatGPT Extractor] Found title from active item:', title);
+            return title;
+          }
+        }
+
+        // Fallback: use the entire text content
+        const title = activeItem.textContent.trim();
+        if (title && !title.includes('New chat') && title.length > 0) {
+          console.log('[ChatGPT Extractor] Found title from active item (fallback):', title);
+          return title;
+        }
+      } else {
+        console.log('[ChatGPT Extractor] No [data-active] item found in #history');
+      }
+    } else {
+      console.log('[ChatGPT Extractor] #history list not found');
+    }
+
+    // Fallback: Try other selectors
+    const fallbackSelectors = [
+      'nav [aria-current="page"]',
       'h1',
       '[data-testid="conversation-title"]',
       'nav button[class*="font-semibold"]',
       'nav button > div'
     ];
 
-    for (const selector of titleSelectors) {
+    for (const selector of fallbackSelectors) {
       const element = document.querySelector(selector);
       if (element && element.textContent.trim()) {
+        console.log('[ChatGPT Extractor] Found title from fallback selector:', element.textContent.trim());
         return element.textContent.trim();
       }
     }
 
+    // Ultimate fallback: Use default
+    console.log('[ChatGPT Extractor] No title found, using default');
     return 'Untitled Conversation';
   }
 
@@ -286,8 +324,17 @@
     e.stopPropagation();
 
     console.log('[ChatGPT Extractor] Save button clicked');
+    console.log('[ChatGPT Extractor] chrome object exists?', typeof chrome !== 'undefined');
+    console.log('[ChatGPT Extractor] chrome.runtime exists?', typeof chrome?.runtime !== 'undefined');
 
     if (!saveButton) return;
+
+    // Check if chrome API is available
+    if (typeof chrome === 'undefined' || !chrome.runtime) {
+      console.error('[ChatGPT Extractor] Chrome extension API not available');
+      showNotification('Extension API not available. Try reloading the page.', 'error');
+      return;
+    }
 
     // Disable button during save
     saveButton.disabled = true;
