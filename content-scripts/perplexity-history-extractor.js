@@ -184,85 +184,48 @@
   function getMessages() {
     const messages = [];
 
-    // Perplexity likely uses a main content area
-    const mainContent = document.querySelector('main, [role="main"]');
-
-    if (!mainContent) {
-      console.log('[Perplexity Extractor] No main content area found');
-      return messages;
+    // Extract user query from the question area
+    const userQuery = document.querySelector('[data-lexical-text="true"]');
+    if (userQuery) {
+      const queryText = userQuery.textContent.trim();
+      if (queryText) {
+        console.log('[Perplexity Extractor] Found user query:', queryText.substring(0, 50));
+        messages.push({
+          role: 'user',
+          content: queryText
+        });
+      }
     }
 
-    // Try to find message containers with various patterns
-    let messageContainers = mainContent.querySelectorAll('[class*="message"], [data-testid*="query"], [data-testid*="answer"]');
+    // Extract assistant answers from markdown content areas
+    // Perplexity uses div[id^="markdown-content-"] for actual answers
+    const answerContainers = document.querySelectorAll('div[id^="markdown-content-"]');
 
-    // If not found, try looking for structured conversation elements
-    if (messageContainers.length === 0) {
-      messageContainers = mainContent.querySelectorAll('div[class*="prose"], article');
-    }
+    console.log('[Perplexity Extractor] Found answer containers:', answerContainers.length);
 
-    console.log('[Perplexity Extractor] Found message containers:', messageContainers.length);
-
-    messageContainers.forEach((container, index) => {
+    answerContainers.forEach((container) => {
       try {
-        const message = extractMessageFromContainer(container, index);
-        if (message) {
-          messages.push(message);
+        // Extract markdown from the answer content
+        const content = extractMarkdownFromElement(container);
+
+        if (content && content.trim()) {
+          console.log('[Perplexity Extractor] Extracted answer:', content.substring(0, 50));
+          messages.push({
+            role: 'assistant',
+            content: content.trim()
+          });
         }
       } catch (error) {
-        console.warn('[Perplexity Extractor] Error extracting message:', error);
+        console.warn('[Perplexity Extractor] Error extracting answer:', error);
       }
     });
 
+    console.log('[Perplexity Extractor] Total messages extracted:', messages.length);
     return messages;
   }
 
-  // Extract a single message from its container
-  function extractMessageFromContainer(container, index) {
-    // Determine role based on multiple indicators
-    let role = 'unknown';
-
-    // Try data-testid
-    const testId = container.getAttribute('data-testid');
-    if (testId) {
-      if (testId.includes('query') || testId.includes('user')) {
-        role = 'user';
-      } else if (testId.includes('answer') || testId.includes('assistant')) {
-        role = 'assistant';
-      }
-    }
-
-    // Try class-based detection
-    if (role === 'unknown') {
-      const className = container.className || '';
-      if (className.includes('user') || className.includes('query')) {
-        role = 'user';
-      } else if (className.includes('assistant') || className.includes('answer')) {
-        role = 'assistant';
-      }
-    }
-
-    // Alternating pattern fallback
-    if (role === 'unknown') {
-      role = index % 2 === 0 ? 'user' : 'assistant';
-    }
-
-    // Get message content
-    const contentElement = container.querySelector('[class*="prose"], .markdown, [class*="content"]') || container;
-
-    if (!contentElement) return null;
-
-    // Extract markdown from the content
-    const content = extractMarkdownFromElement(contentElement);
-
-    if (!content.trim()) return null;
-
-    console.log('[Perplexity Extractor] Extracted message:', { role, contentLength: content.length });
-
-    return {
-      role,
-      content: content.trim()
-    };
-  }
+  // NOTE: extractMessageFromContainer() function removed - no longer needed
+  // Message extraction now handled directly in getMessages() with specific selectors
 
   // NOTE: Markdown extraction and formatting functions moved to conversation-extractor-utils.js
 
