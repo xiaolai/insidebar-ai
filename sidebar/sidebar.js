@@ -1627,8 +1627,12 @@ async function renderConversationList(conversations = null) {
     return;
   }
 
-  // Sort by timestamp (newest first)
-  conversations.sort((a, b) => b.timestamp - a.timestamp);
+  // Sort by modification time (most recently modified first), fallback to timestamp
+  conversations.sort((a, b) => {
+    const aTime = a.modifiedAt || a.timestamp;
+    const bTime = b.modifiedAt || b.timestamp;
+    return bTime - aTime;
+  });
 
   // Get dark theme status
   const useDarkIcons = isDarkTheme();

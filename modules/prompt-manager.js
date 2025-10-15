@@ -2,7 +2,7 @@
 // Handles CRUD operations for prompts in the Prompt Library
 
 const DB_NAME = 'SmarterPanelDB';
-const DB_VERSION = 3;  // Upgraded to add conversationId index
+const DB_VERSION = 4;  // Upgraded to add modifiedAt field for conversations
 const PROMPTS_STORE = 'prompts';
 const CONVERSATIONS_STORE = 'conversations';
 

@@ -108,17 +108,19 @@ export async function saveConversation(conversationData) {
           : [],
         notes: sanitizeString(conversationData.notes || '', MAX_NOTES_LENGTH),
         conversationId: sanitizeString(conversationData.conversationId || '', 200),
-        url: sanitizeString(conversationData.url || '', 500)
+        url: sanitizeString(conversationData.url || '', 500),
+        modifiedAt: Date.now()
       });
     }
   }
 
   // Sanitize and prepare conversation
+  const now = Date.now();
   const conversation = {
     title: sanitizeString(conversationData.title || generateAutoTitle(conversationData.content), MAX_TITLE_LENGTH),
     content: sanitizeString(conversationData.content, MAX_CONTENT_LENGTH),
     provider: sanitizeString(conversationData.provider || 'unknown', 20),
-    timestamp: conversationData.timestamp || Date.now(),
+    timestamp: conversationData.timestamp || now,
     tags: Array.isArray(conversationData.tags)
       ? conversationData.tags.slice(0, MAX_TAGS_COUNT).map(tag => sanitizeString(tag, MAX_TAG_LENGTH)).filter(t => t)
       : [],
@@ -126,6 +128,7 @@ export async function saveConversation(conversationData) {
     notes: sanitizeString(conversationData.notes || '', MAX_NOTES_LENGTH),
     conversationId: sanitizeString(conversationData.conversationId || '', 200),
     url: sanitizeString(conversationData.url || '', 500),
+    modifiedAt: now,
     searchText: ''  // Will be set below
   };
 
@@ -182,7 +185,7 @@ export async function updateConversation(id, updates) {
         return;
       }
 
-      const updatedConversation = { ...conversation, ...updates, id };
+      const updatedConversation = { ...conversation, ...updates, id, modifiedAt: Date.now() };
 
       // Regenerate search text if content changed
       if (updates.title || updates.content || updates.tags || updates.notes || updates.provider) {
