@@ -165,10 +165,17 @@ body {
 }
 
 .tab-separator {
+  flex: 1;
   width: 1px;
   background: #d0d0d0;
   margin: 8px 4px;
-  flex-shrink: 0;
+}
+
+/* UI tabs (chat history, prompt library, settings) - fixed width on right */
+#provider-tabs button[data-view],
+#provider-tabs button#settings-tab {
+  flex: 0 0 48px;
+  max-width: 48px;
 }
 
 /* Dark theme */
