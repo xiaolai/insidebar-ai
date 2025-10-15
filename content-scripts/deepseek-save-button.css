@@ -1,0 +1,45 @@
+/* DeepSeek Save Button Styles */
+
+#insidebar-save-conversation {
+  /* Button matches DeepSeek's icon button style */
+  font-family: inherit;
+  cursor: pointer;
+  user-select: none;
+}
+
+#insidebar-save-conversation[aria-disabled="true"] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Match DeepSeek's hover effect */
+#insidebar-save-conversation:hover:not([aria-disabled="true"]) .ds-icon-button__hover-bg {
+  background-color: var(--dsw-alias-bg-hover, rgba(0, 0, 0, 0.05));
+}
+
+/* Notification animations */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.insidebar-notification {
+  transition: all 0.3s ease;
+}
