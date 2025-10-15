@@ -126,9 +126,8 @@ body {
 }
 
 #provider-tabs button {
-  flex: 1;
-  min-width: 48px;
-  max-width: 64px;
+  flex: 0 0 48px;
+  width: 48px;
   padding: 10px 8px;
   border: none;
   background: transparent;
