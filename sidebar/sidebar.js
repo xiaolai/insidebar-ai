@@ -138,20 +138,21 @@ async function renderProviderTabs() {
   separator.className = 'tab-separator';
   tabsContainer.appendChild(separator);
 
+  // TODO: Chat History tab temporarily hidden until auto-extraction is implemented
   // Add chat history tab
-  const historyTab = document.createElement('button');
-  historyTab.id = 'chat-history-tab';
-  historyTab.dataset.view = 'chat-history';
-  historyTab.title = 'Chat History';
-
-  const historyIcon = document.createElement('img');
-  historyIcon.src = useDarkIcons ? '/icons/ui/dark/chat-history.png' : '/icons/ui/chat-history.png';
-  historyIcon.alt = 'History';
-  historyIcon.className = 'provider-icon';
-
-  historyTab.appendChild(historyIcon);
-  historyTab.addEventListener('click', () => switchToView('chat-history'));
-  tabsContainer.appendChild(historyTab);
+  // const historyTab = document.createElement('button');
+  // historyTab.id = 'chat-history-tab';
+  // historyTab.dataset.view = 'chat-history';
+  // historyTab.title = 'Chat History';
+  //
+  // const historyIcon = document.createElement('img');
+  // historyIcon.src = useDarkIcons ? '/icons/ui/dark/chat-history.png' : '/icons/ui/chat-history.png';
+  // historyIcon.alt = 'History';
+  // historyIcon.className = 'provider-icon';
+  //
+  // historyTab.appendChild(historyIcon);
+  // historyTab.addEventListener('click', () => switchToView('chat-history'));
+  // tabsContainer.appendChild(historyTab);
 
   // Add prompt library tab
   const promptLibraryTab = document.createElement('button');
