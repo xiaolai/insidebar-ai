@@ -138,21 +138,20 @@ async function renderProviderTabs() {
   separator.className = 'tab-separator';
   tabsContainer.appendChild(separator);
 
-  // TODO: Chat History tab temporarily hidden until auto-extraction is implemented
   // Add chat history tab
-  // const historyTab = document.createElement('button');
-  // historyTab.id = 'chat-history-tab';
-  // historyTab.dataset.view = 'chat-history';
-  // historyTab.title = 'Chat History';
-  //
-  // const historyIcon = document.createElement('img');
-  // historyIcon.src = useDarkIcons ? '/icons/ui/dark/chat-history.png' : '/icons/ui/chat-history.png';
-  // historyIcon.alt = 'History';
-  // historyIcon.className = 'provider-icon';
-  //
-  // historyTab.appendChild(historyIcon);
-  // historyTab.addEventListener('click', () => switchToView('chat-history'));
-  // tabsContainer.appendChild(historyTab);
+  const historyTab = document.createElement('button');
+  historyTab.id = 'chat-history-tab';
+  historyTab.dataset.view = 'chat-history';
+  historyTab.title = 'Chat History';
+
+  const historyIcon = document.createElement('img');
+  historyIcon.src = useDarkIcons ? '/icons/ui/dark/chat-history.png' : '/icons/ui/chat-history.png';
+  historyIcon.alt = 'History';
+  historyIcon.className = 'provider-icon';
+
+  historyTab.appendChild(historyIcon);
+  historyTab.addEventListener('click', () => switchToView('chat-history'));
+  tabsContainer.appendChild(historyTab);
 
   // Add prompt library tab
   const promptLibraryTab = document.createElement('button');
@@ -210,6 +209,7 @@ async function switchProvider(providerId) {
   // Hide non-provider views if currently active
   currentView = 'providers';
   document.getElementById('prompt-library').style.display = 'none';
+  document.getElementById('chat-history').style.display = 'none';
 
   // Show provider container
   document.getElementById('provider-container').style.display = 'flex';
@@ -341,6 +341,10 @@ function setupMessageListener() {
         } else if (message.action === 'closeSidePanel') {
           // T070: Close side panel when requested
           window.close();
+          sendResponse({ success: true });
+        } else if (message.action === 'saveExtractedConversation') {
+          // Handle extracted conversation from ChatGPT page
+          await handleExtractedConversation(message.payload);
           sendResponse({ success: true });
         }
       } catch (error) {
@@ -1718,6 +1722,54 @@ async function saveConversationFromModal() {
   } catch (error) {
     console.error('Error saving conversation:', error);
     alert('Failed to save conversation. ' + error.message);
+  }
+}
+
+// Handle extracted conversation from ChatGPT content script
+async function handleExtractedConversation(conversationData) {
+  try {
+    console.log('[Sidebar] handleExtractedConversation called');
+    console.log('[Sidebar] Received conversation data:', {
+      title: conversationData?.title,
+      provider: conversationData?.provider,
+      contentLength: conversationData?.content?.length,
+      messageCount: conversationData?.messages?.length,
+      timestamp: conversationData?.timestamp,
+      url: conversationData?.url
+    });
+
+    // Switch to chat history view
+    console.log('[Sidebar] Switching to chat-history view...');
+    switchToView('chat-history');
+
+    console.log('[Sidebar] Preparing conversation data for save...');
+    const conversationToSave = {
+      title: conversationData.title || generateAutoTitle(conversationData.content),
+      content: conversationData.content,
+      provider: conversationData.provider || 'ChatGPT',
+      timestamp: conversationData.timestamp || Date.now(),
+      tags: [],
+      notes: conversationData.url ? `Extracted from: ${conversationData.url}` : '',
+      isFavorite: false
+    };
+
+    console.log('[Sidebar] Saving conversation to database...');
+    // Save conversation directly to database
+    await saveConversation(conversationToSave);
+
+    console.log('[Sidebar] Conversation saved, refreshing list...');
+    // Refresh conversation list and show success
+    await renderConversationList();
+
+    console.log('[Sidebar] Showing success toast...');
+    showToast('Conversation saved successfully!');
+
+    console.log('[Sidebar] handleExtractedConversation completed successfully');
+  } catch (error) {
+    console.error('[Sidebar] Error in handleExtractedConversation:', error);
+    console.error('[Sidebar] Error stack:', error.stack);
+    showToast('Failed to save conversation: ' + error.message);
+    throw error;
   }
 }
 

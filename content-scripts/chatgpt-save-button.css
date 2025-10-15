@@ -1,0 +1,57 @@
+/* Save conversation button for ChatGPT pages */
+/* Button styling is handled by ChatGPT's native classes */
+
+#insidebar-save-conversation:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Notification styles */
+.insidebar-notification {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 10000;
+
+  padding: 16px 24px;
+  background: #10a37f;
+  color: white;
+  border-radius: 8px;
+
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  opacity: 0;
+  transform: translateX(400px);
+  transition: all 0.3s ease;
+}
+
+.insidebar-notification.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.insidebar-notification-success {
+  background: #10a37f;
+}
+
+.insidebar-notification-error {
+  background: #ef4444;
+}
+
+.insidebar-notification-info {
+  background: #3b82f6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .insidebar-notification {
+    top: 16px;
+    right: 16px;
+    left: 16px;
+    max-width: none;
+  }
+}

@@ -193,7 +193,7 @@ chrome.windows.onRemoved.addListener((windowId) => {
   sidePanelState.delete(windowId);
 });
 
-// T070: Listen for sidebar close notifications
+// T070: Listen for sidebar close notifications and conversation saves
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'sidePanelClosed') {
     // Get windowId from sender
@@ -201,9 +201,98 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       sidePanelState.set(sender.tab.windowId, false);
     }
     sendResponse({ success: true });
+  } else if (message.action === 'saveConversationFromPage') {
+    // Handle conversation save from ChatGPT page
+    handleSaveConversation(message.payload, sender).then(sendResponse);
+    return true; // Keep channel open for async response
   }
   return true;
 });
+
+// Handle saving conversation from ChatGPT page
+async function handleSaveConversation(conversationData, sender) {
+  try {
+    console.log('[Background] handleSaveConversation called with data:', {
+      title: conversationData?.title,
+      provider: conversationData?.provider,
+      messageCount: conversationData?.messages?.length,
+      hasSender: !!sender,
+      hasTab: !!sender?.tab,
+      hasFrameId: sender?.frameId !== undefined,
+      frameId: sender?.frameId,
+      url: sender?.url
+    });
+
+    // Get the window ID
+    // If sender is from an iframe (like sidebar), we need to get the window differently
+    let windowId = null;
+
+    if (sender.tab) {
+      // Message from a regular tab
+      windowId = sender.tab.windowId;
+      console.log('[Background] Got window ID from tab:', windowId);
+    } else {
+      // Message from an iframe (likely sidebar)
+      // In this case, we can get the current window
+      console.log('[Background] No tab found, getting current window...');
+      try {
+        const currentWindow = await chrome.windows.getCurrent();
+        windowId = currentWindow.id;
+        console.log('[Background] Got current window ID:', windowId);
+      } catch (error) {
+        console.error('[Background] Error getting current window:', error);
+      }
+    }
+
+    if (!windowId) {
+      console.error('[Background] No window ID found after all attempts');
+      // If we still don't have a window ID, try to send directly to sidebar
+      // without opening it (it's probably already open if we got a message from iframe)
+      console.log('[Background] Attempting direct message to sidebar...');
+      try {
+        const response = await notifyMessage({
+          action: 'saveExtractedConversation',
+          payload: conversationData
+        });
+        console.log('[Background] Direct response from sidebar:', response);
+        return { success: true, data: response };
+      } catch (directError) {
+        console.error('[Background] Direct message failed:', directError);
+        return { success: false, error: 'No window ID and direct message failed' };
+      }
+    }
+
+    console.log('[Background] Window ID:', windowId);
+
+    // Open side panel if not already open
+    const isOpen = sidePanelState.get(windowId) || false;
+    console.log('[Background] Side panel open:', isOpen);
+
+    if (!isOpen) {
+      console.log('[Background] Opening side panel...');
+      await chrome.sidePanel.open({ windowId });
+      sidePanelState.set(windowId, true);
+      // Wait for sidebar to load
+      await new Promise(resolve => setTimeout(resolve, 500));
+    }
+
+    console.log('[Background] Sending message to sidebar...');
+
+    // Send conversation data to sidebar
+    const response = await notifyMessage({
+      action: 'saveExtractedConversation',
+      payload: conversationData
+    });
+
+    console.log('[Background] Response from sidebar:', response);
+
+    return { success: true, data: response };
+  } catch (error) {
+    console.error('[Background] Error saving conversation:', error);
+    console.error('[Background] Error stack:', error.stack);
+    return { success: false, error: error.message };
+  }
+}
 
 // T069 & T070: Listen for keyboard shortcuts with toggle support
 chrome.commands.onCommand.addListener(async (command, tab) => {
