@@ -1800,9 +1800,20 @@ async function viewConversation(id) {
   const providerEl = document.getElementById('view-conversation-provider');
   providerEl.innerHTML = `<strong>Provider:</strong> ${escapeHtml(conversation.provider)}`;
 
+  // Extract URL from notes if available (format: "Extracted from: URL")
+  let conversationUrl = null;
+  if (conversation.notes && conversation.notes.startsWith('Extracted from: ')) {
+    conversationUrl = conversation.notes.substring('Extracted from: '.length).trim();
+  }
+
+  // Create timestamp display - make it a link if URL is available
   const timestampEl = document.getElementById('view-conversation-timestamp');
   const date = new Date(conversation.timestamp).toLocaleString();
-  timestampEl.innerHTML = `<strong>Date:</strong> ${date}`;
+  if (conversationUrl) {
+    timestampEl.innerHTML = `<strong>Date:</strong> <a href="${escapeHtml(conversationUrl)}" target="_blank" class="conversation-link" title="Open original conversation">${date}</a>`;
+  } else {
+    timestampEl.innerHTML = `<strong>Date:</strong> ${date}`;
+  }
 
   const tagsEl = document.getElementById('view-conversation-tags');
   if (conversation.tags.length > 0) {
@@ -1811,11 +1822,14 @@ async function viewConversation(id) {
     tagsEl.innerHTML = '';
   }
 
+  // Hide notes section if it only contains the "Extracted from:" URL
   const notesEl = document.getElementById('view-conversation-notes');
-  if (conversation.notes) {
+  if (conversation.notes && !conversation.notes.startsWith('Extracted from: ')) {
     notesEl.innerHTML = `<strong>Notes:</strong> ${escapeHtml(conversation.notes)}`;
+    notesEl.style.display = 'block';
   } else {
     notesEl.innerHTML = '';
+    notesEl.style.display = 'none';
   }
 
   // Show modal
