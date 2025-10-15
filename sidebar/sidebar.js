@@ -1582,6 +1582,17 @@ async function renderConversationList(conversations = null) {
     const date = new Date(conv.timestamp).toLocaleDateString();
     const time = new Date(conv.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
+    // Extract URL from notes if available (format: "Extracted from: URL")
+    let conversationUrl = null;
+    if (conv.notes && conv.notes.startsWith('Extracted from: ')) {
+      conversationUrl = conv.notes.substring('Extracted from: '.length).trim();
+    }
+
+    // Create date/time display - make it a link if URL is available
+    const dateTimeDisplay = conversationUrl
+      ? `<a href="${escapeHtml(conversationUrl)}" target="_blank" class="conversation-item-date conversation-item-link" title="Open original conversation">${date} ${time}</a>`
+      : `<span class="conversation-item-date">${date} ${time}</span>`;
+
     return `
       <div class="conversation-item" data-conversation-id="${conv.id}">
         <div class="conversation-item-header">
@@ -1596,7 +1607,7 @@ async function renderConversationList(conversations = null) {
         <div class="conversation-item-preview">${escapeHtml(preview)}</div>
         <div class="conversation-item-meta">
           <span class="conversation-item-provider">${escapeHtml(conv.provider)}</span>
-          <span class="conversation-item-date">${date} ${time}</span>
+          ${dateTimeDisplay}
           ${conv.tags.length > 0 ? `
             <div class="conversation-item-tags">
               ${conv.tags.map(tag => `<span class="conversation-item-tag">${escapeHtml(tag)}</span>`).join('')}
@@ -1613,7 +1624,8 @@ async function renderConversationList(conversations = null) {
 
     // Click on item to view full conversation
     item.addEventListener('click', async (e) => {
-      if (e.target.closest('button')) return; // Don't trigger on button clicks
+      // Don't trigger on button clicks or link clicks
+      if (e.target.closest('button') || e.target.closest('a.conversation-item-link')) return;
       await viewConversation(id);
     });
   });
