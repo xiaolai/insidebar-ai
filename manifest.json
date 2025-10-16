@@ -30,7 +30,9 @@
     "*://www.perplexity.ai/*",
     "*://perplexity.ai/*",
     "*://www.perplexity.ai/*",
-    "*://perplexity.ai/*"
+    "*://perplexity.ai/*",
+    "*://www.google.com/*",
+    "*://google.com/*"
   ],
 
   "optional_host_permissions": [
@@ -160,6 +162,19 @@
         "content-scripts/perplexity-history-extractor.js"
       ],
       "css": ["content-scripts/perplexity-save-button.css"],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://www.google.com/search*"],
+      "js": [
+        "content-scripts/enter-behavior-utils.js",
+        "content-scripts/enter-behavior-google.js",
+        "content-scripts/text-injection-all-providers.js",
+        "content-scripts/conversation-extractor-utils.js",
+        "content-scripts/google-history-extractor.js"
+      ],
+      "css": ["content-scripts/google-save-button.css"],
       "run_at": "document_end",
       "all_frames": true
     },

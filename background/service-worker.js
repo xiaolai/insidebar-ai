@@ -76,7 +76,7 @@ async function createContextMenus() {
 
   // Get enabled providers from settings
   const settings = await chrome.storage.sync.get({
-    enabledProviders: ['chatgpt', 'claude', 'gemini', 'grok', 'deepseek']
+    enabledProviders: ['chatgpt', 'claude', 'gemini', 'grok', 'deepseek', 'google']
   });
 
   const enabledProviders = settings.enabledProviders;
@@ -94,7 +94,8 @@ async function createContextMenus() {
     claude: 'Claude',
     gemini: 'Gemini',
     grok: 'Grok',
-    deepseek: 'DeepSeek'
+    deepseek: 'DeepSeek',
+    google: 'Google AI'
   };
 
   enabledProviders.forEach(providerId => {

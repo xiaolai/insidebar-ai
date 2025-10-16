@@ -1,0 +1,67 @@
+/* Google AI Mode Save Button Styles */
+
+[data-test-id="insidebar-google-save-container"] {
+  /* Match OEwhSe container spacing */
+  display: inline-flex;
+  align-items: center;
+  margin-left: 8px;
+}
+
+#insidebar-google-save-conversation {
+  /* Button matches Google AI Mode button style */
+  font-family: inherit;
+  cursor: pointer;
+  user-select: none;
+  background: transparent;
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+#insidebar-google-save-conversation:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+#insidebar-google-save-conversation:active {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+#insidebar-google-save-conversation:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+#insidebar-google-save-conversation svg {
+  display: block;
+}
+
+/* Notification animations */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.insidebar-notification {
+  transition: all 0.3s ease;
+}

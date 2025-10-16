@@ -15,7 +15,8 @@
     ],
     gemini: ['.ql-editor'],
     grok: ['textarea', '.tiptap', '.ProseMirror'],
-    deepseek: ['textarea.ds-scroll-area']
+    deepseek: ['textarea.ds-scroll-area'],
+    google: ['textarea.ITIRGe', 'textarea[aria-label="Ask anything"]', 'textarea[maxlength="8192"]']
   };
 
   // Detect which provider we're on based on hostname
@@ -31,6 +32,8 @@
       return 'grok';
     } else if (hostname.includes('deepseek.com')) {
       return 'deepseek';
+    } else if (hostname.includes('google.com') && window.location.search.includes('udm=50')) {
+      return 'google';
     }
     return null;
   }
