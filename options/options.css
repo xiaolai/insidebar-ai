@@ -318,7 +318,7 @@ select:focus {
 
 /* Danger Zone - ensure all buttons have same width */
 .section .btn-danger {
-  min-width: 120px;
+  min-width: 80px;
 }
 
 /* Status Messages */
