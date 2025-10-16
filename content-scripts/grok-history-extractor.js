@@ -146,49 +146,43 @@
     });
   }
 
-  // Extract conversation title from active chat in sidebar
+  // Extract conversation title from first user message
   function getConversationTitle() {
-    // Priority 1: Extract conversation ID from URL and find matching sidebar link
+    // Extract conversation ID from URL for fallback
     const urlMatch = window.location.pathname.match(/\/c\/([^\/]+)/);
+    const conversationId = urlMatch ? urlMatch[1] : 'unknown';
 
-    if (urlMatch) {
-      const conversationId = urlMatch[1];
+    // Use first user message as title
+    try {
+      const messages = getMessages();
+      if (messages && messages.length > 0) {
+        const firstUserMessage = messages.find(m => m.role === 'user');
+        if (firstUserMessage && firstUserMessage.content) {
+          let content = firstUserMessage.content;
 
-      // Find the sidebar link that matches this conversation ID
-      const matchingLink = document.querySelector(`a[href^="/c/${conversationId}"]`);
+          // Filter out "User: " prefix if present
+          content = content.replace(/^User:\s*/i, '');
 
-      if (matchingLink) {
-        const titleSpan = matchingLink.querySelector('span.flex-1');
-        if (titleSpan) {
-          const title = titleSpan.textContent.trim();
-          if (title && title.length > 0) {
-            console.log('[Grok Extractor] Found title from URL-matched sidebar link:', title);
+          // Truncate to first 50 chars, remove newlines
+          const truncated = content
+            .replace(/\n+/g, ' ')
+            .substring(0, 50)
+            .trim();
+
+          if (truncated.length > 0) {
+            const title = truncated.length === 50 ? truncated + '...' : truncated;
+            console.log('[Grok Extractor] Using first user message as title:', title);
             return title;
           }
         }
       }
-
-      // Fallback: Try the old method (text-primary class)
-      const activeChat = document.querySelector('a[href^="/c/"].text-primary');
-      if (activeChat) {
-        const titleSpan = activeChat.querySelector('span.flex-1');
-        if (titleSpan) {
-          const title = titleSpan.textContent.trim();
-          if (title && title.length > 0) {
-            console.log('[Grok Extractor] Found title from active chat (text-primary fallback):', title);
-            return title;
-          }
-        }
-      }
-
-      // Ultimate fallback: Use URL-based title
-      console.log('[Grok Extractor] Falling back to URL-based title');
-      return `Grok Conversation ${conversationId.substring(0, 8)}`;
+    } catch (error) {
+      console.warn('[Grok Extractor] Error extracting title from first message:', error);
     }
 
-    // No URL match - use default
-    console.log('[Grok Extractor] No conversation ID in URL, using default');
-    return 'Untitled Grok Conversation';
+    // Fallback: Use URL-based title (only if message extraction failed)
+    console.log('[Grok Extractor] Falling back to URL-based title');
+    return `Grok Conversation ${conversationId.substring(0, 8)}`;
   }
 
   // Extract all messages from the conversation
