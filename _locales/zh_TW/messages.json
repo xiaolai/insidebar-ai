@@ -595,5 +595,75 @@
   },
   "loadingText": {
     "message": "載入中..."
+  },
+
+  "optionsPageTitle": {
+    "message": "insidebar.ai - 設定"
+  },
+  "headerSettingsTitle": {
+    "message": "設定: insidebar.ai"
+  },
+  "headerSettingsSubtitle": {
+    "message": "自訂您的多AI側邊欄體驗"
+  },
+  "labelEnableKeyboardShortcut": {
+    "message": "啟用鍵盤快速鍵"
+  },
+  "descEnableKeyboardShortcut": {
+    "message": "切換可在瀏覽器任何位置開啟insidebar.ai的全域快速鍵。"
+  },
+  "labelEdgeShortcutHelper": {
+    "message": "在Microsoft Edge中確認"
+  },
+  "descEdgeShortcutHelper": {
+    "message": "Edge需要您確認一次快速鍵。點擊設定可直接跳轉到Edge快速鍵頁面。"
+  },
+  "labelEnableEnterCustom": {
+    "message": "啟用Enter鍵自訂"
+  },
+  "descEnableEnterCustom": {
+    "message": "啟用後，將修改所有支援的AI提供者的Enter鍵行為"
+  },
+  "keyShift": {
+    "message": "Shift"
+  },
+  "keyCtrl": {
+    "message": "Ctrl"
+  },
+  "keyAlt": {
+    "message": "Alt"
+  },
+  "keyMeta": {
+    "message": "⌘/Win"
+  },
+  "keyPlusEnter": {
+    "message": "+ Enter"
+  },
+  "labelDefaultPromptLibrary": {
+    "message": "預設提示詞庫"
+  },
+  "descDefaultPromptLibrary": {
+    "message": "用於提示詞最佳化、規劃、編碼、測試、研究、寫作等的元提示。包含對動態範本的變數支援。"
+  },
+  "descCustomPromptReadme": {
+    "message": "匯入自訂提示詞前，請先閱讀: <code style=\"background: #f5f5f5; padding: 2px 6px; border-radius: 3px;\">data/prompt-libraries/Generate_a_Basic_Prompt_Library.md</code>"
+  },
+  "statStorageUsed": {
+    "message": "已用儲存空間"
+  },
+  "labelExportData": {
+    "message": "匯出資料"
+  },
+  "descExportData": {
+    "message": "將所有提示詞和設定下載為JSON"
+  },
+  "labelImportData": {
+    "message": "匯入資料"
+  },
+  "descImportData": {
+    "message": "從JSON檔案還原提示詞和設定"
+  },
+  "labelLoading": {
+    "message": "載入中..."
   }
 }

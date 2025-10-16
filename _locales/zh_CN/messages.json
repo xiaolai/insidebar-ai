@@ -595,5 +595,75 @@
   },
   "loadingText": {
     "message": "加载中..."
+  },
+
+  "optionsPageTitle": {
+    "message": "insidebar.ai - 设置"
+  },
+  "headerSettingsTitle": {
+    "message": "设置: insidebar.ai"
+  },
+  "headerSettingsSubtitle": {
+    "message": "自定义您的多AI侧边栏体验"
+  },
+  "labelEnableKeyboardShortcut": {
+    "message": "启用键盘快捷键"
+  },
+  "descEnableKeyboardShortcut": {
+    "message": "切换可在浏览器任何位置打开insidebar.ai的全局快捷键。"
+  },
+  "labelEdgeShortcutHelper": {
+    "message": "在Microsoft Edge中确认"
+  },
+  "descEdgeShortcutHelper": {
+    "message": "Edge需要您确认一次快捷键。点击配置可直接跳转到Edge快捷键页面。"
+  },
+  "labelEnableEnterCustom": {
+    "message": "启用回车键自定义"
+  },
+  "descEnableEnterCustom": {
+    "message": "启用后，将修改所有支持的AI提供商的回车键行为"
+  },
+  "keyShift": {
+    "message": "Shift"
+  },
+  "keyCtrl": {
+    "message": "Ctrl"
+  },
+  "keyAlt": {
+    "message": "Alt"
+  },
+  "keyMeta": {
+    "message": "⌘/Win"
+  },
+  "keyPlusEnter": {
+    "message": "+ Enter"
+  },
+  "labelDefaultPromptLibrary": {
+    "message": "默认提示词库"
+  },
+  "descDefaultPromptLibrary": {
+    "message": "用于提示词优化、规划、编码、测试、研究、写作等的元提示。包含对动态模板的变量支持。"
+  },
+  "descCustomPromptReadme": {
+    "message": "导入自定义提示词前，请先阅读: <code style=\"background: #f5f5f5; padding: 2px 6px; border-radius: 3px;\">data/prompt-libraries/Generate_a_Basic_Prompt_Library.md</code>"
+  },
+  "statStorageUsed": {
+    "message": "已用存储"
+  },
+  "labelExportData": {
+    "message": "导出数据"
+  },
+  "descExportData": {
+    "message": "将所有提示词和设置下载为JSON"
+  },
+  "labelImportData": {
+    "message": "导入数据"
+  },
+  "descImportData": {
+    "message": "从JSON文件恢复提示词和设置"
+  },
+  "labelLoading": {
+    "message": "加载中..."
   }
 }

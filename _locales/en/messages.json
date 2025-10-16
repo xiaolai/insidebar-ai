@@ -595,5 +595,75 @@
   },
   "loadingText": {
     "message": "Loading..."
+  },
+
+  "optionsPageTitle": {
+    "message": "insidebar.ai - Settings"
+  },
+  "headerSettingsTitle": {
+    "message": "Settings: insidebar.ai"
+  },
+  "headerSettingsSubtitle": {
+    "message": "Customize your multi-AI sidebar experience"
+  },
+  "labelEnableKeyboardShortcut": {
+    "message": "Enable Keyboard Shortcut"
+  },
+  "descEnableKeyboardShortcut": {
+    "message": "Toggle the global shortcut that opens insidebar.ai from anywhere in the browser."
+  },
+  "labelEdgeShortcutHelper": {
+    "message": "Confirm in Microsoft Edge"
+  },
+  "descEdgeShortcutHelper": {
+    "message": "Edge requires you to confirm the shortcut once. Click configure to jump straight to the Edge shortcuts page."
+  },
+  "labelEnableEnterCustom": {
+    "message": "Enable Enter Key Customization"
+  },
+  "descEnableEnterCustom": {
+    "message": "When enabled, modifies Enter key behavior across all supported AI providers"
+  },
+  "keyShift": {
+    "message": "Shift"
+  },
+  "keyCtrl": {
+    "message": "Ctrl"
+  },
+  "keyAlt": {
+    "message": "Alt"
+  },
+  "keyMeta": {
+    "message": "⌘/Win"
+  },
+  "keyPlusEnter": {
+    "message": "+ Enter"
+  },
+  "labelDefaultPromptLibrary": {
+    "message": "Default Prompt Library"
+  },
+  "descDefaultPromptLibrary": {
+    "message": "Meta-prompts for prompt refinement, planning, coding, testing, research, writing, and more. Includes variables support for dynamic templates."
+  },
+  "descCustomPromptReadme": {
+    "message": "Before importing custom prompts, please read: <code style=\"background: #f5f5f5; padding: 2px 6px; border-radius: 3px;\">data/prompt-libraries/Generate_a_Basic_Prompt_Library.md</code>"
+  },
+  "statStorageUsed": {
+    "message": "Storage Used"
+  },
+  "labelExportData": {
+    "message": "Export Data"
+  },
+  "descExportData": {
+    "message": "Download all prompts and settings as JSON"
+  },
+  "labelImportData": {
+    "message": "Import Data"
+  },
+  "descImportData": {
+    "message": "Restore prompts and settings from JSON file"
+  },
+  "labelLoading": {
+    "message": "Loading..."
   }
 }
