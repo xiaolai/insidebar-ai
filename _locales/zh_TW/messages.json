@@ -383,6 +383,17 @@
   "msgCommitHashUnavailable": {
     "message": "提交雜湊不可用"
   },
+  "msgBuildInfo": {
+    "message": "建置: $HASH$ ($DATE$)",
+    "placeholders": {
+      "hash": {
+        "content": "$1"
+      },
+      "date": {
+        "content": "$2"
+      }
+    }
+  },
   "msgUpdateStatusAvailable": {
     "message": "<strong>有可用更新!</strong><br>最新: $LATEST$ ($DATE$)<br>目前: $CURRENT$<br><small>$MESSAGE$</small>",
     "placeholders": {
