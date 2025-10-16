@@ -213,6 +213,12 @@ async function toggleProvider(providerId) {
       return;
     }
     enabledProviders = enabledProviders.filter(id => id !== providerId);
+
+    // If disabling the last selected provider, clear it so sidebar uses the new default
+    const lastSelected = await chrome.storage.sync.get({ lastSelectedProvider: null });
+    if (lastSelected.lastSelectedProvider === providerId) {
+      await chrome.storage.sync.set({ lastSelectedProvider: null });
+    }
   } else {
     // Enable
     enabledProviders.push(providerId);
