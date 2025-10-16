@@ -32,7 +32,8 @@
     "*://www.perplexity.ai/*",
     "*://perplexity.ai/*",
     "*://www.google.com/*",
-    "*://google.com/*"
+    "*://google.com/*",
+    "*://api.github.com/*"
   ],
 
   "optional_host_permissions": [
@@ -201,7 +202,10 @@
 
   "web_accessible_resources": [
     {
-      "resources": ["data/prompt-libraries/default-prompts.json"],
+      "resources": [
+        "data/prompt-libraries/default-prompts.json",
+        "data/version-info.json"
+      ],
       "matches": ["<all_urls>"]
     }
   ],

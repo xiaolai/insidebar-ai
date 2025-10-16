@@ -15,6 +15,10 @@ import {
   importConversations,
   clearAllConversations
 } from '../modules/history-manager.js';
+import {
+  loadVersionInfo,
+  checkForUpdates
+} from '../modules/version-checker.js';
 const DEFAULT_ENABLED_PROVIDERS = ['chatgpt', 'claude', 'gemini', 'grok', 'deepseek'];
 
 function getEnabledProvidersOrDefault(settings) {
@@ -76,6 +80,7 @@ async function init() {
   await loadSettings();
   await loadDataStats();
   await loadLibraryCount();  // Load default library count
+  await loadVersionDisplay();  // T073: Load and display version info
   await renderProviderList();
   setupEventListeners();
   setupShortcutHelpers();
@@ -338,6 +343,12 @@ function setupEventListeners() {
       checkbox.addEventListener('change', saveCustomEnterSettings);
     }
   });
+
+  // T073: Version check button
+  const checkUpdatesBtn = document.getElementById('check-updates-btn');
+  if (checkUpdatesBtn) {
+    checkUpdatesBtn.addEventListener('click', performVersionCheck);
+  }
 }
 
 // T057: Export all data
@@ -792,6 +803,66 @@ async function saveCustomEnterSettings() {
   }
 
   showStatus('success', 'Custom key mapping saved');
+}
+
+// T073: Version Check Functions
+async function loadVersionDisplay() {
+  const versionInfo = await loadVersionInfo();
+  if (!versionInfo) {
+    document.getElementById('version').textContent = 'Version unknown';
+    document.getElementById('commit-hash').textContent = 'Commit hash unavailable';
+    return;
+  }
+
+  document.getElementById('version').textContent = `Version ${versionInfo.version}`;
+  document.getElementById('commit-hash').textContent = `Build: ${versionInfo.commitHash} (${versionInfo.buildDate})`;
+
+  // Automatically check for updates on page load
+  await performVersionCheck();
+}
+
+async function performVersionCheck() {
+  const button = document.getElementById('check-updates-btn');
+  const statusDiv = document.getElementById('update-status');
+
+  try {
+    button.disabled = true;
+    button.textContent = 'Checking...';
+    statusDiv.style.display = 'none';
+
+    const result = await checkForUpdates();
+
+    if (result.error) {
+      statusDiv.textContent = result.error;
+      statusDiv.className = 'update-status update-error';
+      statusDiv.style.display = 'block';
+      showStatus('error', result.error);
+    } else if (result.updateAvailable) {
+      statusDiv.innerHTML = `
+        <strong>Update available!</strong><br>
+        Latest: ${result.latestHash} (${new Date(result.latestDate).toLocaleDateString()})<br>
+        Current: ${result.currentHash}<br>
+        <small>${result.latestMessage.split('\n')[0]}</small>
+      `;
+      statusDiv.className = 'update-status update-available';
+      statusDiv.style.display = 'block';
+      showStatus('success', 'Update available - click Download Latest Version link');
+    } else {
+      statusDiv.textContent = 'You have the latest version!';
+      statusDiv.className = 'update-status update-current';
+      statusDiv.style.display = 'block';
+      showStatus('success', 'You are up to date!');
+    }
+  } catch (error) {
+    statusDiv.textContent = 'Failed to check for updates';
+    statusDiv.className = 'update-status update-error';
+    statusDiv.style.display = 'block';
+    showStatus('error', 'Failed to check for updates');
+    console.error('Version check error:', error);
+  } finally {
+    button.disabled = false;
+    button.textContent = 'Check for Updates';
+  }
 }
 
 // Initialize on load

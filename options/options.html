@@ -349,8 +349,25 @@
         <h2 class="section-title">About</h2>
 
         <div class="about-info">
-          <div class="version" id="version">Version 1.0.0</div>
-          <p style="font-size: 14px; color: #666; margin-bottom: 8px;">
+          <div class="version-display">
+            <div class="version" id="version">Version 1.0.0</div>
+            <div class="commit-hash" id="commit-hash">Loading...</div>
+          </div>
+
+          <div class="version-actions">
+            <button class="btn btn-secondary" id="check-updates-btn">Check for Updates</button>
+          </div>
+
+          <div id="update-status" class="update-status" style="display: none;"></div>
+
+          <div class="version-download">
+            <a href="https://github.com/xiaolai/insidebar-ai/archive/refs/heads/main.zip"
+               id="download-latest-link"
+               target="_blank"
+               rel="noopener noreferrer">Download Latest Version</a>
+          </div>
+
+          <p style="font-size: 14px; color: #666; margin-bottom: 8px; margin-top: 16px;">
             insidebar.ai provides quick access to multiple AI assistants in one convenient sidebar.
           </p>
           <p style="font-size: 12px; color: #999;">
