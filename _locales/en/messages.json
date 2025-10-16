@@ -1,0 +1,570 @@
+{
+  "extensionName": {
+    "message": "insidebar.ai"
+  },
+  "extensionDescription": {
+    "message": "Multi-AI sidebar extension for quick access to ChatGPT, Claude, Gemini, and more"
+  },
+  "commandOpenSidebar": {
+    "message": "Open insidebar.ai with default provider"
+  },
+  "commandOpenPromptLibrary": {
+    "message": "Open insidebar.ai Prompt Library"
+  },
+  "actionDefaultTitle": {
+    "message": "Open insidebar.ai"
+  },
+
+  "settingsTitle": {
+    "message": "Settings: insidebar.ai"
+  },
+  "settingsSubtitle": {
+    "message": "Customize your multi-AI sidebar experience"
+  },
+
+  "sectionAppearance": {
+    "message": "Appearance"
+  },
+  "labelTheme": {
+    "message": "Theme"
+  },
+  "descTheme": {
+    "message": "Choose your preferred color scheme"
+  },
+  "themeAuto": {
+    "message": "Auto (System)"
+  },
+  "themeLight": {
+    "message": "Light"
+  },
+  "themeDark": {
+    "message": "Dark"
+  },
+
+  "sectionProviders": {
+    "message": "AI Providers"
+  },
+  "labelDefaultProvider": {
+    "message": "Default Provider"
+  },
+  "descDefaultProvider": {
+    "message": "AI provider to load when opening the sidebar"
+  },
+  "labelEnabledProviders": {
+    "message": "Enabled Providers"
+  },
+  "descEnabledProviders": {
+    "message": "Select which AI providers appear in your sidebar"
+  },
+
+  "sectionKeyboardShortcuts": {
+    "message": "Keyboard Shortcuts"
+  },
+  "labelEnableShortcut": {
+    "message": "Enable Keyboard Shortcut"
+  },
+  "descEnableShortcut": {
+    "message": "Toggle the global shortcut that opens insidebar.ai from anywhere in the browser."
+  },
+  "labelDefaultShortcuts": {
+    "message": "Default Shortcuts"
+  },
+  "descDefaultShortcuts": {
+    "message": "Command+Shift+E (Ctrl+Shift+E on Windows/Linux) opens the sidebar with default provider.<br>Command+Shift+P (Ctrl+Shift+P on Windows/Linux) opens Prompt Library.<br>You can customize these in your browser's shortcut settings."
+  },
+  "btnOpenShortcuts": {
+    "message": "Open Shortcuts"
+  },
+  "labelEdgeConfirm": {
+    "message": "Confirm in Microsoft Edge"
+  },
+  "descEdgeConfirm": {
+    "message": "Edge requires you to confirm the shortcut once. Click configure to jump straight to the Edge shortcuts page."
+  },
+  "btnConfigureEdge": {
+    "message": "Configure in Edge"
+  },
+  "labelAutoPaste": {
+    "message": "Auto-paste Clipboard to Prompt Library"
+  },
+  "descAutoPaste": {
+    "message": "Automatically paste clipboard content to workspace when opening Prompt Library with Command+Shift+P"
+  },
+
+  "sectionChatHistory": {
+    "message": "Chat History"
+  },
+  "labelAutoOpenSidebar": {
+    "message": "Auto-open Sidebar After Save"
+  },
+  "descAutoOpenSidebar": {
+    "message": "Automatically open the sidebar and switch to chat history when you save a conversation"
+  },
+
+  "sectionEnterBehavior": {
+    "message": "Enter Key Behavior"
+  },
+  "descEnterBehavior1": {
+    "message": "Customize how Enter and modifier keys work when typing in AI provider input fields."
+  },
+  "descEnterBehavior2": {
+    "message": "<strong>Applies to:</strong> ChatGPT, Claude, Gemini, Google (AI Mode), Grok, DeepSeek, and Perplexity."
+  },
+  "labelEnableEnterCustomization": {
+    "message": "Enable Enter Key Customization"
+  },
+  "descEnableEnterCustomization": {
+    "message": "When enabled, modifies Enter key behavior across all supported AI providers"
+  },
+  "labelPreset": {
+    "message": "Preset"
+  },
+  "descPreset": {
+    "message": "Choose a common key combination pattern"
+  },
+  "presetDefault": {
+    "message": "Default (Enter=Send, Shift+Enter=Newline)"
+  },
+  "presetSwapped": {
+    "message": "Swapped (Enter=Newline, Shift+Enter=Send)"
+  },
+  "presetSlack": {
+    "message": "Slack-style (Enter=Send, Ctrl+Enter=Newline)"
+  },
+  "presetDiscord": {
+    "message": "Discord-style (Enter=Newline, Ctrl+Enter=Send)"
+  },
+  "presetCustom": {
+    "message": "Custom"
+  },
+  "labelInsertNewline": {
+    "message": "Insert Newline"
+  },
+  "labelSendMessage": {
+    "message": "Send Message"
+  },
+
+  "sectionPromptLibrary": {
+    "message": "Prompt Library"
+  },
+  "descPromptLibrary": {
+    "message": "Import curated meta-prompts for AI workflows, research, coding, and analysis"
+  },
+  "labelDefaultLibrary": {
+    "message": "Default Prompt Library"
+  },
+  "descDefaultLibrary": {
+    "message": "Meta-prompts for prompt refinement, planning, coding, testing, research, writing, and more. Includes variables support for dynamic templates."
+  },
+  "btnImportDefault": {
+    "message": "Import Default Prompts"
+  },
+  "btnImportCustom": {
+    "message": "Import Custom Prompts"
+  },
+  "noteCustomImport": {
+    "message": "Before importing custom prompts, please read: <code style=\"background: #f5f5f5; padding: 2px 6px; border-radius: 3px;\">data/prompt-libraries/Generate_a_Basic_Prompt_Library.md</code>"
+  },
+
+  "sectionDataManagement": {
+    "message": "Data Management"
+  },
+  "statChatHistory": {
+    "message": "Chat History"
+  },
+  "statPrompts": {
+    "message": "Prompts"
+  },
+  "statStorage": {
+    "message": "Storage Used"
+  },
+  "labelExport": {
+    "message": "Export Data"
+  },
+  "descExport": {
+    "message": "Download all prompts and settings as JSON"
+  },
+  "btnExport": {
+    "message": "Export"
+  },
+  "labelImport": {
+    "message": "Import Data"
+  },
+  "descImport": {
+    "message": "Restore prompts and settings from JSON file"
+  },
+  "btnImport": {
+    "message": "Import"
+  },
+
+  "sectionDangerZone": {
+    "message": "Danger Zone"
+  },
+  "descDangerZone": {
+    "message": "These actions cannot be undone. Use with caution."
+  },
+  "labelClearHistory": {
+    "message": "Clear Chat History"
+  },
+  "descClearHistory": {
+    "message": "Delete all saved conversations"
+  },
+  "labelClearPrompts": {
+    "message": "Clear Prompts"
+  },
+  "descClearPrompts": {
+    "message": "Delete all prompts from your library"
+  },
+  "labelResetSettings": {
+    "message": "Reset Settings"
+  },
+  "descResetSettings": {
+    "message": "Reset all settings to defaults"
+  },
+  "btnClear": {
+    "message": "Clear"
+  },
+  "btnReset": {
+    "message": "Reset"
+  },
+
+  "sectionAbout": {
+    "message": "About"
+  },
+  "labelVersion": {
+    "message": "Version"
+  },
+  "labelBuild": {
+    "message": "Build"
+  },
+  "btnCheckUpdates": {
+    "message": "Check for Updates"
+  },
+  "linkDownloadLatest": {
+    "message": "Download Latest Version"
+  },
+  "descAbout1": {
+    "message": "insidebar.ai provides quick access to multiple AI assistants in one convenient sidebar."
+  },
+  "descAbout2": {
+    "message": "Built with privacy-first architecture. All data stored locally."
+  },
+
+  "msgThemeUpdated": {
+    "message": "Theme updated"
+  },
+  "msgProviderUpdated": {
+    "message": "Default provider updated"
+  },
+  "msgProviderSettingsUpdated": {
+    "message": "Provider settings updated"
+  },
+  "msgShortcutEnabled": {
+    "message": "Keyboard shortcut enabled"
+  },
+  "msgShortcutDisabled": {
+    "message": "Keyboard shortcut disabled"
+  },
+  "msgAutoPasteEnabled": {
+    "message": "Auto-paste enabled"
+  },
+  "msgAutoPasteDisabled": {
+    "message": "Auto-paste disabled"
+  },
+  "msgAutoOpenEnabled": {
+    "message": "Auto-open sidebar enabled"
+  },
+  "msgAutoOpenDisabled": {
+    "message": "Auto-open sidebar disabled"
+  },
+  "msgEnterCustomizationEnabled": {
+    "message": "Enter key customization enabled"
+  },
+  "msgEnterCustomizationDisabled": {
+    "message": "Enter key customization disabled"
+  },
+  "msgPresetChanged": {
+    "message": "Preset changed to: $PRESET$",
+    "placeholders": {
+      "preset": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgCustomKeyMappingSaved": {
+    "message": "Custom key mapping saved"
+  },
+  "msgDataExported": {
+    "message": "Data exported successfully"
+  },
+  "msgDataImported": {
+    "message": "Data imported successfully"
+  },
+  "msgDataImportedDetails": {
+    "message": "Data imported successfully — $DETAILS$.",
+    "placeholders": {
+      "details": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgPromptsImported": {
+    "message": "Successfully imported $COUNT$ prompts",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgPromptsImportedWithSkipped": {
+    "message": "Successfully imported $IMPORTED$ prompts ($SKIPPED$ already existed)",
+    "placeholders": {
+      "imported": {
+        "content": "$1"
+      },
+      "skipped": {
+        "content": "$2"
+      }
+    }
+  },
+  "msgPromptsAlreadyExist": {
+    "message": "All prompts already exist in your library"
+  },
+  "msgCustomPromptsImported": {
+    "message": "Successfully imported $IMPORTED$ custom prompts",
+    "placeholders": {
+      "imported": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgHistoryCleared": {
+    "message": "All chat history has been deleted"
+  },
+  "msgPromptsCleared": {
+    "message": "All prompts have been deleted"
+  },
+  "msgSettingsReset": {
+    "message": "All settings have been reset to defaults"
+  },
+  "msgUpdateAvailable": {
+    "message": "Update available - click Download Latest Version link"
+  },
+  "msgUpToDate": {
+    "message": "You are up to date!"
+  },
+  "msgCheckingUpdates": {
+    "message": "Checking..."
+  },
+  "msgUpdateCheckFailed": {
+    "message": "Failed to check for updates"
+  },
+  "msgVersionUnknown": {
+    "message": "Version unknown"
+  },
+  "msgCommitHashUnavailable": {
+    "message": "Commit hash unavailable"
+  },
+  "msgUpdateStatusAvailable": {
+    "message": "<strong>Update available!</strong><br>Latest: $LATEST$ ($DATE$)<br>Current: $CURRENT$<br><small>$MESSAGE$</small>",
+    "placeholders": {
+      "latest": {
+        "content": "$1"
+      },
+      "date": {
+        "content": "$2"
+      },
+      "current": {
+        "content": "$3"
+      },
+      "message": {
+        "content": "$4"
+      }
+    }
+  },
+  "msgUpdateStatusCurrent": {
+    "message": "You have the latest version!"
+  },
+  "msgUpdateStatusError": {
+    "message": "Failed to check for updates"
+  },
+
+  "errAtLeastOneProvider": {
+    "message": "At least one provider must be enabled"
+  },
+  "errExportFailed": {
+    "message": "Failed to export data"
+  },
+  "errImportFailed": {
+    "message": "Failed to import data. Please check the file format."
+  },
+  "errClearHistoryFailed": {
+    "message": "Failed to clear chat history"
+  },
+  "errClearPromptsFailed": {
+    "message": "Failed to clear prompts"
+  },
+  "errResetSettingsFailed": {
+    "message": "Failed to reset settings"
+  },
+  "errImportDefaultLibrary": {
+    "message": "Failed to import default library"
+  },
+  "errImportCustomLibrary": {
+    "message": "Failed to import custom prompts"
+  },
+  "errInvalidFormat": {
+    "message": "Invalid format: File must contain a JSON array of prompts"
+  },
+  "errInvalidPromptStructure": {
+    "message": "Invalid prompt structure - see alert for details"
+  },
+  "errInvalidJSON": {
+    "message": "Invalid JSON file format"
+  },
+  "errValidationErrors": {
+    "message": "$COUNT$ prompts have validation errors",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+
+  "confirmImportData": {
+    "message": "Import data from $DATE$?\n\nThis will add:\n- $PROMPTS$ prompts\n- $CONVERSATIONS$ conversations\n- Settings configuration\n\nExisting data will be preserved unless duplicates are found.",
+    "placeholders": {
+      "date": {
+        "content": "$1"
+      },
+      "prompts": {
+        "content": "$2"
+      },
+      "conversations": {
+        "content": "$3"
+      }
+    }
+  },
+  "confirmClearHistory": {
+    "message": "Are you sure you want to delete ALL chat history?\n\nThis will permanently delete all saved conversations.\n\nThis action CANNOT be undone!"
+  },
+  "confirmClearPrompts": {
+    "message": "Are you sure you want to delete ALL prompts?\n\nThis will permanently delete all prompts from your library.\n\nThis action CANNOT be undone!"
+  },
+  "confirmResetSettings": {
+    "message": "Are you sure you want to reset ALL settings to defaults?\n\nThis will reset:\n- Theme settings\n- Default provider\n- Keyboard shortcuts\n- All other preferences\n\nYour prompts and chat history will NOT be affected.\n\nThis action CANNOT be undone!"
+  },
+
+  "contextMenuSendTo": {
+    "message": "Send to insidebar.ai"
+  },
+  "contextMenuPromptLibrary": {
+    "message": "Prompt Library"
+  },
+
+  "sidebarChatHistory": {
+    "message": "Chat History"
+  },
+  "sidebarPromptGenie": {
+    "message": "Prompt Genie"
+  },
+  "sidebarEditingPrompt": {
+    "message": "Editing Prompt"
+  },
+  "placeholderSearch": {
+    "message": "Search..."
+  },
+  "placeholderSearchConversations": {
+    "message": "Search conversations..."
+  },
+  "placeholderSearchPrompts": {
+    "message": "Search prompts..."
+  },
+  "btnSave": {
+    "message": "Save"
+  },
+  "btnCancel": {
+    "message": "Cancel"
+  },
+  "btnClose": {
+    "message": "Close"
+  },
+  "btnDelete": {
+    "message": "Delete"
+  },
+  "btnEdit": {
+    "message": "Edit"
+  },
+  "btnCopy": {
+    "message": "Copy"
+  },
+  "tooltipSaveNew": {
+    "message": "Save as new prompt"
+  },
+  "tooltipCopyClipboard": {
+    "message": "Copy to clipboard"
+  },
+  "tooltipClear": {
+    "message": "Clear"
+  },
+  "tooltipSelectProvider": {
+    "message": "Select provider"
+  },
+  "tooltipSendProvider": {
+    "message": "Send to selected provider"
+  },
+  "tooltipFilterProvider": {
+    "message": "Filter by provider"
+  },
+  "tooltipShowSearchTips": {
+    "message": "Show search tips"
+  },
+  "tooltipShowFavorites": {
+    "message": "Show favorites only"
+  },
+  "tooltipFilterCategory": {
+    "message": "Filter by category"
+  },
+  "tooltipRecentlyUsed": {
+    "message": "Recently Used"
+  },
+  "tooltipMostUsed": {
+    "message": "Most Used"
+  },
+  "tooltipAlphabetical": {
+    "message": "A-Z"
+  },
+  "tooltipNewestFirst": {
+    "message": "Newest First"
+  },
+  "tooltipToggleSection": {
+    "message": "Toggle section"
+  },
+  "tooltipCopyContent": {
+    "message": "Copy content"
+  },
+  "tooltipInsertBeginning": {
+    "message": "Insert at beginning"
+  },
+  "tooltipInsertEnd": {
+    "message": "Insert at end"
+  },
+  "tooltipReplaceAll": {
+    "message": "Replace all"
+  },
+  "labelAllProviders": {
+    "message": "All Providers"
+  },
+  "labelAllCategories": {
+    "message": "All Categories"
+  },
+  "labelRecentlyUsed": {
+    "message": "Recently Used"
+  },
+  "labelTopFavorites": {
+    "message": "Top Favorites"
+  },
+  "loadingText": {
+    "message": "Loading..."
+  }
+}

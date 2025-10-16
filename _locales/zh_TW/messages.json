@@ -1,0 +1,570 @@
+{
+  "extensionName": {
+    "message": "insidebar.ai"
+  },
+  "extensionDescription": {
+    "message": "多AI側邊欄擴充功能，快速存取ChatGPT、Claude、Gemini等"
+  },
+  "commandOpenSidebar": {
+    "message": "使用預設提供者開啟insidebar.ai"
+  },
+  "commandOpenPromptLibrary": {
+    "message": "開啟insidebar.ai提示詞庫"
+  },
+  "actionDefaultTitle": {
+    "message": "開啟insidebar.ai"
+  },
+
+  "settingsTitle": {
+    "message": "設定: insidebar.ai"
+  },
+  "settingsSubtitle": {
+    "message": "自訂您的多AI側邊欄體驗"
+  },
+
+  "sectionAppearance": {
+    "message": "外觀"
+  },
+  "labelTheme": {
+    "message": "主題"
+  },
+  "descTheme": {
+    "message": "選擇您偏好的配色方案"
+  },
+  "themeAuto": {
+    "message": "自動(系統)"
+  },
+  "themeLight": {
+    "message": "淺色"
+  },
+  "themeDark": {
+    "message": "深色"
+  },
+
+  "sectionProviders": {
+    "message": "AI提供者"
+  },
+  "labelDefaultProvider": {
+    "message": "預設提供者"
+  },
+  "descDefaultProvider": {
+    "message": "開啟側邊欄時載入的AI提供者"
+  },
+  "labelEnabledProviders": {
+    "message": "已啟用的提供者"
+  },
+  "descEnabledProviders": {
+    "message": "選擇在側邊欄中顯示哪些AI提供者"
+  },
+
+  "sectionKeyboardShortcuts": {
+    "message": "鍵盤快速鍵"
+  },
+  "labelEnableShortcut": {
+    "message": "啟用鍵盤快速鍵"
+  },
+  "descEnableShortcut": {
+    "message": "切換可在瀏覽器任何位置開啟insidebar.ai的全域快速鍵。"
+  },
+  "labelDefaultShortcuts": {
+    "message": "預設快速鍵"
+  },
+  "descDefaultShortcuts": {
+    "message": "Command+Shift+E (Windows/Linux上為Ctrl+Shift+E) 使用預設提供者開啟側邊欄。<br>Command+Shift+P (Windows/Linux上為Ctrl+Shift+P) 開啟提示詞庫。<br>您可以在瀏覽器的快速鍵設定中自訂這些快速鍵。"
+  },
+  "btnOpenShortcuts": {
+    "message": "開啟快速鍵設定"
+  },
+  "labelEdgeConfirm": {
+    "message": "在Microsoft Edge中確認"
+  },
+  "descEdgeConfirm": {
+    "message": "Edge需要您確認一次快速鍵。點擊設定可直接跳轉到Edge快速鍵頁面。"
+  },
+  "btnConfigureEdge": {
+    "message": "在Edge中設定"
+  },
+  "labelAutoPaste": {
+    "message": "自動貼上剪貼簿到提示詞庫"
+  },
+  "descAutoPaste": {
+    "message": "使用Command+Shift+P開啟提示詞庫時自動將剪貼簿內容貼上到工作區"
+  },
+
+  "sectionChatHistory": {
+    "message": "聊天記錄"
+  },
+  "labelAutoOpenSidebar": {
+    "message": "儲存後自動開啟側邊欄"
+  },
+  "descAutoOpenSidebar": {
+    "message": "儲存對話時自動開啟側邊欄並切換到聊天記錄"
+  },
+
+  "sectionEnterBehavior": {
+    "message": "Enter鍵行為"
+  },
+  "descEnterBehavior1": {
+    "message": "自訂在AI提供者輸入欄位中輸入時Enter鍵和修飾鍵的工作方式。"
+  },
+  "descEnterBehavior2": {
+    "message": "<strong>適用於:</strong> ChatGPT、Claude、Gemini、Google(AI模式)、Grok、DeepSeek和Perplexity。"
+  },
+  "labelEnableEnterCustomization": {
+    "message": "啟用Enter鍵自訂"
+  },
+  "descEnableEnterCustomization": {
+    "message": "啟用後，將修改所有支援的AI提供者的Enter鍵行為"
+  },
+  "labelPreset": {
+    "message": "預設"
+  },
+  "descPreset": {
+    "message": "選擇常見的按鍵組合模式"
+  },
+  "presetDefault": {
+    "message": "預設(Enter=傳送，Shift+Enter=換行)"
+  },
+  "presetSwapped": {
+    "message": "交換(Enter=換行，Shift+Enter=傳送)"
+  },
+  "presetSlack": {
+    "message": "Slack風格(Enter=傳送，Ctrl+Enter=換行)"
+  },
+  "presetDiscord": {
+    "message": "Discord風格(Enter=換行，Ctrl+Enter=傳送)"
+  },
+  "presetCustom": {
+    "message": "自訂"
+  },
+  "labelInsertNewline": {
+    "message": "插入換行"
+  },
+  "labelSendMessage": {
+    "message": "傳送訊息"
+  },
+
+  "sectionPromptLibrary": {
+    "message": "提示詞庫"
+  },
+  "descPromptLibrary": {
+    "message": "匯入為AI工作流程、研究、編碼和分析精心挑選的元提示"
+  },
+  "labelDefaultLibrary": {
+    "message": "預設提示詞庫"
+  },
+  "descDefaultLibrary": {
+    "message": "用於提示詞最佳化、規劃、編碼、測試、研究、寫作等的元提示。包含對動態範本的變數支援。"
+  },
+  "btnImportDefault": {
+    "message": "匯入預設提示詞"
+  },
+  "btnImportCustom": {
+    "message": "匯入自訂提示詞"
+  },
+  "noteCustomImport": {
+    "message": "匯入自訂提示詞前，請先閱讀: <code style=\"background: #f5f5f5; padding: 2px 6px; border-radius: 3px;\">data/prompt-libraries/Generate_a_Basic_Prompt_Library.md</code>"
+  },
+
+  "sectionDataManagement": {
+    "message": "資料管理"
+  },
+  "statChatHistory": {
+    "message": "聊天記錄"
+  },
+  "statPrompts": {
+    "message": "提示詞"
+  },
+  "statStorage": {
+    "message": "已用儲存空間"
+  },
+  "labelExport": {
+    "message": "匯出資料"
+  },
+  "descExport": {
+    "message": "將所有提示詞和設定下載為JSON"
+  },
+  "btnExport": {
+    "message": "匯出"
+  },
+  "labelImport": {
+    "message": "匯入資料"
+  },
+  "descImport": {
+    "message": "從JSON檔案還原提示詞和設定"
+  },
+  "btnImport": {
+    "message": "匯入"
+  },
+
+  "sectionDangerZone": {
+    "message": "危險區域"
+  },
+  "descDangerZone": {
+    "message": "這些操作無法復原。請謹慎使用。"
+  },
+  "labelClearHistory": {
+    "message": "清空聊天記錄"
+  },
+  "descClearHistory": {
+    "message": "刪除所有儲存的對話"
+  },
+  "labelClearPrompts": {
+    "message": "清空提示詞"
+  },
+  "descClearPrompts": {
+    "message": "從您的庫中刪除所有提示詞"
+  },
+  "labelResetSettings": {
+    "message": "重設設定"
+  },
+  "descResetSettings": {
+    "message": "將所有設定重設為預設值"
+  },
+  "btnClear": {
+    "message": "清空"
+  },
+  "btnReset": {
+    "message": "重設"
+  },
+
+  "sectionAbout": {
+    "message": "關於"
+  },
+  "labelVersion": {
+    "message": "版本"
+  },
+  "labelBuild": {
+    "message": "建置"
+  },
+  "btnCheckUpdates": {
+    "message": "檢查更新"
+  },
+  "linkDownloadLatest": {
+    "message": "下載最新版本"
+  },
+  "descAbout1": {
+    "message": "insidebar.ai在一個便利的側邊欄中提供對多個AI助手的快速存取。"
+  },
+  "descAbout2": {
+    "message": "採用隱私優先架構建置。所有資料本機儲存。"
+  },
+
+  "msgThemeUpdated": {
+    "message": "主題已更新"
+  },
+  "msgProviderUpdated": {
+    "message": "預設提供者已更新"
+  },
+  "msgProviderSettingsUpdated": {
+    "message": "提供者設定已更新"
+  },
+  "msgShortcutEnabled": {
+    "message": "鍵盤快速鍵已啟用"
+  },
+  "msgShortcutDisabled": {
+    "message": "鍵盤快速鍵已停用"
+  },
+  "msgAutoPasteEnabled": {
+    "message": "自動貼上已啟用"
+  },
+  "msgAutoPasteDisabled": {
+    "message": "自動貼上已停用"
+  },
+  "msgAutoOpenEnabled": {
+    "message": "自動開啟側邊欄已啟用"
+  },
+  "msgAutoOpenDisabled": {
+    "message": "自動開啟側邊欄已停用"
+  },
+  "msgEnterCustomizationEnabled": {
+    "message": "Enter鍵自訂已啟用"
+  },
+  "msgEnterCustomizationDisabled": {
+    "message": "Enter鍵自訂已停用"
+  },
+  "msgPresetChanged": {
+    "message": "預設已更改為: $PRESET$",
+    "placeholders": {
+      "preset": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgCustomKeyMappingSaved": {
+    "message": "自訂鍵對應已儲存"
+  },
+  "msgDataExported": {
+    "message": "資料匯出成功"
+  },
+  "msgDataImported": {
+    "message": "資料匯入成功"
+  },
+  "msgDataImportedDetails": {
+    "message": "資料匯入成功 — $DETAILS$。",
+    "placeholders": {
+      "details": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgPromptsImported": {
+    "message": "成功匯入$COUNT$個提示詞",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgPromptsImportedWithSkipped": {
+    "message": "成功匯入$IMPORTED$個提示詞($SKIPPED$個已存在)",
+    "placeholders": {
+      "imported": {
+        "content": "$1"
+      },
+      "skipped": {
+        "content": "$2"
+      }
+    }
+  },
+  "msgPromptsAlreadyExist": {
+    "message": "所有提示詞已存在於您的庫中"
+  },
+  "msgCustomPromptsImported": {
+    "message": "成功匯入$IMPORTED$個自訂提示詞",
+    "placeholders": {
+      "imported": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgHistoryCleared": {
+    "message": "所有聊天記錄已被刪除"
+  },
+  "msgPromptsCleared": {
+    "message": "所有提示詞已被刪除"
+  },
+  "msgSettingsReset": {
+    "message": "所有設定已重設為預設值"
+  },
+  "msgUpdateAvailable": {
+    "message": "有可用更新 - 點擊下載最新版本連結"
+  },
+  "msgUpToDate": {
+    "message": "您已是最新版本!"
+  },
+  "msgCheckingUpdates": {
+    "message": "正在檢查..."
+  },
+  "msgUpdateCheckFailed": {
+    "message": "檢查更新失敗"
+  },
+  "msgVersionUnknown": {
+    "message": "版本未知"
+  },
+  "msgCommitHashUnavailable": {
+    "message": "提交雜湊不可用"
+  },
+  "msgUpdateStatusAvailable": {
+    "message": "<strong>有可用更新!</strong><br>最新: $LATEST$ ($DATE$)<br>目前: $CURRENT$<br><small>$MESSAGE$</small>",
+    "placeholders": {
+      "latest": {
+        "content": "$1"
+      },
+      "date": {
+        "content": "$2"
+      },
+      "current": {
+        "content": "$3"
+      },
+      "message": {
+        "content": "$4"
+      }
+    }
+  },
+  "msgUpdateStatusCurrent": {
+    "message": "您已是最新版本!"
+  },
+  "msgUpdateStatusError": {
+    "message": "檢查更新失敗"
+  },
+
+  "errAtLeastOneProvider": {
+    "message": "至少需要啟用一個提供者"
+  },
+  "errExportFailed": {
+    "message": "匯出資料失敗"
+  },
+  "errImportFailed": {
+    "message": "匯入資料失敗。請檢查檔案格式。"
+  },
+  "errClearHistoryFailed": {
+    "message": "清空聊天記錄失敗"
+  },
+  "errClearPromptsFailed": {
+    "message": "清空提示詞失敗"
+  },
+  "errResetSettingsFailed": {
+    "message": "重設設定失敗"
+  },
+  "errImportDefaultLibrary": {
+    "message": "匯入預設庫失敗"
+  },
+  "errImportCustomLibrary": {
+    "message": "匯入自訂提示詞失敗"
+  },
+  "errInvalidFormat": {
+    "message": "無效格式: 檔案必須包含提示詞的JSON陣列"
+  },
+  "errInvalidPromptStructure": {
+    "message": "無效的提示詞結構 - 查看警告了解詳情"
+  },
+  "errInvalidJSON": {
+    "message": "無效的JSON檔案格式"
+  },
+  "errValidationErrors": {
+    "message": "$COUNT$個提示詞存在驗證錯誤",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+
+  "confirmImportData": {
+    "message": "從$DATE$匯入資料?\n\n這將新增:\n- $PROMPTS$個提示詞\n- $CONVERSATIONS$個對話\n- 設定組態\n\n除非發現重複項目，否則現有資料將被保留。",
+    "placeholders": {
+      "date": {
+        "content": "$1"
+      },
+      "prompts": {
+        "content": "$2"
+      },
+      "conversations": {
+        "content": "$3"
+      }
+    }
+  },
+  "confirmClearHistory": {
+    "message": "您確定要刪除所有聊天記錄嗎?\n\n這將永久刪除所有儲存的對話。\n\n此操作無法復原!"
+  },
+  "confirmClearPrompts": {
+    "message": "您確定要刪除所有提示詞嗎?\n\n這將永久刪除您庫中的所有提示詞。\n\n此操作無法復原!"
+  },
+  "confirmResetSettings": {
+    "message": "您確定要將所有設定重設為預設值嗎?\n\n這將重設:\n- 主題設定\n- 預設提供者\n- 鍵盤快速鍵\n- 所有其他偏好設定\n\n您的提示詞和聊天記錄不會受到影響。\n\n此操作無法復原!"
+  },
+
+  "contextMenuSendTo": {
+    "message": "傳送到insidebar.ai"
+  },
+  "contextMenuPromptLibrary": {
+    "message": "提示詞庫"
+  },
+
+  "sidebarChatHistory": {
+    "message": "聊天記錄"
+  },
+  "sidebarPromptGenie": {
+    "message": "提示詞精靈"
+  },
+  "sidebarEditingPrompt": {
+    "message": "編輯提示詞"
+  },
+  "placeholderSearch": {
+    "message": "搜尋..."
+  },
+  "placeholderSearchConversations": {
+    "message": "搜尋對話..."
+  },
+  "placeholderSearchPrompts": {
+    "message": "搜尋提示詞..."
+  },
+  "btnSave": {
+    "message": "儲存"
+  },
+  "btnCancel": {
+    "message": "取消"
+  },
+  "btnClose": {
+    "message": "關閉"
+  },
+  "btnDelete": {
+    "message": "刪除"
+  },
+  "btnEdit": {
+    "message": "編輯"
+  },
+  "btnCopy": {
+    "message": "複製"
+  },
+  "tooltipSaveNew": {
+    "message": "儲存為新提示詞"
+  },
+  "tooltipCopyClipboard": {
+    "message": "複製到剪貼簿"
+  },
+  "tooltipClear": {
+    "message": "清空"
+  },
+  "tooltipSelectProvider": {
+    "message": "選擇提供者"
+  },
+  "tooltipSendProvider": {
+    "message": "傳送到選定的提供者"
+  },
+  "tooltipFilterProvider": {
+    "message": "按提供者篩選"
+  },
+  "tooltipShowSearchTips": {
+    "message": "顯示搜尋提示"
+  },
+  "tooltipShowFavorites": {
+    "message": "僅顯示收藏"
+  },
+  "tooltipFilterCategory": {
+    "message": "按類別篩選"
+  },
+  "tooltipRecentlyUsed": {
+    "message": "最近使用"
+  },
+  "tooltipMostUsed": {
+    "message": "最常使用"
+  },
+  "tooltipAlphabetical": {
+    "message": "A-Z"
+  },
+  "tooltipNewestFirst": {
+    "message": "最新優先"
+  },
+  "tooltipToggleSection": {
+    "message": "切換部分"
+  },
+  "tooltipCopyContent": {
+    "message": "複製內容"
+  },
+  "tooltipInsertBeginning": {
+    "message": "插入到開頭"
+  },
+  "tooltipInsertEnd": {
+    "message": "插入到末尾"
+  },
+  "tooltipReplaceAll": {
+    "message": "全部取代"
+  },
+  "labelAllProviders": {
+    "message": "所有提供者"
+  },
+  "labelAllCategories": {
+    "message": "所有類別"
+  },
+  "labelRecentlyUsed": {
+    "message": "最近使用"
+  },
+  "labelTopFavorites": {
+    "message": "熱門收藏"
+  },
+  "loadingText": {
+    "message": "載入中..."
+  }
+}

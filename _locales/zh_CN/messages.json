@@ -1,0 +1,570 @@
+{
+  "extensionName": {
+    "message": "insidebar.ai"
+  },
+  "extensionDescription": {
+    "message": "多AI侧边栏扩展，快速访问ChatGPT、Claude、Gemini等"
+  },
+  "commandOpenSidebar": {
+    "message": "使用默认提供商打开insidebar.ai"
+  },
+  "commandOpenPromptLibrary": {
+    "message": "打开insidebar.ai提示词库"
+  },
+  "actionDefaultTitle": {
+    "message": "打开insidebar.ai"
+  },
+
+  "settingsTitle": {
+    "message": "设置: insidebar.ai"
+  },
+  "settingsSubtitle": {
+    "message": "自定义您的多AI侧边栏体验"
+  },
+
+  "sectionAppearance": {
+    "message": "外观"
+  },
+  "labelTheme": {
+    "message": "主题"
+  },
+  "descTheme": {
+    "message": "选择您喜欢的配色方案"
+  },
+  "themeAuto": {
+    "message": "自动(系统)"
+  },
+  "themeLight": {
+    "message": "浅色"
+  },
+  "themeDark": {
+    "message": "深色"
+  },
+
+  "sectionProviders": {
+    "message": "AI提供商"
+  },
+  "labelDefaultProvider": {
+    "message": "默认提供商"
+  },
+  "descDefaultProvider": {
+    "message": "打开侧边栏时加载的AI提供商"
+  },
+  "labelEnabledProviders": {
+    "message": "已启用的提供商"
+  },
+  "descEnabledProviders": {
+    "message": "选择在侧边栏中显示哪些AI提供商"
+  },
+
+  "sectionKeyboardShortcuts": {
+    "message": "键盘快捷键"
+  },
+  "labelEnableShortcut": {
+    "message": "启用键盘快捷键"
+  },
+  "descEnableShortcut": {
+    "message": "切换可在浏览器任何位置打开insidebar.ai的全局快捷键。"
+  },
+  "labelDefaultShortcuts": {
+    "message": "默认快捷键"
+  },
+  "descDefaultShortcuts": {
+    "message": "Command+Shift+E (Windows/Linux上为Ctrl+Shift+E) 使用默认提供商打开侧边栏。<br>Command+Shift+P (Windows/Linux上为Ctrl+Shift+P) 打开提示词库。<br>您可以在浏览器的快捷键设置中自定义这些快捷键。"
+  },
+  "btnOpenShortcuts": {
+    "message": "打开快捷键设置"
+  },
+  "labelEdgeConfirm": {
+    "message": "在Microsoft Edge中确认"
+  },
+  "descEdgeConfirm": {
+    "message": "Edge需要您确认一次快捷键。点击配置可直接跳转到Edge快捷键页面。"
+  },
+  "btnConfigureEdge": {
+    "message": "在Edge中配置"
+  },
+  "labelAutoPaste": {
+    "message": "自动粘贴剪贴板到提示词库"
+  },
+  "descAutoPaste": {
+    "message": "使用Command+Shift+P打开提示词库时自动将剪贴板内容粘贴到工作区"
+  },
+
+  "sectionChatHistory": {
+    "message": "聊天历史"
+  },
+  "labelAutoOpenSidebar": {
+    "message": "保存后自动打开侧边栏"
+  },
+  "descAutoOpenSidebar": {
+    "message": "保存对话时自动打开侧边栏并切换到聊天历史"
+  },
+
+  "sectionEnterBehavior": {
+    "message": "回车键行为"
+  },
+  "descEnterBehavior1": {
+    "message": "自定义在AI提供商输入字段中输入时回车键和修饰键的工作方式。"
+  },
+  "descEnterBehavior2": {
+    "message": "<strong>适用于:</strong> ChatGPT、Claude、Gemini、Google(AI模式)、Grok、DeepSeek和Perplexity。"
+  },
+  "labelEnableEnterCustomization": {
+    "message": "启用回车键自定义"
+  },
+  "descEnableEnterCustomization": {
+    "message": "启用后，将修改所有支持的AI提供商的回车键行为"
+  },
+  "labelPreset": {
+    "message": "预设"
+  },
+  "descPreset": {
+    "message": "选择常见的按键组合模式"
+  },
+  "presetDefault": {
+    "message": "默认(回车=发送，Shift+回车=换行)"
+  },
+  "presetSwapped": {
+    "message": "交换(回车=换行，Shift+回车=发送)"
+  },
+  "presetSlack": {
+    "message": "Slack风格(回车=发送，Ctrl+回车=换行)"
+  },
+  "presetDiscord": {
+    "message": "Discord风格(回车=换行，Ctrl+回车=发送)"
+  },
+  "presetCustom": {
+    "message": "自定义"
+  },
+  "labelInsertNewline": {
+    "message": "插入换行"
+  },
+  "labelSendMessage": {
+    "message": "发送消息"
+  },
+
+  "sectionPromptLibrary": {
+    "message": "提示词库"
+  },
+  "descPromptLibrary": {
+    "message": "导入为AI工作流、研究、编码和分析精心挑选的元提示"
+  },
+  "labelDefaultLibrary": {
+    "message": "默认提示词库"
+  },
+  "descDefaultLibrary": {
+    "message": "用于提示词优化、规划、编码、测试、研究、写作等的元提示。包含对动态模板的变量支持。"
+  },
+  "btnImportDefault": {
+    "message": "导入默认提示词"
+  },
+  "btnImportCustom": {
+    "message": "导入自定义提示词"
+  },
+  "noteCustomImport": {
+    "message": "导入自定义提示词前，请先阅读: <code style=\"background: #f5f5f5; padding: 2px 6px; border-radius: 3px;\">data/prompt-libraries/Generate_a_Basic_Prompt_Library.md</code>"
+  },
+
+  "sectionDataManagement": {
+    "message": "数据管理"
+  },
+  "statChatHistory": {
+    "message": "聊天历史"
+  },
+  "statPrompts": {
+    "message": "提示词"
+  },
+  "statStorage": {
+    "message": "已用存储"
+  },
+  "labelExport": {
+    "message": "导出数据"
+  },
+  "descExport": {
+    "message": "将所有提示词和设置下载为JSON"
+  },
+  "btnExport": {
+    "message": "导出"
+  },
+  "labelImport": {
+    "message": "导入数据"
+  },
+  "descImport": {
+    "message": "从JSON文件恢复提示词和设置"
+  },
+  "btnImport": {
+    "message": "导入"
+  },
+
+  "sectionDangerZone": {
+    "message": "危险区域"
+  },
+  "descDangerZone": {
+    "message": "这些操作无法撤销。请谨慎使用。"
+  },
+  "labelClearHistory": {
+    "message": "清空聊天历史"
+  },
+  "descClearHistory": {
+    "message": "删除所有保存的对话"
+  },
+  "labelClearPrompts": {
+    "message": "清空提示词"
+  },
+  "descClearPrompts": {
+    "message": "从您的库中删除所有提示词"
+  },
+  "labelResetSettings": {
+    "message": "重置设置"
+  },
+  "descResetSettings": {
+    "message": "将所有设置重置为默认值"
+  },
+  "btnClear": {
+    "message": "清空"
+  },
+  "btnReset": {
+    "message": "重置"
+  },
+
+  "sectionAbout": {
+    "message": "关于"
+  },
+  "labelVersion": {
+    "message": "版本"
+  },
+  "labelBuild": {
+    "message": "构建"
+  },
+  "btnCheckUpdates": {
+    "message": "检查更新"
+  },
+  "linkDownloadLatest": {
+    "message": "下载最新版本"
+  },
+  "descAbout1": {
+    "message": "insidebar.ai在一个便捷的侧边栏中提供对多个AI助手的快速访问。"
+  },
+  "descAbout2": {
+    "message": "采用隐私优先架构构建。所有数据本地存储。"
+  },
+
+  "msgThemeUpdated": {
+    "message": "主题已更新"
+  },
+  "msgProviderUpdated": {
+    "message": "默认提供商已更新"
+  },
+  "msgProviderSettingsUpdated": {
+    "message": "提供商设置已更新"
+  },
+  "msgShortcutEnabled": {
+    "message": "键盘快捷键已启用"
+  },
+  "msgShortcutDisabled": {
+    "message": "键盘快捷键已禁用"
+  },
+  "msgAutoPasteEnabled": {
+    "message": "自动粘贴已启用"
+  },
+  "msgAutoPasteDisabled": {
+    "message": "自动粘贴已禁用"
+  },
+  "msgAutoOpenEnabled": {
+    "message": "自动打开侧边栏已启用"
+  },
+  "msgAutoOpenDisabled": {
+    "message": "自动打开侧边栏已禁用"
+  },
+  "msgEnterCustomizationEnabled": {
+    "message": "回车键自定义已启用"
+  },
+  "msgEnterCustomizationDisabled": {
+    "message": "回车键自定义已禁用"
+  },
+  "msgPresetChanged": {
+    "message": "预设已更改为: $PRESET$",
+    "placeholders": {
+      "preset": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgCustomKeyMappingSaved": {
+    "message": "自定义键映射已保存"
+  },
+  "msgDataExported": {
+    "message": "数据导出成功"
+  },
+  "msgDataImported": {
+    "message": "数据导入成功"
+  },
+  "msgDataImportedDetails": {
+    "message": "数据导入成功 — $DETAILS$。",
+    "placeholders": {
+      "details": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgPromptsImported": {
+    "message": "成功导入$COUNT$个提示词",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgPromptsImportedWithSkipped": {
+    "message": "成功导入$IMPORTED$个提示词($SKIPPED$个已存在)",
+    "placeholders": {
+      "imported": {
+        "content": "$1"
+      },
+      "skipped": {
+        "content": "$2"
+      }
+    }
+  },
+  "msgPromptsAlreadyExist": {
+    "message": "所有提示词已存在于您的库中"
+  },
+  "msgCustomPromptsImported": {
+    "message": "成功导入$IMPORTED$个自定义提示词",
+    "placeholders": {
+      "imported": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgHistoryCleared": {
+    "message": "所有聊天历史已被删除"
+  },
+  "msgPromptsCleared": {
+    "message": "所有提示词已被删除"
+  },
+  "msgSettingsReset": {
+    "message": "所有设置已重置为默认值"
+  },
+  "msgUpdateAvailable": {
+    "message": "有可用更新 - 点击下载最新版本链接"
+  },
+  "msgUpToDate": {
+    "message": "您已是最新版本!"
+  },
+  "msgCheckingUpdates": {
+    "message": "正在检查..."
+  },
+  "msgUpdateCheckFailed": {
+    "message": "检查更新失败"
+  },
+  "msgVersionUnknown": {
+    "message": "版本未知"
+  },
+  "msgCommitHashUnavailable": {
+    "message": "提交哈希不可用"
+  },
+  "msgUpdateStatusAvailable": {
+    "message": "<strong>有可用更新!</strong><br>最新: $LATEST$ ($DATE$)<br>当前: $CURRENT$<br><small>$MESSAGE$</small>",
+    "placeholders": {
+      "latest": {
+        "content": "$1"
+      },
+      "date": {
+        "content": "$2"
+      },
+      "current": {
+        "content": "$3"
+      },
+      "message": {
+        "content": "$4"
+      }
+    }
+  },
+  "msgUpdateStatusCurrent": {
+    "message": "您已是最新版本!"
+  },
+  "msgUpdateStatusError": {
+    "message": "检查更新失败"
+  },
+
+  "errAtLeastOneProvider": {
+    "message": "至少需要启用一个提供商"
+  },
+  "errExportFailed": {
+    "message": "导出数据失败"
+  },
+  "errImportFailed": {
+    "message": "导入数据失败。请检查文件格式。"
+  },
+  "errClearHistoryFailed": {
+    "message": "清空聊天历史失败"
+  },
+  "errClearPromptsFailed": {
+    "message": "清空提示词失败"
+  },
+  "errResetSettingsFailed": {
+    "message": "重置设置失败"
+  },
+  "errImportDefaultLibrary": {
+    "message": "导入默认库失败"
+  },
+  "errImportCustomLibrary": {
+    "message": "导入自定义提示词失败"
+  },
+  "errInvalidFormat": {
+    "message": "无效格式: 文件必须包含提示词的JSON数组"
+  },
+  "errInvalidPromptStructure": {
+    "message": "无效的提示词结构 - 查看警告了解详情"
+  },
+  "errInvalidJSON": {
+    "message": "无效的JSON文件格式"
+  },
+  "errValidationErrors": {
+    "message": "$COUNT$个提示词存在验证错误",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+
+  "confirmImportData": {
+    "message": "从$DATE$导入数据?\n\n这将添加:\n- $PROMPTS$个提示词\n- $CONVERSATIONS$个对话\n- 设置配置\n\n除非发现重复项，否则现有数据将被保留。",
+    "placeholders": {
+      "date": {
+        "content": "$1"
+      },
+      "prompts": {
+        "content": "$2"
+      },
+      "conversations": {
+        "content": "$3"
+      }
+    }
+  },
+  "confirmClearHistory": {
+    "message": "您确定要删除所有聊天历史吗?\n\n这将永久删除所有保存的对话。\n\n此操作无法撤销!"
+  },
+  "confirmClearPrompts": {
+    "message": "您确定要删除所有提示词吗?\n\n这将永久删除您库中的所有提示词。\n\n此操作无法撤销!"
+  },
+  "confirmResetSettings": {
+    "message": "您确定要将所有设置重置为默认值吗?\n\n这将重置:\n- 主题设置\n- 默认提供商\n- 键盘快捷键\n- 所有其他首选项\n\n您的提示词和聊天历史不会受到影响。\n\n此操作无法撤销!"
+  },
+
+  "contextMenuSendTo": {
+    "message": "发送到insidebar.ai"
+  },
+  "contextMenuPromptLibrary": {
+    "message": "提示词库"
+  },
+
+  "sidebarChatHistory": {
+    "message": "聊天历史"
+  },
+  "sidebarPromptGenie": {
+    "message": "提示词精灵"
+  },
+  "sidebarEditingPrompt": {
+    "message": "编辑提示词"
+  },
+  "placeholderSearch": {
+    "message": "搜索..."
+  },
+  "placeholderSearchConversations": {
+    "message": "搜索对话..."
+  },
+  "placeholderSearchPrompts": {
+    "message": "搜索提示词..."
+  },
+  "btnSave": {
+    "message": "保存"
+  },
+  "btnCancel": {
+    "message": "取消"
+  },
+  "btnClose": {
+    "message": "关闭"
+  },
+  "btnDelete": {
+    "message": "删除"
+  },
+  "btnEdit": {
+    "message": "编辑"
+  },
+  "btnCopy": {
+    "message": "复制"
+  },
+  "tooltipSaveNew": {
+    "message": "保存为新提示词"
+  },
+  "tooltipCopyClipboard": {
+    "message": "复制到剪贴板"
+  },
+  "tooltipClear": {
+    "message": "清空"
+  },
+  "tooltipSelectProvider": {
+    "message": "选择提供商"
+  },
+  "tooltipSendProvider": {
+    "message": "发送到选定的提供商"
+  },
+  "tooltipFilterProvider": {
+    "message": "按提供商筛选"
+  },
+  "tooltipShowSearchTips": {
+    "message": "显示搜索提示"
+  },
+  "tooltipShowFavorites": {
+    "message": "仅显示收藏"
+  },
+  "tooltipFilterCategory": {
+    "message": "按类别筛选"
+  },
+  "tooltipRecentlyUsed": {
+    "message": "最近使用"
+  },
+  "tooltipMostUsed": {
+    "message": "最常使用"
+  },
+  "tooltipAlphabetical": {
+    "message": "A-Z"
+  },
+  "tooltipNewestFirst": {
+    "message": "最新优先"
+  },
+  "tooltipToggleSection": {
+    "message": "切换部分"
+  },
+  "tooltipCopyContent": {
+    "message": "复制内容"
+  },
+  "tooltipInsertBeginning": {
+    "message": "插入到开头"
+  },
+  "tooltipInsertEnd": {
+    "message": "插入到末尾"
+  },
+  "tooltipReplaceAll": {
+    "message": "全部替换"
+  },
+  "labelAllProviders": {
+    "message": "所有提供商"
+  },
+  "labelAllCategories": {
+    "message": "所有类别"
+  },
+  "labelRecentlyUsed": {
+    "message": "最近使用"
+  },
+  "labelTopFavorites": {
+    "message": "热门收藏"
+  },
+  "loadingText": {
+    "message": "加载中..."
+  }
+}
