@@ -3,6 +3,7 @@ import {
   saveConversation,
   findConversationByConversationId
 } from '../modules/history-manager.js';
+import { t } from '../modules/i18n.js';
 
 // T008 & T065: Install event - setup context menus and configure side panel
 const DEFAULT_SHORTCUT_SETTING = { keyboardShortcutEnabled: true };
@@ -84,7 +85,7 @@ async function createContextMenus() {
   // Create main context menu item
   chrome.contextMenus.create({
     id: 'open-smarter-panel',
-    title: 'Send to insidebar.ai',
+    title: t('contextMenuSendTo'),
     contexts: ['page', 'selection', 'link']
   });
 
@@ -111,7 +112,7 @@ async function createContextMenus() {
   chrome.contextMenus.create({
     id: 'open-prompt-library',
     parentId: 'open-smarter-panel',
-    title: 'Prompt Library',
+    title: t('contextMenuPromptLibrary'),
     contexts: ['page', 'selection', 'link']
   });
 }

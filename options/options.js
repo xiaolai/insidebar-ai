@@ -19,6 +19,7 @@ import {
   loadVersionInfo,
   checkForUpdates
 } from '../modules/version-checker.js';
+import { t, translatePage } from '../modules/i18n.js';
 const DEFAULT_ENABLED_PROVIDERS = ['chatgpt', 'claude', 'gemini', 'grok', 'deepseek'];
 
 function getEnabledProvidersOrDefault(settings) {
@@ -77,6 +78,7 @@ function updateShortcutHelperVisibility(isEnabled) {
 // T050: Initialize settings page
 async function init() {
   await applyTheme();  // Apply theme first
+  translatePage();  // Translate all static text
   await loadSettings();
   await loadDataStats();
   await loadLibraryCount();  // Load default library count
@@ -176,7 +178,7 @@ async function toggleProvider(providerId) {
   if (enabledProviders.includes(providerId)) {
     // Disable - but ensure at least one provider remains enabled
     if (enabledProviders.length === 1) {
-      showStatus('error', 'At least one provider must be enabled');
+      showStatus('error', t('msgOneProviderRequired'));
       return;
     }
     enabledProviders = enabledProviders.filter(id => id !== providerId);
@@ -187,7 +189,7 @@ async function toggleProvider(providerId) {
 
   await saveSetting('enabledProviders', enabledProviders);
   await renderProviderList();
-  showStatus('success', 'Provider settings updated');
+  showStatus('success', t('msgProviderUpdated'));
 }
 
 // T056: Load and display data statistics
@@ -222,10 +224,10 @@ async function loadLibraryCount() {
     const response = await fetch(chrome.runtime.getURL('data/prompt-libraries/default-prompts.json'));
     const promptsArray = await response.json();
     const count = Array.isArray(promptsArray) ? promptsArray.length : 0;
-    countElement.textContent = `${count} prompts`;
+    countElement.textContent = t('msgPromptsCount', count.toString());
   } catch (error) {
     console.error('Failed to load library count:', error);
-    countElement.textContent = 'Unknown count';
+    countElement.textContent = t('msgUnknownCount');
   }
 }
 
@@ -235,13 +237,13 @@ function setupEventListeners() {
   document.getElementById('theme-select').addEventListener('change', async (e) => {
     await saveSetting('theme', e.target.value);
     await applyTheme();  // Re-apply theme immediately
-    showStatus('success', 'Theme updated');
+    showStatus('success', t('msgThemeUpdated'));
   });
 
   // Default provider change
   document.getElementById('default-provider-select').addEventListener('change', async (e) => {
     await saveSetting('defaultProvider', e.target.value);
-    showStatus('success', 'Default provider updated');
+    showStatus('success', t('msgDefaultProviderUpdated'));
   });
 
   // Keyboard shortcut toggle
@@ -251,7 +253,7 @@ function setupEventListeners() {
       const enabled = e.target.checked;
       await saveSetting('keyboardShortcutEnabled', enabled);
       updateShortcutHelperVisibility(enabled);
-      showStatus('success', enabled ? 'Keyboard shortcut enabled' : 'Keyboard shortcut disabled');
+      showStatus('success', enabled ? t('msgShortcutEnabled') : t('msgShortcutDisabled'));
     });
   }
 
@@ -261,7 +263,7 @@ function setupEventListeners() {
     autoPasteToggle.addEventListener('change', async (e) => {
       const enabled = e.target.checked;
       await saveSetting('autoPasteClipboard', enabled);
-      showStatus('success', enabled ? 'Auto-paste enabled' : 'Auto-paste disabled');
+      showStatus('success', enabled ? t('msgAutoPasteEnabled') : t('msgAutoPasteDisabled'));
     });
   }
 
@@ -271,7 +273,7 @@ function setupEventListeners() {
     autoOpenSidebarToggle.addEventListener('change', async (e) => {
       const enabled = e.target.checked;
       await saveSetting('autoOpenSidebarOnSave', enabled);
-      showStatus('success', enabled ? 'Auto-open sidebar enabled' : 'Auto-open sidebar disabled');
+      showStatus('success', enabled ? t('msgAutoOpenEnabled') : t('msgAutoOpenDisabled'));
     });
   }
 
@@ -322,7 +324,7 @@ function setupEventListeners() {
       enterBehavior.enabled = enabled;
       await saveSetting('enterKeyBehavior', enterBehavior);
       updateEnterBehaviorVisibility(enabled);
-      showStatus('success', enabled ? 'Enter key customization enabled' : 'Enter key customization disabled');
+      showStatus('success', enabled ? t('msgEnterCustomEnabled') : t('msgEnterCustomDisabled'));
     });
   }
 
@@ -381,9 +383,9 @@ async function exportData() {
     a.click();
     URL.revokeObjectURL(url);
 
-    showStatus('success', 'Data exported successfully');
+    showStatus('success', t('msgDataExported'));
   } catch (error) {
-    showStatus('error', 'Failed to export data');
+    showStatus('error', t('msgDataExportFailed'));
   }
 }
 
@@ -398,12 +400,11 @@ async function importData(file) {
     }
 
     // Confirm import
-    const confirmMsg = `Import data from ${new Date(data.exportDate).toLocaleString()}?\n\n` +
-      `This will add:\n` +
-      `- ${data.prompts?.length || 0} prompts\n` +
-      `- ${data.conversations?.length || 0} conversations\n` +
-      `- Settings configuration\n\n` +
-      `Existing data will be preserved unless duplicates are found.`;
+    const confirmMsg = t('msgImportConfirm', [
+      new Date(data.exportDate).toLocaleString(),
+      (data.prompts?.length || 0).toString(),
+      (data.conversations?.length || 0).toString()
+    ]);
 
     if (!confirm(confirmMsg)) {
       return;
@@ -438,73 +439,56 @@ async function importData(file) {
     const messages = [];
     if (promptImportSummary) {
       const { imported = 0, skipped = 0 } = promptImportSummary;
-      messages.push(`prompts: ${imported} added, ${skipped} skipped`);
+      messages.push(t('msgPromptsImported', [imported.toString(), skipped.toString()]));
     }
     if (conversationImportSummary) {
       const { imported = 0, skipped = 0 } = conversationImportSummary;
-      messages.push(`conversations: ${imported} added, ${skipped} skipped`);
+      messages.push(t('msgConversationsImported', [imported.toString(), skipped.toString()]));
     }
 
     if (messages.length > 0) {
-      showStatus('success', `Data imported successfully — ${messages.join('; ')}.`);
+      showStatus('success', t('msgDataImported') + ' — ' + messages.join('; ') + '.');
     } else {
-      showStatus('success', 'Data imported successfully.');
+      showStatus('success', t('msgDataImported'));
     }
   } catch (error) {
-    showStatus('error', 'Failed to import data. Please check the file format.');
+    showStatus('error', t('msgDataImportFailed'));
   }
 }
 
 // Danger Zone: Clear Prompts
 async function clearPrompts() {
-  const confirmMsg = 'Are you sure you want to delete ALL prompts?\n\n' +
-    'This will permanently delete all prompts from your library.\n\n' +
-    'This action CANNOT be undone!';
-
-  if (!confirm(confirmMsg)) {
+  if (!confirm(t('msgConfirmClearPrompts'))) {
     return;
   }
 
   try {
     await clearAllPrompts();
     await loadDataStats();
-    showStatus('success', 'All prompts have been deleted');
+    showStatus('success', t('msgPromptsCleared'));
   } catch (error) {
-    showStatus('error', 'Failed to clear prompts');
+    showStatus('error', t('msgClearPromptsFailed'));
   }
 }
 
 // Danger Zone: Clear Chat History
 async function clearConversations() {
-  const confirmMsg = 'Are you sure you want to delete ALL chat history?\n\n' +
-    'This will permanently delete all saved conversations.\n\n' +
-    'This action CANNOT be undone!';
-
-  if (!confirm(confirmMsg)) {
+  if (!confirm(t('msgConfirmClearHistory'))) {
     return;
   }
 
   try {
     await clearAllConversations();
     await loadDataStats();
-    showStatus('success', 'All chat history has been deleted');
+    showStatus('success', t('msgHistoryCleared'));
   } catch (error) {
-    showStatus('error', 'Failed to clear chat history');
+    showStatus('error', t('msgClearHistoryFailed'));
   }
 }
 
 // Danger Zone: Reset Settings
 async function resetSettingsOnly() {
-  const confirmMsg = 'Are you sure you want to reset ALL settings to defaults?\n\n' +
-    'This will reset:\n' +
-    '- Theme settings\n' +
-    '- Default provider\n' +
-    '- Keyboard shortcuts\n' +
-    '- All other preferences\n\n' +
-    'Your prompts and chat history will NOT be affected.\n\n' +
-    'This action CANNOT be undone!';
-
-  if (!confirm(confirmMsg)) {
+  if (!confirm(t('msgConfirmResetSettings'))) {
     return;
   }
 
@@ -512,9 +496,9 @@ async function resetSettingsOnly() {
     await resetSettings();
     await loadSettings();
     await renderProviderList();
-    showStatus('success', 'All settings have been reset to defaults');
+    showStatus('success', t('msgSettingsReset'));
   } catch (error) {
-    showStatus('error', 'Failed to reset settings');
+    showStatus('error', t('msgResetSettingsFailed'));
   }
 }
 
@@ -610,8 +594,8 @@ async function importCustomLibraryHandler(file) {
 
     // Check if it's an array
     if (!Array.isArray(data)) {
-      showStatus('error', 'Invalid format: File must contain a JSON array of prompts');
-      alert(`Invalid Format\n\n${getPromptStructureExample()}`);
+      showStatus('error', t('msgInvalidPromptFormat'));
+      alert(`${t('msgInvalidFormat')}\n\n${getPromptStructureExample()}`);
       return;
     }
 
@@ -619,8 +603,8 @@ async function importCustomLibraryHandler(file) {
     if (data.length > 0) {
       const errors = validatePromptStructure(data[0]);
       if (errors.length > 0) {
-        const errorMsg = `Invalid prompt structure:\n\n${errors.join('\n')}\n\n${getPromptStructureExample()}`;
-        showStatus('error', 'Invalid prompt structure - see alert for details');
+        const errorMsg = `${t('msgInvalidPromptStructure')}:\n\n${errors.join('\n')}\n\n${getPromptStructureExample()}`;
+        showStatus('error', t('msgInvalidPromptStructure'));
         alert(errorMsg);
         return;
       }
@@ -636,8 +620,8 @@ async function importCustomLibraryHandler(file) {
     });
 
     if (validationErrors.length > 0) {
-      const errorMsg = `Found ${validationErrors.length} invalid prompts:\n\n${validationErrors.slice(0, 5).join('\n')}${validationErrors.length > 5 ? '\n...' : ''}\n\n${getPromptStructureExample()}`;
-      showStatus('error', `${validationErrors.length} prompts have validation errors`);
+      const errorMsg = t('msgValidationErrors', validationErrors.length.toString()) + `:\n\n${validationErrors.slice(0, 5).join('\n')}${validationErrors.length > 5 ? '\n...' : ''}\n\n${getPromptStructureExample()}`;
+      showStatus('error', t('msgValidationErrors', validationErrors.length.toString()));
       alert(errorMsg);
       return;
     }
@@ -650,9 +634,9 @@ async function importCustomLibraryHandler(file) {
 
     // Show results
     if (result.imported > 0) {
-      showStatus('success', `Successfully imported ${result.imported} custom prompts${result.skipped > 0 ? ` (${result.skipped} already existed)` : ''}`);
+      showStatus('success', t('msgCustomPromptsImported', [result.imported.toString(), result.skipped.toString()]));
     } else {
-      showStatus('success', 'All prompts already exist in your library');
+      showStatus('success', t('msgAllPromptsExist'));
     }
 
     // Refresh stats
@@ -660,10 +644,10 @@ async function importCustomLibraryHandler(file) {
 
   } catch (error) {
     if (error instanceof SyntaxError) {
-      showStatus('error', 'Invalid JSON file format');
-      alert(`JSON Parse Error\n\nThe file is not valid JSON. Please check the file format.\n\n${getPromptStructureExample()}`);
+      showStatus('error', t('msgInvalidJSON'));
+      alert(`${t('msgJSONParseError')}\n\n${getPromptStructureExample()}`);
     } else {
-      showStatus('error', 'Failed to import custom prompts');
+      showStatus('error', t('msgCustomImportFailed'));
       console.error('Import error:', error);
     }
   }
@@ -675,7 +659,7 @@ async function importDefaultLibraryHandler() {
 
   try {
     button.disabled = true;
-    button.textContent = 'Importing...';
+    button.textContent = t('msgImporting');
 
     // Fetch the default library data
     const response = await fetch(chrome.runtime.getURL('data/prompt-libraries/default-prompts.json'));
@@ -691,23 +675,23 @@ async function importDefaultLibraryHandler() {
 
     // Update UI
     if (result.imported > 0) {
-      button.textContent = '✓ Imported';
+      button.textContent = t('msgImported');
       button.style.background = '#4caf50';
       button.style.color = 'white';
-      showStatus('success', `Successfully imported ${result.imported} prompts${result.skipped > 0 ? ` (${result.skipped} already existed)` : ''}`);
+      showStatus('success', t('msgDefaultPromptsImported', [result.imported.toString(), result.skipped.toString()]));
     } else {
-      button.textContent = 'Already Imported';
+      button.textContent = t('msgAlreadyImported');
       button.disabled = true;
-      showStatus('success', 'All prompts already exist in your library');
+      showStatus('success', t('msgAllPromptsExist'));
     }
 
     // Refresh stats
     await loadDataStats();
 
   } catch (error) {
-    showStatus('error', 'Failed to import default library');
+    showStatus('error', t('msgDefaultImportFailed'));
     button.disabled = false;
-    button.textContent = 'Import Default Prompts';
+    button.textContent = t('btnImportDefault');
   }
 }
 
@@ -773,7 +757,7 @@ async function applyEnterKeyPreset(preset) {
   }
 
   await saveSetting('enterKeyBehavior', enterBehavior);
-  showStatus('success', `Preset changed to: ${preset}`);
+  showStatus('success', t('msgPresetChanged', preset));
 }
 
 async function saveCustomEnterSettings() {
@@ -802,20 +786,20 @@ async function saveCustomEnterSettings() {
     presetSelect.value = 'custom';
   }
 
-  showStatus('success', 'Custom key mapping saved');
+  showStatus('success', t('msgCustomMappingSaved'));
 }
 
 // T073: Version Check Functions
 async function loadVersionDisplay() {
   const versionInfo = await loadVersionInfo();
   if (!versionInfo) {
-    document.getElementById('version').textContent = 'Version unknown';
-    document.getElementById('commit-hash').textContent = 'Commit hash unavailable';
+    document.getElementById('version').textContent = t('msgVersionUnknown');
+    document.getElementById('commit-hash').textContent = t('msgCommitHashUnavailable');
     return;
   }
 
-  document.getElementById('version').textContent = `Version ${versionInfo.version}`;
-  document.getElementById('commit-hash').textContent = `Build: ${versionInfo.commitHash} (${versionInfo.buildDate})`;
+  document.getElementById('version').textContent = t('labelVersion', versionInfo.version);
+  document.getElementById('commit-hash').textContent = t('msgBuildInfo', [versionInfo.commitHash, versionInfo.buildDate]);
 
   // Automatically check for updates on page load
   await performVersionCheck();
@@ -827,7 +811,7 @@ async function performVersionCheck() {
 
   try {
     button.disabled = true;
-    button.textContent = 'Checking...';
+    button.textContent = t('msgChecking');
     statusDiv.style.display = 'none';
 
     const result = await checkForUpdates();
@@ -838,30 +822,29 @@ async function performVersionCheck() {
       statusDiv.style.display = 'block';
       showStatus('error', result.error);
     } else if (result.updateAvailable) {
-      statusDiv.innerHTML = `
-        <strong>Update available!</strong><br>
-        Latest: ${result.latestHash} (${new Date(result.latestDate).toLocaleDateString()})<br>
-        Current: ${result.currentHash}<br>
-        <small>${result.latestMessage.split('\n')[0]}</small>
-      `;
+      const latest = result.latestHash;
+      const date = new Date(result.latestDate).toLocaleDateString();
+      const current = result.currentHash;
+      const message = result.latestMessage.split('\n')[0];
+      statusDiv.innerHTML = t('msgUpdateStatusAvailable', [latest, date, current, message]);
       statusDiv.className = 'update-status update-available';
       statusDiv.style.display = 'block';
-      showStatus('success', 'Update available - click Download Latest Version link');
+      showStatus('success', t('msgUpdateAvailable'));
     } else {
-      statusDiv.textContent = 'You have the latest version!';
+      statusDiv.textContent = t('msgLatestVersion');
       statusDiv.className = 'update-status update-current';
       statusDiv.style.display = 'block';
-      showStatus('success', 'You are up to date!');
+      showStatus('success', t('msgUpToDate'));
     }
   } catch (error) {
-    statusDiv.textContent = 'Failed to check for updates';
+    statusDiv.textContent = t('msgCheckUpdatesFailed');
     statusDiv.className = 'update-status update-error';
     statusDiv.style.display = 'block';
-    showStatus('error', 'Failed to check for updates');
+    showStatus('error', t('msgCheckUpdatesFailed'));
     console.error('Version check error:', error);
   } finally {
     button.disabled = false;
-    button.textContent = 'Check for Updates';
+    button.textContent = t('btnCheckUpdates');
   }
 }
 

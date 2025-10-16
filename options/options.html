@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>insidebar.ai - Settings</title>
+  <title data-i18n="optionsPageTitle">insidebar.ai - Settings</title>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" rel="stylesheet">
   <link rel="stylesheet" href="options.css">
 </head>
 <body>
   <div class="container">
     <header>
-      <h1>Settings: insidebar.ai</h1>
-      <p>Customize your multi-AI sidebar experience</p>
+      <h1 data-i18n="headerSettingsTitle">Settings: insidebar.ai</h1>
+      <p data-i18n="headerSettingsSubtitle">Customize your multi-AI sidebar experience</p>
     </header>
 
     <div class="content">
@@ -21,18 +21,18 @@
 
       <!-- T051: Theme Settings -->
       <section class="section">
-        <h2 class="section-title">Appearance</h2>
+        <h2 class="section-title" data-i18n="sectionAppearance">Appearance</h2>
 
         <div class="setting-item">
           <div class="setting-info">
-            <div class="setting-label">Theme</div>
-            <div class="setting-description">Choose your preferred color scheme</div>
+            <div class="setting-label" data-i18n="labelTheme">Theme</div>
+            <div class="setting-description" data-i18n="descTheme">Choose your preferred color scheme</div>
           </div>
           <div class="setting-control">
             <select id="theme-select">
-              <option value="auto">Auto (System)</option>
-              <option value="light">Light</option>
-              <option value="dark">Dark</option>
+              <option value="auto" data-i18n="themeAuto">Auto (System)</option>
+              <option value="light" data-i18n="themeLight">Light</option>
+              <option value="dark" data-i18n="themeDark">Dark</option>
             </select>
           </div>
         </div>
@@ -40,12 +40,12 @@
 
       <!-- T052-T053: Provider Settings -->
       <section class="section">
-        <h2 class="section-title">AI Providers</h2>
+        <h2 class="section-title" data-i18n="sectionProviders">AI Providers</h2>
 
         <div class="setting-item">
           <div class="setting-info">
-            <div class="setting-label">Default Provider</div>
-            <div class="setting-description">AI provider to load when opening the sidebar</div>
+            <div class="setting-label" data-i18n="labelDefaultProvider">Default Provider</div>
+            <div class="setting-description" data-i18n="descDefaultProvider">AI provider to load when opening the sidebar</div>
           </div>
           <div class="setting-control">
             <select id="default-provider-select">
@@ -60,8 +60,8 @@
 
         <div class="setting-item">
           <div class="setting-info">
-            <div class="setting-label">Enabled Providers</div>
-            <div class="setting-description">Select which AI providers appear in your sidebar</div>
+            <div class="setting-label" data-i18n="labelEnabledProviders">Enabled Providers</div>
+            <div class="setting-description" data-i18n="descEnabledProviders">Select which AI providers appear in your sidebar</div>
           </div>
         </div>
 
@@ -71,12 +71,12 @@
       </section>
 
       <section class="section">
-        <h2 class="section-title">Keyboard Shortcuts</h2>
+        <h2 class="section-title" data-i18n="sectionKeyboardShortcuts">Keyboard Shortcuts</h2>
 
         <div class="setting-item">
           <div class="setting-info">
-            <div class="setting-label">Enable Keyboard Shortcut</div>
-            <div class="setting-description">
+            <div class="setting-label" data-i18n="labelEnableKeyboardShortcut">Enable Keyboard Shortcut</div>
+            <div class="setting-description" data-i18n="descEnableKeyboardShortcut">
               Toggle the global shortcut that opens insidebar.ai from anywhere in the browser.
             </div>
           </div>
@@ -90,34 +90,34 @@
 
         <div class="setting-item">
           <div class="setting-info">
-            <div class="setting-label">Default Shortcuts</div>
-            <div class="setting-description">
+            <div class="setting-label" data-i18n="labelDefaultShortcuts">Default Shortcuts</div>
+            <div class="setting-description" data-i18n-html="descDefaultShortcuts">
               Command+Shift+E (Ctrl+Shift+E on Windows/Linux) opens the sidebar with default provider.<br>
               Command+Shift+P (Ctrl+Shift+P on Windows/Linux) opens Prompt Library.<br>
               You can customize these in your browser's shortcut settings.
             </div>
           </div>
           <div class="setting-control">
-            <button class="btn btn-secondary" id="open-shortcuts-btn">Open Shortcuts</button>
+            <button class="btn btn-secondary" id="open-shortcuts-btn" data-i18n="btnOpenShortcuts">Open Shortcuts</button>
           </div>
         </div>
 
         <div class="setting-item" id="edge-shortcut-helper" style="display: none;">
           <div class="setting-info">
-            <div class="setting-label">Confirm in Microsoft Edge</div>
-            <div class="setting-description">
+            <div class="setting-label" data-i18n="labelEdgeShortcutHelper">Confirm in Microsoft Edge</div>
+            <div class="setting-description" data-i18n="descEdgeShortcutHelper">
               Edge requires you to confirm the shortcut once. Click configure to jump straight to the Edge shortcuts page.
             </div>
           </div>
           <div class="setting-control">
-            <button class="btn btn-secondary" id="open-edge-shortcuts-btn">Configure in Edge</button>
+            <button class="btn btn-secondary" id="open-edge-shortcuts-btn" data-i18n="btnConfigureEdge">Configure in Edge</button>
           </div>
         </div>
 
         <div class="setting-item">
           <div class="setting-info">
-            <div class="setting-label">Auto-paste Clipboard to Prompt Library</div>
-            <div class="setting-description">
+            <div class="setting-label" data-i18n="labelAutoPaste">Auto-paste Clipboard to Prompt Library</div>
+            <div class="setting-description" data-i18n="descAutoPaste">
               Automatically paste clipboard content to workspace when opening Prompt Library with Command+Shift+P
             </div>
           </div>
@@ -133,12 +133,12 @@
 
       <!-- Chat History Settings -->
       <section class="section">
-        <h2 class="section-title">Chat History</h2>
+        <h2 class="section-title" data-i18n="sectionChatHistory">Chat History</h2>
 
         <div class="setting-item">
           <div class="setting-info">
-            <div class="setting-label">Auto-open Sidebar After Save</div>
-            <div class="setting-description">
+            <div class="setting-label" data-i18n="labelAutoOpenSidebar">Auto-open Sidebar After Save</div>
+            <div class="setting-description" data-i18n="descAutoOpenSidebar">
               Automatically open the sidebar and switch to chat history when you save a conversation
             </div>
           </div>
@@ -154,18 +154,18 @@
 
       <!-- Enter Key Behavior Settings -->
       <section class="section">
-        <h2 class="section-title">Enter Key Behavior</h2>
-        <p style="font-size: 14px; color: #666; margin-bottom: 8px;">
+        <h2 class="section-title" data-i18n="sectionEnterBehavior">Enter Key Behavior</h2>
+        <p style="font-size: 14px; color: #666; margin-bottom: 8px;" data-i18n="descEnterBehavior1">
           Customize how Enter and modifier keys work when typing in AI provider input fields.
         </p>
-        <p style="font-size: 13px; color: #888; margin-bottom: 16px;">
+        <p style="font-size: 13px; color: #888; margin-bottom: 16px;" data-i18n-html="descEnterBehavior2">
           <strong>Applies to:</strong> ChatGPT, Claude, Gemini, Google (AI Mode), Grok, DeepSeek, and Perplexity.
         </p>
 
         <div class="setting-item">
           <div class="setting-info">
-            <div class="setting-label">Enable Enter Key Customization</div>
-            <div class="setting-description">
+            <div class="setting-label" data-i18n="labelEnableEnterCustom">Enable Enter Key Customization</div>
+            <div class="setting-description" data-i18n="descEnableEnterCustom">
               When enabled, modifies Enter key behavior across all supported AI providers
             </div>
           </div>
@@ -180,56 +180,56 @@
         <div id="enter-behavior-settings">
           <div class="setting-item">
             <div class="setting-info">
-              <div class="setting-label">Preset</div>
-              <div class="setting-description">Choose a common key combination pattern</div>
+              <div class="setting-label" data-i18n="labelPreset">Preset</div>
+              <div class="setting-description" data-i18n="descPreset">Choose a common key combination pattern</div>
             </div>
             <div class="setting-control">
               <select id="enter-preset-select">
-                <option value="default">Default (Enter=Send, Shift+Enter=Newline)</option>
-                <option value="swapped" selected>Swapped (Enter=Newline, Shift+Enter=Send)</option>
-                <option value="slack">Slack-style (Enter=Send, Ctrl+Enter=Newline)</option>
-                <option value="discord">Discord-style (Enter=Newline, Ctrl+Enter=Send)</option>
-                <option value="custom">Custom</option>
+                <option value="default" data-i18n="presetDefault">Default (Enter=Send, Shift+Enter=Newline)</option>
+                <option value="swapped" selected data-i18n="presetSwapped">Swapped (Enter=Newline, Shift+Enter=Send)</option>
+                <option value="slack" data-i18n="presetSlack">Slack-style (Enter=Send, Ctrl+Enter=Newline)</option>
+                <option value="discord" data-i18n="presetDiscord">Discord-style (Enter=Newline, Ctrl+Enter=Send)</option>
+                <option value="custom" data-i18n="presetCustom">Custom</option>
               </select>
             </div>
           </div>
 
           <div id="custom-enter-settings" style="display: none;">
             <div class="key-mapping-card">
-              <h3>Insert Newline</h3>
+              <h3 data-i18n="labelInsertNewline">Insert Newline</h3>
               <div class="key-mapping-controls">
                 <label>
-                  <input type="checkbox" id="newline-shift" /> Shift
+                  <input type="checkbox" id="newline-shift" /> <span data-i18n="keyShift">Shift</span>
                 </label>
                 <label>
-                  <input type="checkbox" id="newline-ctrl" /> Ctrl
+                  <input type="checkbox" id="newline-ctrl" /> <span data-i18n="keyCtrl">Ctrl</span>
                 </label>
                 <label>
-                  <input type="checkbox" id="newline-alt" /> Alt
+                  <input type="checkbox" id="newline-alt" /> <span data-i18n="keyAlt">Alt</span>
                 </label>
                 <label>
-                  <input type="checkbox" id="newline-meta" /> ⌘/Win
+                  <input type="checkbox" id="newline-meta" /> <span data-i18n="keyMeta">⌘/Win</span>
                 </label>
-                <span style="margin-left: auto;">+ Enter</span>
+                <span style="margin-left: auto;" data-i18n="keyPlusEnter">+ Enter</span>
               </div>
             </div>
 
             <div class="key-mapping-card">
-              <h3>Send Message</h3>
+              <h3 data-i18n="labelSendMessage">Send Message</h3>
               <div class="key-mapping-controls">
                 <label>
-                  <input type="checkbox" id="send-shift" /> Shift
+                  <input type="checkbox" id="send-shift" /> <span data-i18n="keyShift">Shift</span>
                 </label>
                 <label>
-                  <input type="checkbox" id="send-ctrl" /> Ctrl
+                  <input type="checkbox" id="send-ctrl" /> <span data-i18n="keyCtrl">Ctrl</span>
                 </label>
                 <label>
-                  <input type="checkbox" id="send-alt" /> Alt
+                  <input type="checkbox" id="send-alt" /> <span data-i18n="keyAlt">Alt</span>
                 </label>
                 <label>
-                  <input type="checkbox" id="send-meta" /> ⌘/Win
+                  <input type="checkbox" id="send-meta" /> <span data-i18n="keyMeta">⌘/Win</span>
                 </label>
-                <span style="margin-left: auto;">+ Enter</span>
+                <span style="margin-left: auto;" data-i18n="keyPlusEnter">+ Enter</span>
               </div>
             </div>
           </div>
@@ -239,25 +239,25 @@
 
       <!-- Default Prompt Library -->
       <section class="section">
-        <h2 class="section-title">Prompt Library</h2>
-        <p style="font-size: 14px; color: #666; margin-bottom: 16px;">
+        <h2 class="section-title" data-i18n="sectionPromptLibrary">Prompt Library</h2>
+        <p style="font-size: 14px; color: #666; margin-bottom: 16px;" data-i18n="descPromptLibrary">
           Import curated meta-prompts for AI workflows, research, coding, and analysis
         </p>
 
         <div class="library-import-card">
           <div class="library-header">
-            <h3>Default Prompt Library</h3>
-            <span class="library-count" id="library-count">Loading...</span>
+            <h3 data-i18n="labelDefaultPromptLibrary">Default Prompt Library</h3>
+            <span class="library-count" id="library-count" data-i18n="labelLoading">Loading...</span>
           </div>
-          <p class="library-description">
+          <p class="library-description" data-i18n="descDefaultPromptLibrary">
             Meta-prompts for prompt refinement, planning, coding, testing, research, writing, and more.
             Includes variables support for dynamic templates.
           </p>
           <div class="btn-group">
-            <button class="btn btn-primary" id="import-default-library">Import Default Prompts</button>
-            <button class="btn btn-secondary" id="import-custom-library">Import Custom Prompts</button>
+            <button class="btn btn-primary" id="import-default-library" data-i18n="btnImportDefault">Import Default Prompts</button>
+            <button class="btn btn-secondary" id="import-custom-library" data-i18n="btnImportCustom">Import Custom Prompts</button>
           </div>
-          <p style="font-size: 12px; color: #888; margin-top: 12px; font-style: italic;">
+          <p style="font-size: 12px; color: #888; margin-top: 12px; font-style: italic;" data-i18n-html="descCustomPromptReadme">
             Before importing custom prompts, please read: <code style="background: #f5f5f5; padding: 2px 6px; border-radius: 3px;">data/prompt-libraries/Generate_a_Basic_Prompt_Library.md</code>
           </p>
           <input type="file" id="import-custom-library-file" accept=".json" style="display: none;" />
@@ -266,41 +266,41 @@
 
       <!-- T056-T064: Data Management -->
       <section class="section">
-        <h2 class="section-title">Data Management</h2>
+        <h2 class="section-title" data-i18n="sectionDataManagement">Data Management</h2>
 
         <div class="data-stats" id="data-stats">
           <div class="data-stat-item">
-            <span class="data-stat-label">Chat History</span>
+            <span class="data-stat-label" data-i18n="statChatHistory">Chat History</span>
             <span class="data-stat-value" id="stat-conversations">0</span>
           </div>
           <div class="data-stat-item">
-            <span class="data-stat-label">Prompts</span>
+            <span class="data-stat-label" data-i18n="statPrompts">Prompts</span>
             <span class="data-stat-value" id="stat-prompts">0</span>
           </div>
           <div class="data-stat-item">
-            <span class="data-stat-label">Storage Used</span>
+            <span class="data-stat-label" data-i18n="statStorageUsed">Storage Used</span>
             <span class="data-stat-value" id="stat-storage">~0 KB</span>
           </div>
         </div>
 
         <div class="setting-item">
           <div class="setting-info">
-            <div class="setting-label">Export Data</div>
-            <div class="setting-description">Download all prompts and settings as JSON</div>
+            <div class="setting-label" data-i18n="labelExportData">Export Data</div>
+            <div class="setting-description" data-i18n="descExportData">Download all prompts and settings as JSON</div>
           </div>
           <div class="setting-control">
-            <button class="btn btn-secondary" id="export-btn">Export</button>
+            <button class="btn btn-secondary" id="export-btn" data-i18n="btnExport">Export</button>
           </div>
         </div>
 
         <div class="setting-item">
           <div class="setting-info">
-            <div class="setting-label">Import Data</div>
-            <div class="setting-description">Restore prompts and settings from JSON file</div>
+            <div class="setting-label" data-i18n="labelImportData">Import Data</div>
+            <div class="setting-description" data-i18n="descImportData">Restore prompts and settings from JSON file</div>
           </div>
           <div class="setting-control">
             <input type="file" id="import-file" accept=".json" style="display: none;" />
-            <button class="btn btn-secondary" id="import-btn">Import</button>
+            <button class="btn btn-secondary" id="import-btn" data-i18n="btnImport">Import</button>
           </div>
         </div>
 
@@ -308,54 +308,54 @@
 
       <!-- Danger Zone -->
       <section class="section">
-        <h2 class="section-title" style="color: #d32f2f;">Danger Zone</h2>
-        <p style="font-size: 14px; color: #d32f2f; margin-bottom: 16px;">
+        <h2 class="section-title" style="color: #d32f2f;" data-i18n="sectionDangerZone">Danger Zone</h2>
+        <p style="font-size: 14px; color: #d32f2f; margin-bottom: 16px;" data-i18n="descDangerZone">
           These actions cannot be undone. Use with caution.
         </p>
 
         <div class="setting-item">
           <div class="setting-info">
-            <div class="setting-label">Clear Chat History</div>
-            <div class="setting-description">Delete all saved conversations</div>
+            <div class="setting-label" data-i18n="labelClearChatHistory">Clear Chat History</div>
+            <div class="setting-description" data-i18n="descClearChatHistory">Delete all saved conversations</div>
           </div>
           <div class="setting-control">
-            <button class="btn btn-danger" id="clear-conversations-btn">Clear</button>
+            <button class="btn btn-danger" id="clear-conversations-btn" data-i18n="btnClear">Clear</button>
           </div>
         </div>
 
         <div class="setting-item">
           <div class="setting-info">
-            <div class="setting-label">Clear Prompts</div>
-            <div class="setting-description">Delete all prompts from your library</div>
+            <div class="setting-label" data-i18n="labelClearPrompts">Clear Prompts</div>
+            <div class="setting-description" data-i18n="descClearPrompts">Delete all prompts from your library</div>
           </div>
           <div class="setting-control">
-            <button class="btn btn-danger" id="clear-prompts-btn">Clear</button>
+            <button class="btn btn-danger" id="clear-prompts-btn" data-i18n="btnClear">Clear</button>
           </div>
         </div>
 
         <div class="setting-item">
           <div class="setting-info">
-            <div class="setting-label">Reset Settings</div>
-            <div class="setting-description">Reset all settings to defaults</div>
+            <div class="setting-label" data-i18n="labelResetSettings">Reset Settings</div>
+            <div class="setting-description" data-i18n="descResetSettings">Reset all settings to defaults</div>
           </div>
           <div class="setting-control">
-            <button class="btn btn-danger" id="reset-settings-btn">Reset</button>
+            <button class="btn btn-danger" id="reset-settings-btn" data-i18n="btnReset">Reset</button>
           </div>
         </div>
       </section>
 
       <!-- About Section -->
       <section class="section">
-        <h2 class="section-title">About</h2>
+        <h2 class="section-title" data-i18n="sectionAbout">About</h2>
 
         <div class="about-info">
           <div class="version-display">
             <div class="version" id="version">Version 1.0.0</div>
-            <div class="commit-hash" id="commit-hash">Loading...</div>
+            <div class="commit-hash" id="commit-hash" data-i18n="labelLoading">Loading...</div>
           </div>
 
           <div class="version-actions">
-            <button class="btn btn-secondary" id="check-updates-btn">Check for Updates</button>
+            <button class="btn btn-secondary" id="check-updates-btn" data-i18n="btnCheckUpdates">Check for Updates</button>
           </div>
 
           <div id="update-status" class="update-status" style="display: none;"></div>
@@ -364,13 +364,14 @@
             <a href="https://github.com/xiaolai/insidebar-ai/archive/refs/heads/main.zip"
                id="download-latest-link"
                target="_blank"
-               rel="noopener noreferrer">Download Latest Version</a>
+               rel="noopener noreferrer"
+               data-i18n="linkDownloadLatest">Download Latest Version</a>
           </div>
 
-          <p style="font-size: 14px; color: #666; margin-bottom: 8px; margin-top: 16px;">
+          <p style="font-size: 14px; color: #666; margin-bottom: 8px; margin-top: 16px;" data-i18n="descAbout1">
             insidebar.ai provides quick access to multiple AI assistants in one convenient sidebar.
           </p>
-          <p style="font-size: 12px; color: #999;">
+          <p style="font-size: 12px; color: #999;" data-i18n="descAbout2">
             Built with privacy-first architecture. All data stored locally.
           </p>
         </div>
