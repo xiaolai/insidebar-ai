@@ -12,7 +12,10 @@ import {
   importDefaultLibrary
 } from '../modules/prompt-manager.js';
 import {
-  getAllConversations
+  getAllConversations,
+  exportConversations,
+  importConversations,
+  clearAllConversations
 } from '../modules/history-manager.js';
 const DEFAULT_ENABLED_PROVIDERS = ['chatgpt', 'claude', 'gemini', 'grok', 'deepseek'];
 
@@ -349,6 +352,9 @@ async function exportData() {
     // Export prompts
     const promptsData = await exportPrompts();
 
+    // Export conversations (chat history)
+    const conversationsData = await exportConversations();
+
     // Export settings
     const settingsData = await exportSettings();
 
@@ -357,6 +363,7 @@ async function exportData() {
       version: '1.0',
       exportDate: new Date().toISOString(),
       prompts: promptsData.prompts,
+      conversations: conversationsData.conversations,
       settings: settingsData
     };
 
@@ -365,7 +372,7 @@ async function exportData() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `smarter-panel-backup-${Date.now()}.json`;
+    a.download = `insidebar-backup-${Date.now()}.json`;
     a.click();
     URL.revokeObjectURL(url);
 
@@ -389,6 +396,7 @@ async function importData(file) {
     const confirmMsg = `Import data from ${new Date(data.exportDate).toLocaleString()}?\n\n` +
       `This will add:\n` +
       `- ${data.prompts?.length || 0} prompts\n` +
+      `- ${data.conversations?.length || 0} conversations\n` +
       `- Settings configuration\n\n` +
       `Existing data will be preserved unless duplicates are found.`;
 
@@ -400,6 +408,12 @@ async function importData(file) {
     let promptImportSummary = null;
     if (data.prompts && Array.isArray(data.prompts)) {
       promptImportSummary = await importPrompts({ prompts: data.prompts }, 'skip');
+    }
+
+    // Import conversations (chat history)
+    let conversationImportSummary = null;
+    if (data.conversations && Array.isArray(data.conversations)) {
+      conversationImportSummary = await importConversations({ conversations: data.conversations }, 'skip');
     }
 
     // Import settings (but preserve current enabled providers)
@@ -415,9 +429,19 @@ async function importData(file) {
     await loadSettings();
     await loadDataStats();
 
+    // Build success message
+    const messages = [];
     if (promptImportSummary) {
       const { imported = 0, skipped = 0 } = promptImportSummary;
-      showStatus('success', `Data imported successfully — prompts: ${imported} added, ${skipped} skipped.`);
+      messages.push(`prompts: ${imported} added, ${skipped} skipped`);
+    }
+    if (conversationImportSummary) {
+      const { imported = 0, skipped = 0 } = conversationImportSummary;
+      messages.push(`conversations: ${imported} added, ${skipped} skipped`);
+    }
+
+    if (messages.length > 0) {
+      showStatus('success', `Data imported successfully — ${messages.join('; ')}.`);
     } else {
       showStatus('success', 'Data imported successfully.');
     }
@@ -431,6 +455,7 @@ async function resetData() {
   const confirmMsg = 'Are you sure you want to reset ALL data?\n\n' +
     'This will:\n' +
     '- Delete all prompts\n' +
+    '- Delete all chat history (conversations)\n' +
     '- Reset all settings to defaults\n\n' +
     'This action CANNOT be undone!';
 
@@ -446,6 +471,9 @@ async function resetData() {
   try {
     // Clear prompts
     await clearAllPrompts();
+
+    // Clear conversations (chat history)
+    await clearAllConversations();
 
     // Reset settings
     await resetSettings();
