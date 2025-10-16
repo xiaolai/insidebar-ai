@@ -584,5 +584,108 @@
   },
   "loadingText": {
     "message": "Loading..."
+  },
+
+  "sidebarChatHistory": {
+    "message": "Chat History"
+  },
+  "sidebarPromptGenie": {
+    "message": "Prompt Genie"
+  },
+  "sidebarEditingPrompt": {
+    "message": "Editing Prompt"
+  },
+  "placeholderSearch": {
+    "message": "Search..."
+  },
+  "placeholderSearchConversations": {
+    "message": "Search conversations..."
+  },
+  "placeholderSearchPrompts": {
+    "message": "Search prompts..."
+  },
+  "btnSave": {
+    "message": "Save"
+  },
+  "btnCancel": {
+    "message": "Cancel"
+  },
+  "btnClose": {
+    "message": "Close"
+  },
+  "btnDelete": {
+    "message": "Delete"
+  },
+  "btnEdit": {
+    "message": "Edit"
+  },
+  "btnCopy": {
+    "message": "Copy"
+  },
+  "tooltipSaveNew": {
+    "message": "Save as new prompt"
+  },
+  "tooltipCopyClipboard": {
+    "message": "Copy to clipboard"
+  },
+  "tooltipClear": {
+    "message": "Clear"
+  },
+  "tooltipSelectProvider": {
+    "message": "Select provider"
+  },
+  "tooltipSendProvider": {
+    "message": "Send to selected provider"
+  },
+  "tooltipFilterProvider": {
+    "message": "Filter by provider"
+  },
+  "tooltipShowSearchTips": {
+    "message": "Show search tips"
+  },
+  "tooltipShowFavorites": {
+    "message": "Show favorites only"
+  },
+  "tooltipFilterCategory": {
+    "message": "Filter by category"
+  },
+  "tooltipRecentlyUsed": {
+    "message": "Recently Used"
+  },
+  "tooltipMostUsed": {
+    "message": "Most Used"
+  },
+  "tooltipAlphabetical": {
+    "message": "A-Z"
+  },
+  "tooltipNewestFirst": {
+    "message": "Newest First"
+  },
+  "tooltipToggleSection": {
+    "message": "Toggle section"
+  },
+  "tooltipCopyContent": {
+    "message": "Copy content"
+  },
+  "tooltipInsertBeginning": {
+    "message": "Insert at beginning"
+  },
+  "tooltipInsertEnd": {
+    "message": "Insert at end"
+  },
+  "tooltipReplaceAll": {
+    "message": "Replace all"
+  },
+  "labelAllProviders": {
+    "message": "All Providers"
+  },
+  "labelAllCategories": {
+    "message": "All Categories"
+  },
+  "labelRecentlyUsed": {
+    "message": "Recently Used"
+  },
+  "labelTopFavorites": {
+    "message": "Top Favorites"
   }
 }

@@ -34,12 +34,12 @@
     <!-- Chat History UI -->
     <div id="chat-history" style="display: none;">
       <div id="history-header">
-        <h2>Chat History</h2>
+        <h2 data-i18n="sidebarChatHistory">Chat History</h2>
       </div>
 
       <div id="history-filters">
         <div class="filter-row-top">
-          <input type="text" id="history-search" placeholder="Search conversations..." list="search-history-list" autocomplete="off" />
+          <input type="text" id="history-search" data-i18n-placeholder="placeholderSearchConversations" placeholder="Search conversations..." list="search-history-list" autocomplete="off" />
           <datalist id="search-history-list">
             <!-- Search history will be dynamically populated here -->
           </datalist>
@@ -61,14 +61,14 @@
         </div>
         <div class="filter-row-bottom">
           <div id="provider-filter-wrapper">
-            <button id="provider-filter-btn" title="Filter by provider"><span class="material-symbols-outlined">filter_alt</span></button>
+            <button id="provider-filter-btn" data-i18n-title="tooltipFilterProvider" title="Filter by provider"><span class="material-symbols-outlined">filter_alt</span></button>
             <div id="provider-popup" class="provider-popup" style="display: none;">
-              <div class="provider-popup-item" data-value="">All Providers</div>
+              <div class="provider-popup-item" data-value="" data-i18n="labelAllProviders">All Providers</div>
               <!-- Providers will be dynamically populated here -->
             </div>
           </div>
-          <button id="history-show-search-tips" title="Show search tips"><span class="material-symbols-outlined">help</span></button>
-          <button id="history-show-favorites" title="Show favorites only"><span class="material-symbols-outlined">star</span></button>
+          <button id="history-show-search-tips" data-i18n-title="tooltipShowSearchTips" title="Show search tips"><span class="material-symbols-outlined">help</span></button>
+          <button id="history-show-favorites" data-i18n-title="tooltipShowFavorites" title="Show favorites only"><span class="material-symbols-outlined">star</span></button>
         </div>
       </div>
 
@@ -80,8 +80,8 @@
       <div id="save-conversation-modal" class="modal" style="display: none;">
         <div class="modal-content">
           <div class="modal-header">
-            <h3>Save Conversation</h3>
-            <button class="close-btn" id="close-save-conversation"><span class="material-symbols-outlined">close</span></button>
+            <h3 data-i18n="btnSave">Save Conversation</h3>
+            <button class="close-btn" data-i18n-title="btnClose" id="close-save-conversation"><span class="material-symbols-outlined">close</span></button>
           </div>
           <div class="modal-body">
             <input type="text" id="conversation-title-input" placeholder="Conversation title (auto-generated from content)" />
@@ -95,8 +95,8 @@
             </label>
           </div>
           <div class="modal-footer">
-            <button id="cancel-save-conversation-btn" class="secondary" title="Cancel"><span class="material-symbols-outlined">close</span></button>
-            <button id="save-conversation-submit-btn" class="primary" title="Save"><span class="material-symbols-outlined">check</span></button>
+            <button id="cancel-save-conversation-btn" class="secondary" data-i18n-title="btnCancel" title="Cancel"><span class="material-symbols-outlined">close</span></button>
+            <button id="save-conversation-submit-btn" class="primary" data-i18n-title="btnSave" title="Save"><span class="material-symbols-outlined">check</span></button>
           </div>
         </div>
       </div>
@@ -107,9 +107,9 @@
           <div class="modal-header">
             <h3 id="view-conversation-title">Conversation</h3>
             <div class="modal-header-actions">
-              <button id="copy-conversation-btn" class="header-action-btn" title="Copy content"><span class="material-symbols-outlined" style="font-size: 20px;">content_copy</span></button>
-              <button id="delete-conversation-from-view-btn" class="header-action-btn" title="Delete"><span class="material-symbols-outlined" style="font-size: 20px;">delete</span></button>
-              <button class="close-btn" id="close-view-conversation"><span class="material-symbols-outlined">close</span></button>
+              <button id="copy-conversation-btn" class="header-action-btn" data-i18n-title="tooltipCopyContent" title="Copy content"><span class="material-symbols-outlined" style="font-size: 20px;">content_copy</span></button>
+              <button id="delete-conversation-from-view-btn" class="header-action-btn" data-i18n-title="btnDelete" title="Delete"><span class="material-symbols-outlined" style="font-size: 20px;">delete</span></button>
+              <button class="close-btn" data-i18n-title="btnClose" id="close-view-conversation"><span class="material-symbols-outlined">close</span></button>
             </div>
           </div>
           <div class="modal-body">
@@ -129,54 +129,54 @@
     <div id="prompt-library" style="display: none;">
       <!-- Workspace for editing received text - Always visible at top -->
       <div id="workspace-header">
-        <h2>Editing Prompt</h2>
+        <h2 data-i18n="sidebarEditingPrompt">Editing Prompt</h2>
       </div>
 
       <div id="prompt-workspace" style="display: block;">
         <textarea id="prompt-workspace-text" placeholder="Selected text will appear here..."></textarea>
         <div class="workspace-actions">
           <div class="workspace-actions-left">
-            <button id="workspace-save-btn" title="Save as new prompt"><span class="material-symbols-outlined">add_2</span></button>
-            <button id="workspace-copy-btn" title="Copy to clipboard"><span class="material-symbols-outlined">content_copy</span></button>
-            <button id="workspace-clear-btn" title="Clear"><span class="material-symbols-outlined">close</span></button>
+            <button id="workspace-save-btn" data-i18n-title="tooltipSaveNew" title="Save as new prompt"><span class="material-symbols-outlined">add_2</span></button>
+            <button id="workspace-copy-btn" data-i18n-title="tooltipCopyClipboard" title="Copy to clipboard"><span class="material-symbols-outlined">content_copy</span></button>
+            <button id="workspace-clear-btn" data-i18n-title="tooltipClear" title="Clear"><span class="material-symbols-outlined">close</span></button>
           </div>
           <div class="workspace-actions-right">
             <div id="workspace-provider-wrapper">
-              <button id="workspace-provider-btn" title="Select provider">
+              <button id="workspace-provider-btn" data-i18n-title="tooltipSelectProvider" title="Select provider">
                 <img class="provider-icon-small" src="" alt="">
               </button>
               <div id="workspace-provider-popup" class="workspace-provider-popup" style="display: none;">
                 <!-- Providers will be dynamically populated here -->
               </div>
             </div>
-            <button id="workspace-send-btn" title="Send to selected provider"><span class="material-symbols-outlined">keyboard_return</span></button>
+            <button id="workspace-send-btn" data-i18n-title="tooltipSendProvider" title="Send to selected provider"><span class="material-symbols-outlined">keyboard_return</span></button>
           </div>
         </div>
       </div>
 
       <div id="prompt-library-header">
-        <h2>Prompt Genie</h2>
+        <h2 data-i18n="sidebarPromptGenie">Prompt Genie</h2>
       </div>
 
       <div id="prompt-filters">
         <div class="filter-row-top">
-          <input type="text" id="prompt-search" placeholder="Search prompts..." />
+          <input type="text" id="prompt-search" data-i18n-placeholder="placeholderSearchPrompts" placeholder="Search prompts..." />
         </div>
         <div class="filter-row-bottom">
           <div id="category-filter-wrapper">
-            <button id="category-filter-btn" title="Filter by category"><span class="material-symbols-outlined">category</span></button>
+            <button id="category-filter-btn" data-i18n-title="tooltipFilterCategory" title="Filter by category"><span class="material-symbols-outlined">category</span></button>
             <div id="category-popup" class="category-popup" style="display: none;">
-              <div class="category-popup-item" data-value="">All Categories</div>
+              <div class="category-popup-item" data-value="" data-i18n="labelAllCategories">All Categories</div>
               <!-- Categories will be dynamically populated here -->
             </div>
           </div>
           <div id="sort-buttons">
-            <button class="sort-btn active" data-sort="recent" title="Recently Used"><span class="material-symbols-outlined">schedule</span></button>
-            <button class="sort-btn" data-sort="most-used" title="Most Used"><span class="material-symbols-outlined">numbers</span></button>
-            <button class="sort-btn sort-toggle" data-sort="alphabetical" data-alt-sort="reverse-alphabetical" title="A-Z"><span class="material-symbols-outlined">sort_by_alpha</span></button>
-            <button class="sort-btn sort-toggle" data-sort="newest" data-alt-sort="oldest" title="Newest First"><span class="material-symbols-outlined">new_releases</span></button>
+            <button class="sort-btn active" data-sort="recent" data-i18n-title="tooltipRecentlyUsed" title="Recently Used"><span class="material-symbols-outlined">schedule</span></button>
+            <button class="sort-btn" data-sort="most-used" data-i18n-title="tooltipMostUsed" title="Most Used"><span class="material-symbols-outlined">numbers</span></button>
+            <button class="sort-btn sort-toggle" data-sort="alphabetical" data-alt-sort="reverse-alphabetical" data-i18n-title="tooltipAlphabetical" title="A-Z"><span class="material-symbols-outlined">sort_by_alpha</span></button>
+            <button class="sort-btn sort-toggle" data-sort="newest" data-alt-sort="oldest" data-i18n-title="tooltipNewestFirst" title="Newest First"><span class="material-symbols-outlined">new_releases</span></button>
           </div>
-          <button id="show-favorites" title="Show favorites only"><span class="material-symbols-outlined">star</span></button>
+          <button id="show-favorites" data-i18n-title="tooltipShowFavorites" title="Show favorites only"><span class="material-symbols-outlined">star</span></button>
         </div>
       </div>
 
@@ -184,8 +184,8 @@
       <div id="quick-access-panel" style="display: none;">
         <div class="quick-access-section">
           <div class="quick-access-header">
-            <span class="quick-access-title">Recently Used</span>
-            <button class="quick-access-toggle" id="toggle-recent" title="Toggle section"><span class="material-symbols-outlined">remove</span></button>
+            <span class="quick-access-title" data-i18n="labelRecentlyUsed">Recently Used</span>
+            <button class="quick-access-toggle" id="toggle-recent" data-i18n-title="tooltipToggleSection" title="Toggle section"><span class="material-symbols-outlined">remove</span></button>
           </div>
           <div class="quick-access-items" id="recent-prompts-list">
             <!-- Recently used prompts will be rendered here -->
@@ -194,8 +194,8 @@
 
         <div class="quick-access-section">
           <div class="quick-access-header">
-            <span class="quick-access-title">Top Favorites</span>
-            <button class="quick-access-toggle" id="toggle-favorites" title="Toggle section"><span class="material-symbols-outlined">remove</span></button>
+            <span class="quick-access-title" data-i18n="labelTopFavorites">Top Favorites</span>
+            <button class="quick-access-toggle" id="toggle-favorites" data-i18n-title="tooltipToggleSection" title="Toggle section"><span class="material-symbols-outlined">remove</span></button>
           </div>
           <div class="quick-access-items" id="top-favorites-list">
             <!-- Top favorites will be rendered here -->
@@ -212,7 +212,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h3 id="editor-title">New Prompt</h3>
-            <button class="close-btn" id="close-editor"><span class="material-symbols-outlined">close</span></button>
+            <button class="close-btn" data-i18n-title="btnClose" id="close-editor"><span class="material-symbols-outlined">close</span></button>
           </div>
           <div class="modal-body">
             <input type="text" id="prompt-title-input" placeholder="Prompt title" />
@@ -225,8 +225,8 @@
             </label>
           </div>
           <div class="modal-footer">
-            <button id="cancel-edit-btn" class="secondary" title="Cancel"><span class="material-symbols-outlined">close</span></button>
-            <button id="save-prompt-btn" class="primary" title="Save"><span class="material-symbols-outlined">check</span></button>
+            <button id="cancel-edit-btn" class="secondary" data-i18n-title="btnCancel" title="Cancel"><span class="material-symbols-outlined">close</span></button>
+            <button id="save-prompt-btn" class="primary" data-i18n-title="btnSave" title="Save"><span class="material-symbols-outlined">check</span></button>
           </div>
         </div>
       </div>
@@ -236,7 +236,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h3>Insert text to Prompt Workspace Area</h3>
-            <button class="close-btn" id="close-insert-modal"><span class="material-symbols-outlined">close</span></button>
+            <button class="close-btn" data-i18n-title="btnClose" id="close-insert-modal"><span class="material-symbols-outlined">close</span></button>
           </div>
           <div class="modal-body">
             <div class="insert-prompt-preview" id="insert-prompt-preview">
@@ -245,9 +245,9 @@
             <p class="modal-description">Choose how to insert this prompt: at the beginning, at the end, or replace the existing text entirely?</p>
           </div>
           <div class="modal-footer">
-            <button id="insert-beginning-btn" class="primary" title="Insert at beginning"><span class="material-symbols-outlined">vertical_align_top</span></button>
-            <button id="insert-end-btn" class="primary" title="Insert at end"><span class="material-symbols-outlined">vertical_align_bottom</span></button>
-            <button id="replace-workspace-btn" class="secondary" title="Replace all"><span class="material-symbols-outlined">sync</span></button>
+            <button id="insert-beginning-btn" class="primary" data-i18n-title="tooltipInsertBeginning" title="Insert at beginning"><span class="material-symbols-outlined">vertical_align_top</span></button>
+            <button id="insert-end-btn" class="primary" data-i18n-title="tooltipInsertEnd" title="Insert at end"><span class="material-symbols-outlined">vertical_align_bottom</span></button>
+            <button id="replace-workspace-btn" class="secondary" data-i18n-title="tooltipReplaceAll" title="Replace all"><span class="material-symbols-outlined">sync</span></button>
           </div>
         </div>
       </div>

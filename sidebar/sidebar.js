@@ -1,5 +1,6 @@
 import { PROVIDERS, getProviderById, getProviderByIdWithSettings, getEnabledProviders } from '../modules/providers.js';
 import { applyTheme } from '../modules/theme-manager.js';
+import { t, translatePage, initializeLanguage } from '../modules/i18n.js';
 import {
   getAllPrompts,
   savePrompt,
@@ -58,6 +59,8 @@ function isDarkTheme() {
 // T013: Initialize sidebar
 async function init() {
   await applyTheme();
+  await initializeLanguage();  // Initialize i18n
+  translatePage();  // Translate all static text
   await renderProviderTabs();
   await loadDefaultProvider();
   setupMessageListener();
@@ -143,7 +146,7 @@ async function renderProviderTabs() {
   const historyTab = document.createElement('button');
   historyTab.id = 'chat-history-tab';
   historyTab.dataset.view = 'chat-history';
-  historyTab.title = 'Chat History';
+  historyTab.title = t('sidebarChatHistory');
 
   const historyIcon = document.createElement('img');
   historyIcon.src = useDarkIcons ? '/icons/ui/dark/chat-history.png' : '/icons/ui/chat-history.png';
@@ -158,7 +161,7 @@ async function renderProviderTabs() {
   const promptLibraryTab = document.createElement('button');
   promptLibraryTab.id = 'prompt-library-tab';
   promptLibraryTab.dataset.view = 'prompt-library';
-  promptLibraryTab.title = 'Prompt Library';
+  promptLibraryTab.title = t('sidebarPromptGenie');
 
   const promptIcon = document.createElement('img');
   promptIcon.src = useDarkIcons ? '/icons/ui/dark/prompts.png' : '/icons/ui/prompts.png';
@@ -172,7 +175,7 @@ async function renderProviderTabs() {
   // Add settings tab at the very end (right side)
   const settingsTab = document.createElement('button');
   settingsTab.id = 'settings-tab';
-  settingsTab.title = 'Settings';
+  settingsTab.title = t('sectionAbout');
 
   const settingsIcon = document.createElement('img');
   settingsIcon.src = useDarkIcons ? '/icons/ui/dark/settings.png' : '/icons/ui/settings.png';
@@ -385,7 +388,7 @@ function setupMessageListener() {
   });
 
   // T026: Listen for settings changes to re-render tabs
-  chrome.storage.onChanged.addListener((changes, namespace) => {
+  chrome.storage.onChanged.addListener(async (changes, namespace) => {
     if (changes.enabledProviders) {
       renderProviderTabs();
       // If current provider was disabled, switch to first enabled provider
@@ -393,6 +396,14 @@ function setupMessageListener() {
       if (currentProvider && !newEnabledProviders.includes(currentProvider)) {
         switchProvider(newEnabledProviders[0]);
       }
+    }
+
+    // Listen for language changes and re-translate
+    if (changes.language) {
+      await initializeLanguage(changes.language.newValue);
+      translatePage();
+      // Re-render provider tabs to update tooltips
+      await renderProviderTabs();
     }
   });
 }
