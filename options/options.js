@@ -286,8 +286,10 @@ function setupEventListeners() {
     }
   });
 
-  // Reset data
-  document.getElementById('reset-btn').addEventListener('click', resetData);
+  // Danger Zone - Clear buttons
+  document.getElementById('clear-prompts-btn').addEventListener('click', clearPrompts);
+  document.getElementById('clear-conversations-btn').addEventListener('click', clearConversations);
+  document.getElementById('reset-settings-btn').addEventListener('click', resetSettingsOnly);
 
   // Default library import button
   document.getElementById('import-default-library')?.addEventListener('click', importDefaultLibraryHandler);
@@ -442,42 +444,66 @@ async function importData(file) {
   }
 }
 
-// T063-T064: Reset all data
-async function resetData() {
-  const confirmMsg = 'Are you sure you want to reset ALL data?\n\n' +
-    'This will:\n' +
-    '- Delete all prompts\n' +
-    '- Delete all chat history (conversations)\n' +
-    '- Reset all settings to defaults\n\n' +
+// Danger Zone: Clear Prompts
+async function clearPrompts() {
+  const confirmMsg = 'Are you sure you want to delete ALL prompts?\n\n' +
+    'This will permanently delete all prompts from your library.\n\n' +
     'This action CANNOT be undone!';
 
   if (!confirm(confirmMsg)) {
     return;
   }
 
-  // Double confirmation for safety
-  if (!confirm('Last chance! Are you absolutely sure?')) {
+  try {
+    await clearAllPrompts();
+    await loadDataStats();
+    showStatus('success', 'All prompts have been deleted');
+  } catch (error) {
+    showStatus('error', 'Failed to clear prompts');
+  }
+}
+
+// Danger Zone: Clear Chat History
+async function clearConversations() {
+  const confirmMsg = 'Are you sure you want to delete ALL chat history?\n\n' +
+    'This will permanently delete all saved conversations.\n\n' +
+    'This action CANNOT be undone!';
+
+  if (!confirm(confirmMsg)) {
     return;
   }
 
   try {
-    // Clear prompts
-    await clearAllPrompts();
-
-    // Clear conversations (chat history)
     await clearAllConversations();
-
-    // Reset settings
-    await resetSettings();
-
-    // Reload UI
-    await loadSettings();
     await loadDataStats();
-    await renderProviderList();
-
-    showStatus('success', 'All data has been reset');
+    showStatus('success', 'All chat history has been deleted');
   } catch (error) {
-    showStatus('error', 'Failed to reset data');
+    showStatus('error', 'Failed to clear chat history');
+  }
+}
+
+// Danger Zone: Reset Settings
+async function resetSettingsOnly() {
+  const confirmMsg = 'Are you sure you want to reset ALL settings to defaults?\n\n' +
+    'This will reset:\n' +
+    '- Theme settings\n' +
+    '- Default provider\n' +
+    '- Keyboard shortcuts\n' +
+    '- All other preferences\n\n' +
+    'Your prompts and chat history will NOT be affected.\n\n' +
+    'This action CANNOT be undone!';
+
+  if (!confirm(confirmMsg)) {
+    return;
+  }
+
+  try {
+    await resetSettings();
+    await loadSettings();
+    await renderProviderList();
+    showStatus('success', 'All settings have been reset to defaults');
+  } catch (error) {
+    showStatus('error', 'Failed to reset settings');
   }
 }
 
