@@ -1,7 +1,6 @@
 // T073: Version Check Module
 // Checks for updates by comparing commit hash with GitHub
 
-const GITHUB_API_COMMITS_URL = 'https://api.github.com/repos/xiaolai/insidebar-ai/commits/main';
 const VERSION_INFO_PATH = '/data/version-info.json';
 
 /**
@@ -22,29 +21,21 @@ export async function loadVersionInfo() {
 }
 
 /**
- * Fetch latest commit from GitHub
+ * Fetch latest commit from GitHub via background service worker
  * @returns {Promise<Object|null>} Latest commit info {sha, date, message} or null on error
  */
 export async function fetchLatestCommit() {
   try {
-    const response = await fetch(GITHUB_API_COMMITS_URL, {
-      headers: {
-        'Accept': 'application/vnd.github.v3+json'
-      }
+    const response = await chrome.runtime.sendMessage({
+      action: 'fetchLatestCommit'
     });
 
-    if (!response.ok) {
-      throw new Error(`GitHub API error: ${response.status}`);
+    if (response && response.success) {
+      return response.data;
+    } else {
+      console.error('Error fetching latest commit:', response?.error || 'Unknown error');
+      return null;
     }
-
-    const data = await response.json();
-
-    return {
-      sha: data.sha,
-      shortSha: data.sha.substring(0, 7),
-      date: data.commit.committer.date,
-      message: data.commit.message
-    };
   } catch (error) {
     console.error('Error fetching latest commit:', error);
     return null;

@@ -292,9 +292,48 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     // Handle duplicate check request
     handleCheckDuplicate(message.payload).then(sendResponse);
     return true; // Keep channel open for async response
+  } else if (message.action === 'fetchLatestCommit') {
+    // T073: Handle version check request from options page
+    handleFetchLatestCommit().then(sendResponse);
+    return true; // Keep channel open for async response
   }
   return true;
 });
+
+// T073: Handle version check by fetching latest commit from GitHub API
+async function handleFetchLatestCommit() {
+  try {
+    const GITHUB_API_URL = 'https://api.github.com/repos/xiaolai/insidebar-ai/commits/main';
+
+    const response = await fetch(GITHUB_API_URL, {
+      headers: {
+        'Accept': 'application/vnd.github.v3+json'
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`GitHub API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    return {
+      success: true,
+      data: {
+        sha: data.sha,
+        shortSha: data.sha.substring(0, 7),
+        date: data.commit.committer.date,
+        message: data.commit.message
+      }
+    };
+  } catch (error) {
+    console.error('[Background] Error fetching latest commit:', error);
+    return {
+      success: false,
+      error: error.message
+    };
+  }
+}
 
 // Handle duplicate conversation check - now with direct database access
 async function handleCheckDuplicate(payload) {
