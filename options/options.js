@@ -93,8 +93,8 @@ async function loadSettings() {
   // Theme
   document.getElementById('theme-select').value = settings.theme || 'auto';
 
-  // Default provider
-  document.getElementById('default-provider-select').value = settings.defaultProvider || 'chatgpt';
+  // Default provider - now dynamically populated
+  await updateDefaultProviderDropdown();
 
   const keyboardShortcutEnabled = settings.keyboardShortcutEnabled !== false;
   const shortcutToggle = document.getElementById('keyboard-shortcut-toggle');
@@ -169,6 +169,39 @@ async function renderProviderList() {
   });
 }
 
+// Update the default provider dropdown to show only enabled providers
+async function updateDefaultProviderDropdown() {
+  const settings = await getSettings();
+  const enabledProviders = getEnabledProvidersOrDefault(settings);
+  const dropdown = document.getElementById('default-provider-select');
+  const currentDefault = settings.defaultProvider || 'chatgpt';
+
+  // Clear existing options
+  dropdown.innerHTML = '';
+
+  // Populate with enabled providers only
+  enabledProviders.forEach(providerId => {
+    const provider = PROVIDERS.find(p => p.id === providerId);
+    if (provider) {
+      const option = document.createElement('option');
+      option.value = provider.id;
+      option.textContent = provider.name;
+      dropdown.appendChild(option);
+    }
+  });
+
+  // Set the selected value
+  // If current default is still enabled, keep it; otherwise use first enabled provider
+  if (enabledProviders.includes(currentDefault)) {
+    dropdown.value = currentDefault;
+  } else {
+    // Current default was disabled, switch to first enabled provider
+    const newDefault = enabledProviders[0];
+    dropdown.value = newDefault;
+    await saveSetting('defaultProvider', newDefault);
+  }
+}
+
 async function toggleProvider(providerId) {
   const settings = await getSettings();
   let enabledProviders = getEnabledProvidersOrDefault(settings);
@@ -187,6 +220,7 @@ async function toggleProvider(providerId) {
 
   await saveSetting('enabledProviders', enabledProviders);
   await renderProviderList();
+  await updateDefaultProviderDropdown();  // Update dropdown when providers change
   showStatus('success', 'Provider settings updated');
 }
 
