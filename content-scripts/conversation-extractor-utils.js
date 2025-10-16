@@ -184,6 +184,21 @@
   window.ConversationExtractorUtils.generateConversationId = function(url, title) {
   // Prefer URL-based ID for uniqueness and reliability
   if (url) {
+    // Google AI Mode: Use normalized query parameter only
+    if (url.includes('google.com/search') && url.includes('udm=50')) {
+      try {
+        const urlObj = new URL(url);
+        const query = urlObj.searchParams.get('q');
+        if (query) {
+          // Normalize query: lowercase, trim, collapse spaces
+          const normalized = query.toLowerCase().trim().replace(/\s+/g, ' ');
+          return `google-ai-${normalized}`;
+        }
+      } catch (e) {
+        console.error('[Extractor Utils] Error parsing Google AI URL:', e);
+      }
+    }
+
     // Extract conversation ID from URL if present
     // ChatGPT: https://chatgpt.com/c/abc123
     // Claude: https://claude.ai/chat/abc-123

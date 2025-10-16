@@ -181,8 +181,9 @@
     // - User messages might be in specific containers
     // - AI responses might be in different containers
 
-    // Try to find message containers (this is speculative and needs testing)
+    // Try to find message containers
     const possibleSelectors = [
+      'div[data-processed="true"]',  // Google AI Mode primary selector
       '[role="article"]',
       '[data-message-author]',
       '.message-container',
@@ -231,8 +232,16 @@
     // Determine role based on container attributes or structure
     let role = 'unknown';
 
+    // Google AI Mode specific: Check data-processed attribute
+    if (container.hasAttribute('data-processed')) {
+      // Heuristic: Alternate between user and assistant
+      // First message is typically user query
+      const allMessages = document.querySelectorAll('div[data-processed="true"]');
+      const index = Array.from(allMessages).indexOf(container);
+      role = index % 2 === 0 ? 'user' : 'assistant';
+    }
     // Try to detect role from attributes or classes
-    if (container.hasAttribute('data-message-author')) {
+    else if (container.hasAttribute('data-message-author')) {
       const author = container.getAttribute('data-message-author');
       role = author === 'user' ? 'user' : 'assistant';
     } else if (container.classList.contains('user-message')) {
