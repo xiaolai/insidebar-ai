@@ -40,6 +40,24 @@
   "themeDark": {
     "message": "深色"
   },
+  "labelLanguage": {
+    "message": "語言"
+  },
+  "descLanguage": {
+    "message": "選擇您偏好的介面語言"
+  },
+  "langEnglish": {
+    "message": "English (英語)"
+  },
+  "langSimplifiedChinese": {
+    "message": "简体中文"
+  },
+  "langTraditionalChinese": {
+    "message": "繁體中文"
+  },
+  "msgLanguageUpdated": {
+    "message": "語言已更新。請重新載入擴充功能以查看變更。"
+  },
 
   "sectionProviders": {
     "message": "AI提供者"

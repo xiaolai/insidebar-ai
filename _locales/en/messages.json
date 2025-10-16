@@ -40,6 +40,24 @@
   "themeDark": {
     "message": "Dark"
   },
+  "labelLanguage": {
+    "message": "Language"
+  },
+  "descLanguage": {
+    "message": "Choose your preferred interface language"
+  },
+  "langEnglish": {
+    "message": "English"
+  },
+  "langSimplifiedChinese": {
+    "message": "简体中文 (Simplified Chinese)"
+  },
+  "langTraditionalChinese": {
+    "message": "繁體中文 (Traditional Chinese)"
+  },
+  "msgLanguageUpdated": {
+    "message": "Language updated. Please reload the extension to see changes."
+  },
 
   "sectionProviders": {
     "message": "AI Providers"

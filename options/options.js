@@ -19,8 +19,21 @@ import {
   loadVersionInfo,
   checkForUpdates
 } from '../modules/version-checker.js';
-import { t, translatePage } from '../modules/i18n.js';
+import { t, translatePage, getCurrentLanguage } from '../modules/i18n.js';
 const DEFAULT_ENABLED_PROVIDERS = ['chatgpt', 'claude', 'gemini', 'grok', 'deepseek'];
+
+// Helper function to get browser's current language in our supported format
+function getCurrentBrowserLanguage() {
+  const browserLang = getCurrentLanguage();
+  // Map browser language codes to our supported locales
+  if (browserLang.startsWith('zh')) {
+    if (browserLang.includes('TW') || browserLang.includes('HK') || browserLang.includes('Hant')) {
+      return 'zh_TW';
+    }
+    return 'zh_CN';
+  }
+  return 'en';
+}
 
 function getEnabledProvidersOrDefault(settings) {
   if (settings.enabledProviders && Array.isArray(settings.enabledProviders)) {
@@ -94,6 +107,10 @@ async function loadSettings() {
 
   // Theme
   document.getElementById('theme-select').value = settings.theme || 'auto';
+
+  // Language
+  const currentLanguage = settings.language || getCurrentBrowserLanguage();
+  document.getElementById('language-select').value = currentLanguage;
 
   // Default provider
   document.getElementById('default-provider-select').value = settings.defaultProvider || 'chatgpt';
@@ -238,6 +255,15 @@ function setupEventListeners() {
     await saveSetting('theme', e.target.value);
     await applyTheme();  // Re-apply theme immediately
     showStatus('success', t('msgThemeUpdated'));
+  });
+
+  // Language change
+  document.getElementById('language-select').addEventListener('change', async (e) => {
+    await saveSetting('language', e.target.value);
+    showStatus('success', t('msgLanguageUpdated'));
+
+    // Note: Chrome extension i18n requires extension reload to change language
+    // The user will need to reload the extension manually or close/reopen the page
   });
 
   // Default provider change
