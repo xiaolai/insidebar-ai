@@ -4,8 +4,6 @@ import { getSettings, getSetting, saveSettings, saveSetting, resetSettings, expo
 import { applyTheme } from '../modules/theme-manager.js';
 import {
   getAllPrompts,
-  getFavoritePrompts,
-  getAllCategories,
   exportPrompts,
   importPrompts,
   clearAllPrompts,
@@ -191,13 +189,9 @@ async function toggleProvider(providerId) {
 async function loadDataStats() {
   try {
     const prompts = await getAllPrompts();
-    const favorites = await getFavoritePrompts();
-    const categories = await getAllCategories();
     const conversations = await getAllConversations();
 
     document.getElementById('stat-prompts').textContent = prompts.length;
-    document.getElementById('stat-favorites').textContent = favorites.length;
-    document.getElementById('stat-categories').textContent = categories.length;
     document.getElementById('stat-conversations').textContent = conversations.length;
 
     // Estimate storage size (include both prompts and conversations)
@@ -209,8 +203,6 @@ async function loadDataStats() {
   } catch (error) {
     // Silently handle data stats errors
     document.getElementById('stat-prompts').textContent = '0';
-    document.getElementById('stat-favorites').textContent = '0';
-    document.getElementById('stat-categories').textContent = '0';
     document.getElementById('stat-conversations').textContent = '0';
     document.getElementById('stat-storage').textContent = '0 KB';
   }
