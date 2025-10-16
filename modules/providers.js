@@ -24,6 +24,14 @@ export const PROVIDERS = [
     enabled: true
   },
   {
+    id: 'google',
+    name: 'Google AI',
+    url: 'https://www.google.com/search?udm=50',
+    icon: '/icons/providers/google.png',
+    iconDark: '/icons/providers/dark/google.png',
+    enabled: true
+  },
+  {
     id: 'grok',
     name: 'Grok',
     url: 'https://grok.com',
@@ -37,14 +45,6 @@ export const PROVIDERS = [
     url: 'https://chat.deepseek.com',
     icon: '/icons/providers/deepseek.png',
     iconDark: '/icons/providers/dark/deepseek.png',
-    enabled: true
-  },
-  {
-    id: 'google',
-    name: 'Google AI',
-    url: 'https://www.google.com/search?udm=50',
-    icon: '/icons/providers/google.png',
-    iconDark: '/icons/providers/dark/google.png',
     enabled: true
   }
 ];
@@ -62,7 +62,7 @@ export async function getProviderByIdWithSettings(id) {
 
 export async function getEnabledProviders() {
   const settings = await chrome.storage.sync.get({
-    enabledProviders: ['chatgpt', 'claude', 'gemini', 'grok', 'deepseek', 'google']
+    enabledProviders: ['chatgpt', 'claude', 'gemini', 'google', 'grok', 'deepseek']
   });
 
   return PROVIDERS
