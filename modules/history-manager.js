@@ -212,40 +212,67 @@ export async function deleteConversation(id) {
   });
 }
 
-// Search conversations with enhanced features
+// Search conversations with enhanced features using cursor-based filtering
 export async function searchConversations(searchText) {
   await ensureDb();
-
-  const allConversations = await getAllConversations();
 
   // Parse search query for operators and field-specific searches
   const searchOptions = parseSearchQuery(searchText);
 
-  // Filter conversations based on search options
-  let results = allConversations.filter(conv =>
-    matchesSearchCriteria(conv, searchOptions)
-  );
+  return runWithRetry(() => new Promise((resolve, reject) => {
+    const transaction = db.transaction([CONVERSATIONS_STORE], 'readonly');
+    const store = transaction.objectStore(CONVERSATIONS_STORE);
 
-  // Apply relevance scoring and ranking
-  if (results.length > 0) {
-    results = results.map(conv => ({
-      ...conv,
-      _relevanceScore: calculateRelevanceScore(conv, searchOptions)
-    }));
+    // Optimize by using indexes where possible
+    let cursorSource;
 
-    // Sort by relevance score (highest first), then by timestamp
-    results.sort((a, b) => {
-      if (b._relevanceScore !== a._relevanceScore) {
-        return b._relevanceScore - a._relevanceScore;
+    // If searching by provider, use provider index
+    if (searchOptions.fieldSearches.provider.length > 0) {
+      const providerValue = searchOptions.fieldSearches.provider[0];
+      const index = store.index('provider');
+      cursorSource = index.openCursor(IDBKeyRange.only(providerValue));
+    } else {
+      // Use primary cursor for general search
+      cursorSource = store.openCursor();
+    }
+
+    const results = [];
+
+    cursorSource.onsuccess = (event) => {
+      const cursor = event.target.result;
+
+      if (cursor) {
+        const conv = cursor.value;
+
+        // Apply filters incrementally
+        if (matchesSearchCriteria(conv, searchOptions)) {
+          // Calculate relevance score and insert in sorted position
+          const score = calculateRelevanceScore(conv, searchOptions);
+
+          // Binary search to find insertion point for sorted order
+          let insertIndex = results.length;
+          for (let i = 0; i < results.length; i++) {
+            const existingScore = results[i]._relevanceScore;
+            if (score > existingScore ||
+               (score === existingScore && conv.timestamp > results[i].timestamp)) {
+              insertIndex = i;
+              break;
+            }
+          }
+
+          results.splice(insertIndex, 0, { ...conv, _relevanceScore: score });
+        }
+
+        cursor.continue();
+      } else {
+        // Cursor exhausted, remove score field and return results
+        const cleanedResults = results.map(({ _relevanceScore, ...conv }) => conv);
+        resolve(cleanedResults);
       }
-      return b.timestamp - a.timestamp;
-    });
+    };
 
-    // Remove the temporary score field
-    results = results.map(({ _relevanceScore, ...conv }) => conv);
-  }
-
-  return results;
+    cursorSource.onerror = () => reject(cursorSource.error);
+  }));
 }
 
 // Parse search query to extract operators and field filters
@@ -511,12 +538,18 @@ export async function getConversationsByProvider(provider) {
   });
 }
 
-// Get favorite conversations
+// Get favorite conversations using cursor-based filtering
 export async function getFavoriteConversations() {
   await ensureDb();
 
-  const allConversations = await getAllConversations();
-  return allConversations.filter(c => c.isFavorite === true);
+  return runWithRetry(() => {
+    const transaction = db.transaction([CONVERSATIONS_STORE], 'readonly');
+    const store = transaction.objectStore(CONVERSATIONS_STORE);
+    const index = store.index('isFavorite');
+    // Use index to get only favorites (isFavorite = 1/true)
+    const request = index.getAll(1);
+    return wrapRequest(request, value => value || []);
+  });
 }
 
 // Toggle favorite status
