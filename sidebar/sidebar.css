@@ -1553,6 +1553,90 @@ body {
   font-size: 14px;
 }
 
+/* Search info section (result count and helper) */
+.search-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.search-result-count {
+  font-size: 12px;
+  color: #666;
+  padding: 4px 8px;
+}
+
+.search-helper {
+  background: #e3f2fd;
+  border: 1px solid #90caf9;
+  border-radius: 4px;
+  padding: 8px 10px;
+  font-size: 11px;
+  line-height: 1.4;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 8px;
+}
+
+.search-helper .helper-text {
+  flex: 1;
+  color: #1565c0;
+}
+
+.search-helper .helper-text code {
+  background: #bbdefb;
+  padding: 2px 4px;
+  border-radius: 2px;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.search-helper .helper-close {
+  background: none;
+  border: none;
+  font-size: 18px;
+  line-height: 1;
+  color: #1565c0;
+  cursor: pointer;
+  padding: 0;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.search-helper .helper-close:hover {
+  opacity: 1;
+}
+
+/* Highlight search terms in results */
+.search-highlight {
+  background: #ffeb3b;
+  padding: 1px 0;
+  border-radius: 2px;
+  font-weight: 500;
+}
+
+#history-show-search-tips {
+  padding: 8px 10px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+  min-width: 36px;
+  opacity: 0.7;
+}
+
+#history-show-search-tips .material-symbols-outlined {
+  font-size: 18px;
+}
+
+#history-show-search-tips:hover {
+  background: #f5f5f5;
+  opacity: 1;
+}
+
 #provider-filter-wrapper {
   position: relative;
 }
@@ -1942,6 +2026,42 @@ a.conversation-link:hover {
   background: #2d2d2d;
   border-color: #444;
   color: #e0e0e0;
+}
+
+[data-theme="dark"] .search-result-count {
+  color: #aaa;
+}
+
+[data-theme="dark"] .search-helper {
+  background: #1a3a5a;
+  border-color: #2962ff;
+}
+
+[data-theme="dark"] .search-helper .helper-text {
+  color: #90caf9;
+}
+
+[data-theme="dark"] .search-helper .helper-text code {
+  background: #2962ff;
+  color: #e3f2fd;
+}
+
+[data-theme="dark"] .search-helper .helper-close {
+  color: #90caf9;
+}
+
+[data-theme="dark"] .search-highlight {
+  background: #9e6b00;
+  color: #fff;
+}
+
+[data-theme="dark"] #history-show-search-tips {
+  background: transparent;
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] #history-show-search-tips:hover {
+  background: #3a3a3a;
 }
 
 [data-theme="dark"] #provider-filter-btn {

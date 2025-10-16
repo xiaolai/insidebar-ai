@@ -39,7 +39,25 @@
 
       <div id="history-filters">
         <div class="filter-row-top">
-          <input type="text" id="history-search" placeholder="Search conversations..." />
+          <input type="text" id="history-search" placeholder="Search conversations..." list="search-history-list" autocomplete="off" />
+          <datalist id="search-history-list">
+            <!-- Search history will be dynamically populated here -->
+          </datalist>
+        </div>
+        <div class="search-info">
+          <div id="search-result-count" class="search-result-count" style="display: none;"></div>
+          <div id="search-helper" class="search-helper" style="display: none;">
+            <span class="helper-text">
+              <strong>Tips:</strong>
+              <code>title:keyword</code> search in titles,
+              <code>tag:keyword</code> search in tags,
+              <code>provider:name</code> filter by provider,
+              <code>"exact phrase"</code> exact match,
+              <code>-keyword</code> exclude,
+              <code>OR</code> for either term
+            </span>
+            <button id="close-search-helper" class="helper-close" title="Hide tips">&times;</button>
+          </div>
         </div>
         <div class="filter-row-bottom">
           <div id="provider-filter-wrapper">
@@ -49,6 +67,7 @@
               <!-- Providers will be dynamically populated here -->
             </div>
           </div>
+          <button id="history-show-search-tips" title="Show search tips"><span class="material-symbols-outlined">help</span></button>
           <button id="history-show-favorites" title="Show favorites only"><span class="material-symbols-outlined">star</span></button>
         </div>
       </div>

@@ -212,16 +212,286 @@ export async function deleteConversation(id) {
   });
 }
 
-// Search conversations
+// Search conversations with enhanced features
 export async function searchConversations(searchText) {
   await ensureDb();
 
   const allConversations = await getAllConversations();
-  const lowerSearch = searchText.toLowerCase();
 
-  return allConversations.filter(conv =>
-    conv.searchText.includes(lowerSearch)
+  // Parse search query for operators and field-specific searches
+  const searchOptions = parseSearchQuery(searchText);
+
+  // Filter conversations based on search options
+  let results = allConversations.filter(conv =>
+    matchesSearchCriteria(conv, searchOptions)
   );
+
+  // Apply relevance scoring and ranking
+  if (results.length > 0) {
+    results = results.map(conv => ({
+      ...conv,
+      _relevanceScore: calculateRelevanceScore(conv, searchOptions)
+    }));
+
+    // Sort by relevance score (highest first), then by timestamp
+    results.sort((a, b) => {
+      if (b._relevanceScore !== a._relevanceScore) {
+        return b._relevanceScore - a._relevanceScore;
+      }
+      return b.timestamp - a.timestamp;
+    });
+
+    // Remove the temporary score field
+    results = results.map(({ _relevanceScore, ...conv }) => conv);
+  }
+
+  return results;
+}
+
+// Parse search query to extract operators and field filters
+function parseSearchQuery(searchText) {
+  const options = {
+    terms: [],
+    exactPhrases: [],
+    excludeTerms: [],
+    fieldSearches: {
+      title: [],
+      content: [],
+      tag: [],
+      provider: []
+    },
+    operator: 'AND' // default operator
+  };
+
+  let remaining = searchText;
+
+  // Extract exact phrases (quoted strings)
+  const exactPhraseRegex = /"([^"]+)"/g;
+  let match;
+  while ((match = exactPhraseRegex.exec(searchText)) !== null) {
+    options.exactPhrases.push(match[1].toLowerCase());
+    remaining = remaining.replace(match[0], ' ');
+  }
+
+  // Split remaining text into tokens
+  const tokens = remaining.split(/\s+/).filter(t => t.trim());
+
+  for (const token of tokens) {
+    const lower = token.toLowerCase();
+
+    // Check for field-specific search (field:value)
+    if (lower.includes(':')) {
+      const [field, value] = lower.split(':', 2);
+      if (value && ['title', 'content', 'tag', 'provider'].includes(field)) {
+        options.fieldSearches[field].push(value);
+        continue;
+      }
+    }
+
+    // Check for exclude operator
+    if (lower.startsWith('-') || lower === 'not') {
+      if (lower.startsWith('-') && lower.length > 1) {
+        options.excludeTerms.push(lower.substring(1));
+      }
+      continue;
+    }
+
+    // Check for OR operator
+    if (lower === 'or') {
+      options.operator = 'OR';
+      continue;
+    }
+
+    // Check for AND operator (explicit)
+    if (lower === 'and') {
+      options.operator = 'AND';
+      continue;
+    }
+
+    // Regular search term
+    if (lower) {
+      options.terms.push(lower);
+    }
+  }
+
+  return options;
+}
+
+// Check if conversation matches search criteria
+function matchesSearchCriteria(conv, options) {
+  const { terms, exactPhrases, excludeTerms, fieldSearches, operator } = options;
+
+  // Check excluded terms first (must not match any)
+  for (const term of excludeTerms) {
+    if (conv.searchText.includes(term)) {
+      return false;
+    }
+  }
+
+  // Check exact phrases (must match all)
+  for (const phrase of exactPhrases) {
+    if (!conv.searchText.includes(phrase)) {
+      return false;
+    }
+  }
+
+  // Check field-specific searches
+  for (const [field, values] of Object.entries(fieldSearches)) {
+    if (values.length > 0) {
+      let fieldMatches = false;
+      const fieldText = getFieldText(conv, field);
+
+      for (const value of values) {
+        if (fieldText.includes(value) || fuzzyMatch(fieldText, value)) {
+          fieldMatches = true;
+          break;
+        }
+      }
+
+      if (!fieldMatches) {
+        return false;
+      }
+    }
+  }
+
+  // Check general search terms
+  if (terms.length > 0) {
+    if (operator === 'OR') {
+      // At least one term must match
+      let hasMatch = false;
+      for (const term of terms) {
+        if (conv.searchText.includes(term) || fuzzyMatch(conv.searchText, term)) {
+          hasMatch = true;
+          break;
+        }
+      }
+      if (!hasMatch) {
+        return false;
+      }
+    } else {
+      // All terms must match (AND)
+      for (const term of terms) {
+        if (!conv.searchText.includes(term) && !fuzzyMatch(conv.searchText, term)) {
+          return false;
+        }
+      }
+    }
+  }
+
+  return true;
+}
+
+// Get field-specific text for searching
+function getFieldText(conv, field) {
+  switch (field) {
+    case 'title':
+      return conv.title.toLowerCase();
+    case 'content':
+      return conv.content.toLowerCase();
+    case 'tag':
+      return conv.tags.join(' ').toLowerCase();
+    case 'provider':
+      return conv.provider.toLowerCase();
+    default:
+      return '';
+  }
+}
+
+// Fuzzy matching for typo tolerance (Levenshtein distance ≤ 2)
+function fuzzyMatch(text, term) {
+  // Only apply fuzzy matching for terms longer than 4 characters
+  if (term.length <= 4) {
+    return false;
+  }
+
+  // Split text into words and check each word
+  const words = text.split(/\s+/);
+  for (const word of words) {
+    if (levenshteinDistance(word, term) <= 2) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+// Calculate Levenshtein distance between two strings
+function levenshteinDistance(str1, str2) {
+  const len1 = str1.length;
+  const len2 = str2.length;
+
+  // Create distance matrix
+  const matrix = Array(len1 + 1).fill(null).map(() => Array(len2 + 1).fill(0));
+
+  // Initialize first row and column
+  for (let i = 0; i <= len1; i++) matrix[i][0] = i;
+  for (let j = 0; j <= len2; j++) matrix[0][j] = j;
+
+  // Fill matrix
+  for (let i = 1; i <= len1; i++) {
+    for (let j = 1; j <= len2; j++) {
+      const cost = str1[i - 1] === str2[j - 1] ? 0 : 1;
+      matrix[i][j] = Math.min(
+        matrix[i - 1][j] + 1,      // deletion
+        matrix[i][j - 1] + 1,      // insertion
+        matrix[i - 1][j - 1] + cost // substitution
+      );
+    }
+  }
+
+  return matrix[len1][len2];
+}
+
+// Calculate relevance score for ranking
+function calculateRelevanceScore(conv, options) {
+  let score = 0;
+
+  const { terms, exactPhrases, fieldSearches } = options;
+  const allTerms = [...terms, ...exactPhrases];
+
+  // Score based on where matches appear
+  for (const term of allTerms) {
+    // Title matches are most valuable (weight: 10)
+    if (conv.title.toLowerCase().includes(term)) {
+      score += 10;
+    }
+
+    // Tag matches are second (weight: 5)
+    const tagText = conv.tags.join(' ').toLowerCase();
+    if (tagText.includes(term)) {
+      score += 5;
+    }
+
+    // Notes matches are third (weight: 3)
+    if (conv.notes && conv.notes.toLowerCase().includes(term)) {
+      score += 3;
+    }
+
+    // Content matches are least (weight: 1)
+    if (conv.content.toLowerCase().includes(term)) {
+      score += 1;
+    }
+  }
+
+  // Boost score for field-specific matches
+  for (const [field, values] of Object.entries(fieldSearches)) {
+    if (values.length > 0) {
+      score += 5; // Bonus for using field-specific search
+    }
+  }
+
+  // Boost score for exact phrase matches
+  score += exactPhrases.length * 8;
+
+  // Recency bonus (newer conversations get slight boost)
+  const daysSinceCreation = (Date.now() - conv.timestamp) / (1000 * 60 * 60 * 24);
+  if (daysSinceCreation < 7) {
+    score += 3;
+  } else if (daysSinceCreation < 30) {
+    score += 1;
+  }
+
+  return score;
 }
 
 // Filter by provider

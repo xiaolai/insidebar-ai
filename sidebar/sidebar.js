@@ -1502,6 +1502,11 @@ function sanitizeHtml(html) {
   return temp.innerHTML;
 }
 
+// Chat History state
+let currentSearchQuery = '';
+const SEARCH_HISTORY_KEY = 'insidebar_search_history';
+const MAX_SEARCH_HISTORY = 10;
+
 // Chat History Implementation
 function setupChatHistory() {
   // Search functionality
@@ -1510,13 +1515,43 @@ function setupChatHistory() {
   searchInput.addEventListener('input', (e) => {
     clearTimeout(searchTimeout);
     searchTimeout = setTimeout(() => {
-      if (e.target.value.trim()) {
-        filterConversations('search', e.target.value);
+      const query = e.target.value.trim();
+      currentSearchQuery = query;
+
+      if (query) {
+        filterConversations('search', query);
+        // Save to search history
+        saveSearchHistory(query);
       } else {
         renderConversationList();
+        hideSearchResultCount();
       }
     }, 300);
   });
+
+  // Load search history into datalist
+  loadSearchHistory();
+
+  // Search tips button
+  const searchTipsBtn = document.getElementById('history-show-search-tips');
+  if (searchTipsBtn) {
+    searchTipsBtn.addEventListener('click', () => {
+      const helper = document.getElementById('search-helper');
+      if (helper.style.display === 'none') {
+        helper.style.display = 'flex';
+      } else {
+        helper.style.display = 'none';
+      }
+    });
+  }
+
+  // Close search helper button
+  const closeHelperBtn = document.getElementById('close-search-helper');
+  if (closeHelperBtn) {
+    closeHelperBtn.addEventListener('click', () => {
+      document.getElementById('search-helper').style.display = 'none';
+    });
+  }
 
   // Provider filter button
   const providerBtn = document.getElementById('provider-filter-btn');
@@ -1720,6 +1755,8 @@ async function filterConversations(filterType, value) {
 
   if (filterType === 'search') {
     conversations = await searchConversations(value);
+    // Show search result count
+    showSearchResultCount(conversations.length);
   } else if (filterType === 'provider') {
     conversations = await getConversationsByProvider(value);
   } else if (filterType === 'favorites') {
@@ -1994,6 +2031,62 @@ async function deleteConversationWithConfirm(id) {
       console.error('Error deleting conversation:', error);
       showToast('Failed to delete conversation');
     }
+  }
+}
+
+// Search history management
+function saveSearchHistory(query) {
+  if (!query || query.trim().length === 0) return;
+
+  try {
+    const history = JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY) || '[]');
+
+    // Remove duplicate if exists
+    const filtered = history.filter(item => item !== query);
+
+    // Add to beginning
+    filtered.unshift(query);
+
+    // Keep only MAX_SEARCH_HISTORY items
+    const trimmed = filtered.slice(0, MAX_SEARCH_HISTORY);
+
+    localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(trimmed));
+
+    // Reload datalist
+    loadSearchHistory();
+  } catch (error) {
+    console.error('Error saving search history:', error);
+  }
+}
+
+function loadSearchHistory() {
+  try {
+    const history = JSON.parse(localStorage.getItem(SEARCH_HISTORY_KEY) || '[]');
+    const datalist = document.getElementById('search-history-list');
+
+    if (!datalist) return;
+
+    datalist.innerHTML = history.map(query =>
+      `<option value="${escapeHtml(query)}">`
+    ).join('');
+  } catch (error) {
+    console.error('Error loading search history:', error);
+  }
+}
+
+// Search result count display
+function showSearchResultCount(count) {
+  const countEl = document.getElementById('search-result-count');
+  if (countEl) {
+    countEl.textContent = `Found ${count} conversation${count !== 1 ? 's' : ''}`;
+    countEl.style.display = 'block';
+  }
+}
+
+function hideSearchResultCount() {
+  const countEl = document.getElementById('search-result-count');
+  if (countEl) {
+    countEl.style.display = 'none';
   }
 }
 
