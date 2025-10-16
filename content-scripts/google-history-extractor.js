@@ -284,7 +284,7 @@
         messages,
         timestamp: Date.now(),
         url: window.location.href,
-        provider: 'Google AI'
+        provider: 'Google'
       };
     } catch (error) {
       console.error('[Google Extractor] Error extracting conversation:', error);
