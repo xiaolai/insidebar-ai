@@ -33,6 +33,12 @@
     console.log('[ChatGPT Extractor] In iframe?', window !== window.top);
     console.log('[ChatGPT Extractor] URL:', window.location.href);
 
+    // Only run on conversation pages (not homepage)
+    if (!window.location.href.startsWith('https://chatgpt.com/c/')) {
+      console.log('[ChatGPT Extractor] Not on conversation page, skipping');
+      return;
+    }
+
     // Wait a bit for ChatGPT to fully render
     setTimeout(() => {
       console.log('[ChatGPT Extractor] Attempting to insert save button...');
@@ -63,6 +69,12 @@
 
   // Insert save button after share button
   function insertSaveButton() {
+    // Only insert button on conversation pages
+    if (!window.location.href.startsWith('https://chatgpt.com/c/')) {
+      console.log('[ChatGPT Extractor] Not a conversation page, skipping save button');
+      return;
+    }
+
     // Check if button already exists
     if (document.getElementById('insidebar-save-conversation')) {
       console.log('[ChatGPT Extractor] Save button already exists');

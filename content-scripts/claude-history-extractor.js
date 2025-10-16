@@ -33,6 +33,12 @@
     console.log('[Claude Extractor] In iframe?', window !== window.top);
     console.log('[Claude Extractor] URL:', window.location.href);
 
+    // Only run on conversation pages (not homepage)
+    if (!window.location.href.startsWith('https://claude.ai/chat/')) {
+      console.log('[Claude Extractor] Not on conversation page, skipping');
+      return;
+    }
+
     // Wait a bit for Claude to fully render
     setTimeout(() => {
       console.log('[Claude Extractor] Attempting to insert save button...');
@@ -79,6 +85,12 @@
 
   // Insert save button after share button
   function insertSaveButton() {
+    // Only insert button on conversation pages
+    if (!window.location.href.startsWith('https://claude.ai/chat/')) {
+      console.log('[Claude Extractor] Not a conversation page, skipping save button');
+      return;
+    }
+
     // Check if button already exists
     if (document.getElementById('insidebar-save-conversation')) {
       console.log('[Claude Extractor] Save button already exists');
