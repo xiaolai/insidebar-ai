@@ -205,7 +205,10 @@
     {
       "resources": [
         "data/prompt-libraries/default-prompts.json",
-        "data/version-info.json"
+        "data/version-info.json",
+        "_locales/en/messages.json",
+        "_locales/zh_CN/messages.json",
+        "_locales/zh_TW/messages.json"
       ],
       "matches": ["<all_urls>"]
     }

@@ -3,7 +3,7 @@ import {
   saveConversation,
   findConversationByConversationId
 } from '../modules/history-manager.js';
-import { t } from '../modules/i18n.js';
+import { t, initializeLanguage } from '../modules/i18n.js';
 
 // T008 & T065: Install event - setup context menus and configure side panel
 const DEFAULT_SHORTCUT_SETTING = { keyboardShortcutEnabled: true };
@@ -75,6 +75,9 @@ async function createContextMenus() {
   // Remove all existing menus
   await chrome.contextMenus.removeAll();
 
+  // Initialize language before creating menus
+  await initializeLanguage();
+
   // Get enabled providers from settings
   const settings = await chrome.storage.sync.get({
     enabledProviders: ['chatgpt', 'claude', 'gemini', 'google', 'grok', 'deepseek']
@@ -119,7 +122,7 @@ async function createContextMenus() {
 
 // T066: Listen for settings changes and update context menus
 chrome.storage.onChanged.addListener((changes, namespace) => {
-  if (changes.enabledProviders) {
+  if (changes.enabledProviders || changes.language) {
     createContextMenus();
   }
 });

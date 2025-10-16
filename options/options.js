@@ -19,7 +19,7 @@ import {
   loadVersionInfo,
   checkForUpdates
 } from '../modules/version-checker.js';
-import { t, translatePage, getCurrentLanguage } from '../modules/i18n.js';
+import { t, translatePage, getCurrentLanguage, initializeLanguage } from '../modules/i18n.js';
 const DEFAULT_ENABLED_PROVIDERS = ['chatgpt', 'claude', 'gemini', 'grok', 'deepseek'];
 
 // Helper function to get browser's current language in our supported format
@@ -91,6 +91,7 @@ function updateShortcutHelperVisibility(isEnabled) {
 // T050: Initialize settings page
 async function init() {
   await applyTheme();  // Apply theme first
+  await initializeLanguage();  // Initialize language from user settings
   translatePage();  // Translate all static text
   await loadSettings();
   await loadDataStats();
@@ -259,11 +260,17 @@ function setupEventListeners() {
 
   // Language change
   document.getElementById('language-select').addEventListener('change', async (e) => {
-    await saveSetting('language', e.target.value);
-    showStatus('success', t('msgLanguageUpdated'));
+    const newLanguage = e.target.value;
+    await saveSetting('language', newLanguage);
 
-    // Note: Chrome extension i18n requires extension reload to change language
-    // The user will need to reload the extension manually or close/reopen the page
+    // Reload translations with new language
+    await initializeLanguage(newLanguage);
+
+    // Re-translate the entire page
+    translatePage();
+
+    // Show success message (now in the new language)
+    showStatus('success', t('msgLanguageUpdated'));
   });
 
   // Default provider change
