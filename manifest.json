@@ -162,6 +162,15 @@
       "css": ["content-scripts/perplexity-save-button.css"],
       "run_at": "document_end",
       "all_frames": true
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "libs/Readability.js",
+        "content-scripts/page-content-extractor.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
     }
   ],
 

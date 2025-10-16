@@ -136,35 +136,113 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
       await chrome.sidePanel.open({ windowId: tab.windowId });
       sidePanelState.set(tab.windowId, true);
 
-      // Capture selected text if available
-      const selectedText = info.selectionText || '';
+      // Check if text is selected
+      if (info.selectionText) {
+        // Send selection with source
+        const contentToSend = `${info.selectionText}\n\nSource: ${info.pageUrl}`;
 
-      // Wait for sidebar to load, then send message to switch provider
-      setTimeout(() => {
-        notifyMessage({
-          action: 'switchProvider',
-          payload: { providerId, selectedText }
-        }).catch(() => {
-          // Sidebar may not be ready yet, silently ignore
-        });
-      }, 100);
+        // Wait for sidebar to load, then send message to switch provider
+        setTimeout(() => {
+          notifyMessage({
+            action: 'switchProvider',
+            payload: { providerId, selectedText: contentToSend }
+          }).catch(() => {
+            // Sidebar may not be ready yet, silently ignore
+          });
+        }, 100);
+      } else {
+        // No text selected - extract page content
+        try {
+          const response = await chrome.tabs.sendMessage(tab.id, {
+            action: 'extractPageContent'
+          });
+
+          if (response && response.success) {
+            // Send extracted content to sidebar
+            setTimeout(() => {
+              notifyMessage({
+                action: 'switchProvider',
+                payload: { providerId, selectedText: response.content }
+              }).catch(() => {
+                // Sidebar may not be ready yet, silently ignore
+              });
+            }, 100);
+          } else {
+            // Extraction failed - send empty to provider
+            setTimeout(() => {
+              notifyMessage({
+                action: 'switchProvider',
+                payload: { providerId, selectedText: '' }
+              }).catch(() => {});
+            }, 100);
+          }
+        } catch (error) {
+          // Content script not ready or extraction failed
+          // Send empty to provider
+          setTimeout(() => {
+            notifyMessage({
+              action: 'switchProvider',
+              payload: { providerId, selectedText: '' }
+            }).catch(() => {});
+          }, 100);
+        }
+      }
     } else if (info.menuItemId === 'open-prompt-library') {
       // Open side panel with prompt library and track state
       await chrome.sidePanel.open({ windowId: tab.windowId });
       sidePanelState.set(tab.windowId, true);
 
-      // Capture selected text if available
-      const selectedText = info.selectionText || '';
+      // Check if text is selected
+      if (info.selectionText) {
+        // Send selection with source
+        const contentToSend = `${info.selectionText}\n\nSource: ${info.pageUrl}`;
 
-      // Wait for sidebar to load, then switch to prompt library
-      setTimeout(() => {
-        notifyMessage({
-          action: 'openPromptLibrary',
-          payload: { selectedText }
-        }).catch(() => {
-          // Sidebar may not be ready yet, ignore error
-        });
-      }, 100);
+        // Wait for sidebar to load, then switch to prompt library
+        setTimeout(() => {
+          notifyMessage({
+            action: 'openPromptLibrary',
+            payload: { selectedText: contentToSend }
+          }).catch(() => {
+            // Sidebar may not be ready yet, ignore error
+          });
+        }, 100);
+      } else {
+        // No text selected - extract page content
+        try {
+          const response = await chrome.tabs.sendMessage(tab.id, {
+            action: 'extractPageContent'
+          });
+
+          if (response && response.success) {
+            // Send extracted content to sidebar
+            setTimeout(() => {
+              notifyMessage({
+                action: 'openPromptLibrary',
+                payload: { selectedText: response.content }
+              }).catch(() => {
+                // Sidebar may not be ready yet, ignore error
+              });
+            }, 100);
+          } else {
+            // Extraction failed - send empty
+            setTimeout(() => {
+              notifyMessage({
+                action: 'openPromptLibrary',
+                payload: { selectedText: '' }
+              }).catch(() => {});
+            }, 100);
+          }
+        } catch (error) {
+          // Content script not ready or extraction failed
+          // Send empty
+          setTimeout(() => {
+            notifyMessage({
+              action: 'openPromptLibrary',
+              payload: { selectedText: '' }
+            }).catch(() => {});
+          }, 100);
+        }
+      }
     }
   } catch (error) {
     // Silently handle context menu errors
