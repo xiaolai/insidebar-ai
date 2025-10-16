@@ -11,6 +11,9 @@ import {
   clearAllPrompts,
   importDefaultLibrary
 } from '../modules/prompt-manager.js';
+import {
+  getAllConversations
+} from '../modules/history-manager.js';
 const DEFAULT_ENABLED_PROVIDERS = ['chatgpt', 'claude', 'gemini', 'grok', 'deepseek'];
 
 function getEnabledProvidersOrDefault(settings) {
@@ -187,20 +190,25 @@ async function loadDataStats() {
     const prompts = await getAllPrompts();
     const favorites = await getFavoritePrompts();
     const categories = await getAllCategories();
+    const conversations = await getAllConversations();
 
     document.getElementById('stat-prompts').textContent = prompts.length;
     document.getElementById('stat-favorites').textContent = favorites.length;
     document.getElementById('stat-categories').textContent = categories.length;
+    document.getElementById('stat-conversations').textContent = conversations.length;
 
-    // Estimate storage size
-    const dataSize = JSON.stringify(prompts).length;
-    const sizeKB = Math.round(dataSize / 1024);
+    // Estimate storage size (include both prompts and conversations)
+    const promptsSize = JSON.stringify(prompts).length;
+    const conversationsSize = JSON.stringify(conversations).length;
+    const totalSize = promptsSize + conversationsSize;
+    const sizeKB = Math.round(totalSize / 1024);
     document.getElementById('stat-storage').textContent = `~${sizeKB} KB`;
   } catch (error) {
     // Silently handle data stats errors
     document.getElementById('stat-prompts').textContent = '0';
     document.getElementById('stat-favorites').textContent = '0';
     document.getElementById('stat-categories').textContent = '0';
+    document.getElementById('stat-conversations').textContent = '0';
     document.getElementById('stat-storage').textContent = '0 KB';
   }
 }
