@@ -95,7 +95,7 @@ async function createContextMenus() {
     gemini: 'Gemini',
     grok: 'Grok',
     deepseek: 'DeepSeek',
-    google: 'Google AI'
+    google: 'Google'
   };
 
   enabledProviders.forEach(providerId => {

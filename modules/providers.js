@@ -25,7 +25,7 @@ export const PROVIDERS = [
   },
   {
     id: 'google',
-    name: 'Google AI',
+    name: 'Google',
     url: 'https://www.google.com/search?udm=50',
     icon: '/icons/providers/google.png',
     iconDark: '/icons/providers/dark/google.png',
