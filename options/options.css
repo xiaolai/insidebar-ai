@@ -316,6 +316,11 @@ select:focus {
   color: #333;
 }
 
+/* Danger Zone - ensure all buttons have same width */
+.section .btn-danger {
+  min-width: 120px;
+}
+
 /* Status Messages */
 .status-message {
   padding: 12px 16px;
