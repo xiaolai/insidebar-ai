@@ -68,6 +68,12 @@
   "descDefaultProvider": {
     "message": "AI provider to load when opening the sidebar"
   },
+  "labelRememberLastProvider": {
+    "message": "Remember Last Provider"
+  },
+  "descRememberLastProvider": {
+    "message": "When enabled, sidebar opens with the last provider you used. When disabled, always opens with default provider."
+  },
   "labelEnabledProviders": {
     "message": "Enabled Providers"
   },
@@ -294,6 +300,12 @@
   },
   "msgAutoOpenDisabled": {
     "message": "Auto-open sidebar disabled"
+  },
+  "msgRememberLastProviderEnabled": {
+    "message": "Sidebar will remember last provider"
+  },
+  "msgRememberLastProviderDisabled": {
+    "message": "Sidebar will always open default provider"
   },
   "msgEnterCustomizationEnabled": {
     "message": "Enter key customization enabled"

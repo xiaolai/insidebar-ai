@@ -63,12 +63,21 @@
           </div>
           <div class="setting-control">
             <select id="default-provider-select">
-              <option value="chatgpt">ChatGPT</option>
-              <option value="claude">Claude</option>
-              <option value="gemini">Gemini</option>
-              <option value="grok">Grok</option>
-              <option value="deepseek">DeepSeek</option>
+              <!-- Options dynamically populated based on enabled providers -->
             </select>
+          </div>
+        </div>
+
+        <div class="setting-item">
+          <div class="setting-info">
+            <div class="setting-label" data-i18n="labelRememberLastProvider">Remember Last Provider</div>
+            <div class="setting-description" data-i18n="descRememberLastProvider">When enabled, sidebar opens with the last provider you used. When disabled, always opens with default provider.</div>
+          </div>
+          <div class="setting-control">
+            <label class="switch">
+              <input type="checkbox" id="remember-last-provider-toggle" checked />
+              <span class="slider"></span>
+            </label>
           </div>
         </div>
 

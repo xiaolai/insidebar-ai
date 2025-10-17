@@ -68,6 +68,12 @@
   "descDefaultProvider": {
     "message": "開啟側邊欄時載入的AI提供者"
   },
+  "labelRememberLastProvider": {
+    "message": "記住上次使用的提供者"
+  },
+  "descRememberLastProvider": {
+    "message": "啟用時，側邊欄開啟時使用上次使用的提供者。禁用時，始終開啟預設提供者。"
+  },
   "labelEnabledProviders": {
     "message": "已啟用的提供者"
   },
@@ -294,6 +300,12 @@
   },
   "msgAutoOpenDisabled": {
     "message": "自動開啟側邊欄已停用"
+  },
+  "msgRememberLastProviderEnabled": {
+    "message": "側邊欄將記住上次使用的提供者"
+  },
+  "msgRememberLastProviderDisabled": {
+    "message": "側邊欄將始終開啟預設提供者"
   },
   "msgEnterCustomizationEnabled": {
     "message": "Enter鍵自訂已啟用"

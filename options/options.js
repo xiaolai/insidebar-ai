@@ -113,8 +113,8 @@ async function loadSettings() {
   const currentLanguage = settings.language || getCurrentBrowserLanguage();
   document.getElementById('language-select').value = currentLanguage;
 
-  // Default provider
-  document.getElementById('default-provider-select').value = settings.defaultProvider || 'chatgpt';
+  // Default provider - now dynamically populated
+  await updateDefaultProviderDropdown();
 
   const keyboardShortcutEnabled = settings.keyboardShortcutEnabled !== false;
   const shortcutToggle = document.getElementById('keyboard-shortcut-toggle');
@@ -133,6 +133,12 @@ async function loadSettings() {
   const autoOpenSidebarToggle = document.getElementById('auto-open-sidebar-toggle');
   if (autoOpenSidebarToggle) {
     autoOpenSidebarToggle.checked = settings.autoOpenSidebarOnSave === true;
+  }
+
+  // Remember last provider setting
+  const rememberLastProviderToggle = document.getElementById('remember-last-provider-toggle');
+  if (rememberLastProviderToggle) {
+    rememberLastProviderToggle.checked = settings.rememberLastProvider !== false;
   }
 
   // Enter key behavior settings
@@ -189,6 +195,39 @@ async function renderProviderList() {
   });
 }
 
+// Update the default provider dropdown to show only enabled providers
+async function updateDefaultProviderDropdown() {
+  const settings = await getSettings();
+  const enabledProviders = getEnabledProvidersOrDefault(settings);
+  const dropdown = document.getElementById('default-provider-select');
+  const currentDefault = settings.defaultProvider || 'chatgpt';
+
+  // Clear existing options
+  dropdown.innerHTML = '';
+
+  // Populate with enabled providers only
+  enabledProviders.forEach(providerId => {
+    const provider = PROVIDERS.find(p => p.id === providerId);
+    if (provider) {
+      const option = document.createElement('option');
+      option.value = provider.id;
+      option.textContent = provider.name;
+      dropdown.appendChild(option);
+    }
+  });
+
+  // Set the selected value
+  // If current default is still enabled, keep it; otherwise use first enabled provider
+  if (enabledProviders.includes(currentDefault)) {
+    dropdown.value = currentDefault;
+  } else {
+    // Current default was disabled, switch to first enabled provider
+    const newDefault = enabledProviders[0];
+    dropdown.value = newDefault;
+    await saveSetting('defaultProvider', newDefault);
+  }
+}
+
 async function toggleProvider(providerId) {
   const settings = await getSettings();
   let enabledProviders = getEnabledProvidersOrDefault(settings);
@@ -200,6 +239,12 @@ async function toggleProvider(providerId) {
       return;
     }
     enabledProviders = enabledProviders.filter(id => id !== providerId);
+
+    // If disabling the last selected provider, clear it so sidebar uses the new default
+    const lastSelected = await chrome.storage.sync.get({ lastSelectedProvider: null });
+    if (lastSelected.lastSelectedProvider === providerId) {
+      await chrome.storage.sync.set({ lastSelectedProvider: null });
+    }
   } else {
     // Enable
     enabledProviders.push(providerId);
@@ -207,7 +252,8 @@ async function toggleProvider(providerId) {
 
   await saveSetting('enabledProviders', enabledProviders);
   await renderProviderList();
-  showStatus('success', t('msgProviderUpdated'));
+  await updateDefaultProviderDropdown();  // Update dropdown when providers change
+  showStatus('success', t('msgProviderSettingsUpdated'));
 }
 
 // T056: Load and display data statistics
@@ -307,6 +353,22 @@ function setupEventListeners() {
       const enabled = e.target.checked;
       await saveSetting('autoOpenSidebarOnSave', enabled);
       showStatus('success', enabled ? t('msgAutoOpenEnabled') : t('msgAutoOpenDisabled'));
+    });
+  }
+
+  // Remember last provider toggle
+  const rememberLastProviderToggle = document.getElementById('remember-last-provider-toggle');
+  if (rememberLastProviderToggle) {
+    rememberLastProviderToggle.addEventListener('change', async (e) => {
+      const enabled = e.target.checked;
+      await saveSetting('rememberLastProvider', enabled);
+
+      // If disabling, clear lastSelectedProvider so sidebar uses default provider next time
+      if (!enabled) {
+        await chrome.storage.sync.set({ lastSelectedProvider: null });
+      }
+
+      showStatus('success', enabled ? t('msgRememberLastProviderEnabled') : t('msgRememberLastProviderDisabled'));
     });
   }
 

@@ -297,9 +297,15 @@ function createProviderIframe(provider) {
 async function loadDefaultProvider() {
   const settings = await chrome.storage.sync.get({
     lastSelectedProvider: 'chatgpt',
-    defaultProvider: 'chatgpt'
+    defaultProvider: 'chatgpt',
+    rememberLastProvider: true
   });
-  const providerId = settings.lastSelectedProvider || settings.defaultProvider;
+
+  // If rememberLastProvider is enabled, use last selected; otherwise always use default
+  const providerId = settings.rememberLastProvider
+    ? (settings.lastSelectedProvider || settings.defaultProvider)
+    : settings.defaultProvider;
+
   await switchProvider(providerId);
 }
 

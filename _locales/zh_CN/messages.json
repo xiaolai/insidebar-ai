@@ -68,6 +68,12 @@
   "descDefaultProvider": {
     "message": "打开侧边栏时加载的AI提供商"
   },
+  "labelRememberLastProvider": {
+    "message": "记住上次使用的提供商"
+  },
+  "descRememberLastProvider": {
+    "message": "启用时，侧边栏打开时使用上次使用的提供商。禁用时，始终打开默认提供商。"
+  },
   "labelEnabledProviders": {
     "message": "已启用的提供商"
   },
@@ -294,6 +300,12 @@
   },
   "msgAutoOpenDisabled": {
     "message": "自动打开侧边栏已禁用"
+  },
+  "msgRememberLastProviderEnabled": {
+    "message": "侧边栏将记住上次使用的提供商"
+  },
+  "msgRememberLastProviderDisabled": {
+    "message": "侧边栏将始终打开默认提供商"
   },
   "msgEnterCustomizationEnabled": {
     "message": "回车键自定义已启用"
