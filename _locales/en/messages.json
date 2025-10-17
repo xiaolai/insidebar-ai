@@ -55,6 +55,12 @@
   "langTraditionalChinese": {
     "message": "繁體中文 (Traditional Chinese)"
   },
+  "langKorean": {
+    "message": "한국어 (Korean)"
+  },
+  "langJapanese": {
+    "message": "日本語 (Japanese)"
+  },
   "msgLanguageUpdated": {
     "message": "Language updated successfully"
   },

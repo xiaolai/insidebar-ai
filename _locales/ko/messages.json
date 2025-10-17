@@ -1,0 +1,687 @@
+{
+  "extensionName": {
+    "message": "insidebar.ai"
+  },
+  "extensionDescription": {
+    "message": "ChatGPT, Claude, Gemini 등에 빠르게 접근할 수 있는 멀티 AI 사이드바 확장 프로그램"
+  },
+  "commandOpenSidebar": {
+    "message": "기본 제공자로 insidebar.ai 열기"
+  },
+  "commandOpenPromptLibrary": {
+    "message": "insidebar.ai 프롬프트 라이브러리 열기"
+  },
+  "actionDefaultTitle": {
+    "message": "insidebar.ai 열기"
+  },
+
+  "settingsTitle": {
+    "message": "설정: insidebar.ai"
+  },
+  "settingsSubtitle": {
+    "message": "멀티 AI 사이드바 경험을 사용자 지정하세요"
+  },
+
+  "sectionAppearance": {
+    "message": "외관"
+  },
+  "labelTheme": {
+    "message": "테마"
+  },
+  "descTheme": {
+    "message": "선호하는 색상 구성표를 선택하세요"
+  },
+  "themeAuto": {
+    "message": "자동 (시스템)"
+  },
+  "themeLight": {
+    "message": "밝게"
+  },
+  "themeDark": {
+    "message": "어둡게"
+  },
+  "labelLanguage": {
+    "message": "언어"
+  },
+  "descLanguage": {
+    "message": "선호하는 인터페이스 언어를 선택하세요"
+  },
+  "langEnglish": {
+    "message": "English"
+  },
+  "langSimplifiedChinese": {
+    "message": "简体中文 (Simplified Chinese)"
+  },
+  "langTraditionalChinese": {
+    "message": "繁體中文 (Traditional Chinese)"
+  },
+  "langKorean": {
+    "message": "한국어 (Korean)"
+  },
+  "langJapanese": {
+    "message": "日本語 (Japanese)"
+  },
+  "msgLanguageUpdated": {
+    "message": "언어가 성공적으로 업데이트되었습니다"
+  },
+
+  "sectionProviders": {
+    "message": "AI 제공자"
+  },
+  "labelDefaultProvider": {
+    "message": "기본 제공자"
+  },
+  "descDefaultProvider": {
+    "message": "사이드바를 열 때 로드할 AI 제공자"
+  },
+  "labelRememberLastProvider": {
+    "message": "마지막 제공자 기억하기"
+  },
+  "descRememberLastProvider": {
+    "message": "활성화하면 사이드바가 마지막으로 사용한 제공자로 열립니다. 비활성화하면 항상 기본 제공자로 열립니다."
+  },
+  "labelEnabledProviders": {
+    "message": "활성화된 제공자"
+  },
+  "descEnabledProviders": {
+    "message": "사이드바에 표시할 AI 제공자를 선택하세요"
+  },
+
+  "sectionKeyboardShortcuts": {
+    "message": "키보드 단축키"
+  },
+  "labelEnableShortcut": {
+    "message": "키보드 단축키 활성화"
+  },
+  "descEnableShortcut": {
+    "message": "브라우저 어디에서나 insidebar.ai를 여는 전역 단축키를 전환합니다."
+  },
+  "labelDefaultShortcuts": {
+    "message": "기본 단축키"
+  },
+  "descDefaultShortcuts": {
+    "message": "Command+Shift+E (Windows/Linux에서 Ctrl+Shift+E)를 누르면 기본 제공자로 사이드바가 열립니다.<br>Command+Shift+P (Windows/Linux에서 Ctrl+Shift+P)를 누르면 프롬프트 라이브러리가 열립니다.<br>브라우저의 단축키 설정에서 사용자 지정할 수 있습니다."
+  },
+  "btnOpenShortcuts": {
+    "message": "단축키 열기"
+  },
+  "labelEdgeConfirm": {
+    "message": "Microsoft Edge에서 확인"
+  },
+  "descEdgeConfirm": {
+    "message": "Edge에서는 단축키를 한 번 확인해야 합니다. 구성을 클릭하면 Edge 단축키 페이지로 바로 이동합니다."
+  },
+  "btnConfigureEdge": {
+    "message": "Edge에서 구성"
+  },
+  "labelAutoPaste": {
+    "message": "프롬프트 라이브러리에 클립보드 자동 붙여넣기"
+  },
+  "descAutoPaste": {
+    "message": "Command+Shift+P로 프롬프트 라이브러리를 열 때 작업 영역에 클립보드 내용을 자동으로 붙여넣습니다"
+  },
+
+  "sectionChatHistory": {
+    "message": "채팅 기록"
+  },
+  "labelAutoOpenSidebar": {
+    "message": "저장 후 사이드바 자동 열기"
+  },
+  "descAutoOpenSidebar": {
+    "message": "대화를 저장할 때 자동으로 사이드바를 열고 채팅 기록으로 전환합니다"
+  },
+
+  "sectionEnterBehavior": {
+    "message": "Enter 키 동작"
+  },
+  "descEnterBehavior1": {
+    "message": "AI 제공자 입력 필드에서 Enter 키와 수정 키가 작동하는 방식을 사용자 지정합니다."
+  },
+  "descEnterBehavior2": {
+    "message": "<strong>적용 대상:</strong> ChatGPT, Claude, Gemini, Google (AI 모드), Grok, DeepSeek 및 Perplexity."
+  },
+  "labelEnableEnterCustomization": {
+    "message": "Enter 키 사용자 지정 활성화"
+  },
+  "descEnableEnterCustomization": {
+    "message": "활성화하면 지원되는 모든 AI 제공자에서 Enter 키 동작을 수정합니다"
+  },
+  "labelPreset": {
+    "message": "사전 설정"
+  },
+  "descPreset": {
+    "message": "일반적인 키 조합 패턴을 선택하세요"
+  },
+  "presetDefault": {
+    "message": "기본 (Enter=전송, Shift+Enter=줄바꿈)"
+  },
+  "presetSwapped": {
+    "message": "교체됨 (Enter=줄바꿈, Shift+Enter=전송)"
+  },
+  "presetSlack": {
+    "message": "Slack 스타일 (Enter=전송, Ctrl+Enter=줄바꿈)"
+  },
+  "presetDiscord": {
+    "message": "Discord 스타일 (Enter=줄바꿈, Ctrl+Enter=전송)"
+  },
+  "presetCustom": {
+    "message": "사용자 지정"
+  },
+  "labelInsertNewline": {
+    "message": "줄바꿈 삽입"
+  },
+  "labelSendMessage": {
+    "message": "메시지 전송"
+  },
+
+  "sectionPromptLibrary": {
+    "message": "프롬프트 라이브러리"
+  },
+  "descPromptLibrary": {
+    "message": "AI 워크플로, 연구, 코딩 및 분석을 위한 엄선된 메타 프롬프트 가져오기"
+  },
+  "labelDefaultLibrary": {
+    "message": "기본 프롬프트 라이브러리"
+  },
+  "descDefaultLibrary": {
+    "message": "프롬프트 개선, 계획, 코딩, 테스트, 연구, 작성 등을 위한 메타 프롬프트. 동적 템플릿을 위한 변수 지원이 포함됩니다."
+  },
+  "btnImportDefault": {
+    "message": "기본 프롬프트 가져오기"
+  },
+  "btnImportCustom": {
+    "message": "사용자 지정 프롬프트 가져오기"
+  },
+  "noteCustomImport": {
+    "message": "사용자 지정 프롬프트를 가져오기 전에 다음을 읽어보세요: <code style=\"background: #f5f5f5; padding: 2px 6px; border-radius: 3px;\">data/prompt-libraries/Generate_a_Basic_Prompt_Library.md</code>"
+  },
+
+  "sectionDataManagement": {
+    "message": "데이터 관리"
+  },
+  "statChatHistory": {
+    "message": "채팅 기록"
+  },
+  "statPrompts": {
+    "message": "프롬프트"
+  },
+  "statStorage": {
+    "message": "사용된 저장 공간"
+  },
+  "labelExport": {
+    "message": "데이터 내보내기"
+  },
+  "descExport": {
+    "message": "모든 프롬프트 및 설정을 JSON으로 다운로드"
+  },
+  "btnExport": {
+    "message": "내보내기"
+  },
+  "labelImport": {
+    "message": "데이터 가져오기"
+  },
+  "descImport": {
+    "message": "JSON 파일에서 프롬프트 및 설정 복원"
+  },
+  "btnImport": {
+    "message": "가져오기"
+  },
+
+  "sectionDangerZone": {
+    "message": "위험 영역"
+  },
+  "descDangerZone": {
+    "message": "이 작업은 취소할 수 없습니다. 주의해서 사용하세요."
+  },
+  "labelClearHistory": {
+    "message": "채팅 기록 지우기"
+  },
+  "descClearHistory": {
+    "message": "저장된 모든 대화 삭제"
+  },
+  "labelClearPrompts": {
+    "message": "프롬프트 지우기"
+  },
+  "descClearPrompts": {
+    "message": "라이브러리에서 모든 프롬프트 삭제"
+  },
+  "labelResetSettings": {
+    "message": "설정 재설정"
+  },
+  "descResetSettings": {
+    "message": "모든 설정을 기본값으로 재설정"
+  },
+  "btnClear": {
+    "message": "지우기"
+  },
+  "btnReset": {
+    "message": "재설정"
+  },
+
+  "sectionAbout": {
+    "message": "정보"
+  },
+  "labelVersion": {
+    "message": "버전"
+  },
+  "labelBuild": {
+    "message": "빌드"
+  },
+  "btnCheckUpdates": {
+    "message": "업데이트 확인"
+  },
+  "linkDownloadLatest": {
+    "message": "최신 버전 다운로드"
+  },
+  "descAbout1": {
+    "message": "insidebar.ai는 하나의 편리한 사이드바에서 여러 AI 어시스턴트에 빠르게 접근할 수 있습니다."
+  },
+  "descAbout2": {
+    "message": "개인 정보 보호 우선 아키텍처로 구축되었습니다. 모든 데이터는 로컬에 저장됩니다."
+  },
+
+  "msgThemeUpdated": {
+    "message": "테마가 업데이트되었습니다"
+  },
+  "msgProviderUpdated": {
+    "message": "기본 제공자가 업데이트되었습니다"
+  },
+  "msgProviderSettingsUpdated": {
+    "message": "제공자 설정이 업데이트되었습니다"
+  },
+  "msgShortcutEnabled": {
+    "message": "키보드 단축키가 활성화되었습니다"
+  },
+  "msgShortcutDisabled": {
+    "message": "키보드 단축키가 비활성화되었습니다"
+  },
+  "msgAutoPasteEnabled": {
+    "message": "자동 붙여넣기가 활성화되었습니다"
+  },
+  "msgAutoPasteDisabled": {
+    "message": "자동 붙여넣기가 비활성화되었습니다"
+  },
+  "msgAutoOpenEnabled": {
+    "message": "자동 사이드바 열기가 활성화되었습니다"
+  },
+  "msgAutoOpenDisabled": {
+    "message": "자동 사이드바 열기가 비활성화되었습니다"
+  },
+  "msgRememberLastProviderEnabled": {
+    "message": "사이드바가 마지막 제공자를 기억합니다"
+  },
+  "msgRememberLastProviderDisabled": {
+    "message": "사이드바가 항상 기본 제공자로 열립니다"
+  },
+  "msgEnterCustomizationEnabled": {
+    "message": "Enter 키 사용자 지정이 활성화되었습니다"
+  },
+  "msgEnterCustomizationDisabled": {
+    "message": "Enter 키 사용자 지정이 비활성화되었습니다"
+  },
+  "msgPresetChanged": {
+    "message": "사전 설정이 다음으로 변경되었습니다: $PRESET$",
+    "placeholders": {
+      "preset": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgCustomKeyMappingSaved": {
+    "message": "사용자 지정 키 매핑이 저장되었습니다"
+  },
+  "msgDataExported": {
+    "message": "데이터가 성공적으로 내보내졌습니다"
+  },
+  "msgDataImported": {
+    "message": "데이터가 성공적으로 가져와졌습니다"
+  },
+  "msgDataImportedDetails": {
+    "message": "데이터가 성공적으로 가져와졌습니다 — $DETAILS$.",
+    "placeholders": {
+      "details": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgPromptsImported": {
+    "message": "$COUNT$개의 프롬프트를 성공적으로 가져왔습니다",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgPromptsImportedWithSkipped": {
+    "message": "$IMPORTED$개의 프롬프트를 성공적으로 가져왔습니다 ($SKIPPED$개는 이미 존재함)",
+    "placeholders": {
+      "imported": {
+        "content": "$1"
+      },
+      "skipped": {
+        "content": "$2"
+      }
+    }
+  },
+  "msgPromptsAlreadyExist": {
+    "message": "모든 프롬프트가 이미 라이브러리에 존재합니다"
+  },
+  "msgCustomPromptsImported": {
+    "message": "$IMPORTED$개의 사용자 지정 프롬프트를 성공적으로 가져왔습니다",
+    "placeholders": {
+      "imported": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgHistoryCleared": {
+    "message": "모든 채팅 기록이 삭제되었습니다"
+  },
+  "msgPromptsCleared": {
+    "message": "모든 프롬프트가 삭제되었습니다"
+  },
+  "msgSettingsReset": {
+    "message": "모든 설정이 기본값으로 재설정되었습니다"
+  },
+  "msgUpdateAvailable": {
+    "message": "업데이트 사용 가능 - 최신 버전 다운로드 링크를 클릭하세요"
+  },
+  "msgUpToDate": {
+    "message": "최신 버전입니다!"
+  },
+  "msgCheckingUpdates": {
+    "message": "확인 중..."
+  },
+  "msgUpdateCheckFailed": {
+    "message": "업데이트 확인 실패"
+  },
+  "msgVersionUnknown": {
+    "message": "버전 알 수 없음"
+  },
+  "msgCommitHashUnavailable": {
+    "message": "커밋 해시를 사용할 수 없음"
+  },
+  "msgBuildInfo": {
+    "message": "빌드: $HASH$ ($DATE$)",
+    "placeholders": {
+      "hash": {
+        "content": "$1"
+      },
+      "date": {
+        "content": "$2"
+      }
+    }
+  },
+  "msgUpdateStatusAvailable": {
+    "message": "<strong>업데이트 사용 가능!</strong><br>최신: $LATEST$ ($DATE$)<br>현재: $CURRENT$<br><small>$MESSAGE$</small>",
+    "placeholders": {
+      "latest": {
+        "content": "$1"
+      },
+      "date": {
+        "content": "$2"
+      },
+      "current": {
+        "content": "$3"
+      },
+      "message": {
+        "content": "$4"
+      }
+    }
+  },
+  "msgUpdateStatusCurrent": {
+    "message": "최신 버전입니다!"
+  },
+  "msgUpdateStatusError": {
+    "message": "업데이트 확인 실패"
+  },
+
+  "errAtLeastOneProvider": {
+    "message": "최소 하나의 제공자를 활성화해야 합니다"
+  },
+  "errExportFailed": {
+    "message": "데이터 내보내기 실패"
+  },
+  "errImportFailed": {
+    "message": "데이터 가져오기 실패. 파일 형식을 확인하세요."
+  },
+  "errClearHistoryFailed": {
+    "message": "채팅 기록 지우기 실패"
+  },
+  "errClearPromptsFailed": {
+    "message": "프롬프트 지우기 실패"
+  },
+  "errResetSettingsFailed": {
+    "message": "설정 재설정 실패"
+  },
+  "errImportDefaultLibrary": {
+    "message": "기본 라이브러리 가져오기 실패"
+  },
+  "errImportCustomLibrary": {
+    "message": "사용자 지정 프롬프트 가져오기 실패"
+  },
+  "errInvalidFormat": {
+    "message": "잘못된 형식: 파일에 프롬프트의 JSON 배열이 포함되어야 합니다"
+  },
+  "errInvalidPromptStructure": {
+    "message": "잘못된 프롬프트 구조 - 자세한 내용은 알림을 참조하세요"
+  },
+  "errInvalidJSON": {
+    "message": "잘못된 JSON 파일 형식"
+  },
+  "errValidationErrors": {
+    "message": "$COUNT$개의 프롬프트에 유효성 검사 오류가 있습니다",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+
+  "confirmImportData": {
+    "message": "$DATE$의 데이터를 가져오시겠습니까?\n\n다음이 추가됩니다:\n- $PROMPTS$개의 프롬프트\n- $CONVERSATIONS$개의 대화\n- 설정 구성\n\n중복이 발견되지 않는 한 기존 데이터가 유지됩니다.",
+    "placeholders": {
+      "date": {
+        "content": "$1"
+      },
+      "prompts": {
+        "content": "$2"
+      },
+      "conversations": {
+        "content": "$3"
+      }
+    }
+  },
+  "confirmClearHistory": {
+    "message": "모든 채팅 기록을 삭제하시겠습니까?\n\n저장된 모든 대화가 영구적으로 삭제됩니다.\n\n이 작업은 취소할 수 없습니다!"
+  },
+  "confirmClearPrompts": {
+    "message": "모든 프롬프트를 삭제하시겠습니까?\n\n라이브러리에서 모든 프롬프트가 영구적으로 삭제됩니다.\n\n이 작업은 취소할 수 없습니다!"
+  },
+  "confirmResetSettings": {
+    "message": "모든 설정을 기본값으로 재설정하시겠습니까?\n\n다음이 재설정됩니다:\n- 테마 설정\n- 기본 제공자\n- 키보드 단축키\n- 기타 모든 기본 설정\n\n프롬프트 및 채팅 기록은 영향을 받지 않습니다.\n\n이 작업은 취소할 수 없습니다!"
+  },
+
+  "contextMenuSendTo": {
+    "message": "insidebar.ai로 보내기"
+  },
+  "contextMenuPromptLibrary": {
+    "message": "프롬프트 라이브러리"
+  },
+
+  "sidebarChatHistory": {
+    "message": "채팅 기록"
+  },
+  "sidebarPromptGenie": {
+    "message": "프롬프트 지니"
+  },
+  "sidebarEditingPrompt": {
+    "message": "프롬프트 편집"
+  },
+  "placeholderSearch": {
+    "message": "검색..."
+  },
+  "placeholderSearchConversations": {
+    "message": "대화 검색..."
+  },
+  "placeholderSearchPrompts": {
+    "message": "프롬프트 검색..."
+  },
+  "btnSave": {
+    "message": "저장"
+  },
+  "btnCancel": {
+    "message": "취소"
+  },
+  "btnClose": {
+    "message": "닫기"
+  },
+  "btnDelete": {
+    "message": "삭제"
+  },
+  "btnEdit": {
+    "message": "편집"
+  },
+  "btnCopy": {
+    "message": "복사"
+  },
+  "tooltipSaveNew": {
+    "message": "새 프롬프트로 저장"
+  },
+  "tooltipCopyClipboard": {
+    "message": "클립보드에 복사"
+  },
+  "tooltipClear": {
+    "message": "지우기"
+  },
+  "tooltipSelectProvider": {
+    "message": "제공자 선택"
+  },
+  "tooltipSendProvider": {
+    "message": "선택한 제공자에게 보내기"
+  },
+  "tooltipFilterProvider": {
+    "message": "제공자별 필터링"
+  },
+  "tooltipShowSearchTips": {
+    "message": "검색 팁 표시"
+  },
+  "tooltipShowFavorites": {
+    "message": "즐겨찾기만 표시"
+  },
+  "tooltipFilterCategory": {
+    "message": "카테고리별 필터링"
+  },
+  "tooltipRecentlyUsed": {
+    "message": "최근 사용"
+  },
+  "tooltipMostUsed": {
+    "message": "가장 많이 사용"
+  },
+  "tooltipAlphabetical": {
+    "message": "가나다순"
+  },
+  "tooltipNewestFirst": {
+    "message": "최신순"
+  },
+  "tooltipToggleSection": {
+    "message": "섹션 전환"
+  },
+  "tooltipCopyContent": {
+    "message": "내용 복사"
+  },
+  "tooltipInsertBeginning": {
+    "message": "맨 앞에 삽입"
+  },
+  "tooltipInsertEnd": {
+    "message": "맨 뒤에 삽입"
+  },
+  "tooltipReplaceAll": {
+    "message": "모두 바꾸기"
+  },
+  "labelAllProviders": {
+    "message": "모든 제공자"
+  },
+  "labelAllCategories": {
+    "message": "모든 카테고리"
+  },
+  "labelRecentlyUsed": {
+    "message": "최근 사용"
+  },
+  "labelTopFavorites": {
+    "message": "최고 즐겨찾기"
+  },
+  "loadingText": {
+    "message": "로딩 중..."
+  },
+
+  "optionsPageTitle": {
+    "message": "insidebar.ai - 설정"
+  },
+  "headerSettingsTitle": {
+    "message": "설정: insidebar.ai"
+  },
+  "headerSettingsSubtitle": {
+    "message": "멀티 AI 사이드바 경험을 사용자 지정하세요"
+  },
+  "labelEnableKeyboardShortcut": {
+    "message": "키보드 단축키 활성화"
+  },
+  "descEnableKeyboardShortcut": {
+    "message": "브라우저 어디에서나 insidebar.ai를 여는 전역 단축키를 전환합니다."
+  },
+  "labelEdgeShortcutHelper": {
+    "message": "Microsoft Edge에서 확인"
+  },
+  "descEdgeShortcutHelper": {
+    "message": "Edge에서는 단축키를 한 번 확인해야 합니다. 구성을 클릭하면 Edge 단축키 페이지로 바로 이동합니다."
+  },
+  "labelEnableEnterCustom": {
+    "message": "Enter 키 사용자 지정 활성화"
+  },
+  "descEnableEnterCustom": {
+    "message": "활성화하면 지원되는 모든 AI 제공자에서 Enter 키 동작을 수정합니다"
+  },
+  "keyShift": {
+    "message": "Shift"
+  },
+  "keyCtrl": {
+    "message": "Ctrl"
+  },
+  "keyAlt": {
+    "message": "Alt"
+  },
+  "keyMeta": {
+    "message": "⌘/Win"
+  },
+  "keyPlusEnter": {
+    "message": "+ Enter"
+  },
+  "labelDefaultPromptLibrary": {
+    "message": "기본 프롬프트 라이브러리"
+  },
+  "descDefaultPromptLibrary": {
+    "message": "프롬프트 개선, 계획, 코딩, 테스트, 연구, 작성 등을 위한 메타 프롬프트. 동적 템플릿을 위한 변수 지원이 포함됩니다."
+  },
+  "descCustomPromptReadme": {
+    "message": "사용자 지정 프롬프트를 가져오기 전에 다음을 읽어보세요: <code style=\"background: #f5f5f5; padding: 2px 6px; border-radius: 3px;\">data/prompt-libraries/Generate_a_Basic_Prompt_Library.md</code>"
+  },
+  "statStorageUsed": {
+    "message": "사용된 저장 공간"
+  },
+  "labelExportData": {
+    "message": "데이터 내보내기"
+  },
+  "descExportData": {
+    "message": "모든 프롬프트 및 설정을 JSON으로 다운로드"
+  },
+  "labelImportData": {
+    "message": "데이터 가져오기"
+  },
+  "descImportData": {
+    "message": "JSON 파일에서 프롬프트 및 설정 복원"
+  },
+  "labelLoading": {
+    "message": "로딩 중..."
+  }
+}
