@@ -115,6 +115,12 @@ async function loadSettings() {
     autoOpenSidebarToggle.checked = settings.autoOpenSidebarOnSave === true;
   }
 
+  // Remember last provider setting
+  const rememberLastProviderToggle = document.getElementById('remember-last-provider-toggle');
+  if (rememberLastProviderToggle) {
+    rememberLastProviderToggle.checked = settings.rememberLastProvider !== false;
+  }
+
   // Enter key behavior settings
   const enterBehavior = settings.enterKeyBehavior || {
     enabled: true,
@@ -312,6 +318,22 @@ function setupEventListeners() {
       const enabled = e.target.checked;
       await saveSetting('autoOpenSidebarOnSave', enabled);
       showStatus('success', enabled ? 'Auto-open sidebar enabled' : 'Auto-open sidebar disabled');
+    });
+  }
+
+  // Remember last provider toggle
+  const rememberLastProviderToggle = document.getElementById('remember-last-provider-toggle');
+  if (rememberLastProviderToggle) {
+    rememberLastProviderToggle.addEventListener('change', async (e) => {
+      const enabled = e.target.checked;
+      await saveSetting('rememberLastProvider', enabled);
+
+      // If disabling, clear lastSelectedProvider so sidebar uses default provider next time
+      if (!enabled) {
+        await chrome.storage.sync.set({ lastSelectedProvider: null });
+      }
+
+      showStatus('success', enabled ? 'Sidebar will remember last provider' : 'Sidebar will always open default provider');
     });
   }
 

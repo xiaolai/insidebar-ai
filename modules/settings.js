@@ -2,6 +2,7 @@ const DEFAULT_SETTINGS = {
   enabledProviders: ['chatgpt', 'claude', 'gemini', 'grok', 'deepseek'],
   defaultProvider: 'chatgpt',
   lastSelectedProvider: 'chatgpt',
+  rememberLastProvider: true,  // When true, sidebar opens last selected provider; when false, always opens default provider
   theme: 'auto',
   keyboardShortcutEnabled: true,
   enterKeyBehavior: {
