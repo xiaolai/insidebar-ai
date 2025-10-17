@@ -381,6 +381,9 @@
   "msgPromptsAlreadyExist": {
     "message": "Todos los prompts ya existen en tu biblioteca"
   },
+  "msgAlreadyImported": {
+    "message": "Ya importado"
+  },
   "msgCustomPromptsImported": {
     "message": "Se importaron correctamente $IMPORTED$ prompts personalizados",
     "placeholders": {
@@ -698,5 +701,139 @@
   },
   "labelLoading": {
     "message": "Cargando..."
+  },
+
+  "msgAllPromptsExist": {
+    "message": "Todos los prompts ya existen"
+  },
+  "msgChecking": {
+    "message": "Comprobando..."
+  },
+  "msgCheckUpdatesFailed": {
+    "message": "Error al buscar actualizaciones"
+  },
+  "msgClearHistoryFailed": {
+    "message": "Error al borrar el historial"
+  },
+  "msgClearPromptsFailed": {
+    "message": "Error al borrar los prompts"
+  },
+  "msgCustomImportFailed": {
+    "message": "Error al importar prompts personalizados"
+  },
+  "msgDataExportFailed": {
+    "message": "Error al exportar datos"
+  },
+  "msgDataImportFailed": {
+    "message": "Error al importar datos"
+  },
+  "msgDefaultImportFailed": {
+    "message": "Error al importar prompts predeterminados"
+  },
+  "msgDefaultProviderUpdated": {
+    "message": "Proveedor predeterminado actualizado"
+  },
+  "msgEnterCustomDisabled": {
+    "message": "Personalización de tecla Enter deshabilitada"
+  },
+  "msgEnterCustomEnabled": {
+    "message": "Personalización de tecla Enter habilitada"
+  },
+  "msgImported": {
+    "message": "Importado"
+  },
+  "msgImporting": {
+    "message": "Importando..."
+  },
+  "msgInvalidFormat": {
+    "message": "Formato inválido"
+  },
+  "msgInvalidJSON": {
+    "message": "JSON inválido"
+  },
+  "msgInvalidPromptFormat": {
+    "message": "Formato de prompt inválido"
+  },
+  "msgInvalidPromptStructure": {
+    "message": "Estructura de prompt inválida"
+  },
+  "msgJSONParseError": {
+    "message": "Error de análisis JSON"
+  },
+  "msgLatestVersion": {
+    "message": "Última versión"
+  },
+  "msgOneProviderRequired": {
+    "message": "Se requiere al menos un proveedor"
+  },
+  "msgResetSettingsFailed": {
+    "message": "Error al restablecer la configuración"
+  },
+  "msgUnknownCount": {
+    "message": "Recuento desconocido"
+  },
+  "msgDefaultPromptsImported": {
+    "message": "Prompts predeterminados importados"
+  },
+  "msgConversationsImported": {
+    "message": "Conversaciones importadas"
+  },
+  "msgPromptsCount": {
+    "message": "$COUNT$ prompts",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "errVersionInfoFailed": {
+    "message": "Error al cargar información de versión"
+  },
+  "errGitHubFetchFailed": {
+    "message": "Error al obtener el último commit de GitHub"
+  },
+
+  "dlgDuplicateTitle": {
+    "message": "Conversación ya guardada"
+  },
+  "dlgDuplicateDesc": {
+    "message": "Esta conversación se guardó anteriormente:"
+  },
+  "dlgDuplicateSaved": {
+    "message": "Guardado: $DATE$",
+    "placeholders": {
+      "date": {
+        "content": "$1"
+      }
+    }
+  },
+  "dlgDuplicateQuestion": {
+    "message": "¿Desea sobrescribirla con la versión actual?"
+  },
+  "btnOverwrite": {
+    "message": "Sobrescribir"
+  },
+
+  "errExtensionAPI": {
+    "message": "API de extensión no disponible. Intenta recargar la página."
+  },
+  "errExtensionReloaded": {
+    "message": "La extensión se recargó. Recarga esta página e intenta guardar nuevamente."
+  },
+  "errSaveFailed": {
+    "message": "Error al guardar: $ERROR$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
+  },
+  "errExtractFailed": {
+    "message": "Error al extraer conversación: $ERROR$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
   }
 }

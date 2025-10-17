@@ -381,6 +381,9 @@
   "msgPromptsAlreadyExist": {
     "message": "Tutti i prompt esistono già nella tua libreria"
   },
+  "msgAlreadyImported": {
+    "message": "Già importato"
+  },
   "msgCustomPromptsImported": {
     "message": "$IMPORTED$ prompt personalizzati importati con successo",
     "placeholders": {
@@ -698,5 +701,139 @@
   },
   "labelLoading": {
     "message": "Caricamento..."
+  },
+
+  "msgAllPromptsExist": {
+    "message": "Tutti i prompt esistono già"
+  },
+  "msgChecking": {
+    "message": "Verifica in corso..."
+  },
+  "msgCheckUpdatesFailed": {
+    "message": "Verifica aggiornamenti non riuscita"
+  },
+  "msgClearHistoryFailed": {
+    "message": "Cancellazione cronologia non riuscita"
+  },
+  "msgClearPromptsFailed": {
+    "message": "Cancellazione prompt non riuscita"
+  },
+  "msgCustomImportFailed": {
+    "message": "Importazione prompt personalizzati non riuscita"
+  },
+  "msgDataExportFailed": {
+    "message": "Esportazione dati non riuscita"
+  },
+  "msgDataImportFailed": {
+    "message": "Importazione dati non riuscita"
+  },
+  "msgDefaultImportFailed": {
+    "message": "Importazione prompt predefiniti non riuscita"
+  },
+  "msgDefaultProviderUpdated": {
+    "message": "Provider predefinito aggiornato"
+  },
+  "msgEnterCustomDisabled": {
+    "message": "Personalizzazione tasto Invio disattivata"
+  },
+  "msgEnterCustomEnabled": {
+    "message": "Personalizzazione tasto Invio attivata"
+  },
+  "msgImported": {
+    "message": "Importato"
+  },
+  "msgImporting": {
+    "message": "Importazione..."
+  },
+  "msgInvalidFormat": {
+    "message": "Formato non valido"
+  },
+  "msgInvalidJSON": {
+    "message": "JSON non valido"
+  },
+  "msgInvalidPromptFormat": {
+    "message": "Formato prompt non valido"
+  },
+  "msgInvalidPromptStructure": {
+    "message": "Struttura prompt non valida"
+  },
+  "msgJSONParseError": {
+    "message": "Errore di parsing JSON"
+  },
+  "msgLatestVersion": {
+    "message": "Ultima versione"
+  },
+  "msgOneProviderRequired": {
+    "message": "È richiesto almeno un provider"
+  },
+  "msgResetSettingsFailed": {
+    "message": "Ripristino impostazioni non riuscito"
+  },
+  "msgUnknownCount": {
+    "message": "Conteggio sconosciuto"
+  },
+  "msgDefaultPromptsImported": {
+    "message": "Prompt predefiniti importati"
+  },
+  "msgConversationsImported": {
+    "message": "Conversazioni importate"
+  },
+  "msgPromptsCount": {
+    "message": "$COUNT$ prompt",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "errVersionInfoFailed": {
+    "message": "Caricamento informazioni versione non riuscito"
+  },
+  "errGitHubFetchFailed": {
+    "message": "Recupero ultimo commit da GitHub non riuscito"
+  },
+
+  "dlgDuplicateTitle": {
+    "message": "Conversazione già salvata"
+  },
+  "dlgDuplicateDesc": {
+    "message": "Questa conversazione è stata salvata in precedenza:"
+  },
+  "dlgDuplicateSaved": {
+    "message": "Salvato: $DATE$",
+    "placeholders": {
+      "date": {
+        "content": "$1"
+      }
+    }
+  },
+  "dlgDuplicateQuestion": {
+    "message": "Vuoi sovrascriverla con la versione corrente?"
+  },
+  "btnOverwrite": {
+    "message": "Sovrascrivi"
+  },
+
+  "errExtensionAPI": {
+    "message": "API dell'estensione non disponibile. Prova a ricaricare la pagina."
+  },
+  "errExtensionReloaded": {
+    "message": "L'estensione è stata ricaricata. Ricarica questa pagina e riprova a salvare."
+  },
+  "errSaveFailed": {
+    "message": "Salvataggio fallito: $ERROR$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
+  },
+  "errExtractFailed": {
+    "message": "Estrazione della conversazione fallita: $ERROR$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
   }
 }

@@ -370,6 +370,9 @@
   "msgPromptsAlreadyExist": {
     "message": "すべてのプロンプトがすでにライブラリに存在します"
   },
+  "msgAlreadyImported": {
+    "message": "インポート済み"
+  },
   "msgCustomPromptsImported": {
     "message": "$IMPORTED$ 個のカスタムプロンプトを正常にインポートしました",
     "placeholders": {
@@ -682,5 +685,140 @@
   },
   "labelLoading": {
     "message": "読み込み中..."
+  },
+
+  "msgAllPromptsExist": {
+    "message": "すべてのプロンプトがすでに存在します"
+  },
+  "msgChecking": {
+    "message": "確認中..."
+  },
+  "msgCheckUpdatesFailed": {
+    "message": "アップデートの確認に失敗しました"
+  },
+  "msgClearHistoryFailed": {
+    "message": "履歴のクリアに失敗しました"
+  },
+  "msgClearPromptsFailed": {
+    "message": "プロンプトのクリアに失敗しました"
+  },
+  "msgCustomImportFailed": {
+    "message": "カスタムプロンプトのインポートに失敗しました"
+  },
+  "msgDataExportFailed": {
+    "message": "データのエクスポートに失敗しました"
+  },
+  "msgDataImportFailed": {
+    "message": "データのインポートに失敗しました"
+  },
+  "msgDefaultImportFailed": {
+    "message": "デフォルトプロンプトのインポートに失敗しました"
+  },
+  "msgDefaultProviderUpdated": {
+    "message": "デフォルトプロバイダーが更新されました"
+  },
+  "msgEnterCustomDisabled": {
+    "message": "Enter キーのカスタマイズが無効になりました"
+  },
+  "msgEnterCustomEnabled": {
+    "message": "Enter キーのカスタマイズが有効になりました"
+  },
+  "msgImported": {
+    "message": "インポート済み"
+  },
+  "msgImporting": {
+    "message": "インポート中..."
+  },
+  "msgInvalidFormat": {
+    "message": "無効な形式"
+  },
+  "msgInvalidJSON": {
+    "message": "無効な JSON"
+  },
+  "msgInvalidPromptFormat": {
+    "message": "無効なプロンプト形式"
+  },
+  "msgInvalidPromptStructure": {
+    "message": "無効なプロンプト構造"
+  },
+  "msgJSONParseError": {
+    "message": "JSON パースエラー"
+  },
+  "msgLatestVersion": {
+    "message": "最新バージョン"
+  },
+  "msgOneProviderRequired": {
+    "message": "少なくとも 1 つのプロバイダーが必要です"
+  },
+  "msgResetSettingsFailed": {
+    "message": "設定のリセットに失敗しました"
+  },
+  "msgUnknownCount": {
+    "message": "不明なカウント"
+  },
+  "msgDefaultPromptsImported": {
+    "message": "デフォルトプロンプトをインポートしました"
+  },
+  "msgConversationsImported": {
+    "message": "会話をインポートしました"
+  },
+  "msgPromptsCount": {
+    "message": "$COUNT$ 個のプロンプト",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+
+  "dlgDuplicateTitle": {
+    "message": "会話は既に保存されています"
+  },
+  "dlgDuplicateDesc": {
+    "message": "この会話は以前に保存されました："
+  },
+  "dlgDuplicateSaved": {
+    "message": "保存日時：$DATE$",
+    "placeholders": {
+      "date": {
+        "content": "$1"
+      }
+    }
+  },
+  "dlgDuplicateQuestion": {
+    "message": "現在のバージョンで上書きしますか？"
+  },
+  "btnOverwrite": {
+    "message": "上書き"
+  },
+
+  "errVersionInfoFailed": {
+    "message": "バージョン情報の読み込みに失敗しました"
+  },
+  "errGitHubFetchFailed": {
+    "message": "GitHub から最新のコミットを取得できませんでした"
+  },
+
+  "errExtensionAPI": {
+    "message": "拡張機能 API が利用できません。ページを再読み込みしてみてください。"
+  },
+  "errExtensionReloaded": {
+    "message": "拡張機能が再読み込みされました。このページを再読み込みして、もう一度保存してみてください。"
+  },
+  "errSaveFailed": {
+    "message": "保存に失敗しました：$ERROR$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
+  },
+  "errExtractFailed": {
+    "message": "会話の抽出に失敗しました：$ERROR$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
   }
 }

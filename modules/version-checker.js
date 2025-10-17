@@ -1,6 +1,8 @@
 // T073: Version Check Module
 // Checks for updates by comparing commit hash with GitHub
 
+import { t } from './i18n.js';
+
 const VERSION_INFO_PATH = '/data/version-info.json';
 
 /**
@@ -51,7 +53,7 @@ export async function checkForUpdates() {
   if (!versionInfo) {
     return {
       updateAvailable: false,
-      error: 'Failed to load version info'
+      error: t('errVersionInfoFailed')
     };
   }
 
@@ -60,7 +62,7 @@ export async function checkForUpdates() {
     return {
       updateAvailable: false,
       currentHash: versionInfo.commitHash,
-      error: 'Failed to fetch latest commit from GitHub'
+      error: t('errGitHubFetchFailed')
     };
   }
 

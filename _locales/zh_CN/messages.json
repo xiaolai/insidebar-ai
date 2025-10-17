@@ -370,6 +370,9 @@
   "msgPromptsAlreadyExist": {
     "message": "所有提示词已存在于您的库中"
   },
+  "msgAlreadyImported": {
+    "message": "已导入"
+  },
   "msgCustomPromptsImported": {
     "message": "成功导入 $IMPORTED$ 个自定义提示词",
     "placeholders": {
@@ -682,5 +685,139 @@
   },
   "labelLoading": {
     "message": "加载中..."
+  },
+
+  "msgAllPromptsExist": {
+    "message": "所有提示词已存在"
+  },
+  "msgChecking": {
+    "message": "检查中..."
+  },
+  "msgCheckUpdatesFailed": {
+    "message": "检查更新失败"
+  },
+  "msgClearHistoryFailed": {
+    "message": "清空历史失败"
+  },
+  "msgClearPromptsFailed": {
+    "message": "清空提示词失败"
+  },
+  "msgCustomImportFailed": {
+    "message": "导入自定义提示词失败"
+  },
+  "msgDataExportFailed": {
+    "message": "导出数据失败"
+  },
+  "msgDataImportFailed": {
+    "message": "导入数据失败"
+  },
+  "msgDefaultImportFailed": {
+    "message": "导入默认提示词失败"
+  },
+  "msgDefaultProviderUpdated": {
+    "message": "默认提供商已更新"
+  },
+  "msgEnterCustomDisabled": {
+    "message": "回车键自定义已禁用"
+  },
+  "msgEnterCustomEnabled": {
+    "message": "回车键自定义已启用"
+  },
+  "msgImported": {
+    "message": "已导入"
+  },
+  "msgImporting": {
+    "message": "导入中..."
+  },
+  "msgInvalidFormat": {
+    "message": "格式无效"
+  },
+  "msgInvalidJSON": {
+    "message": "JSON 格式无效"
+  },
+  "msgInvalidPromptFormat": {
+    "message": "提示词格式无效"
+  },
+  "msgInvalidPromptStructure": {
+    "message": "提示词结构无效"
+  },
+  "msgJSONParseError": {
+    "message": "JSON 解析错误"
+  },
+  "msgLatestVersion": {
+    "message": "最新版本"
+  },
+  "msgOneProviderRequired": {
+    "message": "至少需要一个提供商"
+  },
+  "msgResetSettingsFailed": {
+    "message": "重置设置失败"
+  },
+  "msgUnknownCount": {
+    "message": "未知数量"
+  },
+  "msgDefaultPromptsImported": {
+    "message": "已导入默认提示词"
+  },
+  "msgConversationsImported": {
+    "message": "已导入对话"
+  },
+  "msgPromptsCount": {
+    "message": "$COUNT$ 个提示词",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "errVersionInfoFailed": {
+    "message": "加载版本信息失败"
+  },
+  "errGitHubFetchFailed": {
+    "message": "从 GitHub 获取最新提交失败"
+  },
+
+  "dlgDuplicateTitle": {
+    "message": "对话已保存"
+  },
+  "dlgDuplicateDesc": {
+    "message": "此对话先前已保存："
+  },
+  "dlgDuplicateSaved": {
+    "message": "保存时间：$DATE$",
+    "placeholders": {
+      "date": {
+        "content": "$1"
+      }
+    }
+  },
+  "dlgDuplicateQuestion": {
+    "message": "是否用当前版本覆盖？"
+  },
+  "btnOverwrite": {
+    "message": "覆盖"
+  },
+
+  "errExtensionAPI": {
+    "message": "扩展 API 不可用。请尝试重新加载页面。"
+  },
+  "errExtensionReloaded": {
+    "message": "扩展已重新加载。请重新加载此页面并重试保存。"
+  },
+  "errSaveFailed": {
+    "message": "保存失败：$ERROR$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
+  },
+  "errExtractFailed": {
+    "message": "提取对话失败：$ERROR$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
   }
 }

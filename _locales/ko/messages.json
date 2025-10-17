@@ -370,6 +370,9 @@
   "msgPromptsAlreadyExist": {
     "message": "모든 프롬프트가 이미 라이브러리에 존재합니다"
   },
+  "msgAlreadyImported": {
+    "message": "이미 가져옴"
+  },
   "msgCustomPromptsImported": {
     "message": "$IMPORTED$개의 사용자 지정 프롬프트를 성공적으로 가져왔습니다",
     "placeholders": {
@@ -682,5 +685,140 @@
   },
   "labelLoading": {
     "message": "로딩 중..."
+  },
+
+  "msgAllPromptsExist": {
+    "message": "모든 프롬프트가 이미 존재합니다"
+  },
+  "msgChecking": {
+    "message": "확인 중..."
+  },
+  "msgCheckUpdatesFailed": {
+    "message": "업데이트 확인 실패"
+  },
+  "msgClearHistoryFailed": {
+    "message": "기록 지우기 실패"
+  },
+  "msgClearPromptsFailed": {
+    "message": "프롬프트 지우기 실패"
+  },
+  "msgCustomImportFailed": {
+    "message": "사용자 지정 프롬프트 가져오기 실패"
+  },
+  "msgDataExportFailed": {
+    "message": "데이터 내보내기 실패"
+  },
+  "msgDataImportFailed": {
+    "message": "데이터 가져오기 실패"
+  },
+  "msgDefaultImportFailed": {
+    "message": "기본 프롬프트 가져오기 실패"
+  },
+  "msgDefaultProviderUpdated": {
+    "message": "기본 제공자가 업데이트되었습니다"
+  },
+  "msgEnterCustomDisabled": {
+    "message": "Enter 키 사용자 지정이 비활성화되었습니다"
+  },
+  "msgEnterCustomEnabled": {
+    "message": "Enter 키 사용자 지정이 활성화되었습니다"
+  },
+  "msgImported": {
+    "message": "가져왔습니다"
+  },
+  "msgImporting": {
+    "message": "가져오는 중..."
+  },
+  "msgInvalidFormat": {
+    "message": "잘못된 형식"
+  },
+  "msgInvalidJSON": {
+    "message": "잘못된 JSON"
+  },
+  "msgInvalidPromptFormat": {
+    "message": "잘못된 프롬프트 형식"
+  },
+  "msgInvalidPromptStructure": {
+    "message": "잘못된 프롬프트 구조"
+  },
+  "msgJSONParseError": {
+    "message": "JSON 파싱 오류"
+  },
+  "msgLatestVersion": {
+    "message": "최신 버전"
+  },
+  "msgOneProviderRequired": {
+    "message": "최소 하나의 제공자가 필요합니다"
+  },
+  "msgResetSettingsFailed": {
+    "message": "설정 재설정 실패"
+  },
+  "msgUnknownCount": {
+    "message": "알 수 없는 수"
+  },
+  "msgDefaultPromptsImported": {
+    "message": "기본 프롬프트를 가져왔습니다"
+  },
+  "msgConversationsImported": {
+    "message": "대화를 가져왔습니다"
+  },
+  "msgPromptsCount": {
+    "message": "$COUNT$개의 프롬프트",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+
+  "dlgDuplicateTitle": {
+    "message": "대화가 이미 저장됨"
+  },
+  "dlgDuplicateDesc": {
+    "message": "이 대화는 이전에 저장되었습니다:"
+  },
+  "dlgDuplicateSaved": {
+    "message": "저장됨: $DATE$",
+    "placeholders": {
+      "date": {
+        "content": "$1"
+      }
+    }
+  },
+  "dlgDuplicateQuestion": {
+    "message": "현재 버전으로 덮어쓰시겠습니까?"
+  },
+  "btnOverwrite": {
+    "message": "덮어쓰기"
+  },
+
+  "errVersionInfoFailed": {
+    "message": "버전 정보 로드 실패"
+  },
+  "errGitHubFetchFailed": {
+    "message": "GitHub에서 최신 커밋 가져오기 실패"
+  },
+
+  "errExtensionAPI": {
+    "message": "확장 프로그램 API를 사용할 수 없습니다. 페이지를 다시 로드해 보세요."
+  },
+  "errExtensionReloaded": {
+    "message": "확장 프로그램이 다시 로드되었습니다. 이 페이지를 다시 로드하고 저장을 다시 시도하세요."
+  },
+  "errSaveFailed": {
+    "message": "저장 실패: $ERROR$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
+  },
+  "errExtractFailed": {
+    "message": "대화 추출 실패: $ERROR$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
   }
 }

@@ -370,6 +370,9 @@
   "msgPromptsAlreadyExist": {
     "message": "所有提示詞已存在於您的庫中"
   },
+  "msgAlreadyImported": {
+    "message": "已匯入"
+  },
   "msgCustomPromptsImported": {
     "message": "成功匯入 $IMPORTED$ 個自訂提示詞",
     "placeholders": {
@@ -682,5 +685,140 @@
   },
   "labelLoading": {
     "message": "載入中..."
+  },
+
+  "msgAllPromptsExist": {
+    "message": "所有提示詞已存在"
+  },
+  "msgChecking": {
+    "message": "檢查中..."
+  },
+  "msgCheckUpdatesFailed": {
+    "message": "檢查更新失敗"
+  },
+  "msgClearHistoryFailed": {
+    "message": "清空記錄失敗"
+  },
+  "msgClearPromptsFailed": {
+    "message": "清空提示詞失敗"
+  },
+  "msgCustomImportFailed": {
+    "message": "匯入自訂提示詞失敗"
+  },
+  "msgDataExportFailed": {
+    "message": "匯出資料失敗"
+  },
+  "msgDataImportFailed": {
+    "message": "匯入資料失敗"
+  },
+  "msgDefaultImportFailed": {
+    "message": "匯入預設提示詞失敗"
+  },
+  "msgDefaultProviderUpdated": {
+    "message": "預設提供者已更新"
+  },
+  "msgEnterCustomDisabled": {
+    "message": "Enter 鍵自訂已停用"
+  },
+  "msgEnterCustomEnabled": {
+    "message": "Enter 鍵自訂已啟用"
+  },
+  "msgImported": {
+    "message": "已匯入"
+  },
+  "msgImporting": {
+    "message": "匯入中..."
+  },
+  "msgInvalidFormat": {
+    "message": "格式無效"
+  },
+  "msgInvalidJSON": {
+    "message": "JSON 格式無效"
+  },
+  "msgInvalidPromptFormat": {
+    "message": "提示詞格式無效"
+  },
+  "msgInvalidPromptStructure": {
+    "message": "提示詞結構無效"
+  },
+  "msgJSONParseError": {
+    "message": "JSON 解析錯誤"
+  },
+  "msgLatestVersion": {
+    "message": "最新版本"
+  },
+  "msgOneProviderRequired": {
+    "message": "至少需要一個提供者"
+  },
+  "msgResetSettingsFailed": {
+    "message": "重設設定失敗"
+  },
+  "msgUnknownCount": {
+    "message": "未知數量"
+  },
+  "msgDefaultPromptsImported": {
+    "message": "已匯入預設提示詞"
+  },
+  "msgConversationsImported": {
+    "message": "已匯入對話"
+  },
+  "msgPromptsCount": {
+    "message": "$COUNT$ 個提示詞",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+
+  "dlgDuplicateTitle": {
+    "message": "對話已儲存"
+  },
+  "dlgDuplicateDesc": {
+    "message": "此對話先前已儲存："
+  },
+  "dlgDuplicateSaved": {
+    "message": "儲存時間：$DATE$",
+    "placeholders": {
+      "date": {
+        "content": "$1"
+      }
+    }
+  },
+  "dlgDuplicateQuestion": {
+    "message": "您要用目前版本覆寫它嗎？"
+  },
+  "btnOverwrite": {
+    "message": "覆寫"
+  },
+
+  "errVersionInfoFailed": {
+    "message": "載入版本資訊失敗"
+  },
+  "errGitHubFetchFailed": {
+    "message": "從 GitHub 取得最新提交失敗"
+  },
+
+  "errExtensionAPI": {
+    "message": "擴充功能 API 不可用。請嘗試重新載入頁面。"
+  },
+  "errExtensionReloaded": {
+    "message": "擴充功能已重新載入。請重新載入此頁面並再次嘗試儲存。"
+  },
+  "errSaveFailed": {
+    "message": "儲存失敗：$ERROR$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
+  },
+  "errExtractFailed": {
+    "message": "擷取對話失敗：$ERROR$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
   }
 }

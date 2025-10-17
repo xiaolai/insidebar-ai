@@ -275,17 +275,17 @@
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
       ">
         <h3 style="margin: 0 0 16px 0; font-size: 18px; font-weight: 600;">
-          Conversation Already Saved
+          ${chrome.i18n.getMessage('dlgDuplicateTitle')}
         </h3>
         <p style="margin: 0 0 8px 0; font-size: 14px; line-height: 1.5;">
-          This conversation was previously saved:
+          ${chrome.i18n.getMessage('dlgDuplicateDesc')}
         </p>
         <p style="margin: 0 0 16px 0; font-size: 13px; color: #666; font-weight: 500;">
           "${title}"<br>
-          <span style="font-size: 12px;">Saved: ${existingDate}</span>
+          <span style="font-size: 12px;">${chrome.i18n.getMessage('dlgDuplicateSaved', [existingDate])}</span>
         </p>
         <p style="margin: 0 0 20px 0; font-size: 14px; line-height: 1.5;">
-          Do you want to overwrite it with the current version?
+          ${chrome.i18n.getMessage('dlgDuplicateQuestion')}
         </p>
         <div style="display: flex; gap: 12px;">
           <button id="insidebar-dup-cancel" style="
@@ -299,7 +299,7 @@
             cursor: pointer;
             font-weight: 500;
           ">
-            Cancel
+            ${chrome.i18n.getMessage('btnCancel')}
           </button>
           <button id="insidebar-dup-overwrite" style="
             flex: 1;
@@ -312,7 +312,7 @@
             cursor: pointer;
             font-weight: 500;
           ">
-            Overwrite
+            ${chrome.i18n.getMessage('btnOverwrite')}
           </button>
         </div>
       </div>

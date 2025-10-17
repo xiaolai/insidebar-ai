@@ -381,6 +381,9 @@
   "msgPromptsAlreadyExist": {
     "message": "Alle Prompts existieren bereits in Ihrer Bibliothek"
   },
+  "msgAlreadyImported": {
+    "message": "Bereits importiert"
+  },
   "msgCustomPromptsImported": {
     "message": "$IMPORTED$ benutzerdefinierte Prompts erfolgreich importiert",
     "placeholders": {
@@ -698,5 +701,139 @@
   },
   "labelLoading": {
     "message": "Lädt..."
+  },
+
+  "msgAllPromptsExist": {
+    "message": "Alle Prompts existieren bereits"
+  },
+  "msgChecking": {
+    "message": "Überprüfe..."
+  },
+  "msgCheckUpdatesFailed": {
+    "message": "Fehler beim Suchen nach Updates"
+  },
+  "msgClearHistoryFailed": {
+    "message": "Fehler beim Löschen des Verlaufs"
+  },
+  "msgClearPromptsFailed": {
+    "message": "Fehler beim Löschen der Prompts"
+  },
+  "msgCustomImportFailed": {
+    "message": "Fehler beim Importieren benutzerdefinierter Prompts"
+  },
+  "msgDataExportFailed": {
+    "message": "Fehler beim Exportieren der Daten"
+  },
+  "msgDataImportFailed": {
+    "message": "Fehler beim Importieren der Daten"
+  },
+  "msgDefaultImportFailed": {
+    "message": "Fehler beim Importieren der Standard-Prompts"
+  },
+  "msgDefaultProviderUpdated": {
+    "message": "Standard-Anbieter aktualisiert"
+  },
+  "msgEnterCustomDisabled": {
+    "message": "Enter-Tasten-Anpassung deaktiviert"
+  },
+  "msgEnterCustomEnabled": {
+    "message": "Enter-Tasten-Anpassung aktiviert"
+  },
+  "msgImported": {
+    "message": "Importiert"
+  },
+  "msgImporting": {
+    "message": "Importiere..."
+  },
+  "msgInvalidFormat": {
+    "message": "Ungültiges Format"
+  },
+  "msgInvalidJSON": {
+    "message": "Ungültiges JSON"
+  },
+  "msgInvalidPromptFormat": {
+    "message": "Ungültiges Prompt-Format"
+  },
+  "msgInvalidPromptStructure": {
+    "message": "Ungültige Prompt-Struktur"
+  },
+  "msgJSONParseError": {
+    "message": "JSON-Analysefehler"
+  },
+  "msgLatestVersion": {
+    "message": "Neueste Version"
+  },
+  "msgOneProviderRequired": {
+    "message": "Mindestens ein Anbieter ist erforderlich"
+  },
+  "msgResetSettingsFailed": {
+    "message": "Fehler beim Zurücksetzen der Einstellungen"
+  },
+  "msgUnknownCount": {
+    "message": "Unbekannte Anzahl"
+  },
+  "msgDefaultPromptsImported": {
+    "message": "Standard-Prompts importiert"
+  },
+  "msgConversationsImported": {
+    "message": "Unterhaltungen importiert"
+  },
+  "msgPromptsCount": {
+    "message": "$COUNT$ Prompts",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "errVersionInfoFailed": {
+    "message": "Fehler beim Laden der Versionsinformationen"
+  },
+  "errGitHubFetchFailed": {
+    "message": "Fehler beim Abrufen des neuesten Commits von GitHub"
+  },
+
+  "dlgDuplicateTitle": {
+    "message": "Unterhaltung bereits gespeichert"
+  },
+  "dlgDuplicateDesc": {
+    "message": "Diese Unterhaltung wurde zuvor gespeichert:"
+  },
+  "dlgDuplicateSaved": {
+    "message": "Gespeichert: $DATE$",
+    "placeholders": {
+      "date": {
+        "content": "$1"
+      }
+    }
+  },
+  "dlgDuplicateQuestion": {
+    "message": "Möchten Sie sie mit der aktuellen Version überschreiben?"
+  },
+  "btnOverwrite": {
+    "message": "Überschreiben"
+  },
+
+  "errExtensionAPI": {
+    "message": "Erweiterungs-API nicht verfügbar. Versuchen Sie, die Seite neu zu laden."
+  },
+  "errExtensionReloaded": {
+    "message": "Die Erweiterung wurde neu geladen. Bitte laden Sie diese Seite neu und versuchen Sie erneut zu speichern."
+  },
+  "errSaveFailed": {
+    "message": "Speichern fehlgeschlagen: $ERROR$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
+  },
+  "errExtractFailed": {
+    "message": "Extrahieren der Unterhaltung fehlgeschlagen: $ERROR$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
   }
 }

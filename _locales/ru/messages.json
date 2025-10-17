@@ -381,6 +381,9 @@
   "msgPromptsAlreadyExist": {
     "message": "Все промпты уже существуют в вашей библиотеке"
   },
+  "msgAlreadyImported": {
+    "message": "Уже импортировано"
+  },
   "msgCustomPromptsImported": {
     "message": "Успешно импортировано пользовательских промптов: $IMPORTED$",
     "placeholders": {
@@ -698,5 +701,139 @@
   },
   "labelLoading": {
     "message": "Загрузка..."
+  },
+
+  "msgAllPromptsExist": {
+    "message": "Все промпты уже существуют"
+  },
+  "msgChecking": {
+    "message": "Проверка..."
+  },
+  "msgCheckUpdatesFailed": {
+    "message": "Не удалось проверить обновления"
+  },
+  "msgClearHistoryFailed": {
+    "message": "Не удалось очистить историю"
+  },
+  "msgClearPromptsFailed": {
+    "message": "Не удалось очистить промпты"
+  },
+  "msgCustomImportFailed": {
+    "message": "Не удалось импортировать пользовательские промпты"
+  },
+  "msgDataExportFailed": {
+    "message": "Не удалось экспортировать данные"
+  },
+  "msgDataImportFailed": {
+    "message": "Не удалось импортировать данные"
+  },
+  "msgDefaultImportFailed": {
+    "message": "Не удалось импортировать стандартные промпты"
+  },
+  "msgDefaultProviderUpdated": {
+    "message": "Провайдер по умолчанию обновлён"
+  },
+  "msgEnterCustomDisabled": {
+    "message": "Настройка клавиши Enter отключена"
+  },
+  "msgEnterCustomEnabled": {
+    "message": "Настройка клавиши Enter включена"
+  },
+  "msgImported": {
+    "message": "Импортировано"
+  },
+  "msgImporting": {
+    "message": "Импорт..."
+  },
+  "msgInvalidFormat": {
+    "message": "Неверный формат"
+  },
+  "msgInvalidJSON": {
+    "message": "Неверный JSON"
+  },
+  "msgInvalidPromptFormat": {
+    "message": "Неверный формат промпта"
+  },
+  "msgInvalidPromptStructure": {
+    "message": "Неверная структура промпта"
+  },
+  "msgJSONParseError": {
+    "message": "Ошибка парсинга JSON"
+  },
+  "msgLatestVersion": {
+    "message": "Последняя версия"
+  },
+  "msgOneProviderRequired": {
+    "message": "Требуется хотя бы один провайдер"
+  },
+  "msgResetSettingsFailed": {
+    "message": "Не удалось сбросить настройки"
+  },
+  "msgUnknownCount": {
+    "message": "Неизвестное количество"
+  },
+  "msgDefaultPromptsImported": {
+    "message": "Стандартные промпты импортированы"
+  },
+  "msgConversationsImported": {
+    "message": "Беседы импортированы"
+  },
+  "msgPromptsCount": {
+    "message": "$COUNT$ промптов",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "errVersionInfoFailed": {
+    "message": "Не удалось загрузить информацию о версии"
+  },
+  "errGitHubFetchFailed": {
+    "message": "Не удалось получить последний коммит с GitHub"
+  },
+
+  "dlgDuplicateTitle": {
+    "message": "Разговор уже сохранён"
+  },
+  "dlgDuplicateDesc": {
+    "message": "Этот разговор был сохранён ранее:"
+  },
+  "dlgDuplicateSaved": {
+    "message": "Сохранено: $DATE$",
+    "placeholders": {
+      "date": {
+        "content": "$1"
+      }
+    }
+  },
+  "dlgDuplicateQuestion": {
+    "message": "Хотите перезаписать его текущей версией?"
+  },
+  "btnOverwrite": {
+    "message": "Перезаписать"
+  },
+
+  "errExtensionAPI": {
+    "message": "API расширения недоступен. Попробуйте перезагрузить страницу."
+  },
+  "errExtensionReloaded": {
+    "message": "Расширение было перезагружено. Перезагрузите эту страницу и попробуйте сохранить снова."
+  },
+  "errSaveFailed": {
+    "message": "Ошибка сохранения: $ERROR$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
+  },
+  "errExtractFailed": {
+    "message": "Ошибка извлечения разговора: $ERROR$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
   }
 }

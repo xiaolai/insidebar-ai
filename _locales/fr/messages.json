@@ -381,6 +381,9 @@
   "msgPromptsAlreadyExist": {
     "message": "Tous les prompts existent déjà dans votre bibliothèque"
   },
+  "msgAlreadyImported": {
+    "message": "Déjà importé"
+  },
   "msgCustomPromptsImported": {
     "message": "$IMPORTED$ prompts personnalisés importés avec succès",
     "placeholders": {
@@ -698,5 +701,139 @@
   },
   "labelLoading": {
     "message": "Chargement..."
+  },
+
+  "msgAllPromptsExist": {
+    "message": "Tous les prompts existent déjà"
+  },
+  "msgChecking": {
+    "message": "Vérification..."
+  },
+  "msgCheckUpdatesFailed": {
+    "message": "Échec de la vérification des mises à jour"
+  },
+  "msgClearHistoryFailed": {
+    "message": "Échec de l'effacement de l'historique"
+  },
+  "msgClearPromptsFailed": {
+    "message": "Échec de l'effacement des prompts"
+  },
+  "msgCustomImportFailed": {
+    "message": "Échec de l'importation des prompts personnalisés"
+  },
+  "msgDataExportFailed": {
+    "message": "Échec de l'exportation des données"
+  },
+  "msgDataImportFailed": {
+    "message": "Échec de l'importation des données"
+  },
+  "msgDefaultImportFailed": {
+    "message": "Échec de l'importation des prompts par défaut"
+  },
+  "msgDefaultProviderUpdated": {
+    "message": "Fournisseur par défaut mis à jour"
+  },
+  "msgEnterCustomDisabled": {
+    "message": "Personnalisation de la touche Entrée désactivée"
+  },
+  "msgEnterCustomEnabled": {
+    "message": "Personnalisation de la touche Entrée activée"
+  },
+  "msgImported": {
+    "message": "Importé"
+  },
+  "msgImporting": {
+    "message": "Importation..."
+  },
+  "msgInvalidFormat": {
+    "message": "Format invalide"
+  },
+  "msgInvalidJSON": {
+    "message": "JSON invalide"
+  },
+  "msgInvalidPromptFormat": {
+    "message": "Format de prompt invalide"
+  },
+  "msgInvalidPromptStructure": {
+    "message": "Structure de prompt invalide"
+  },
+  "msgJSONParseError": {
+    "message": "Erreur d'analyse JSON"
+  },
+  "msgLatestVersion": {
+    "message": "Dernière version"
+  },
+  "msgOneProviderRequired": {
+    "message": "Au moins un fournisseur est requis"
+  },
+  "msgResetSettingsFailed": {
+    "message": "Échec de la réinitialisation des paramètres"
+  },
+  "msgUnknownCount": {
+    "message": "Nombre inconnu"
+  },
+  "msgDefaultPromptsImported": {
+    "message": "Prompts par défaut importés"
+  },
+  "msgConversationsImported": {
+    "message": "Conversations importées"
+  },
+  "msgPromptsCount": {
+    "message": "$COUNT$ prompts",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "errVersionInfoFailed": {
+    "message": "Échec du chargement des informations de version"
+  },
+  "errGitHubFetchFailed": {
+    "message": "Échec de la récupération du dernier commit depuis GitHub"
+  },
+
+  "dlgDuplicateTitle": {
+    "message": "Conversation déjà enregistrée"
+  },
+  "dlgDuplicateDesc": {
+    "message": "Cette conversation a été enregistrée précédemment :"
+  },
+  "dlgDuplicateSaved": {
+    "message": "Enregistré : $DATE$",
+    "placeholders": {
+      "date": {
+        "content": "$1"
+      }
+    }
+  },
+  "dlgDuplicateQuestion": {
+    "message": "Voulez-vous l'écraser avec la version actuelle ?"
+  },
+  "btnOverwrite": {
+    "message": "Écraser"
+  },
+
+  "errExtensionAPI": {
+    "message": "API d'extension non disponible. Essayez de recharger la page."
+  },
+  "errExtensionReloaded": {
+    "message": "L'extension a été rechargée. Veuillez recharger cette page et réessayer d'enregistrer."
+  },
+  "errSaveFailed": {
+    "message": "Échec de l'enregistrement : $ERROR$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
+  },
+  "errExtractFailed": {
+    "message": "Échec de l'extraction de la conversation : $ERROR$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
   }
 }

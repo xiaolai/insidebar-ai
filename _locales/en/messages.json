@@ -381,6 +381,9 @@
   "msgPromptsAlreadyExist": {
     "message": "All prompts already exist in your library"
   },
+  "msgAlreadyImported": {
+    "message": "Already Imported"
+  },
   "msgCustomPromptsImported": {
     "message": "Successfully imported $IMPORTED$ custom prompts",
     "placeholders": {
@@ -698,5 +701,139 @@
   },
   "labelLoading": {
     "message": "Loading..."
+  },
+
+  "msgAllPromptsExist": {
+    "message": "All prompts already exist"
+  },
+  "msgChecking": {
+    "message": "Checking..."
+  },
+  "msgCheckUpdatesFailed": {
+    "message": "Failed to check for updates"
+  },
+  "msgClearHistoryFailed": {
+    "message": "Failed to clear history"
+  },
+  "msgClearPromptsFailed": {
+    "message": "Failed to clear prompts"
+  },
+  "msgCustomImportFailed": {
+    "message": "Failed to import custom prompts"
+  },
+  "msgDataExportFailed": {
+    "message": "Failed to export data"
+  },
+  "msgDataImportFailed": {
+    "message": "Failed to import data"
+  },
+  "msgDefaultImportFailed": {
+    "message": "Failed to import default prompts"
+  },
+  "msgDefaultProviderUpdated": {
+    "message": "Default provider updated"
+  },
+  "msgEnterCustomDisabled": {
+    "message": "Enter key customization disabled"
+  },
+  "msgEnterCustomEnabled": {
+    "message": "Enter key customization enabled"
+  },
+  "msgImported": {
+    "message": "Imported"
+  },
+  "msgImporting": {
+    "message": "Importing..."
+  },
+  "msgInvalidFormat": {
+    "message": "Invalid format"
+  },
+  "msgInvalidJSON": {
+    "message": "Invalid JSON"
+  },
+  "msgInvalidPromptFormat": {
+    "message": "Invalid prompt format"
+  },
+  "msgInvalidPromptStructure": {
+    "message": "Invalid prompt structure"
+  },
+  "msgJSONParseError": {
+    "message": "JSON parse error"
+  },
+  "msgLatestVersion": {
+    "message": "Latest version"
+  },
+  "msgOneProviderRequired": {
+    "message": "At least one provider is required"
+  },
+  "msgResetSettingsFailed": {
+    "message": "Failed to reset settings"
+  },
+  "msgUnknownCount": {
+    "message": "Unknown count"
+  },
+  "msgDefaultPromptsImported": {
+    "message": "Default prompts imported"
+  },
+  "msgConversationsImported": {
+    "message": "Conversations imported"
+  },
+  "msgPromptsCount": {
+    "message": "$COUNT$ prompts",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "errVersionInfoFailed": {
+    "message": "Failed to load version info"
+  },
+  "errGitHubFetchFailed": {
+    "message": "Failed to fetch latest commit from GitHub"
+  },
+
+  "dlgDuplicateTitle": {
+    "message": "Conversation Already Saved"
+  },
+  "dlgDuplicateDesc": {
+    "message": "This conversation was previously saved:"
+  },
+  "dlgDuplicateSaved": {
+    "message": "Saved: $DATE$",
+    "placeholders": {
+      "date": {
+        "content": "$1"
+      }
+    }
+  },
+  "dlgDuplicateQuestion": {
+    "message": "Do you want to overwrite it with the current version?"
+  },
+  "btnOverwrite": {
+    "message": "Overwrite"
+  },
+
+  "errExtensionAPI": {
+    "message": "Extension API not available. Try reloading the page."
+  },
+  "errExtensionReloaded": {
+    "message": "Extension was reloaded. Please reload this page and try saving again."
+  },
+  "errSaveFailed": {
+    "message": "Failed to save: $ERROR$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
+  },
+  "errExtractFailed": {
+    "message": "Failed to extract conversation: $ERROR$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
   }
 }
