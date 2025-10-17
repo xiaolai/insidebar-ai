@@ -1,0 +1,702 @@
+{
+  "extensionName": {
+    "message": "insidebar.ai"
+  },
+  "extensionDescription": {
+    "message": "Multi-KI-Seitenleisten-Erweiterung für schnellen Zugriff auf ChatGPT, Claude, Gemini und mehr"
+  },
+  "commandOpenSidebar": {
+    "message": "insidebar.ai mit Standard-Anbieter öffnen"
+  },
+  "commandOpenPromptLibrary": {
+    "message": "insidebar.ai Prompt-Bibliothek öffnen"
+  },
+  "actionDefaultTitle": {
+    "message": "insidebar.ai öffnen"
+  },
+
+  "settingsTitle": {
+    "message": "Einstellungen: insidebar.ai"
+  },
+  "settingsSubtitle": {
+    "message": "Passen Sie Ihre Multi-KI-Seitenleiste an"
+  },
+
+  "sectionAppearance": {
+    "message": "Erscheinungsbild"
+  },
+  "labelTheme": {
+    "message": "Design"
+  },
+  "descTheme": {
+    "message": "Wählen Sie Ihr bevorzugtes Farbschema"
+  },
+  "themeAuto": {
+    "message": "Auto (System)"
+  },
+  "themeLight": {
+    "message": "Hell"
+  },
+  "themeDark": {
+    "message": "Dunkel"
+  },
+  "labelLanguage": {
+    "message": "Sprache"
+  },
+  "descLanguage": {
+    "message": "Wählen Sie Ihre bevorzugte Oberflächensprache"
+  },
+  "langEnglish": {
+    "message": "English (Englisch)"
+  },
+  "langSimplifiedChinese": {
+    "message": "简体中文 (Vereinfachtes Chinesisch)"
+  },
+  "langTraditionalChinese": {
+    "message": "繁體中文 (Traditionelles Chinesisch)"
+  },
+  "langKorean": {
+    "message": "한국어 (Koreanisch)"
+  },
+  "langJapanese": {
+    "message": "日本語 (Japanisch)"
+  },
+  "langSpanish": {
+    "message": "Español (Spanisch)"
+  },
+  "langFrench": {
+    "message": "Français (Französisch)"
+  },
+  "langGerman": {
+    "message": "Deutsch (German)"
+  },
+  "langItalian": {
+    "message": "Italiano (Italienisch)"
+  },
+  "langRussian": {
+    "message": "Русский (Russisch)"
+  },
+  "msgLanguageUpdated": {
+    "message": "Sprache erfolgreich aktualisiert"
+  },
+
+  "sectionProviders": {
+    "message": "KI-Anbieter"
+  },
+  "labelDefaultProvider": {
+    "message": "Standard-Anbieter"
+  },
+  "descDefaultProvider": {
+    "message": "KI-Anbieter, der beim Öffnen der Seitenleiste geladen wird"
+  },
+  "labelRememberLastProvider": {
+    "message": "Letzten Anbieter merken"
+  },
+  "descRememberLastProvider": {
+    "message": "Wenn aktiviert, öffnet sich die Seitenleiste mit dem zuletzt verwendeten Anbieter. Wenn deaktiviert, öffnet sich immer der Standard-Anbieter."
+  },
+  "labelEnabledProviders": {
+    "message": "Aktivierte Anbieter"
+  },
+  "descEnabledProviders": {
+    "message": "Wählen Sie aus, welche KI-Anbieter in Ihrer Seitenleiste erscheinen"
+  },
+
+  "sectionKeyboardShortcuts": {
+    "message": "Tastaturkürzel"
+  },
+  "labelEnableShortcut": {
+    "message": "Tastaturkürzel aktivieren"
+  },
+  "descEnableShortcut": {
+    "message": "Schalten Sie das globale Tastaturkürzel um, das insidebar.ai von überall im Browser öffnet."
+  },
+  "labelDefaultShortcuts": {
+    "message": "Standard-Tastaturkürzel"
+  },
+  "descDefaultShortcuts": {
+    "message": "Befehl+Umschalt+E (Strg+Umschalt+E unter Windows/Linux) öffnet die Seitenleiste mit dem Standard-Anbieter.<br>Befehl+Umschalt+P (Strg+Umschalt+P unter Windows/Linux) öffnet die Prompt-Bibliothek.<br>Sie können diese in den Tastaturkürzel-Einstellungen Ihres Browsers anpassen."
+  },
+  "btnOpenShortcuts": {
+    "message": "Tastaturkürzel öffnen"
+  },
+  "labelEdgeConfirm": {
+    "message": "In Microsoft Edge bestätigen"
+  },
+  "descEdgeConfirm": {
+    "message": "Edge erfordert eine einmalige Bestätigung des Tastaturkürzels. Klicken Sie auf Konfigurieren, um direkt zur Edge-Tastaturkürzel-Seite zu gelangen."
+  },
+  "btnConfigureEdge": {
+    "message": "In Edge konfigurieren"
+  },
+  "labelAutoPaste": {
+    "message": "Zwischenablage automatisch in Prompt-Bibliothek einfügen"
+  },
+  "descAutoPaste": {
+    "message": "Fügt den Inhalt der Zwischenablage automatisch in den Arbeitsbereich ein, wenn die Prompt-Bibliothek mit Befehl+Umschalt+P geöffnet wird"
+  },
+
+  "sectionChatHistory": {
+    "message": "Chat-Verlauf"
+  },
+  "labelAutoOpenSidebar": {
+    "message": "Seitenleiste nach dem Speichern automatisch öffnen"
+  },
+  "descAutoOpenSidebar": {
+    "message": "Öffnet die Seitenleiste automatisch und wechselt zum Chat-Verlauf, wenn Sie eine Unterhaltung speichern"
+  },
+
+  "sectionEnterBehavior": {
+    "message": "Enter-Tasten-Verhalten"
+  },
+  "descEnterBehavior1": {
+    "message": "Passen Sie an, wie die Enter-Taste und Modifikatortasten funktionieren, wenn Sie in KI-Anbieter-Eingabefeldern tippen."
+  },
+  "descEnterBehavior2": {
+    "message": "<strong>Gilt für:</strong> ChatGPT, Claude, Gemini, Google (KI-Modus), Grok, DeepSeek und Perplexity."
+  },
+  "labelEnableEnterCustomization": {
+    "message": "Enter-Tasten-Anpassung aktivieren"
+  },
+  "descEnableEnterCustomization": {
+    "message": "Wenn aktiviert, ändert das Enter-Tasten-Verhalten bei allen unterstützten KI-Anbietern"
+  },
+  "labelPreset": {
+    "message": "Voreinstellung"
+  },
+  "descPreset": {
+    "message": "Wählen Sie ein gängiges Tastenkombinations-Muster"
+  },
+  "presetDefault": {
+    "message": "Standard (Enter=Senden, Umschalt+Enter=Neue Zeile)"
+  },
+  "presetSwapped": {
+    "message": "Getauscht (Enter=Neue Zeile, Umschalt+Enter=Senden)"
+  },
+  "presetSlack": {
+    "message": "Slack-Stil (Enter=Senden, Strg+Enter=Neue Zeile)"
+  },
+  "presetDiscord": {
+    "message": "Discord-Stil (Enter=Neue Zeile, Strg+Enter=Senden)"
+  },
+  "presetCustom": {
+    "message": "Benutzerdefiniert"
+  },
+  "labelInsertNewline": {
+    "message": "Neue Zeile einfügen"
+  },
+  "labelSendMessage": {
+    "message": "Nachricht senden"
+  },
+
+  "sectionPromptLibrary": {
+    "message": "Prompt-Bibliothek"
+  },
+  "descPromptLibrary": {
+    "message": "Importieren Sie kuratierte Meta-Prompts für KI-Workflows, Recherche, Programmierung und Analyse"
+  },
+  "labelDefaultLibrary": {
+    "message": "Standard-Prompt-Bibliothek"
+  },
+  "descDefaultLibrary": {
+    "message": "Meta-Prompts für Prompt-Verfeinerung, Planung, Programmierung, Tests, Recherche, Schreiben und mehr. Enthält Variablenunterstützung für dynamische Vorlagen."
+  },
+  "btnImportDefault": {
+    "message": "Standard-Prompts importieren"
+  },
+  "btnImportCustom": {
+    "message": "Benutzerdefinierte Prompts importieren"
+  },
+  "noteCustomImport": {
+    "message": "Bevor Sie benutzerdefinierte Prompts importieren, lesen Sie bitte: <code style=\"background: #f5f5f5; padding: 2px 6px; border-radius: 3px;\">data/prompt-libraries/Generate_a_Basic_Prompt_Library.md</code>"
+  },
+
+  "sectionDataManagement": {
+    "message": "Datenverwaltung"
+  },
+  "statChatHistory": {
+    "message": "Chat-Verlauf"
+  },
+  "statPrompts": {
+    "message": "Prompts"
+  },
+  "statStorage": {
+    "message": "Verwendeter Speicher"
+  },
+  "labelExport": {
+    "message": "Daten exportieren"
+  },
+  "descExport": {
+    "message": "Laden Sie alle Prompts und Einstellungen als JSON herunter"
+  },
+  "btnExport": {
+    "message": "Exportieren"
+  },
+  "labelImport": {
+    "message": "Daten importieren"
+  },
+  "descImport": {
+    "message": "Prompts und Einstellungen aus JSON-Datei wiederherstellen"
+  },
+  "btnImport": {
+    "message": "Importieren"
+  },
+
+  "sectionDangerZone": {
+    "message": "Gefahrenzone"
+  },
+  "descDangerZone": {
+    "message": "Diese Aktionen können nicht rückgängig gemacht werden. Mit Vorsicht verwenden."
+  },
+  "labelClearHistory": {
+    "message": "Chat-Verlauf löschen"
+  },
+  "descClearHistory": {
+    "message": "Alle gespeicherten Unterhaltungen löschen"
+  },
+  "labelClearPrompts": {
+    "message": "Prompts löschen"
+  },
+  "descClearPrompts": {
+    "message": "Alle Prompts aus Ihrer Bibliothek löschen"
+  },
+  "labelResetSettings": {
+    "message": "Einstellungen zurücksetzen"
+  },
+  "descResetSettings": {
+    "message": "Alle Einstellungen auf Standardwerte zurücksetzen"
+  },
+  "btnClear": {
+    "message": "Löschen"
+  },
+  "btnReset": {
+    "message": "Zurücksetzen"
+  },
+
+  "sectionAbout": {
+    "message": "Über"
+  },
+  "labelVersion": {
+    "message": "Version"
+  },
+  "labelBuild": {
+    "message": "Build"
+  },
+  "btnCheckUpdates": {
+    "message": "Nach Updates suchen"
+  },
+  "linkDownloadLatest": {
+    "message": "Neueste Version herunterladen"
+  },
+  "descAbout1": {
+    "message": "insidebar.ai bietet schnellen Zugriff auf mehrere KI-Assistenten in einer praktischen Seitenleiste."
+  },
+  "descAbout2": {
+    "message": "Entwickelt mit datenschutzorientierter Architektur. Alle Daten werden lokal gespeichert."
+  },
+
+  "msgThemeUpdated": {
+    "message": "Design aktualisiert"
+  },
+  "msgProviderUpdated": {
+    "message": "Standard-Anbieter aktualisiert"
+  },
+  "msgProviderSettingsUpdated": {
+    "message": "Anbietereinstellungen aktualisiert"
+  },
+  "msgShortcutEnabled": {
+    "message": "Tastaturkürzel aktiviert"
+  },
+  "msgShortcutDisabled": {
+    "message": "Tastaturkürzel deaktiviert"
+  },
+  "msgAutoPasteEnabled": {
+    "message": "Automatisches Einfügen aktiviert"
+  },
+  "msgAutoPasteDisabled": {
+    "message": "Automatisches Einfügen deaktiviert"
+  },
+  "msgAutoOpenEnabled": {
+    "message": "Automatisches Öffnen der Seitenleiste aktiviert"
+  },
+  "msgAutoOpenDisabled": {
+    "message": "Automatisches Öffnen der Seitenleiste deaktiviert"
+  },
+  "msgRememberLastProviderEnabled": {
+    "message": "Seitenleiste merkt sich den letzten Anbieter"
+  },
+  "msgRememberLastProviderDisabled": {
+    "message": "Seitenleiste öffnet immer den Standard-Anbieter"
+  },
+  "msgEnterCustomizationEnabled": {
+    "message": "Enter-Tasten-Anpassung aktiviert"
+  },
+  "msgEnterCustomizationDisabled": {
+    "message": "Enter-Tasten-Anpassung deaktiviert"
+  },
+  "msgPresetChanged": {
+    "message": "Voreinstellung geändert zu: $PRESET$",
+    "placeholders": {
+      "preset": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgCustomKeyMappingSaved": {
+    "message": "Benutzerdefinierte Tastenbelegung gespeichert"
+  },
+  "msgDataExported": {
+    "message": "Daten erfolgreich exportiert"
+  },
+  "msgDataImported": {
+    "message": "Daten erfolgreich importiert"
+  },
+  "msgDataImportedDetails": {
+    "message": "Daten erfolgreich importiert — $DETAILS$.",
+    "placeholders": {
+      "details": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgPromptsImported": {
+    "message": "$COUNT$ Prompts erfolgreich importiert",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgPromptsImportedWithSkipped": {
+    "message": "$IMPORTED$ Prompts erfolgreich importiert ($SKIPPED$ existierten bereits)",
+    "placeholders": {
+      "imported": {
+        "content": "$1"
+      },
+      "skipped": {
+        "content": "$2"
+      }
+    }
+  },
+  "msgPromptsAlreadyExist": {
+    "message": "Alle Prompts existieren bereits in Ihrer Bibliothek"
+  },
+  "msgCustomPromptsImported": {
+    "message": "$IMPORTED$ benutzerdefinierte Prompts erfolgreich importiert",
+    "placeholders": {
+      "imported": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgHistoryCleared": {
+    "message": "Gesamter Chat-Verlauf wurde gelöscht"
+  },
+  "msgPromptsCleared": {
+    "message": "Alle Prompts wurden gelöscht"
+  },
+  "msgSettingsReset": {
+    "message": "Alle Einstellungen wurden auf Standardwerte zurückgesetzt"
+  },
+  "msgUpdateAvailable": {
+    "message": "Update verfügbar - klicken Sie auf den Link 'Neueste Version herunterladen'"
+  },
+  "msgUpToDate": {
+    "message": "Sie sind auf dem neuesten Stand!"
+  },
+  "msgCheckingUpdates": {
+    "message": "Überprüfe..."
+  },
+  "msgUpdateCheckFailed": {
+    "message": "Fehler beim Suchen nach Updates"
+  },
+  "msgVersionUnknown": {
+    "message": "Version unbekannt"
+  },
+  "msgCommitHashUnavailable": {
+    "message": "Commit-Hash nicht verfügbar"
+  },
+  "msgBuildInfo": {
+    "message": "Build: $HASH$ ($DATE$)",
+    "placeholders": {
+      "hash": {
+        "content": "$1"
+      },
+      "date": {
+        "content": "$2"
+      }
+    }
+  },
+  "msgUpdateStatusAvailable": {
+    "message": "<strong>Update verfügbar!</strong><br>Neueste: $LATEST$ ($DATE$)<br>Aktuell: $CURRENT$<br><small>$MESSAGE$</small>",
+    "placeholders": {
+      "latest": {
+        "content": "$1"
+      },
+      "date": {
+        "content": "$2"
+      },
+      "current": {
+        "content": "$3"
+      },
+      "message": {
+        "content": "$4"
+      }
+    }
+  },
+  "msgUpdateStatusCurrent": {
+    "message": "Sie haben die neueste Version!"
+  },
+  "msgUpdateStatusError": {
+    "message": "Fehler beim Suchen nach Updates"
+  },
+
+  "errAtLeastOneProvider": {
+    "message": "Mindestens ein Anbieter muss aktiviert sein"
+  },
+  "errExportFailed": {
+    "message": "Fehler beim Exportieren der Daten"
+  },
+  "errImportFailed": {
+    "message": "Fehler beim Importieren der Daten. Bitte überprüfen Sie das Dateiformat."
+  },
+  "errClearHistoryFailed": {
+    "message": "Fehler beim Löschen des Chat-Verlaufs"
+  },
+  "errClearPromptsFailed": {
+    "message": "Fehler beim Löschen der Prompts"
+  },
+  "errResetSettingsFailed": {
+    "message": "Fehler beim Zurücksetzen der Einstellungen"
+  },
+  "errImportDefaultLibrary": {
+    "message": "Fehler beim Importieren der Standard-Bibliothek"
+  },
+  "errImportCustomLibrary": {
+    "message": "Fehler beim Importieren benutzerdefinierter Prompts"
+  },
+  "errInvalidFormat": {
+    "message": "Ungültiges Format: Datei muss ein JSON-Array von Prompts enthalten"
+  },
+  "errInvalidPromptStructure": {
+    "message": "Ungültige Prompt-Struktur - siehe Warnung für Details"
+  },
+  "errInvalidJSON": {
+    "message": "Ungültiges JSON-Dateiformat"
+  },
+  "errValidationErrors": {
+    "message": "$COUNT$ Prompts haben Validierungsfehler",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+
+  "confirmImportData": {
+    "message": "Daten von $DATE$ importieren?\n\nDies wird hinzufügen:\n- $PROMPTS$ Prompts\n- $CONVERSATIONS$ Unterhaltungen\n- Einstellungskonfiguration\n\nVorhandene Daten bleiben erhalten, es sei denn, es werden Duplikate gefunden.",
+    "placeholders": {
+      "date": {
+        "content": "$1"
+      },
+      "prompts": {
+        "content": "$2"
+      },
+      "conversations": {
+        "content": "$3"
+      }
+    }
+  },
+  "confirmClearHistory": {
+    "message": "Sind Sie sicher, dass Sie den GESAMTEN Chat-Verlauf löschen möchten?\n\nDies löscht dauerhaft alle gespeicherten Unterhaltungen.\n\nDiese Aktion kann NICHT rückgängig gemacht werden!"
+  },
+  "confirmClearPrompts": {
+    "message": "Sind Sie sicher, dass Sie ALLE Prompts löschen möchten?\n\nDies löscht dauerhaft alle Prompts aus Ihrer Bibliothek.\n\nDiese Aktion kann NICHT rückgängig gemacht werden!"
+  },
+  "confirmResetSettings": {
+    "message": "Sind Sie sicher, dass Sie ALLE Einstellungen auf Standardwerte zurücksetzen möchten?\n\nDies setzt zurück:\n- Design-Einstellungen\n- Standard-Anbieter\n- Tastaturkürzel\n- Alle anderen Einstellungen\n\nIhre Prompts und Ihr Chat-Verlauf werden NICHT betroffen sein.\n\nDiese Aktion kann NICHT rückgängig gemacht werden!"
+  },
+
+  "contextMenuSendTo": {
+    "message": "An insidebar.ai senden"
+  },
+  "contextMenuPromptLibrary": {
+    "message": "Prompt-Bibliothek"
+  },
+
+  "sidebarChatHistory": {
+    "message": "Chat-Verlauf"
+  },
+  "sidebarPromptGenie": {
+    "message": "Prompt-Genie"
+  },
+  "sidebarEditingPrompt": {
+    "message": "Prompt bearbeiten"
+  },
+  "placeholderSearch": {
+    "message": "Suchen..."
+  },
+  "placeholderSearchConversations": {
+    "message": "Unterhaltungen durchsuchen..."
+  },
+  "placeholderSearchPrompts": {
+    "message": "Prompts durchsuchen..."
+  },
+  "btnSave": {
+    "message": "Speichern"
+  },
+  "btnCancel": {
+    "message": "Abbrechen"
+  },
+  "btnClose": {
+    "message": "Schließen"
+  },
+  "btnDelete": {
+    "message": "Löschen"
+  },
+  "btnEdit": {
+    "message": "Bearbeiten"
+  },
+  "btnCopy": {
+    "message": "Kopieren"
+  },
+  "tooltipSaveNew": {
+    "message": "Als neuen Prompt speichern"
+  },
+  "tooltipCopyClipboard": {
+    "message": "In Zwischenablage kopieren"
+  },
+  "tooltipClear": {
+    "message": "Löschen"
+  },
+  "tooltipSelectProvider": {
+    "message": "Anbieter auswählen"
+  },
+  "tooltipSendProvider": {
+    "message": "An ausgewählten Anbieter senden"
+  },
+  "tooltipFilterProvider": {
+    "message": "Nach Anbieter filtern"
+  },
+  "tooltipShowSearchTips": {
+    "message": "Suchtipps anzeigen"
+  },
+  "tooltipShowFavorites": {
+    "message": "Nur Favoriten anzeigen"
+  },
+  "tooltipFilterCategory": {
+    "message": "Nach Kategorie filtern"
+  },
+  "tooltipRecentlyUsed": {
+    "message": "Zuletzt verwendet"
+  },
+  "tooltipMostUsed": {
+    "message": "Am häufigsten verwendet"
+  },
+  "tooltipAlphabetical": {
+    "message": "A-Z"
+  },
+  "tooltipNewestFirst": {
+    "message": "Neueste zuerst"
+  },
+  "tooltipToggleSection": {
+    "message": "Abschnitt umschalten"
+  },
+  "tooltipCopyContent": {
+    "message": "Inhalt kopieren"
+  },
+  "tooltipInsertBeginning": {
+    "message": "Am Anfang einfügen"
+  },
+  "tooltipInsertEnd": {
+    "message": "Am Ende einfügen"
+  },
+  "tooltipReplaceAll": {
+    "message": "Alles ersetzen"
+  },
+  "labelAllProviders": {
+    "message": "Alle Anbieter"
+  },
+  "labelAllCategories": {
+    "message": "Alle Kategorien"
+  },
+  "labelRecentlyUsed": {
+    "message": "Zuletzt verwendet"
+  },
+  "labelTopFavorites": {
+    "message": "Top-Favoriten"
+  },
+  "loadingText": {
+    "message": "Lädt..."
+  },
+
+  "optionsPageTitle": {
+    "message": "insidebar.ai - Einstellungen"
+  },
+  "headerSettingsTitle": {
+    "message": "Einstellungen: insidebar.ai"
+  },
+  "headerSettingsSubtitle": {
+    "message": "Passen Sie Ihre Multi-KI-Seitenleiste an"
+  },
+  "labelEnableKeyboardShortcut": {
+    "message": "Tastaturkürzel aktivieren"
+  },
+  "descEnableKeyboardShortcut": {
+    "message": "Schalten Sie das globale Tastaturkürzel um, das insidebar.ai von überall im Browser öffnet."
+  },
+  "labelEdgeShortcutHelper": {
+    "message": "In Microsoft Edge bestätigen"
+  },
+  "descEdgeShortcutHelper": {
+    "message": "Edge erfordert eine einmalige Bestätigung des Tastaturkürzels. Klicken Sie auf Konfigurieren, um direkt zur Edge-Tastaturkürzel-Seite zu gelangen."
+  },
+  "labelEnableEnterCustom": {
+    "message": "Enter-Tasten-Anpassung aktivieren"
+  },
+  "descEnableEnterCustom": {
+    "message": "Wenn aktiviert, ändert das Enter-Tasten-Verhalten bei allen unterstützten KI-Anbietern"
+  },
+  "keyShift": {
+    "message": "Umschalt"
+  },
+  "keyCtrl": {
+    "message": "Strg"
+  },
+  "keyAlt": {
+    "message": "Alt"
+  },
+  "keyMeta": {
+    "message": "⌘/Win"
+  },
+  "keyPlusEnter": {
+    "message": "+ Enter"
+  },
+  "labelDefaultPromptLibrary": {
+    "message": "Standard-Prompt-Bibliothek"
+  },
+  "descDefaultPromptLibrary": {
+    "message": "Meta-Prompts für Prompt-Verfeinerung, Planung, Programmierung, Tests, Recherche, Schreiben und mehr. Enthält Variablenunterstützung für dynamische Vorlagen."
+  },
+  "descCustomPromptReadme": {
+    "message": "Bevor Sie benutzerdefinierte Prompts importieren, lesen Sie bitte: <code style=\"background: #f5f5f5; padding: 2px 6px; border-radius: 3px;\">data/prompt-libraries/Generate_a_Basic_Prompt_Library.md</code>"
+  },
+  "statStorageUsed": {
+    "message": "Verwendeter Speicher"
+  },
+  "labelExportData": {
+    "message": "Daten exportieren"
+  },
+  "descExportData": {
+    "message": "Laden Sie alle Prompts und Einstellungen als JSON herunter"
+  },
+  "labelImportData": {
+    "message": "Daten importieren"
+  },
+  "descImportData": {
+    "message": "Prompts und Einstellungen aus JSON-Datei wiederherstellen"
+  },
+  "labelLoading": {
+    "message": "Lädt..."
+  }
+}

@@ -3,25 +3,23 @@
     "message": "insidebar.ai"
   },
   "extensionDescription": {
-    "message": "多AI側邊欄擴充功能，快速存取ChatGPT、Claude、Gemini等"
+    "message": "多 AI 側邊欄擴充功能，快速存取 ChatGPT、Claude、Gemini 等"
   },
   "commandOpenSidebar": {
-    "message": "使用預設提供者開啟insidebar.ai"
+    "message": "使用預設提供者開啟 insidebar.ai"
   },
   "commandOpenPromptLibrary": {
-    "message": "開啟insidebar.ai提示詞庫"
+    "message": "開啟 insidebar.ai 提示詞庫"
   },
   "actionDefaultTitle": {
-    "message": "開啟insidebar.ai"
+    "message": "開啟 insidebar.ai"
   },
-
   "settingsTitle": {
-    "message": "設定: insidebar.ai"
+    "message": "設定： insidebar.ai"
   },
   "settingsSubtitle": {
-    "message": "自訂您的多AI側邊欄體驗"
+    "message": "自訂您的多 AI 側邊欄體驗"
   },
-
   "sectionAppearance": {
     "message": "外觀"
   },
@@ -32,7 +30,7 @@
     "message": "選擇您偏好的配色方案"
   },
   "themeAuto": {
-    "message": "自動(系統)"
+    "message": "自動（系統）"
   },
   "themeLight": {
     "message": "淺色"
@@ -47,7 +45,7 @@
     "message": "選擇您偏好的介面語言"
   },
   "langEnglish": {
-    "message": "English (英語)"
+    "message": "English （英語）"
   },
   "langSimplifiedChinese": {
     "message": "简体中文"
@@ -61,18 +59,32 @@
   "langJapanese": {
     "message": "日本語 (Japanese)"
   },
+  "langSpanish": {
+    "message": "Español (Spanish)"
+  },
+  "langFrench": {
+    "message": "Français (French)"
+  },
+  "langGerman": {
+    "message": "Deutsch (German)"
+  },
+  "langItalian": {
+    "message": "Italiano (Italian)"
+  },
+  "langRussian": {
+    "message": "Русский (Russian)"
+  },
   "msgLanguageUpdated": {
     "message": "語言更新成功"
   },
-
   "sectionProviders": {
-    "message": "AI提供者"
+    "message": "AI 提供者"
   },
   "labelDefaultProvider": {
     "message": "預設提供者"
   },
   "descDefaultProvider": {
-    "message": "開啟側邊欄時載入的AI提供者"
+    "message": "開啟側邊欄時載入的 AI 提供者"
   },
   "labelRememberLastProvider": {
     "message": "記住上次使用的提供者"
@@ -84,9 +96,8 @@
     "message": "已啟用的提供者"
   },
   "descEnabledProviders": {
-    "message": "選擇在側邊欄中顯示哪些AI提供者"
+    "message": "選擇在側邊欄中顯示哪些 AI 提供者"
   },
-
   "sectionKeyboardShortcuts": {
     "message": "鍵盤快速鍵"
   },
@@ -94,33 +105,32 @@
     "message": "啟用鍵盤快速鍵"
   },
   "descEnableShortcut": {
-    "message": "切換可在瀏覽器任何位置開啟insidebar.ai的全域快速鍵。"
+    "message": "切換可在瀏覽器任何位置開啟 insidebar.ai 的全域快速鍵。"
   },
   "labelDefaultShortcuts": {
     "message": "預設快速鍵"
   },
   "descDefaultShortcuts": {
-    "message": "Command+Shift+E (Windows/Linux上為Ctrl+Shift+E) 使用預設提供者開啟側邊欄。<br>Command+Shift+P (Windows/Linux上為Ctrl+Shift+P) 開啟提示詞庫。<br>您可以在瀏覽器的快速鍵設定中自訂這些快速鍵。"
+    "message": "Command + Shift + E (Windows/Linux 上為 Ctrl + Shift + E) 使用預設提供者開啟側邊欄。<br>Command + Shift + P (Windows/Linux 上為 Ctrl + Shift + P) 開啟提示詞庫。<br>您可以在瀏覽器的快速鍵設定中自訂這些快速鍵。"
   },
   "btnOpenShortcuts": {
     "message": "開啟快速鍵設定"
   },
   "labelEdgeConfirm": {
-    "message": "在Microsoft Edge中確認"
+    "message": "在 Microsoft Edge 中確認"
   },
   "descEdgeConfirm": {
-    "message": "Edge需要您確認一次快速鍵。點擊設定可直接跳轉到Edge快速鍵頁面。"
+    "message": "Edge 需要您確認一次快速鍵。點擊設定可直接跳轉到 Edge 快速鍵頁面。"
   },
   "btnConfigureEdge": {
-    "message": "在Edge中設定"
+    "message": "在 Edge 中設定"
   },
   "labelAutoPaste": {
     "message": "自動貼上剪貼簿到提示詞庫"
   },
   "descAutoPaste": {
-    "message": "使用Command+Shift+P開啟提示詞庫時自動將剪貼簿內容貼上到工作區"
+    "message": "使用 Command + Shift + P 開啟提示詞庫時自動將剪貼簿內容貼上到工作區"
   },
-
   "sectionChatHistory": {
     "message": "聊天記錄"
   },
@@ -130,21 +140,20 @@
   "descAutoOpenSidebar": {
     "message": "儲存對話時自動開啟側邊欄並切換到聊天記錄"
   },
-
   "sectionEnterBehavior": {
-    "message": "Enter鍵行為"
+    "message": "Enter 鍵行為"
   },
   "descEnterBehavior1": {
-    "message": "自訂在AI提供者輸入欄位中輸入時Enter鍵和修飾鍵的工作方式。"
+    "message": "自訂在 AI 提供者輸入欄位中輸入時 Enter 鍵和修飾鍵的工作方式。"
   },
   "descEnterBehavior2": {
-    "message": "<strong>適用於:</strong> ChatGPT、Claude、Gemini、Google(AI模式)、Grok、DeepSeek和Perplexity。"
+    "message": "<strong>適用於:</strong> ChatGPT、Claude、Gemini、Google(AI 模式)、Grok、DeepSeek 和 Perplexity。"
   },
   "labelEnableEnterCustomization": {
-    "message": "啟用Enter鍵自訂"
+    "message": "啟用 Enter 鍵自訂"
   },
   "descEnableEnterCustomization": {
-    "message": "啟用後，將修改所有支援的AI提供者的Enter鍵行為"
+    "message": "啟用後，將修改所有支援的 AI 提供者的 Enter 鍵行為"
   },
   "labelPreset": {
     "message": "預設"
@@ -153,16 +162,16 @@
     "message": "選擇常見的按鍵組合模式"
   },
   "presetDefault": {
-    "message": "預設(Enter=傳送，Shift+Enter=換行)"
+    "message": "預設 (Enter = 傳送，Shift + Enter = 換行)"
   },
   "presetSwapped": {
-    "message": "交換(Enter=換行，Shift+Enter=傳送)"
+    "message": "交換 (Enter = 換行，Shift + Enter = 傳送)"
   },
   "presetSlack": {
-    "message": "Slack風格(Enter=傳送，Ctrl+Enter=換行)"
+    "message": "Slack 風格 (Enter = 傳送，Ctrl + Enter = 換行)"
   },
   "presetDiscord": {
-    "message": "Discord風格(Enter=換行，Ctrl+Enter=傳送)"
+    "message": "Discord 風格 (Enter = 換行，Ctrl + Enter = 傳送)"
   },
   "presetCustom": {
     "message": "自訂"
@@ -173,12 +182,11 @@
   "labelSendMessage": {
     "message": "傳送訊息"
   },
-
   "sectionPromptLibrary": {
     "message": "提示詞庫"
   },
   "descPromptLibrary": {
-    "message": "匯入為AI工作流程、研究、編碼和分析精心挑選的元提示"
+    "message": "匯入為 AI 工作流程、研究、編碼和分析精心挑選的元提示"
   },
   "labelDefaultLibrary": {
     "message": "預設提示詞庫"
@@ -193,9 +201,8 @@
     "message": "匯入自訂提示詞"
   },
   "noteCustomImport": {
-    "message": "匯入自訂提示詞前，請先閱讀: <code style=\"background: #f5f5f5; padding: 2px 6px; border-radius: 3px;\">data/prompt-libraries/Generate_a_Basic_Prompt_Library.md</code>"
+    "message": "匯入自訂提示詞前，請先閱讀： <code style = \"background: #f5f5f5; padding: 2px 6px; border - radius: 3px;\">data/prompt - libraries/Generate_a_Basic_Prompt_Library.md</code>"
   },
-
   "sectionDataManagement": {
     "message": "資料管理"
   },
@@ -212,7 +219,7 @@
     "message": "匯出資料"
   },
   "descExport": {
-    "message": "將所有提示詞和設定下載為JSON"
+    "message": "將所有提示詞和設定下載為 JSON"
   },
   "btnExport": {
     "message": "匯出"
@@ -221,12 +228,11 @@
     "message": "匯入資料"
   },
   "descImport": {
-    "message": "從JSON檔案還原提示詞和設定"
+    "message": "從 JSON 檔案還原提示詞和設定"
   },
   "btnImport": {
     "message": "匯入"
   },
-
   "sectionDangerZone": {
     "message": "危險區域"
   },
@@ -257,7 +263,6 @@
   "btnReset": {
     "message": "重設"
   },
-
   "sectionAbout": {
     "message": "關於"
   },
@@ -274,12 +279,11 @@
     "message": "下載最新版本"
   },
   "descAbout1": {
-    "message": "insidebar.ai在一個便利的側邊欄中提供對多個AI助手的快速存取。"
+    "message": "insidebar.ai 在一個便利的側邊欄中提供對多個 AI 助手的快速存取。"
   },
   "descAbout2": {
     "message": "採用隱私優先架構建置。所有資料本機儲存。"
   },
-
   "msgThemeUpdated": {
     "message": "主題已更新"
   },
@@ -314,13 +318,13 @@
     "message": "側邊欄將始終開啟預設提供者"
   },
   "msgEnterCustomizationEnabled": {
-    "message": "Enter鍵自訂已啟用"
+    "message": "Enter 鍵自訂已啟用"
   },
   "msgEnterCustomizationDisabled": {
-    "message": "Enter鍵自訂已停用"
+    "message": "Enter 鍵自訂已停用"
   },
   "msgPresetChanged": {
-    "message": "預設已更改為: $PRESET$",
+    "message": "預設已更改為： $PRESET$",
     "placeholders": {
       "preset": {
         "content": "$1"
@@ -345,7 +349,7 @@
     }
   },
   "msgPromptsImported": {
-    "message": "成功匯入$COUNT$個提示詞",
+    "message": "成功匯入 $COUNT$ 個提示詞",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -353,7 +357,7 @@
     }
   },
   "msgPromptsImportedWithSkipped": {
-    "message": "成功匯入$IMPORTED$個提示詞($SKIPPED$個已存在)",
+    "message": "成功匯入 $IMPORTED$ 個提示詞 ($SKIPPED$ 個已存在)",
     "placeholders": {
       "imported": {
         "content": "$1"
@@ -367,7 +371,7 @@
     "message": "所有提示詞已存在於您的庫中"
   },
   "msgCustomPromptsImported": {
-    "message": "成功匯入$IMPORTED$個自訂提示詞",
+    "message": "成功匯入 $IMPORTED$ 個自訂提示詞",
     "placeholders": {
       "imported": {
         "content": "$1"
@@ -387,7 +391,7 @@
     "message": "有可用更新 - 點擊下載最新版本連結"
   },
   "msgUpToDate": {
-    "message": "您已是最新版本!"
+    "message": "您已是最新版本！"
   },
   "msgCheckingUpdates": {
     "message": "正在檢查..."
@@ -402,7 +406,7 @@
     "message": "提交雜湊不可用"
   },
   "msgBuildInfo": {
-    "message": "建置: $HASH$ ($DATE$)",
+    "message": "建置： $HASH$ ($DATE$)",
     "placeholders": {
       "hash": {
         "content": "$1"
@@ -413,7 +417,7 @@
     }
   },
   "msgUpdateStatusAvailable": {
-    "message": "<strong>有可用更新!</strong><br>最新: $LATEST$ ($DATE$)<br>目前: $CURRENT$<br><small>$MESSAGE$</small>",
+    "message": "<strong>有可用更新!</strong><br>最新： $LATEST$ ($DATE$)<br>目前： $CURRENT$<br><small>$MESSAGE$</small>",
     "placeholders": {
       "latest": {
         "content": "$1"
@@ -430,12 +434,11 @@
     }
   },
   "msgUpdateStatusCurrent": {
-    "message": "您已是最新版本!"
+    "message": "您已是最新版本！"
   },
   "msgUpdateStatusError": {
     "message": "檢查更新失敗"
   },
-
   "errAtLeastOneProvider": {
     "message": "至少需要啟用一個提供者"
   },
@@ -461,25 +464,24 @@
     "message": "匯入自訂提示詞失敗"
   },
   "errInvalidFormat": {
-    "message": "無效格式: 檔案必須包含提示詞的JSON陣列"
+    "message": "無效格式： 檔案必須包含提示詞的 JSON 陣列"
   },
   "errInvalidPromptStructure": {
     "message": "無效的提示詞結構 - 查看警告了解詳情"
   },
   "errInvalidJSON": {
-    "message": "無效的JSON檔案格式"
+    "message": "無效的 JSON 檔案格式"
   },
   "errValidationErrors": {
-    "message": "$COUNT$個提示詞存在驗證錯誤",
+    "message": "$COUNT$ 個提示詞存在驗證錯誤",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
   },
-
   "confirmImportData": {
-    "message": "從$DATE$匯入資料?\n\n這將新增:\n- $PROMPTS$個提示詞\n- $CONVERSATIONS$個對話\n- 設定組態\n\n除非發現重複項目，否則現有資料將被保留。",
+    "message": "從 $DATE$ 匯入資料？\n\n這將新增：\n- $PROMPTS$ 個提示詞\n- $CONVERSATIONS$ 個對話\n- 設定組態\n\n除非發現重複項目，否則現有資料將被保留。",
     "placeholders": {
       "date": {
         "content": "$1"
@@ -493,22 +495,20 @@
     }
   },
   "confirmClearHistory": {
-    "message": "您確定要刪除所有聊天記錄嗎?\n\n這將永久刪除所有儲存的對話。\n\n此操作無法復原!"
+    "message": "您確定要刪除所有聊天記錄嗎？\n\n這將永久刪除所有儲存的對話。\n\n此操作無法復原！"
   },
   "confirmClearPrompts": {
-    "message": "您確定要刪除所有提示詞嗎?\n\n這將永久刪除您庫中的所有提示詞。\n\n此操作無法復原!"
+    "message": "您確定要刪除所有提示詞嗎？\n\n這將永久刪除您庫中的所有提示詞。\n\n此操作無法復原！"
   },
   "confirmResetSettings": {
-    "message": "您確定要將所有設定重設為預設值嗎?\n\n這將重設:\n- 主題設定\n- 預設提供者\n- 鍵盤快速鍵\n- 所有其他偏好設定\n\n您的提示詞和聊天記錄不會受到影響。\n\n此操作無法復原!"
+    "message": "您確定要將所有設定重設為預設值嗎？\n\n這將重設：\n- 主題設定\n- 預設提供者\n- 鍵盤快速鍵\n- 所有其他偏好設定\n\n您的提示詞和聊天記錄不會受到影響。\n\n此操作無法復原！"
   },
-
   "contextMenuSendTo": {
-    "message": "傳送到insidebar.ai"
+    "message": "傳送到 insidebar.ai"
   },
   "contextMenuPromptLibrary": {
     "message": "提示詞庫"
   },
-
   "sidebarChatHistory": {
     "message": "聊天記錄"
   },
@@ -579,7 +579,7 @@
     "message": "最常使用"
   },
   "tooltipAlphabetical": {
-    "message": "A-Z"
+    "message": "A - Z"
   },
   "tooltipNewestFirst": {
     "message": "最新優先"
@@ -614,33 +614,32 @@
   "loadingText": {
     "message": "載入中..."
   },
-
   "optionsPageTitle": {
     "message": "insidebar.ai - 設定"
   },
   "headerSettingsTitle": {
-    "message": "設定: insidebar.ai"
+    "message": "設定： insidebar.ai"
   },
   "headerSettingsSubtitle": {
-    "message": "自訂您的多AI側邊欄體驗"
+    "message": "自訂您的多 AI 側邊欄體驗"
   },
   "labelEnableKeyboardShortcut": {
     "message": "啟用鍵盤快速鍵"
   },
   "descEnableKeyboardShortcut": {
-    "message": "切換可在瀏覽器任何位置開啟insidebar.ai的全域快速鍵。"
+    "message": "切換可在瀏覽器任何位置開啟 insidebar.ai 的全域快速鍵。"
   },
   "labelEdgeShortcutHelper": {
-    "message": "在Microsoft Edge中確認"
+    "message": "在 Microsoft Edge 中確認"
   },
   "descEdgeShortcutHelper": {
-    "message": "Edge需要您確認一次快速鍵。點擊設定可直接跳轉到Edge快速鍵頁面。"
+    "message": "Edge 需要您確認一次快速鍵。點擊設定可直接跳轉到 Edge 快速鍵頁面。"
   },
   "labelEnableEnterCustom": {
-    "message": "啟用Enter鍵自訂"
+    "message": "啟用 Enter 鍵自訂"
   },
   "descEnableEnterCustom": {
-    "message": "啟用後，將修改所有支援的AI提供者的Enter鍵行為"
+    "message": "啟用後，將修改所有支援的 AI 提供者的 Enter 鍵行為"
   },
   "keyShift": {
     "message": "Shift"
@@ -664,7 +663,7 @@
     "message": "用於提示詞最佳化、規劃、編碼、測試、研究、寫作等的元提示。包含對動態範本的變數支援。"
   },
   "descCustomPromptReadme": {
-    "message": "匯入自訂提示詞前，請先閱讀: <code style=\"background: #f5f5f5; padding: 2px 6px; border-radius: 3px;\">data/prompt-libraries/Generate_a_Basic_Prompt_Library.md</code>"
+    "message": "匯入自訂提示詞前，請先閱讀： <code style = \"background: #f5f5f5; padding: 2px 6px; border - radius: 3px;\">data/prompt - libraries/Generate_a_Basic_Prompt_Library.md</code>"
   },
   "statStorageUsed": {
     "message": "已用儲存空間"
@@ -673,13 +672,13 @@
     "message": "匯出資料"
   },
   "descExportData": {
-    "message": "將所有提示詞和設定下載為JSON"
+    "message": "將所有提示詞和設定下載為 JSON"
   },
   "labelImportData": {
     "message": "匯入資料"
   },
   "descImportData": {
-    "message": "從JSON檔案還原提示詞和設定"
+    "message": "從 JSON 檔案還原提示詞和設定"
   },
   "labelLoading": {
     "message": "載入中..."

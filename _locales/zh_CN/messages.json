@@ -3,25 +3,23 @@
     "message": "insidebar.ai"
   },
   "extensionDescription": {
-    "message": "多AI侧边栏扩展，快速访问ChatGPT、Claude、Gemini等"
+    "message": "多 AI 侧边栏扩展，快速访问 ChatGPT、Claude、Gemini 等"
   },
   "commandOpenSidebar": {
-    "message": "使用默认提供商打开insidebar.ai"
+    "message": "使用默认提供商打开 insidebar.ai"
   },
   "commandOpenPromptLibrary": {
-    "message": "打开insidebar.ai提示词库"
+    "message": "打开 insidebar.ai 提示词库"
   },
   "actionDefaultTitle": {
-    "message": "打开insidebar.ai"
+    "message": "打开 insidebar.ai"
   },
-
   "settingsTitle": {
-    "message": "设置: insidebar.ai"
+    "message": "设置： insidebar.ai"
   },
   "settingsSubtitle": {
-    "message": "自定义您的多AI侧边栏体验"
+    "message": "自定义您的多 AI 侧边栏体验"
   },
-
   "sectionAppearance": {
     "message": "外观"
   },
@@ -32,7 +30,7 @@
     "message": "选择您喜欢的配色方案"
   },
   "themeAuto": {
-    "message": "自动(系统)"
+    "message": "自动（系统）"
   },
   "themeLight": {
     "message": "浅色"
@@ -47,7 +45,7 @@
     "message": "选择您喜欢的界面语言"
   },
   "langEnglish": {
-    "message": "English (英语)"
+    "message": "English （英语）"
   },
   "langSimplifiedChinese": {
     "message": "简体中文"
@@ -61,18 +59,32 @@
   "langJapanese": {
     "message": "日本語 (Japanese)"
   },
+  "langSpanish": {
+    "message": "Español (Spanish)"
+  },
+  "langFrench": {
+    "message": "Français (French)"
+  },
+  "langGerman": {
+    "message": "Deutsch (German)"
+  },
+  "langItalian": {
+    "message": "Italiano (Italian)"
+  },
+  "langRussian": {
+    "message": "Русский (Russian)"
+  },
   "msgLanguageUpdated": {
     "message": "语言更新成功"
   },
-
   "sectionProviders": {
-    "message": "AI提供商"
+    "message": "AI 提供商"
   },
   "labelDefaultProvider": {
     "message": "默认提供商"
   },
   "descDefaultProvider": {
-    "message": "打开侧边栏时加载的AI提供商"
+    "message": "打开侧边栏时加载的 AI 提供商"
   },
   "labelRememberLastProvider": {
     "message": "记住上次使用的提供商"
@@ -84,9 +96,8 @@
     "message": "已启用的提供商"
   },
   "descEnabledProviders": {
-    "message": "选择在侧边栏中显示哪些AI提供商"
+    "message": "选择在侧边栏中显示哪些 AI 提供商"
   },
-
   "sectionKeyboardShortcuts": {
     "message": "键盘快捷键"
   },
@@ -94,33 +105,32 @@
     "message": "启用键盘快捷键"
   },
   "descEnableShortcut": {
-    "message": "切换可在浏览器任何位置打开insidebar.ai的全局快捷键。"
+    "message": "切换可在浏览器任何位置打开 insidebar.ai 的全局快捷键。"
   },
   "labelDefaultShortcuts": {
     "message": "默认快捷键"
   },
   "descDefaultShortcuts": {
-    "message": "Command+Shift+E (Windows/Linux上为Ctrl+Shift+E) 使用默认提供商打开侧边栏。<br>Command+Shift+P (Windows/Linux上为Ctrl+Shift+P) 打开提示词库。<br>您可以在浏览器的快捷键设置中自定义这些快捷键。"
+    "message": "Command + Shift + E (Windows/Linux 上为 Ctrl + Shift + E) 使用默认提供商打开侧边栏。<br>Command + Shift + P (Windows/Linux 上为 Ctrl + Shift + P) 打开提示词库。<br>您可以在浏览器的快捷键设置中自定义这些快捷键。"
   },
   "btnOpenShortcuts": {
     "message": "打开快捷键设置"
   },
   "labelEdgeConfirm": {
-    "message": "在Microsoft Edge中确认"
+    "message": "在 Microsoft Edge 中确认"
   },
   "descEdgeConfirm": {
-    "message": "Edge需要您确认一次快捷键。点击配置可直接跳转到Edge快捷键页面。"
+    "message": "Edge 需要您确认一次快捷键。点击配置可直接跳转到 Edge 快捷键页面。"
   },
   "btnConfigureEdge": {
-    "message": "在Edge中配置"
+    "message": "在 Edge 中配置"
   },
   "labelAutoPaste": {
     "message": "自动粘贴剪贴板到提示词库"
   },
   "descAutoPaste": {
-    "message": "使用Command+Shift+P打开提示词库时自动将剪贴板内容粘贴到工作区"
+    "message": "使用 Command + Shift + P 打开提示词库时自动将剪贴板内容粘贴到工作区"
   },
-
   "sectionChatHistory": {
     "message": "聊天历史"
   },
@@ -130,21 +140,20 @@
   "descAutoOpenSidebar": {
     "message": "保存对话时自动打开侧边栏并切换到聊天历史"
   },
-
   "sectionEnterBehavior": {
     "message": "回车键行为"
   },
   "descEnterBehavior1": {
-    "message": "自定义在AI提供商输入字段中输入时回车键和修饰键的工作方式。"
+    "message": "自定义在 AI 提供商输入字段中输入时回车键和修饰键的工作方式。"
   },
   "descEnterBehavior2": {
-    "message": "<strong>适用于:</strong> ChatGPT、Claude、Gemini、Google(AI模式)、Grok、DeepSeek和Perplexity。"
+    "message": "<strong>适用于:</strong> ChatGPT、Claude、Gemini、Google(AI 模式)、Grok、DeepSeek 和 Perplexity。"
   },
   "labelEnableEnterCustomization": {
     "message": "启用回车键自定义"
   },
   "descEnableEnterCustomization": {
-    "message": "启用后，将修改所有支持的AI提供商的回车键行为"
+    "message": "启用后，将修改所有支持的 AI 提供商的回车键行为"
   },
   "labelPreset": {
     "message": "预设"
@@ -153,16 +162,16 @@
     "message": "选择常见的按键组合模式"
   },
   "presetDefault": {
-    "message": "默认(回车=发送，Shift+回车=换行)"
+    "message": "默认（回车 = 发送，Shift + 回车 = 换行）"
   },
   "presetSwapped": {
-    "message": "交换(回车=换行，Shift+回车=发送)"
+    "message": "交换（回车 = 换行，Shift + 回车 = 发送）"
   },
   "presetSlack": {
-    "message": "Slack风格(回车=发送，Ctrl+回车=换行)"
+    "message": "Slack 风格（回车 = 发送，Ctrl + 回车 = 换行）"
   },
   "presetDiscord": {
-    "message": "Discord风格(回车=换行，Ctrl+回车=发送)"
+    "message": "Discord 风格（回车 = 换行，Ctrl + 回车 = 发送）"
   },
   "presetCustom": {
     "message": "自定义"
@@ -173,12 +182,11 @@
   "labelSendMessage": {
     "message": "发送消息"
   },
-
   "sectionPromptLibrary": {
     "message": "提示词库"
   },
   "descPromptLibrary": {
-    "message": "导入为AI工作流、研究、编码和分析精心挑选的元提示"
+    "message": "导入为 AI 工作流、研究、编码和分析精心挑选的元提示"
   },
   "labelDefaultLibrary": {
     "message": "默认提示词库"
@@ -193,9 +201,8 @@
     "message": "导入自定义提示词"
   },
   "noteCustomImport": {
-    "message": "导入自定义提示词前，请先阅读: <code style=\"background: #f5f5f5; padding: 2px 6px; border-radius: 3px;\">data/prompt-libraries/Generate_a_Basic_Prompt_Library.md</code>"
+    "message": "导入自定义提示词前，请先阅读： <code style = \"background: #f5f5f5; padding: 2px 6px; border - radius: 3px;\">data/prompt - libraries/Generate_a_Basic_Prompt_Library.md</code>"
   },
-
   "sectionDataManagement": {
     "message": "数据管理"
   },
@@ -212,7 +219,7 @@
     "message": "导出数据"
   },
   "descExport": {
-    "message": "将所有提示词和设置下载为JSON"
+    "message": "将所有提示词和设置下载为 JSON"
   },
   "btnExport": {
     "message": "导出"
@@ -221,12 +228,11 @@
     "message": "导入数据"
   },
   "descImport": {
-    "message": "从JSON文件恢复提示词和设置"
+    "message": "从 JSON 文件恢复提示词和设置"
   },
   "btnImport": {
     "message": "导入"
   },
-
   "sectionDangerZone": {
     "message": "危险区域"
   },
@@ -257,7 +263,6 @@
   "btnReset": {
     "message": "重置"
   },
-
   "sectionAbout": {
     "message": "关于"
   },
@@ -274,12 +279,11 @@
     "message": "下载最新版本"
   },
   "descAbout1": {
-    "message": "insidebar.ai在一个便捷的侧边栏中提供对多个AI助手的快速访问。"
+    "message": "insidebar.ai 在一个便捷的侧边栏中提供对多个 AI 助手的快速访问。"
   },
   "descAbout2": {
     "message": "采用隐私优先架构构建。所有数据本地存储。"
   },
-
   "msgThemeUpdated": {
     "message": "主题已更新"
   },
@@ -320,7 +324,7 @@
     "message": "回车键自定义已禁用"
   },
   "msgPresetChanged": {
-    "message": "预设已更改为: $PRESET$",
+    "message": "预设已更改为： $PRESET$",
     "placeholders": {
       "preset": {
         "content": "$1"
@@ -345,7 +349,7 @@
     }
   },
   "msgPromptsImported": {
-    "message": "成功导入$COUNT$个提示词",
+    "message": "成功导入 $COUNT$ 个提示词",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -353,7 +357,7 @@
     }
   },
   "msgPromptsImportedWithSkipped": {
-    "message": "成功导入$IMPORTED$个提示词($SKIPPED$个已存在)",
+    "message": "成功导入 $IMPORTED$ 个提示词 ($SKIPPED$ 个已存在)",
     "placeholders": {
       "imported": {
         "content": "$1"
@@ -367,7 +371,7 @@
     "message": "所有提示词已存在于您的库中"
   },
   "msgCustomPromptsImported": {
-    "message": "成功导入$IMPORTED$个自定义提示词",
+    "message": "成功导入 $IMPORTED$ 个自定义提示词",
     "placeholders": {
       "imported": {
         "content": "$1"
@@ -387,7 +391,7 @@
     "message": "有可用更新 - 点击下载最新版本链接"
   },
   "msgUpToDate": {
-    "message": "您已是最新版本!"
+    "message": "您已是最新版本！"
   },
   "msgCheckingUpdates": {
     "message": "正在检查..."
@@ -402,7 +406,7 @@
     "message": "提交哈希不可用"
   },
   "msgBuildInfo": {
-    "message": "构建: $HASH$ ($DATE$)",
+    "message": "构建： $HASH$ ($DATE$)",
     "placeholders": {
       "hash": {
         "content": "$1"
@@ -413,7 +417,7 @@
     }
   },
   "msgUpdateStatusAvailable": {
-    "message": "<strong>有可用更新!</strong><br>最新: $LATEST$ ($DATE$)<br>当前: $CURRENT$<br><small>$MESSAGE$</small>",
+    "message": "<strong>有可用更新!</strong><br>最新： $LATEST$ ($DATE$)<br>当前： $CURRENT$<br><small>$MESSAGE$</small>",
     "placeholders": {
       "latest": {
         "content": "$1"
@@ -430,12 +434,11 @@
     }
   },
   "msgUpdateStatusCurrent": {
-    "message": "您已是最新版本!"
+    "message": "您已是最新版本！"
   },
   "msgUpdateStatusError": {
     "message": "检查更新失败"
   },
-
   "errAtLeastOneProvider": {
     "message": "至少需要启用一个提供商"
   },
@@ -461,25 +464,24 @@
     "message": "导入自定义提示词失败"
   },
   "errInvalidFormat": {
-    "message": "无效格式: 文件必须包含提示词的JSON数组"
+    "message": "无效格式： 文件必须包含提示词的 JSON 数组"
   },
   "errInvalidPromptStructure": {
     "message": "无效的提示词结构 - 查看警告了解详情"
   },
   "errInvalidJSON": {
-    "message": "无效的JSON文件格式"
+    "message": "无效的 JSON 文件格式"
   },
   "errValidationErrors": {
-    "message": "$COUNT$个提示词存在验证错误",
+    "message": "$COUNT$ 个提示词存在验证错误",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
   },
-
   "confirmImportData": {
-    "message": "从$DATE$导入数据?\n\n这将添加:\n- $PROMPTS$个提示词\n- $CONVERSATIONS$个对话\n- 设置配置\n\n除非发现重复项，否则现有数据将被保留。",
+    "message": "从 $DATE$ 导入数据？\n\n这将添加：\n- $PROMPTS$ 个提示词\n- $CONVERSATIONS$ 个对话\n- 设置配置\n\n除非发现重复项，否则现有数据将被保留。",
     "placeholders": {
       "date": {
         "content": "$1"
@@ -493,22 +495,20 @@
     }
   },
   "confirmClearHistory": {
-    "message": "您确定要删除所有聊天历史吗?\n\n这将永久删除所有保存的对话。\n\n此操作无法撤销!"
+    "message": "您确定要删除所有聊天历史吗？\n\n这将永久删除所有保存的对话。\n\n此操作无法撤销！"
   },
   "confirmClearPrompts": {
-    "message": "您确定要删除所有提示词吗?\n\n这将永久删除您库中的所有提示词。\n\n此操作无法撤销!"
+    "message": "您确定要删除所有提示词吗？\n\n这将永久删除您库中的所有提示词。\n\n此操作无法撤销！"
   },
   "confirmResetSettings": {
-    "message": "您确定要将所有设置重置为默认值吗?\n\n这将重置:\n- 主题设置\n- 默认提供商\n- 键盘快捷键\n- 所有其他首选项\n\n您的提示词和聊天历史不会受到影响。\n\n此操作无法撤销!"
+    "message": "您确定要将所有设置重置为默认值吗？\n\n这将重置：\n- 主题设置\n- 默认提供商\n- 键盘快捷键\n- 所有其他首选项\n\n您的提示词和聊天历史不会受到影响。\n\n此操作无法撤销！"
   },
-
   "contextMenuSendTo": {
-    "message": "发送到insidebar.ai"
+    "message": "发送到 insidebar.ai"
   },
   "contextMenuPromptLibrary": {
     "message": "提示词库"
   },
-
   "sidebarChatHistory": {
     "message": "聊天历史"
   },
@@ -579,7 +579,7 @@
     "message": "最常使用"
   },
   "tooltipAlphabetical": {
-    "message": "A-Z"
+    "message": "A - Z"
   },
   "tooltipNewestFirst": {
     "message": "最新优先"
@@ -614,33 +614,32 @@
   "loadingText": {
     "message": "加载中..."
   },
-
   "optionsPageTitle": {
     "message": "insidebar.ai - 设置"
   },
   "headerSettingsTitle": {
-    "message": "设置: insidebar.ai"
+    "message": "设置： insidebar.ai"
   },
   "headerSettingsSubtitle": {
-    "message": "自定义您的多AI侧边栏体验"
+    "message": "自定义您的多 AI 侧边栏体验"
   },
   "labelEnableKeyboardShortcut": {
     "message": "启用键盘快捷键"
   },
   "descEnableKeyboardShortcut": {
-    "message": "切换可在浏览器任何位置打开insidebar.ai的全局快捷键。"
+    "message": "切换可在浏览器任何位置打开 insidebar.ai 的全局快捷键。"
   },
   "labelEdgeShortcutHelper": {
-    "message": "在Microsoft Edge中确认"
+    "message": "在 Microsoft Edge 中确认"
   },
   "descEdgeShortcutHelper": {
-    "message": "Edge需要您确认一次快捷键。点击配置可直接跳转到Edge快捷键页面。"
+    "message": "Edge 需要您确认一次快捷键。点击配置可直接跳转到 Edge 快捷键页面。"
   },
   "labelEnableEnterCustom": {
     "message": "启用回车键自定义"
   },
   "descEnableEnterCustom": {
-    "message": "启用后，将修改所有支持的AI提供商的回车键行为"
+    "message": "启用后，将修改所有支持的 AI 提供商的回车键行为"
   },
   "keyShift": {
     "message": "Shift"
@@ -664,7 +663,7 @@
     "message": "用于提示词优化、规划、编码、测试、研究、写作等的元提示。包含对动态模板的变量支持。"
   },
   "descCustomPromptReadme": {
-    "message": "导入自定义提示词前，请先阅读: <code style=\"background: #f5f5f5; padding: 2px 6px; border-radius: 3px;\">data/prompt-libraries/Generate_a_Basic_Prompt_Library.md</code>"
+    "message": "导入自定义提示词前，请先阅读： <code style = \"background: #f5f5f5; padding: 2px 6px; border - radius: 3px;\">data/prompt - libraries/Generate_a_Basic_Prompt_Library.md</code>"
   },
   "statStorageUsed": {
     "message": "已用存储"
@@ -673,13 +672,13 @@
     "message": "导出数据"
   },
   "descExportData": {
-    "message": "将所有提示词和设置下载为JSON"
+    "message": "将所有提示词和设置下载为 JSON"
   },
   "labelImportData": {
     "message": "导入数据"
   },
   "descImportData": {
-    "message": "从JSON文件恢复提示词和设置"
+    "message": "从 JSON 文件恢复提示词和设置"
   },
   "labelLoading": {
     "message": "加载中..."

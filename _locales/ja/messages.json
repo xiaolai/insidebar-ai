@@ -3,25 +3,23 @@
     "message": "insidebar.ai"
   },
   "extensionDescription": {
-    "message": "ChatGPT、Claude、Geminiなどに素早くアクセスできるマルチAIサイドバー拡張機能"
+    "message": "ChatGPT、Claude、Gemini などに素早くアクセスできるマルチ AI サイドバー拡張機能"
   },
   "commandOpenSidebar": {
-    "message": "デフォルトプロバイダーでinsidebar.aiを開く"
+    "message": "デフォルトプロバイダーで insidebar.ai を開く"
   },
   "commandOpenPromptLibrary": {
-    "message": "insidebar.aiプロンプトライブラリを開く"
+    "message": "insidebar.ai プロンプトライブラリを開く"
   },
   "actionDefaultTitle": {
-    "message": "insidebar.aiを開く"
+    "message": "insidebar.ai を開く"
   },
-
   "settingsTitle": {
-    "message": "設定: insidebar.ai"
+    "message": "設定： insidebar.ai"
   },
   "settingsSubtitle": {
-    "message": "マルチAIサイドバー体験をカスタマイズ"
+    "message": "マルチ AI サイドバー体験をカスタマイズ"
   },
-
   "sectionAppearance": {
     "message": "外観"
   },
@@ -61,10 +59,24 @@
   "langJapanese": {
     "message": "日本語 (Japanese)"
   },
+  "langSpanish": {
+    "message": "Español (Spanish)"
+  },
+  "langFrench": {
+    "message": "Français (French)"
+  },
+  "langGerman": {
+    "message": "Deutsch (German)"
+  },
+  "langItalian": {
+    "message": "Italiano (Italian)"
+  },
+  "langRussian": {
+    "message": "Русский (Russian)"
+  },
   "msgLanguageUpdated": {
     "message": "言語が正常に更新されました"
   },
-
   "sectionProviders": {
     "message": "AIプロバイダー"
   },
@@ -72,7 +84,7 @@
     "message": "デフォルトプロバイダー"
   },
   "descDefaultProvider": {
-    "message": "サイドバーを開くときに読み込むAIプロバイダー"
+    "message": "サイドバーを開くときに読み込む AI プロバイダー"
   },
   "labelRememberLastProvider": {
     "message": "最後のプロバイダーを記憶"
@@ -84,9 +96,8 @@
     "message": "有効なプロバイダー"
   },
   "descEnabledProviders": {
-    "message": "サイドバーに表示するAIプロバイダーを選択してください"
+    "message": "サイドバーに表示する AI プロバイダーを選択してください"
   },
-
   "sectionKeyboardShortcuts": {
     "message": "キーボードショートカット"
   },
@@ -94,33 +105,32 @@
     "message": "キーボードショートカットを有効にする"
   },
   "descEnableShortcut": {
-    "message": "ブラウザのどこからでもinsidebar.aiを開くグローバルショートカットを切り替えます。"
+    "message": "ブラウザのどこからでも insidebar.ai を開くグローバルショートカットを切り替えます。"
   },
   "labelDefaultShortcuts": {
     "message": "デフォルトショートカット"
   },
   "descDefaultShortcuts": {
-    "message": "Command+Shift+E（Windows/LinuxではCtrl+Shift+E）でデフォルトプロバイダーのサイドバーが開きます。<br>Command+Shift+P（Windows/LinuxではCtrl+Shift+P）でプロンプトライブラリが開きます。<br>ブラウザのショートカット設定でカスタマイズできます。"
+    "message": "Command + Shift + E（Windows/Linux では Ctrl + Shift + E）でデフォルトプロバイダーのサイドバーが開きます。<br>Command + Shift + P（Windows/Linux では Ctrl + Shift + P）でプロンプトライブラリが開きます。<br>ブラウザのショートカット設定でカスタマイズできます。"
   },
   "btnOpenShortcuts": {
     "message": "ショートカットを開く"
   },
   "labelEdgeConfirm": {
-    "message": "Microsoft Edgeで確認"
+    "message": "Microsoft Edge で確認"
   },
   "descEdgeConfirm": {
-    "message": "Edgeではショートカットを一度確認する必要があります。設定をクリックすると、Edgeショートカットページに直接移動します。"
+    "message": "Edge ではショートカットを一度確認する必要があります。設定をクリックすると、Edge ショートカットページに直接移動します。"
   },
   "btnConfigureEdge": {
-    "message": "Edgeで設定"
+    "message": "Edge で設定"
   },
   "labelAutoPaste": {
     "message": "プロンプトライブラリにクリップボードを自動貼り付け"
   },
   "descAutoPaste": {
-    "message": "Command+Shift+Pでプロンプトライブラリを開くときに、ワークスペースにクリップボードの内容を自動的に貼り付けます"
+    "message": "Command + Shift + P でプロンプトライブラリを開くときに、ワークスペースにクリップボードの内容を自動的に貼り付けます"
   },
-
   "sectionChatHistory": {
     "message": "チャット履歴"
   },
@@ -130,21 +140,20 @@
   "descAutoOpenSidebar": {
     "message": "会話を保存するときに、自動的にサイドバーを開いてチャット履歴に切り替えます"
   },
-
   "sectionEnterBehavior": {
-    "message": "Enterキーの動作"
+    "message": "Enter キーの動作"
   },
   "descEnterBehavior1": {
-    "message": "AIプロバイダーの入力フィールドでEnterキーと修飾キーがどのように機能するかをカスタマイズします。"
+    "message": "AI プロバイダーの入力フィールドで Enter キーと修飾キーがどのように機能するかをカスタマイズします。"
   },
   "descEnterBehavior2": {
-    "message": "<strong>適用先:</strong> ChatGPT、Claude、Gemini、Google（AIモード）、Grok、DeepSeek、Perplexity。"
+    "message": "<strong>適用先:</strong> ChatGPT、Claude、Gemini、Google（AI モード）、Grok、DeepSeek、Perplexity。"
   },
   "labelEnableEnterCustomization": {
-    "message": "Enterキーのカスタマイズを有効にする"
+    "message": "Enter キーのカスタマイズを有効にする"
   },
   "descEnableEnterCustomization": {
-    "message": "有効にすると、サポートされているすべてのAIプロバイダーでEnterキーの動作を変更します"
+    "message": "有効にすると、サポートされているすべての AI プロバイダーで Enter キーの動作を変更します"
   },
   "labelPreset": {
     "message": "プリセット"
@@ -153,16 +162,16 @@
     "message": "一般的なキーの組み合わせパターンを選択してください"
   },
   "presetDefault": {
-    "message": "デフォルト（Enter=送信、Shift+Enter=改行）"
+    "message": "デフォルト（Enter = 送信、Shift + Enter = 改行）"
   },
   "presetSwapped": {
-    "message": "スワップ（Enter=改行、Shift+Enter=送信）"
+    "message": "スワップ（Enter = 改行、Shift + Enter = 送信）"
   },
   "presetSlack": {
-    "message": "Slackスタイル（Enter=送信、Ctrl+Enter=改行）"
+    "message": "Slack スタイル（Enter = 送信、Ctrl + Enter = 改行）"
   },
   "presetDiscord": {
-    "message": "Discordスタイル（Enter=改行、Ctrl+Enter=送信）"
+    "message": "Discord スタイル（Enter = 改行、Ctrl + Enter = 送信）"
   },
   "presetCustom": {
     "message": "カスタム"
@@ -173,12 +182,11 @@
   "labelSendMessage": {
     "message": "メッセージを送信"
   },
-
   "sectionPromptLibrary": {
     "message": "プロンプトライブラリ"
   },
   "descPromptLibrary": {
-    "message": "AIワークフロー、研究、コーディング、分析のための厳選されたメタプロンプトをインポート"
+    "message": "AI ワークフロー、研究、コーディング、分析のための厳選されたメタプロンプトをインポート"
   },
   "labelDefaultLibrary": {
     "message": "デフォルトプロンプトライブラリ"
@@ -193,9 +201,8 @@
     "message": "カスタムプロンプトをインポート"
   },
   "noteCustomImport": {
-    "message": "カスタムプロンプトをインポートする前に、次をお読みください: <code style=\"background: #f5f5f5; padding: 2px 6px; border-radius: 3px;\">data/prompt-libraries/Generate_a_Basic_Prompt_Library.md</code>"
+    "message": "カスタムプロンプトをインポートする前に、次をお読みください： <code style = \"background: #f5f5f5; padding: 2px 6px; border - radius: 3px;\">data/prompt - libraries/Generate_a_Basic_Prompt_Library.md</code>"
   },
-
   "sectionDataManagement": {
     "message": "データ管理"
   },
@@ -212,7 +219,7 @@
     "message": "データをエクスポート"
   },
   "descExport": {
-    "message": "すべてのプロンプトと設定をJSONでダウンロード"
+    "message": "すべてのプロンプトと設定を JSON でダウンロード"
   },
   "btnExport": {
     "message": "エクスポート"
@@ -221,12 +228,11 @@
     "message": "データをインポート"
   },
   "descImport": {
-    "message": "JSONファイルからプロンプトと設定を復元"
+    "message": "JSON ファイルからプロンプトと設定を復元"
   },
   "btnImport": {
     "message": "インポート"
   },
-
   "sectionDangerZone": {
     "message": "危険ゾーン"
   },
@@ -257,7 +263,6 @@
   "btnReset": {
     "message": "リセット"
   },
-
   "sectionAbout": {
     "message": "について"
   },
@@ -274,12 +279,11 @@
     "message": "最新バージョンをダウンロード"
   },
   "descAbout1": {
-    "message": "insidebar.aiは、1つの便利なサイドバーから複数のAIアシスタントに素早くアクセスできます。"
+    "message": "insidebar.ai は、1 つの便利なサイドバーから複数の AI アシスタントに素早くアクセスできます。"
   },
   "descAbout2": {
     "message": "プライバシー第一のアーキテクチャで構築されています。すべてのデータはローカルに保存されます。"
   },
-
   "msgThemeUpdated": {
     "message": "テーマが更新されました"
   },
@@ -314,13 +318,13 @@
     "message": "サイドバーは常にデフォルトプロバイダーで開きます"
   },
   "msgEnterCustomizationEnabled": {
-    "message": "Enterキーのカスタマイズが有効になりました"
+    "message": "Enter キーのカスタマイズが有効になりました"
   },
   "msgEnterCustomizationDisabled": {
-    "message": "Enterキーのカスタマイズが無効になりました"
+    "message": "Enter キーのカスタマイズが無効になりました"
   },
   "msgPresetChanged": {
-    "message": "プリセットが次に変更されました: $PRESET$",
+    "message": "プリセットが次に変更されました： $PRESET$",
     "placeholders": {
       "preset": {
         "content": "$1"
@@ -345,7 +349,7 @@
     }
   },
   "msgPromptsImported": {
-    "message": "$COUNT$個のプロンプトを正常にインポートしました",
+    "message": "$COUNT$ 個のプロンプトを正常にインポートしました",
     "placeholders": {
       "count": {
         "content": "$1"
@@ -353,7 +357,7 @@
     }
   },
   "msgPromptsImportedWithSkipped": {
-    "message": "$IMPORTED$個のプロンプトを正常にインポートしました（$SKIPPED$個はすでに存在）",
+    "message": "$IMPORTED$ 個のプロンプトを正常にインポートしました（$SKIPPED$ 個はすでに存在）",
     "placeholders": {
       "imported": {
         "content": "$1"
@@ -367,7 +371,7 @@
     "message": "すべてのプロンプトがすでにライブラリに存在します"
   },
   "msgCustomPromptsImported": {
-    "message": "$IMPORTED$個のカスタムプロンプトを正常にインポートしました",
+    "message": "$IMPORTED$ 個のカスタムプロンプトを正常にインポートしました",
     "placeholders": {
       "imported": {
         "content": "$1"
@@ -413,7 +417,7 @@
     }
   },
   "msgUpdateStatusAvailable": {
-    "message": "<strong>アップデートが利用可能です！</strong><br>最新: $LATEST$ ($DATE$)<br>現在: $CURRENT$<br><small>$MESSAGE$</small>",
+    "message": "<strong>アップデートが利用可能です！</strong><br>最新： $LATEST$ ($DATE$)<br>現在： $CURRENT$<br><small>$MESSAGE$</small>",
     "placeholders": {
       "latest": {
         "content": "$1"
@@ -435,9 +439,8 @@
   "msgUpdateStatusError": {
     "message": "アップデートの確認に失敗しました"
   },
-
   "errAtLeastOneProvider": {
-    "message": "少なくとも1つのプロバイダーを有効にする必要があります"
+    "message": "少なくとも 1 つのプロバイダーを有効にする必要があります"
   },
   "errExportFailed": {
     "message": "データのエクスポートに失敗しました"
@@ -461,25 +464,24 @@
     "message": "カスタムプロンプトのインポートに失敗しました"
   },
   "errInvalidFormat": {
-    "message": "無効な形式: ファイルにはプロンプトのJSON配列が含まれている必要があります"
+    "message": "無効な形式： ファイルにはプロンプトの JSON 配列が含まれている必要があります"
   },
   "errInvalidPromptStructure": {
     "message": "無効なプロンプト構造 - 詳細についてはアラートを参照してください"
   },
   "errInvalidJSON": {
-    "message": "無効なJSONファイル形式"
+    "message": "無効な JSON ファイル形式"
   },
   "errValidationErrors": {
-    "message": "$COUNT$個のプロンプトに検証エラーがあります",
+    "message": "$COUNT$ 個のプロンプトに検証エラーがあります",
     "placeholders": {
       "count": {
         "content": "$1"
       }
     }
   },
-
   "confirmImportData": {
-    "message": "$DATE$からのデータをインポートしますか？\n\n次が追加されます:\n- $PROMPTS$個のプロンプト\n- $CONVERSATIONS$個の会話\n- 設定構成\n\n重複が見つからない限り、既存のデータは保持されます。",
+    "message": "$DATE$からのデータをインポートしますか？\n\n次が追加されます：\n- $PROMPTS$ 個のプロンプト\n- $CONVERSATIONS$ 個の会話\n- 設定構成\n\n重複が見つからない限り、既存のデータは保持されます。",
     "placeholders": {
       "date": {
         "content": "$1"
@@ -499,16 +501,14 @@
     "message": "すべてのプロンプトを削除してもよろしいですか？\n\nライブラリからすべてのプロンプトが完全に削除されます。\n\nこの操作は元に戻せません！"
   },
   "confirmResetSettings": {
-    "message": "すべての設定をデフォルトにリセットしてもよろしいですか？\n\n次がリセットされます:\n- テーマ設定\n- デフォルトプロバイダー\n- キーボードショートカット\n- その他すべての設定\n\nプロンプトとチャット履歴は影響を受けません。\n\nこの操作は元に戻せません！"
+    "message": "すべての設定をデフォルトにリセットしてもよろしいですか？\n\n次がリセットされます：\n- テーマ設定\n- デフォルトプロバイダー\n- キーボードショートカット\n- その他すべての設定\n\nプロンプトとチャット履歴は影響を受けません。\n\nこの操作は元に戻せません！"
   },
-
   "contextMenuSendTo": {
-    "message": "insidebar.aiに送信"
+    "message": "insidebar.ai に送信"
   },
   "contextMenuPromptLibrary": {
     "message": "プロンプトライブラリ"
   },
-
   "sidebarChatHistory": {
     "message": "チャット履歴"
   },
@@ -614,33 +614,32 @@
   "loadingText": {
     "message": "読み込み中..."
   },
-
   "optionsPageTitle": {
     "message": "insidebar.ai - 設定"
   },
   "headerSettingsTitle": {
-    "message": "設定: insidebar.ai"
+    "message": "設定： insidebar.ai"
   },
   "headerSettingsSubtitle": {
-    "message": "マルチAIサイドバー体験をカスタマイズ"
+    "message": "マルチ AI サイドバー体験をカスタマイズ"
   },
   "labelEnableKeyboardShortcut": {
     "message": "キーボードショートカットを有効にする"
   },
   "descEnableKeyboardShortcut": {
-    "message": "ブラウザのどこからでもinsidebar.aiを開くグローバルショートカットを切り替えます。"
+    "message": "ブラウザのどこからでも insidebar.ai を開くグローバルショートカットを切り替えます。"
   },
   "labelEdgeShortcutHelper": {
-    "message": "Microsoft Edgeで確認"
+    "message": "Microsoft Edge で確認"
   },
   "descEdgeShortcutHelper": {
-    "message": "Edgeではショートカットを一度確認する必要があります。設定をクリックすると、Edgeショートカットページに直接移動します。"
+    "message": "Edge ではショートカットを一度確認する必要があります。設定をクリックすると、Edge ショートカットページに直接移動します。"
   },
   "labelEnableEnterCustom": {
-    "message": "Enterキーのカスタマイズを有効にする"
+    "message": "Enter キーのカスタマイズを有効にする"
   },
   "descEnableEnterCustom": {
-    "message": "有効にすると、サポートされているすべてのAIプロバイダーでEnterキーの動作を変更します"
+    "message": "有効にすると、サポートされているすべての AI プロバイダーで Enter キーの動作を変更します"
   },
   "keyShift": {
     "message": "Shift"
@@ -664,7 +663,7 @@
     "message": "プロンプトの改良、計画、コーディング、テスト、研究、執筆などのためのメタプロンプト。動的テンプレートのための変数サポートが含まれています。"
   },
   "descCustomPromptReadme": {
-    "message": "カスタムプロンプトをインポートする前に、次をお読みください: <code style=\"background: #f5f5f5; padding: 2px 6px; border-radius: 3px;\">data/prompt-libraries/Generate_a_Basic_Prompt_Library.md</code>"
+    "message": "カスタムプロンプトをインポートする前に、次をお読みください： <code style = \"background: #f5f5f5; padding: 2px 6px; border - radius: 3px;\">data/prompt - libraries/Generate_a_Basic_Prompt_Library.md</code>"
   },
   "statStorageUsed": {
     "message": "使用中のストレージ"
@@ -673,13 +672,13 @@
     "message": "データをエクスポート"
   },
   "descExportData": {
-    "message": "すべてのプロンプトと設定をJSONでダウンロード"
+    "message": "すべてのプロンプトと設定を JSON でダウンロード"
   },
   "labelImportData": {
     "message": "データをインポート"
   },
   "descImportData": {
-    "message": "JSONファイルからプロンプトと設定を復元"
+    "message": "JSON ファイルからプロンプトと設定を復元"
   },
   "labelLoading": {
     "message": "読み込み中..."

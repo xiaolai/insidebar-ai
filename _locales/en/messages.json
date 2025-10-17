@@ -61,6 +61,21 @@
   "langJapanese": {
     "message": "日本語 (Japanese)"
   },
+  "langSpanish": {
+    "message": "Español (Spanish)"
+  },
+  "langFrench": {
+    "message": "Français (French)"
+  },
+  "langGerman": {
+    "message": "Deutsch (German)"
+  },
+  "langItalian": {
+    "message": "Italiano (Italian)"
+  },
+  "langRussian": {
+    "message": "Русский (Russian)"
+  },
   "msgLanguageUpdated": {
     "message": "Language updated successfully"
   },

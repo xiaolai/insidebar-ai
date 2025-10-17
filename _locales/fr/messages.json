@@ -1,0 +1,702 @@
+{
+  "extensionName": {
+    "message": "insidebar.ai"
+  },
+  "extensionDescription": {
+    "message": "Extension de barre latérale multi-IA pour un accès rapide à ChatGPT, Claude, Gemini et plus"
+  },
+  "commandOpenSidebar": {
+    "message": "Ouvrir insidebar.ai avec le fournisseur par défaut"
+  },
+  "commandOpenPromptLibrary": {
+    "message": "Ouvrir la bibliothèque de prompts insidebar.ai"
+  },
+  "actionDefaultTitle": {
+    "message": "Ouvrir insidebar.ai"
+  },
+
+  "settingsTitle": {
+    "message": "Paramètres : insidebar.ai"
+  },
+  "settingsSubtitle": {
+    "message": "Personnalisez votre expérience de barre latérale multi-IA"
+  },
+
+  "sectionAppearance": {
+    "message": "Apparence"
+  },
+  "labelTheme": {
+    "message": "Thème"
+  },
+  "descTheme": {
+    "message": "Choisissez votre jeu de couleurs préféré"
+  },
+  "themeAuto": {
+    "message": "Auto (Système)"
+  },
+  "themeLight": {
+    "message": "Clair"
+  },
+  "themeDark": {
+    "message": "Sombre"
+  },
+  "labelLanguage": {
+    "message": "Langue"
+  },
+  "descLanguage": {
+    "message": "Choisissez votre langue d'interface préférée"
+  },
+  "langEnglish": {
+    "message": "English (Anglais)"
+  },
+  "langSimplifiedChinese": {
+    "message": "简体中文 (Chinois simplifié)"
+  },
+  "langTraditionalChinese": {
+    "message": "繁體中文 (Chinois traditionnel)"
+  },
+  "langKorean": {
+    "message": "한국어 (Coréen)"
+  },
+  "langJapanese": {
+    "message": "日本語 (Japonais)"
+  },
+  "langSpanish": {
+    "message": "Español (Espagnol)"
+  },
+  "langFrench": {
+    "message": "Français (French)"
+  },
+  "langGerman": {
+    "message": "Deutsch (Allemand)"
+  },
+  "langItalian": {
+    "message": "Italiano (Italien)"
+  },
+  "langRussian": {
+    "message": "Русский (Russe)"
+  },
+  "msgLanguageUpdated": {
+    "message": "Langue mise à jour avec succès"
+  },
+
+  "sectionProviders": {
+    "message": "Fournisseurs IA"
+  },
+  "labelDefaultProvider": {
+    "message": "Fournisseur par défaut"
+  },
+  "descDefaultProvider": {
+    "message": "Fournisseur IA à charger lors de l'ouverture de la barre latérale"
+  },
+  "labelRememberLastProvider": {
+    "message": "Mémoriser le dernier fournisseur"
+  },
+  "descRememberLastProvider": {
+    "message": "Lorsqu'activé, la barre latérale s'ouvre avec le dernier fournisseur utilisé. Lorsque désactivé, s'ouvre toujours avec le fournisseur par défaut."
+  },
+  "labelEnabledProviders": {
+    "message": "Fournisseurs activés"
+  },
+  "descEnabledProviders": {
+    "message": "Sélectionnez les fournisseurs IA qui apparaissent dans votre barre latérale"
+  },
+
+  "sectionKeyboardShortcuts": {
+    "message": "Raccourcis clavier"
+  },
+  "labelEnableShortcut": {
+    "message": "Activer le raccourci clavier"
+  },
+  "descEnableShortcut": {
+    "message": "Activer le raccourci global qui ouvre insidebar.ai depuis n'importe où dans le navigateur."
+  },
+  "labelDefaultShortcuts": {
+    "message": "Raccourcis par défaut"
+  },
+  "descDefaultShortcuts": {
+    "message": "Command+Maj+E (Ctrl+Maj+E sur Windows/Linux) ouvre la barre latérale avec le fournisseur par défaut.<br>Command+Maj+P (Ctrl+Maj+P sur Windows/Linux) ouvre la bibliothèque de prompts.<br>Vous pouvez personnaliser ces raccourcis dans les paramètres de raccourcis de votre navigateur."
+  },
+  "btnOpenShortcuts": {
+    "message": "Ouvrir les raccourcis"
+  },
+  "labelEdgeConfirm": {
+    "message": "Confirmer dans Microsoft Edge"
+  },
+  "descEdgeConfirm": {
+    "message": "Edge nécessite que vous confirmiez le raccourci une fois. Cliquez sur configurer pour accéder directement à la page des raccourcis Edge."
+  },
+  "btnConfigureEdge": {
+    "message": "Configurer dans Edge"
+  },
+  "labelAutoPaste": {
+    "message": "Coller automatiquement le presse-papiers dans la bibliothèque de prompts"
+  },
+  "descAutoPaste": {
+    "message": "Coller automatiquement le contenu du presse-papiers dans l'espace de travail lors de l'ouverture de la bibliothèque de prompts avec Command+Maj+P"
+  },
+
+  "sectionChatHistory": {
+    "message": "Historique des conversations"
+  },
+  "labelAutoOpenSidebar": {
+    "message": "Ouvrir automatiquement la barre latérale après l'enregistrement"
+  },
+  "descAutoOpenSidebar": {
+    "message": "Ouvrir automatiquement la barre latérale et basculer vers l'historique des conversations lorsque vous enregistrez une conversation"
+  },
+
+  "sectionEnterBehavior": {
+    "message": "Comportement de la touche Entrée"
+  },
+  "descEnterBehavior1": {
+    "message": "Personnalisez le fonctionnement de la touche Entrée et des touches modificatrices lors de la saisie dans les champs de saisie des fournisseurs IA."
+  },
+  "descEnterBehavior2": {
+    "message": "<strong>S'applique à :</strong> ChatGPT, Claude, Gemini, Google (Mode IA), Grok, DeepSeek et Perplexity."
+  },
+  "labelEnableEnterCustomization": {
+    "message": "Activer la personnalisation de la touche Entrée"
+  },
+  "descEnableEnterCustomization": {
+    "message": "Lorsqu'activé, modifie le comportement de la touche Entrée pour tous les fournisseurs IA pris en charge"
+  },
+  "labelPreset": {
+    "message": "Préréglage"
+  },
+  "descPreset": {
+    "message": "Choisissez un modèle de combinaison de touches courant"
+  },
+  "presetDefault": {
+    "message": "Par défaut (Entrée=Envoyer, Maj+Entrée=Nouvelle ligne)"
+  },
+  "presetSwapped": {
+    "message": "Inversé (Entrée=Nouvelle ligne, Maj+Entrée=Envoyer)"
+  },
+  "presetSlack": {
+    "message": "Style Slack (Entrée=Envoyer, Ctrl+Entrée=Nouvelle ligne)"
+  },
+  "presetDiscord": {
+    "message": "Style Discord (Entrée=Nouvelle ligne, Ctrl+Entrée=Envoyer)"
+  },
+  "presetCustom": {
+    "message": "Personnalisé"
+  },
+  "labelInsertNewline": {
+    "message": "Insérer une nouvelle ligne"
+  },
+  "labelSendMessage": {
+    "message": "Envoyer le message"
+  },
+
+  "sectionPromptLibrary": {
+    "message": "Bibliothèque de prompts"
+  },
+  "descPromptLibrary": {
+    "message": "Importez des méta-prompts sélectionnés pour les flux de travail IA, la recherche, le codage et l'analyse"
+  },
+  "labelDefaultLibrary": {
+    "message": "Bibliothèque de prompts par défaut"
+  },
+  "descDefaultLibrary": {
+    "message": "Méta-prompts pour le raffinement de prompts, la planification, le codage, les tests, la recherche, l'écriture et plus encore. Inclut la prise en charge des variables pour des modèles dynamiques."
+  },
+  "btnImportDefault": {
+    "message": "Importer les prompts par défaut"
+  },
+  "btnImportCustom": {
+    "message": "Importer des prompts personnalisés"
+  },
+  "noteCustomImport": {
+    "message": "Avant d'importer des prompts personnalisés, veuillez lire : <code style=\"background: #f5f5f5; padding: 2px 6px; border-radius: 3px;\">data/prompt-libraries/Generate_a_Basic_Prompt_Library.md</code>"
+  },
+
+  "sectionDataManagement": {
+    "message": "Gestion des données"
+  },
+  "statChatHistory": {
+    "message": "Historique des conversations"
+  },
+  "statPrompts": {
+    "message": "Prompts"
+  },
+  "statStorage": {
+    "message": "Stockage utilisé"
+  },
+  "labelExport": {
+    "message": "Exporter les données"
+  },
+  "descExport": {
+    "message": "Télécharger tous les prompts et paramètres au format JSON"
+  },
+  "btnExport": {
+    "message": "Exporter"
+  },
+  "labelImport": {
+    "message": "Importer les données"
+  },
+  "descImport": {
+    "message": "Restaurer les prompts et paramètres à partir d'un fichier JSON"
+  },
+  "btnImport": {
+    "message": "Importer"
+  },
+
+  "sectionDangerZone": {
+    "message": "Zone dangereuse"
+  },
+  "descDangerZone": {
+    "message": "Ces actions ne peuvent pas être annulées. À utiliser avec précaution."
+  },
+  "labelClearHistory": {
+    "message": "Effacer l'historique des conversations"
+  },
+  "descClearHistory": {
+    "message": "Supprimer toutes les conversations enregistrées"
+  },
+  "labelClearPrompts": {
+    "message": "Effacer les prompts"
+  },
+  "descClearPrompts": {
+    "message": "Supprimer tous les prompts de votre bibliothèque"
+  },
+  "labelResetSettings": {
+    "message": "Réinitialiser les paramètres"
+  },
+  "descResetSettings": {
+    "message": "Réinitialiser tous les paramètres aux valeurs par défaut"
+  },
+  "btnClear": {
+    "message": "Effacer"
+  },
+  "btnReset": {
+    "message": "Réinitialiser"
+  },
+
+  "sectionAbout": {
+    "message": "À propos"
+  },
+  "labelVersion": {
+    "message": "Version"
+  },
+  "labelBuild": {
+    "message": "Build"
+  },
+  "btnCheckUpdates": {
+    "message": "Vérifier les mises à jour"
+  },
+  "linkDownloadLatest": {
+    "message": "Télécharger la dernière version"
+  },
+  "descAbout1": {
+    "message": "insidebar.ai offre un accès rapide à plusieurs assistants IA dans une seule barre latérale pratique."
+  },
+  "descAbout2": {
+    "message": "Conçu avec une architecture axée sur la confidentialité. Toutes les données sont stockées localement."
+  },
+
+  "msgThemeUpdated": {
+    "message": "Thème mis à jour"
+  },
+  "msgProviderUpdated": {
+    "message": "Fournisseur par défaut mis à jour"
+  },
+  "msgProviderSettingsUpdated": {
+    "message": "Paramètres du fournisseur mis à jour"
+  },
+  "msgShortcutEnabled": {
+    "message": "Raccourci clavier activé"
+  },
+  "msgShortcutDisabled": {
+    "message": "Raccourci clavier désactivé"
+  },
+  "msgAutoPasteEnabled": {
+    "message": "Collage automatique activé"
+  },
+  "msgAutoPasteDisabled": {
+    "message": "Collage automatique désactivé"
+  },
+  "msgAutoOpenEnabled": {
+    "message": "Ouverture automatique de la barre latérale activée"
+  },
+  "msgAutoOpenDisabled": {
+    "message": "Ouverture automatique de la barre latérale désactivée"
+  },
+  "msgRememberLastProviderEnabled": {
+    "message": "La barre latérale mémorisera le dernier fournisseur"
+  },
+  "msgRememberLastProviderDisabled": {
+    "message": "La barre latérale ouvrira toujours le fournisseur par défaut"
+  },
+  "msgEnterCustomizationEnabled": {
+    "message": "Personnalisation de la touche Entrée activée"
+  },
+  "msgEnterCustomizationDisabled": {
+    "message": "Personnalisation de la touche Entrée désactivée"
+  },
+  "msgPresetChanged": {
+    "message": "Préréglage modifié en : $PRESET$",
+    "placeholders": {
+      "preset": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgCustomKeyMappingSaved": {
+    "message": "Mappage de touches personnalisé enregistré"
+  },
+  "msgDataExported": {
+    "message": "Données exportées avec succès"
+  },
+  "msgDataImported": {
+    "message": "Données importées avec succès"
+  },
+  "msgDataImportedDetails": {
+    "message": "Données importées avec succès — $DETAILS$.",
+    "placeholders": {
+      "details": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgPromptsImported": {
+    "message": "$COUNT$ prompts importés avec succès",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgPromptsImportedWithSkipped": {
+    "message": "$IMPORTED$ prompts importés avec succès ($SKIPPED$ existaient déjà)",
+    "placeholders": {
+      "imported": {
+        "content": "$1"
+      },
+      "skipped": {
+        "content": "$2"
+      }
+    }
+  },
+  "msgPromptsAlreadyExist": {
+    "message": "Tous les prompts existent déjà dans votre bibliothèque"
+  },
+  "msgCustomPromptsImported": {
+    "message": "$IMPORTED$ prompts personnalisés importés avec succès",
+    "placeholders": {
+      "imported": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgHistoryCleared": {
+    "message": "Tout l'historique des conversations a été supprimé"
+  },
+  "msgPromptsCleared": {
+    "message": "Tous les prompts ont été supprimés"
+  },
+  "msgSettingsReset": {
+    "message": "Tous les paramètres ont été réinitialisés aux valeurs par défaut"
+  },
+  "msgUpdateAvailable": {
+    "message": "Mise à jour disponible - cliquez sur le lien Télécharger la dernière version"
+  },
+  "msgUpToDate": {
+    "message": "Vous êtes à jour !"
+  },
+  "msgCheckingUpdates": {
+    "message": "Vérification..."
+  },
+  "msgUpdateCheckFailed": {
+    "message": "Échec de la vérification des mises à jour"
+  },
+  "msgVersionUnknown": {
+    "message": "Version inconnue"
+  },
+  "msgCommitHashUnavailable": {
+    "message": "Hash de commit non disponible"
+  },
+  "msgBuildInfo": {
+    "message": "Build : $HASH$ ($DATE$)",
+    "placeholders": {
+      "hash": {
+        "content": "$1"
+      },
+      "date": {
+        "content": "$2"
+      }
+    }
+  },
+  "msgUpdateStatusAvailable": {
+    "message": "<strong>Mise à jour disponible !</strong><br>Dernière : $LATEST$ ($DATE$)<br>Actuelle : $CURRENT$<br><small>$MESSAGE$</small>",
+    "placeholders": {
+      "latest": {
+        "content": "$1"
+      },
+      "date": {
+        "content": "$2"
+      },
+      "current": {
+        "content": "$3"
+      },
+      "message": {
+        "content": "$4"
+      }
+    }
+  },
+  "msgUpdateStatusCurrent": {
+    "message": "Vous avez la dernière version !"
+  },
+  "msgUpdateStatusError": {
+    "message": "Échec de la vérification des mises à jour"
+  },
+
+  "errAtLeastOneProvider": {
+    "message": "Au moins un fournisseur doit être activé"
+  },
+  "errExportFailed": {
+    "message": "Échec de l'exportation des données"
+  },
+  "errImportFailed": {
+    "message": "Échec de l'importation des données. Veuillez vérifier le format du fichier."
+  },
+  "errClearHistoryFailed": {
+    "message": "Échec de l'effacement de l'historique des conversations"
+  },
+  "errClearPromptsFailed": {
+    "message": "Échec de l'effacement des prompts"
+  },
+  "errResetSettingsFailed": {
+    "message": "Échec de la réinitialisation des paramètres"
+  },
+  "errImportDefaultLibrary": {
+    "message": "Échec de l'importation de la bibliothèque par défaut"
+  },
+  "errImportCustomLibrary": {
+    "message": "Échec de l'importation des prompts personnalisés"
+  },
+  "errInvalidFormat": {
+    "message": "Format invalide : le fichier doit contenir un tableau JSON de prompts"
+  },
+  "errInvalidPromptStructure": {
+    "message": "Structure de prompt invalide - voir l'alerte pour plus de détails"
+  },
+  "errInvalidJSON": {
+    "message": "Format de fichier JSON invalide"
+  },
+  "errValidationErrors": {
+    "message": "$COUNT$ prompts contiennent des erreurs de validation",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+
+  "confirmImportData": {
+    "message": "Importer les données du $DATE$ ?\n\nCela ajoutera :\n- $PROMPTS$ prompts\n- $CONVERSATIONS$ conversations\n- Configuration des paramètres\n\nLes données existantes seront préservées sauf si des doublons sont trouvés.",
+    "placeholders": {
+      "date": {
+        "content": "$1"
+      },
+      "prompts": {
+        "content": "$2"
+      },
+      "conversations": {
+        "content": "$3"
+      }
+    }
+  },
+  "confirmClearHistory": {
+    "message": "Êtes-vous sûr de vouloir supprimer TOUT l'historique des conversations ?\n\nCela supprimera définitivement toutes les conversations enregistrées.\n\nCette action NE PEUT PAS être annulée !"
+  },
+  "confirmClearPrompts": {
+    "message": "Êtes-vous sûr de vouloir supprimer TOUS les prompts ?\n\nCela supprimera définitivement tous les prompts de votre bibliothèque.\n\nCette action NE PEUT PAS être annulée !"
+  },
+  "confirmResetSettings": {
+    "message": "Êtes-vous sûr de vouloir réinitialiser TOUS les paramètres aux valeurs par défaut ?\n\nCela réinitialisera :\n- Les paramètres de thème\n- Le fournisseur par défaut\n- Les raccourcis clavier\n- Toutes les autres préférences\n\nVos prompts et votre historique des conversations NE seront PAS affectés.\n\nCette action NE PEUT PAS être annulée !"
+  },
+
+  "contextMenuSendTo": {
+    "message": "Envoyer vers insidebar.ai"
+  },
+  "contextMenuPromptLibrary": {
+    "message": "Bibliothèque de prompts"
+  },
+
+  "sidebarChatHistory": {
+    "message": "Historique des conversations"
+  },
+  "sidebarPromptGenie": {
+    "message": "Prompt Genie"
+  },
+  "sidebarEditingPrompt": {
+    "message": "Modification du prompt"
+  },
+  "placeholderSearch": {
+    "message": "Rechercher..."
+  },
+  "placeholderSearchConversations": {
+    "message": "Rechercher des conversations..."
+  },
+  "placeholderSearchPrompts": {
+    "message": "Rechercher des prompts..."
+  },
+  "btnSave": {
+    "message": "Enregistrer"
+  },
+  "btnCancel": {
+    "message": "Annuler"
+  },
+  "btnClose": {
+    "message": "Fermer"
+  },
+  "btnDelete": {
+    "message": "Supprimer"
+  },
+  "btnEdit": {
+    "message": "Modifier"
+  },
+  "btnCopy": {
+    "message": "Copier"
+  },
+  "tooltipSaveNew": {
+    "message": "Enregistrer comme nouveau prompt"
+  },
+  "tooltipCopyClipboard": {
+    "message": "Copier dans le presse-papiers"
+  },
+  "tooltipClear": {
+    "message": "Effacer"
+  },
+  "tooltipSelectProvider": {
+    "message": "Sélectionner le fournisseur"
+  },
+  "tooltipSendProvider": {
+    "message": "Envoyer au fournisseur sélectionné"
+  },
+  "tooltipFilterProvider": {
+    "message": "Filtrer par fournisseur"
+  },
+  "tooltipShowSearchTips": {
+    "message": "Afficher les conseils de recherche"
+  },
+  "tooltipShowFavorites": {
+    "message": "Afficher uniquement les favoris"
+  },
+  "tooltipFilterCategory": {
+    "message": "Filtrer par catégorie"
+  },
+  "tooltipRecentlyUsed": {
+    "message": "Récemment utilisés"
+  },
+  "tooltipMostUsed": {
+    "message": "Les plus utilisés"
+  },
+  "tooltipAlphabetical": {
+    "message": "A-Z"
+  },
+  "tooltipNewestFirst": {
+    "message": "Plus récents d'abord"
+  },
+  "tooltipToggleSection": {
+    "message": "Afficher/Masquer la section"
+  },
+  "tooltipCopyContent": {
+    "message": "Copier le contenu"
+  },
+  "tooltipInsertBeginning": {
+    "message": "Insérer au début"
+  },
+  "tooltipInsertEnd": {
+    "message": "Insérer à la fin"
+  },
+  "tooltipReplaceAll": {
+    "message": "Tout remplacer"
+  },
+  "labelAllProviders": {
+    "message": "Tous les fournisseurs"
+  },
+  "labelAllCategories": {
+    "message": "Toutes les catégories"
+  },
+  "labelRecentlyUsed": {
+    "message": "Récemment utilisés"
+  },
+  "labelTopFavorites": {
+    "message": "Favoris principaux"
+  },
+  "loadingText": {
+    "message": "Chargement..."
+  },
+
+  "optionsPageTitle": {
+    "message": "insidebar.ai - Paramètres"
+  },
+  "headerSettingsTitle": {
+    "message": "Paramètres : insidebar.ai"
+  },
+  "headerSettingsSubtitle": {
+    "message": "Personnalisez votre expérience de barre latérale multi-IA"
+  },
+  "labelEnableKeyboardShortcut": {
+    "message": "Activer le raccourci clavier"
+  },
+  "descEnableKeyboardShortcut": {
+    "message": "Activer le raccourci global qui ouvre insidebar.ai depuis n'importe où dans le navigateur."
+  },
+  "labelEdgeShortcutHelper": {
+    "message": "Confirmer dans Microsoft Edge"
+  },
+  "descEdgeShortcutHelper": {
+    "message": "Edge nécessite que vous confirmiez le raccourci une fois. Cliquez sur configurer pour accéder directement à la page des raccourcis Edge."
+  },
+  "labelEnableEnterCustom": {
+    "message": "Activer la personnalisation de la touche Entrée"
+  },
+  "descEnableEnterCustom": {
+    "message": "Lorsqu'activé, modifie le comportement de la touche Entrée pour tous les fournisseurs IA pris en charge"
+  },
+  "keyShift": {
+    "message": "Maj"
+  },
+  "keyCtrl": {
+    "message": "Ctrl"
+  },
+  "keyAlt": {
+    "message": "Alt"
+  },
+  "keyMeta": {
+    "message": "⌘/Win"
+  },
+  "keyPlusEnter": {
+    "message": "+ Entrée"
+  },
+  "labelDefaultPromptLibrary": {
+    "message": "Bibliothèque de prompts par défaut"
+  },
+  "descDefaultPromptLibrary": {
+    "message": "Méta-prompts pour le raffinement de prompts, la planification, le codage, les tests, la recherche, l'écriture et plus encore. Inclut la prise en charge des variables pour des modèles dynamiques."
+  },
+  "descCustomPromptReadme": {
+    "message": "Avant d'importer des prompts personnalisés, veuillez lire : <code style=\"background: #f5f5f5; padding: 2px 6px; border-radius: 3px;\">data/prompt-libraries/Generate_a_Basic_Prompt_Library.md</code>"
+  },
+  "statStorageUsed": {
+    "message": "Stockage utilisé"
+  },
+  "labelExportData": {
+    "message": "Exporter les données"
+  },
+  "descExportData": {
+    "message": "Télécharger tous les prompts et paramètres au format JSON"
+  },
+  "labelImportData": {
+    "message": "Importer les données"
+  },
+  "descImportData": {
+    "message": "Restaurer les prompts et paramètres à partir d'un fichier JSON"
+  },
+  "labelLoading": {
+    "message": "Chargement..."
+  }
+}

@@ -1,0 +1,702 @@
+{
+  "extensionName": {
+    "message": "insidebar.ai"
+  },
+  "extensionDescription": {
+    "message": "Расширение с боковой панелью для быстрого доступа к ChatGPT, Claude, Gemini и другим ИИ"
+  },
+  "commandOpenSidebar": {
+    "message": "Открыть insidebar.ai с провайдером по умолчанию"
+  },
+  "commandOpenPromptLibrary": {
+    "message": "Открыть библиотеку промптов insidebar.ai"
+  },
+  "actionDefaultTitle": {
+    "message": "Открыть insidebar.ai"
+  },
+
+  "settingsTitle": {
+    "message": "Настройки: insidebar.ai"
+  },
+  "settingsSubtitle": {
+    "message": "Настройте вашу боковую панель с несколькими ИИ"
+  },
+
+  "sectionAppearance": {
+    "message": "Внешний вид"
+  },
+  "labelTheme": {
+    "message": "Тема"
+  },
+  "descTheme": {
+    "message": "Выберите предпочтительную цветовую схему"
+  },
+  "themeAuto": {
+    "message": "Авто (Система)"
+  },
+  "themeLight": {
+    "message": "Светлая"
+  },
+  "themeDark": {
+    "message": "Тёмная"
+  },
+  "labelLanguage": {
+    "message": "Язык"
+  },
+  "descLanguage": {
+    "message": "Выберите предпочтительный язык интерфейса"
+  },
+  "langEnglish": {
+    "message": "English (Английский)"
+  },
+  "langSimplifiedChinese": {
+    "message": "简体中文 (Китайский упрощённый)"
+  },
+  "langTraditionalChinese": {
+    "message": "繁體中文 (Китайский традиционный)"
+  },
+  "langKorean": {
+    "message": "한국어 (Корейский)"
+  },
+  "langJapanese": {
+    "message": "日本語 (Японский)"
+  },
+  "langSpanish": {
+    "message": "Español (Испанский)"
+  },
+  "langFrench": {
+    "message": "Français (Французский)"
+  },
+  "langGerman": {
+    "message": "Deutsch (Немецкий)"
+  },
+  "langItalian": {
+    "message": "Italiano (Итальянский)"
+  },
+  "langRussian": {
+    "message": "Русский (Russian)"
+  },
+  "msgLanguageUpdated": {
+    "message": "Язык успешно обновлён"
+  },
+
+  "sectionProviders": {
+    "message": "Провайдеры ИИ"
+  },
+  "labelDefaultProvider": {
+    "message": "Провайдер по умолчанию"
+  },
+  "descDefaultProvider": {
+    "message": "Провайдер ИИ, загружаемый при открытии боковой панели"
+  },
+  "labelRememberLastProvider": {
+    "message": "Запоминать последний провайдер"
+  },
+  "descRememberLastProvider": {
+    "message": "При включении боковая панель открывается с последним использованным провайдером. При отключении всегда открывается провайдер по умолчанию."
+  },
+  "labelEnabledProviders": {
+    "message": "Включённые провайдеры"
+  },
+  "descEnabledProviders": {
+    "message": "Выберите, какие провайдеры ИИ отображаются в боковой панели"
+  },
+
+  "sectionKeyboardShortcuts": {
+    "message": "Горячие клавиши"
+  },
+  "labelEnableShortcut": {
+    "message": "Включить горячие клавиши"
+  },
+  "descEnableShortcut": {
+    "message": "Переключить глобальное сочетание клавиш для открытия insidebar.ai из любого места браузера."
+  },
+  "labelDefaultShortcuts": {
+    "message": "Горячие клавиши по умолчанию"
+  },
+  "descDefaultShortcuts": {
+    "message": "Command+Shift+E (Ctrl+Shift+E в Windows/Linux) открывает боковую панель с провайдером по умолчанию.<br>Command+Shift+P (Ctrl+Shift+P в Windows/Linux) открывает библиотеку промптов.<br>Вы можете настроить их в настройках горячих клавиш браузера."
+  },
+  "btnOpenShortcuts": {
+    "message": "Открыть горячие клавиши"
+  },
+  "labelEdgeConfirm": {
+    "message": "Подтвердить в Microsoft Edge"
+  },
+  "descEdgeConfirm": {
+    "message": "Edge требует подтверждения горячих клавиш один раз. Нажмите «Настроить», чтобы перейти на страницу горячих клавиш Edge."
+  },
+  "btnConfigureEdge": {
+    "message": "Настроить в Edge"
+  },
+  "labelAutoPaste": {
+    "message": "Автовставка из буфера в библиотеку промптов"
+  },
+  "descAutoPaste": {
+    "message": "Автоматически вставлять содержимое буфера обмена в рабочее пространство при открытии библиотеки промптов с помощью Command+Shift+P"
+  },
+
+  "sectionChatHistory": {
+    "message": "История чатов"
+  },
+  "labelAutoOpenSidebar": {
+    "message": "Автооткрытие боковой панели после сохранения"
+  },
+  "descAutoOpenSidebar": {
+    "message": "Автоматически открывать боковую панель и переключаться на историю чатов при сохранении беседы"
+  },
+
+  "sectionEnterBehavior": {
+    "message": "Поведение клавиши Enter"
+  },
+  "descEnterBehavior1": {
+    "message": "Настройте, как работают клавиша Enter и модификаторы при вводе в полях ввода провайдеров ИИ."
+  },
+  "descEnterBehavior2": {
+    "message": "<strong>Применяется к:</strong> ChatGPT, Claude, Gemini, Google (AI Mode), Grok, DeepSeek и Perplexity."
+  },
+  "labelEnableEnterCustomization": {
+    "message": "Включить настройку клавиши Enter"
+  },
+  "descEnableEnterCustomization": {
+    "message": "При включении изменяет поведение клавиши Enter для всех поддерживаемых провайдеров ИИ"
+  },
+  "labelPreset": {
+    "message": "Предустановка"
+  },
+  "descPreset": {
+    "message": "Выберите распространённую комбинацию клавиш"
+  },
+  "presetDefault": {
+    "message": "По умолчанию (Enter=Отправить, Shift+Enter=Новая строка)"
+  },
+  "presetSwapped": {
+    "message": "Обратный (Enter=Новая строка, Shift+Enter=Отправить)"
+  },
+  "presetSlack": {
+    "message": "Стиль Slack (Enter=Отправить, Ctrl+Enter=Новая строка)"
+  },
+  "presetDiscord": {
+    "message": "Стиль Discord (Enter=Новая строка, Ctrl+Enter=Отправить)"
+  },
+  "presetCustom": {
+    "message": "Пользовательский"
+  },
+  "labelInsertNewline": {
+    "message": "Вставить новую строку"
+  },
+  "labelSendMessage": {
+    "message": "Отправить сообщение"
+  },
+
+  "sectionPromptLibrary": {
+    "message": "Библиотека промптов"
+  },
+  "descPromptLibrary": {
+    "message": "Импортируйте готовые мета-промпты для работы с ИИ, исследований, программирования и анализа"
+  },
+  "labelDefaultLibrary": {
+    "message": "Стандартная библиотека промптов"
+  },
+  "descDefaultLibrary": {
+    "message": "Мета-промпты для улучшения промптов, планирования, программирования, тестирования, исследований, написания текстов и многого другого. Включает поддержку переменных для динамических шаблонов."
+  },
+  "btnImportDefault": {
+    "message": "Импортировать стандартные промпты"
+  },
+  "btnImportCustom": {
+    "message": "Импортировать пользовательские промпты"
+  },
+  "noteCustomImport": {
+    "message": "Перед импортом пользовательских промптов прочитайте: <code style=\"background: #f5f5f5; padding: 2px 6px; border-radius: 3px;\">data/prompt-libraries/Generate_a_Basic_Prompt_Library.md</code>"
+  },
+
+  "sectionDataManagement": {
+    "message": "Управление данными"
+  },
+  "statChatHistory": {
+    "message": "История чатов"
+  },
+  "statPrompts": {
+    "message": "Промпты"
+  },
+  "statStorage": {
+    "message": "Использовано хранилища"
+  },
+  "labelExport": {
+    "message": "Экспорт данных"
+  },
+  "descExport": {
+    "message": "Скачать все промпты и настройки в формате JSON"
+  },
+  "btnExport": {
+    "message": "Экспортировать"
+  },
+  "labelImport": {
+    "message": "Импорт данных"
+  },
+  "descImport": {
+    "message": "Восстановить промпты и настройки из файла JSON"
+  },
+  "btnImport": {
+    "message": "Импортировать"
+  },
+
+  "sectionDangerZone": {
+    "message": "Опасная зона"
+  },
+  "descDangerZone": {
+    "message": "Эти действия нельзя отменить. Используйте с осторожностью."
+  },
+  "labelClearHistory": {
+    "message": "Очистить историю чатов"
+  },
+  "descClearHistory": {
+    "message": "Удалить все сохранённые беседы"
+  },
+  "labelClearPrompts": {
+    "message": "Очистить промпты"
+  },
+  "descClearPrompts": {
+    "message": "Удалить все промпты из библиотеки"
+  },
+  "labelResetSettings": {
+    "message": "Сбросить настройки"
+  },
+  "descResetSettings": {
+    "message": "Сбросить все настройки на значения по умолчанию"
+  },
+  "btnClear": {
+    "message": "Очистить"
+  },
+  "btnReset": {
+    "message": "Сбросить"
+  },
+
+  "sectionAbout": {
+    "message": "О расширении"
+  },
+  "labelVersion": {
+    "message": "Версия"
+  },
+  "labelBuild": {
+    "message": "Сборка"
+  },
+  "btnCheckUpdates": {
+    "message": "Проверить обновления"
+  },
+  "linkDownloadLatest": {
+    "message": "Скачать последнюю версию"
+  },
+  "descAbout1": {
+    "message": "insidebar.ai предоставляет быстрый доступ к нескольким ИИ-помощникам в одной удобной боковой панели."
+  },
+  "descAbout2": {
+    "message": "Создан с приоритетом конфиденциальности. Все данные хранятся локально."
+  },
+
+  "msgThemeUpdated": {
+    "message": "Тема обновлена"
+  },
+  "msgProviderUpdated": {
+    "message": "Провайдер по умолчанию обновлён"
+  },
+  "msgProviderSettingsUpdated": {
+    "message": "Настройки провайдера обновлены"
+  },
+  "msgShortcutEnabled": {
+    "message": "Горячие клавиши включены"
+  },
+  "msgShortcutDisabled": {
+    "message": "Горячие клавиши отключены"
+  },
+  "msgAutoPasteEnabled": {
+    "message": "Автовставка включена"
+  },
+  "msgAutoPasteDisabled": {
+    "message": "Автовставка отключена"
+  },
+  "msgAutoOpenEnabled": {
+    "message": "Автооткрытие боковой панели включено"
+  },
+  "msgAutoOpenDisabled": {
+    "message": "Автооткрытие боковой панели отключено"
+  },
+  "msgRememberLastProviderEnabled": {
+    "message": "Боковая панель будет запоминать последний провайдер"
+  },
+  "msgRememberLastProviderDisabled": {
+    "message": "Боковая панель всегда будет открывать провайдер по умолчанию"
+  },
+  "msgEnterCustomizationEnabled": {
+    "message": "Настройка клавиши Enter включена"
+  },
+  "msgEnterCustomizationDisabled": {
+    "message": "Настройка клавиши Enter отключена"
+  },
+  "msgPresetChanged": {
+    "message": "Предустановка изменена на: $PRESET$",
+    "placeholders": {
+      "preset": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgCustomKeyMappingSaved": {
+    "message": "Пользовательское назначение клавиш сохранено"
+  },
+  "msgDataExported": {
+    "message": "Данные успешно экспортированы"
+  },
+  "msgDataImported": {
+    "message": "Данные успешно импортированы"
+  },
+  "msgDataImportedDetails": {
+    "message": "Данные успешно импортированы — $DETAILS$.",
+    "placeholders": {
+      "details": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgPromptsImported": {
+    "message": "Успешно импортировано промптов: $COUNT$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgPromptsImportedWithSkipped": {
+    "message": "Успешно импортировано промптов: $IMPORTED$ (уже существовало: $SKIPPED$)",
+    "placeholders": {
+      "imported": {
+        "content": "$1"
+      },
+      "skipped": {
+        "content": "$2"
+      }
+    }
+  },
+  "msgPromptsAlreadyExist": {
+    "message": "Все промпты уже существуют в вашей библиотеке"
+  },
+  "msgCustomPromptsImported": {
+    "message": "Успешно импортировано пользовательских промптов: $IMPORTED$",
+    "placeholders": {
+      "imported": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgHistoryCleared": {
+    "message": "Вся история чатов удалена"
+  },
+  "msgPromptsCleared": {
+    "message": "Все промпты удалены"
+  },
+  "msgSettingsReset": {
+    "message": "Все настройки сброшены на значения по умолчанию"
+  },
+  "msgUpdateAvailable": {
+    "message": "Доступно обновление — нажмите на ссылку «Скачать последнюю версию»"
+  },
+  "msgUpToDate": {
+    "message": "У вас последняя версия!"
+  },
+  "msgCheckingUpdates": {
+    "message": "Проверка..."
+  },
+  "msgUpdateCheckFailed": {
+    "message": "Не удалось проверить обновления"
+  },
+  "msgVersionUnknown": {
+    "message": "Версия неизвестна"
+  },
+  "msgCommitHashUnavailable": {
+    "message": "Хеш коммита недоступен"
+  },
+  "msgBuildInfo": {
+    "message": "Сборка: $HASH$ ($DATE$)",
+    "placeholders": {
+      "hash": {
+        "content": "$1"
+      },
+      "date": {
+        "content": "$2"
+      }
+    }
+  },
+  "msgUpdateStatusAvailable": {
+    "message": "<strong>Доступно обновление!</strong><br>Последняя: $LATEST$ ($DATE$)<br>Текущая: $CURRENT$<br><small>$MESSAGE$</small>",
+    "placeholders": {
+      "latest": {
+        "content": "$1"
+      },
+      "date": {
+        "content": "$2"
+      },
+      "current": {
+        "content": "$3"
+      },
+      "message": {
+        "content": "$4"
+      }
+    }
+  },
+  "msgUpdateStatusCurrent": {
+    "message": "У вас последняя версия!"
+  },
+  "msgUpdateStatusError": {
+    "message": "Не удалось проверить обновления"
+  },
+
+  "errAtLeastOneProvider": {
+    "message": "Должен быть включён хотя бы один провайдер"
+  },
+  "errExportFailed": {
+    "message": "Не удалось экспортировать данные"
+  },
+  "errImportFailed": {
+    "message": "Не удалось импортировать данные. Проверьте формат файла."
+  },
+  "errClearHistoryFailed": {
+    "message": "Не удалось очистить историю чатов"
+  },
+  "errClearPromptsFailed": {
+    "message": "Не удалось очистить промпты"
+  },
+  "errResetSettingsFailed": {
+    "message": "Не удалось сбросить настройки"
+  },
+  "errImportDefaultLibrary": {
+    "message": "Не удалось импортировать стандартную библиотеку"
+  },
+  "errImportCustomLibrary": {
+    "message": "Не удалось импортировать пользовательские промпты"
+  },
+  "errInvalidFormat": {
+    "message": "Неверный формат: файл должен содержать JSON-массив промптов"
+  },
+  "errInvalidPromptStructure": {
+    "message": "Неверная структура промпта — см. подробности в уведомлении"
+  },
+  "errInvalidJSON": {
+    "message": "Неверный формат файла JSON"
+  },
+  "errValidationErrors": {
+    "message": "Промптов с ошибками валидации: $COUNT$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+
+  "confirmImportData": {
+    "message": "Импортировать данные от $DATE$?\n\nБудет добавлено:\n- Промптов: $PROMPTS$\n- Бесед: $CONVERSATIONS$\n- Конфигурация настроек\n\nСуществующие данные будут сохранены, если не обнаружены дубликаты.",
+    "placeholders": {
+      "date": {
+        "content": "$1"
+      },
+      "prompts": {
+        "content": "$2"
+      },
+      "conversations": {
+        "content": "$3"
+      }
+    }
+  },
+  "confirmClearHistory": {
+    "message": "Вы уверены, что хотите удалить ВСЮ историю чатов?\n\nЭто навсегда удалит все сохранённые беседы.\n\nЭто действие НЕЛЬЗЯ отменить!"
+  },
+  "confirmClearPrompts": {
+    "message": "Вы уверены, что хотите удалить ВСЕ промпты?\n\nЭто навсегда удалит все промпты из вашей библиотеки.\n\nЭто действие НЕЛЬЗЯ отменить!"
+  },
+  "confirmResetSettings": {
+    "message": "Вы уверены, что хотите сбросить ВСЕ настройки на значения по умолчанию?\n\nБудет сброшено:\n- Настройки темы\n- Провайдер по умолчанию\n- Горячие клавиши\n- Все остальные параметры\n\nВаши промпты и история чатов НЕ будут затронуты.\n\nЭто действие НЕЛЬЗЯ отменить!"
+  },
+
+  "contextMenuSendTo": {
+    "message": "Отправить в insidebar.ai"
+  },
+  "contextMenuPromptLibrary": {
+    "message": "Библиотека промптов"
+  },
+
+  "sidebarChatHistory": {
+    "message": "История чатов"
+  },
+  "sidebarPromptGenie": {
+    "message": "Мастер промптов"
+  },
+  "sidebarEditingPrompt": {
+    "message": "Редактирование промпта"
+  },
+  "placeholderSearch": {
+    "message": "Поиск..."
+  },
+  "placeholderSearchConversations": {
+    "message": "Поиск бесед..."
+  },
+  "placeholderSearchPrompts": {
+    "message": "Поиск промптов..."
+  },
+  "btnSave": {
+    "message": "Сохранить"
+  },
+  "btnCancel": {
+    "message": "Отменить"
+  },
+  "btnClose": {
+    "message": "Закрыть"
+  },
+  "btnDelete": {
+    "message": "Удалить"
+  },
+  "btnEdit": {
+    "message": "Редактировать"
+  },
+  "btnCopy": {
+    "message": "Копировать"
+  },
+  "tooltipSaveNew": {
+    "message": "Сохранить как новый промпт"
+  },
+  "tooltipCopyClipboard": {
+    "message": "Копировать в буфер обмена"
+  },
+  "tooltipClear": {
+    "message": "Очистить"
+  },
+  "tooltipSelectProvider": {
+    "message": "Выбрать провайдер"
+  },
+  "tooltipSendProvider": {
+    "message": "Отправить выбранному провайдеру"
+  },
+  "tooltipFilterProvider": {
+    "message": "Фильтр по провайдеру"
+  },
+  "tooltipShowSearchTips": {
+    "message": "Показать советы по поиску"
+  },
+  "tooltipShowFavorites": {
+    "message": "Показать только избранное"
+  },
+  "tooltipFilterCategory": {
+    "message": "Фильтр по категории"
+  },
+  "tooltipRecentlyUsed": {
+    "message": "Недавно использованные"
+  },
+  "tooltipMostUsed": {
+    "message": "Наиболее используемые"
+  },
+  "tooltipAlphabetical": {
+    "message": "А-Я"
+  },
+  "tooltipNewestFirst": {
+    "message": "Сначала новые"
+  },
+  "tooltipToggleSection": {
+    "message": "Переключить раздел"
+  },
+  "tooltipCopyContent": {
+    "message": "Копировать содержимое"
+  },
+  "tooltipInsertBeginning": {
+    "message": "Вставить в начало"
+  },
+  "tooltipInsertEnd": {
+    "message": "Вставить в конец"
+  },
+  "tooltipReplaceAll": {
+    "message": "Заменить всё"
+  },
+  "labelAllProviders": {
+    "message": "Все провайдеры"
+  },
+  "labelAllCategories": {
+    "message": "Все категории"
+  },
+  "labelRecentlyUsed": {
+    "message": "Недавно использованные"
+  },
+  "labelTopFavorites": {
+    "message": "Топ избранного"
+  },
+  "loadingText": {
+    "message": "Загрузка..."
+  },
+
+  "optionsPageTitle": {
+    "message": "insidebar.ai — Настройки"
+  },
+  "headerSettingsTitle": {
+    "message": "Настройки: insidebar.ai"
+  },
+  "headerSettingsSubtitle": {
+    "message": "Настройте вашу боковую панель с несколькими ИИ"
+  },
+  "labelEnableKeyboardShortcut": {
+    "message": "Включить горячие клавиши"
+  },
+  "descEnableKeyboardShortcut": {
+    "message": "Переключить глобальное сочетание клавиш для открытия insidebar.ai из любого места браузера."
+  },
+  "labelEdgeShortcutHelper": {
+    "message": "Подтвердить в Microsoft Edge"
+  },
+  "descEdgeShortcutHelper": {
+    "message": "Edge требует подтверждения горячих клавиш один раз. Нажмите «Настроить», чтобы перейти на страницу горячих клавиш Edge."
+  },
+  "labelEnableEnterCustom": {
+    "message": "Включить настройку клавиши Enter"
+  },
+  "descEnableEnterCustom": {
+    "message": "При включении изменяет поведение клавиши Enter для всех поддерживаемых провайдеров ИИ"
+  },
+  "keyShift": {
+    "message": "Shift"
+  },
+  "keyCtrl": {
+    "message": "Ctrl"
+  },
+  "keyAlt": {
+    "message": "Alt"
+  },
+  "keyMeta": {
+    "message": "⌘/Win"
+  },
+  "keyPlusEnter": {
+    "message": "+ Enter"
+  },
+  "labelDefaultPromptLibrary": {
+    "message": "Стандартная библиотека промптов"
+  },
+  "descDefaultPromptLibrary": {
+    "message": "Мета-промпты для улучшения промптов, планирования, программирования, тестирования, исследований, написания текстов и многого другого. Включает поддержку переменных для динамических шаблонов."
+  },
+  "descCustomPromptReadme": {
+    "message": "Перед импортом пользовательских промптов прочитайте: <code style=\"background: #f5f5f5; padding: 2px 6px; border-radius: 3px;\">data/prompt-libraries/Generate_a_Basic_Prompt_Library.md</code>"
+  },
+  "statStorageUsed": {
+    "message": "Использовано хранилища"
+  },
+  "labelExportData": {
+    "message": "Экспорт данных"
+  },
+  "descExportData": {
+    "message": "Скачать все промпты и настройки в формате JSON"
+  },
+  "labelImportData": {
+    "message": "Импорт данных"
+  },
+  "descImportData": {
+    "message": "Восстановить промпты и настройки из файла JSON"
+  },
+  "labelLoading": {
+    "message": "Загрузка..."
+  }
+}

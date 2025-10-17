@@ -1,0 +1,702 @@
+{
+  "extensionName": {
+    "message": "insidebar.ai"
+  },
+  "extensionDescription": {
+    "message": "Extensión de barra lateral multi-IA para acceso rápido a ChatGPT, Claude, Gemini y más"
+  },
+  "commandOpenSidebar": {
+    "message": "Abrir insidebar.ai con proveedor predeterminado"
+  },
+  "commandOpenPromptLibrary": {
+    "message": "Abrir Biblioteca de Prompts de insidebar.ai"
+  },
+  "actionDefaultTitle": {
+    "message": "Abrir insidebar.ai"
+  },
+
+  "settingsTitle": {
+    "message": "Configuración: insidebar.ai"
+  },
+  "settingsSubtitle": {
+    "message": "Personaliza tu experiencia de barra lateral multi-IA"
+  },
+
+  "sectionAppearance": {
+    "message": "Apariencia"
+  },
+  "labelTheme": {
+    "message": "Tema"
+  },
+  "descTheme": {
+    "message": "Elige tu esquema de colores preferido"
+  },
+  "themeAuto": {
+    "message": "Automático (Sistema)"
+  },
+  "themeLight": {
+    "message": "Claro"
+  },
+  "themeDark": {
+    "message": "Oscuro"
+  },
+  "labelLanguage": {
+    "message": "Idioma"
+  },
+  "descLanguage": {
+    "message": "Elige tu idioma de interfaz preferido"
+  },
+  "langEnglish": {
+    "message": "English"
+  },
+  "langSimplifiedChinese": {
+    "message": "简体中文 (Chino simplificado)"
+  },
+  "langTraditionalChinese": {
+    "message": "繁體中文 (Chino tradicional)"
+  },
+  "langKorean": {
+    "message": "한국어 (Coreano)"
+  },
+  "langJapanese": {
+    "message": "日本語 (Japonés)"
+  },
+  "langSpanish": {
+    "message": "Español (Spanish)"
+  },
+  "langFrench": {
+    "message": "Français (French)"
+  },
+  "langGerman": {
+    "message": "Deutsch (German)"
+  },
+  "langItalian": {
+    "message": "Italiano (Italian)"
+  },
+  "langRussian": {
+    "message": "Русский (Russian)"
+  },
+  "msgLanguageUpdated": {
+    "message": "Idioma actualizado correctamente"
+  },
+
+  "sectionProviders": {
+    "message": "Proveedores de IA"
+  },
+  "labelDefaultProvider": {
+    "message": "Proveedor Predeterminado"
+  },
+  "descDefaultProvider": {
+    "message": "Proveedor de IA para cargar al abrir la barra lateral"
+  },
+  "labelRememberLastProvider": {
+    "message": "Recordar Último Proveedor"
+  },
+  "descRememberLastProvider": {
+    "message": "Cuando está activado, la barra lateral se abre con el último proveedor que usaste. Cuando está desactivado, siempre se abre con el proveedor predeterminado."
+  },
+  "labelEnabledProviders": {
+    "message": "Proveedores Habilitados"
+  },
+  "descEnabledProviders": {
+    "message": "Selecciona qué proveedores de IA aparecen en tu barra lateral"
+  },
+
+  "sectionKeyboardShortcuts": {
+    "message": "Atajos de Teclado"
+  },
+  "labelEnableShortcut": {
+    "message": "Habilitar Atajos de Teclado"
+  },
+  "descEnableShortcut": {
+    "message": "Activa el atajo global que abre insidebar.ai desde cualquier lugar del navegador."
+  },
+  "labelDefaultShortcuts": {
+    "message": "Atajos Predeterminados"
+  },
+  "descDefaultShortcuts": {
+    "message": "Command+Shift+E (Ctrl+Shift+E en Windows/Linux) abre la barra lateral con el proveedor predeterminado.<br>Command+Shift+P (Ctrl+Shift+P en Windows/Linux) abre la Biblioteca de Prompts.<br>Puedes personalizarlos en la configuración de atajos de tu navegador."
+  },
+  "btnOpenShortcuts": {
+    "message": "Abrir Atajos"
+  },
+  "labelEdgeConfirm": {
+    "message": "Confirmar en Microsoft Edge"
+  },
+  "descEdgeConfirm": {
+    "message": "Edge requiere que confirmes el atajo una vez. Haz clic en configurar para ir directamente a la página de atajos de Edge."
+  },
+  "btnConfigureEdge": {
+    "message": "Configurar en Edge"
+  },
+  "labelAutoPaste": {
+    "message": "Pegar Automáticamente Portapapeles en Biblioteca de Prompts"
+  },
+  "descAutoPaste": {
+    "message": "Pega automáticamente el contenido del portapapeles en el espacio de trabajo al abrir la Biblioteca de Prompts con Command+Shift+P"
+  },
+
+  "sectionChatHistory": {
+    "message": "Historial de Chat"
+  },
+  "labelAutoOpenSidebar": {
+    "message": "Abrir Automáticamente Barra Lateral Después de Guardar"
+  },
+  "descAutoOpenSidebar": {
+    "message": "Abre automáticamente la barra lateral y cambia al historial de chat cuando guardas una conversación"
+  },
+
+  "sectionEnterBehavior": {
+    "message": "Comportamiento de la Tecla Enter"
+  },
+  "descEnterBehavior1": {
+    "message": "Personaliza cómo funcionan la tecla Enter y las teclas modificadoras al escribir en los campos de entrada de proveedores de IA."
+  },
+  "descEnterBehavior2": {
+    "message": "<strong>Se aplica a:</strong> ChatGPT, Claude, Gemini, Google (Modo IA), Grok, DeepSeek y Perplexity."
+  },
+  "labelEnableEnterCustomization": {
+    "message": "Habilitar Personalización de Tecla Enter"
+  },
+  "descEnableEnterCustomization": {
+    "message": "Cuando está habilitado, modifica el comportamiento de la tecla Enter en todos los proveedores de IA compatibles"
+  },
+  "labelPreset": {
+    "message": "Preajuste"
+  },
+  "descPreset": {
+    "message": "Elige un patrón de combinación de teclas común"
+  },
+  "presetDefault": {
+    "message": "Predeterminado (Enter=Enviar, Shift+Enter=Nueva línea)"
+  },
+  "presetSwapped": {
+    "message": "Intercambiado (Enter=Nueva línea, Shift+Enter=Enviar)"
+  },
+  "presetSlack": {
+    "message": "Estilo Slack (Enter=Enviar, Ctrl+Enter=Nueva línea)"
+  },
+  "presetDiscord": {
+    "message": "Estilo Discord (Enter=Nueva línea, Ctrl+Enter=Enviar)"
+  },
+  "presetCustom": {
+    "message": "Personalizado"
+  },
+  "labelInsertNewline": {
+    "message": "Insertar Nueva Línea"
+  },
+  "labelSendMessage": {
+    "message": "Enviar Mensaje"
+  },
+
+  "sectionPromptLibrary": {
+    "message": "Biblioteca de Prompts"
+  },
+  "descPromptLibrary": {
+    "message": "Importa meta-prompts seleccionados para flujos de trabajo de IA, investigación, codificación y análisis"
+  },
+  "labelDefaultLibrary": {
+    "message": "Biblioteca de Prompts Predeterminada"
+  },
+  "descDefaultLibrary": {
+    "message": "Meta-prompts para refinamiento de prompts, planificación, codificación, pruebas, investigación, escritura y más. Incluye soporte de variables para plantillas dinámicas."
+  },
+  "btnImportDefault": {
+    "message": "Importar Prompts Predeterminados"
+  },
+  "btnImportCustom": {
+    "message": "Importar Prompts Personalizados"
+  },
+  "noteCustomImport": {
+    "message": "Antes de importar prompts personalizados, por favor lee: <code style=\"background: #f5f5f5; padding: 2px 6px; border-radius: 3px;\">data/prompt-libraries/Generate_a_Basic_Prompt_Library.md</code>"
+  },
+
+  "sectionDataManagement": {
+    "message": "Gestión de Datos"
+  },
+  "statChatHistory": {
+    "message": "Historial de Chat"
+  },
+  "statPrompts": {
+    "message": "Prompts"
+  },
+  "statStorage": {
+    "message": "Almacenamiento Usado"
+  },
+  "labelExport": {
+    "message": "Exportar Datos"
+  },
+  "descExport": {
+    "message": "Descargar todos los prompts y configuraciones como JSON"
+  },
+  "btnExport": {
+    "message": "Exportar"
+  },
+  "labelImport": {
+    "message": "Importar Datos"
+  },
+  "descImport": {
+    "message": "Restaurar prompts y configuraciones desde archivo JSON"
+  },
+  "btnImport": {
+    "message": "Importar"
+  },
+
+  "sectionDangerZone": {
+    "message": "Zona Peligrosa"
+  },
+  "descDangerZone": {
+    "message": "Estas acciones no se pueden deshacer. Úsalas con precaución."
+  },
+  "labelClearHistory": {
+    "message": "Borrar Historial de Chat"
+  },
+  "descClearHistory": {
+    "message": "Eliminar todas las conversaciones guardadas"
+  },
+  "labelClearPrompts": {
+    "message": "Borrar Prompts"
+  },
+  "descClearPrompts": {
+    "message": "Eliminar todos los prompts de tu biblioteca"
+  },
+  "labelResetSettings": {
+    "message": "Restablecer Configuración"
+  },
+  "descResetSettings": {
+    "message": "Restablecer toda la configuración a valores predeterminados"
+  },
+  "btnClear": {
+    "message": "Borrar"
+  },
+  "btnReset": {
+    "message": "Restablecer"
+  },
+
+  "sectionAbout": {
+    "message": "Acerca de"
+  },
+  "labelVersion": {
+    "message": "Versión"
+  },
+  "labelBuild": {
+    "message": "Compilación"
+  },
+  "btnCheckUpdates": {
+    "message": "Buscar Actualizaciones"
+  },
+  "linkDownloadLatest": {
+    "message": "Descargar Última Versión"
+  },
+  "descAbout1": {
+    "message": "insidebar.ai proporciona acceso rápido a múltiples asistentes de IA en una conveniente barra lateral."
+  },
+  "descAbout2": {
+    "message": "Construido con arquitectura que prioriza la privacidad. Todos los datos se almacenan localmente."
+  },
+
+  "msgThemeUpdated": {
+    "message": "Tema actualizado"
+  },
+  "msgProviderUpdated": {
+    "message": "Proveedor predeterminado actualizado"
+  },
+  "msgProviderSettingsUpdated": {
+    "message": "Configuración de proveedores actualizada"
+  },
+  "msgShortcutEnabled": {
+    "message": "Atajo de teclado habilitado"
+  },
+  "msgShortcutDisabled": {
+    "message": "Atajo de teclado deshabilitado"
+  },
+  "msgAutoPasteEnabled": {
+    "message": "Pegado automático habilitado"
+  },
+  "msgAutoPasteDisabled": {
+    "message": "Pegado automático deshabilitado"
+  },
+  "msgAutoOpenEnabled": {
+    "message": "Apertura automática de barra lateral habilitada"
+  },
+  "msgAutoOpenDisabled": {
+    "message": "Apertura automática de barra lateral deshabilitada"
+  },
+  "msgRememberLastProviderEnabled": {
+    "message": "La barra lateral recordará el último proveedor"
+  },
+  "msgRememberLastProviderDisabled": {
+    "message": "La barra lateral siempre se abrirá con el proveedor predeterminado"
+  },
+  "msgEnterCustomizationEnabled": {
+    "message": "Personalización de tecla Enter habilitada"
+  },
+  "msgEnterCustomizationDisabled": {
+    "message": "Personalización de tecla Enter deshabilitada"
+  },
+  "msgPresetChanged": {
+    "message": "Preajuste cambiado a: $PRESET$",
+    "placeholders": {
+      "preset": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgCustomKeyMappingSaved": {
+    "message": "Mapeo de teclas personalizado guardado"
+  },
+  "msgDataExported": {
+    "message": "Datos exportados correctamente"
+  },
+  "msgDataImported": {
+    "message": "Datos importados correctamente"
+  },
+  "msgDataImportedDetails": {
+    "message": "Datos importados correctamente — $DETAILS$.",
+    "placeholders": {
+      "details": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgPromptsImported": {
+    "message": "Se importaron correctamente $COUNT$ prompts",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgPromptsImportedWithSkipped": {
+    "message": "Se importaron correctamente $IMPORTED$ prompts ($SKIPPED$ ya existían)",
+    "placeholders": {
+      "imported": {
+        "content": "$1"
+      },
+      "skipped": {
+        "content": "$2"
+      }
+    }
+  },
+  "msgPromptsAlreadyExist": {
+    "message": "Todos los prompts ya existen en tu biblioteca"
+  },
+  "msgCustomPromptsImported": {
+    "message": "Se importaron correctamente $IMPORTED$ prompts personalizados",
+    "placeholders": {
+      "imported": {
+        "content": "$1"
+      }
+    }
+  },
+  "msgHistoryCleared": {
+    "message": "Todo el historial de chat ha sido eliminado"
+  },
+  "msgPromptsCleared": {
+    "message": "Todos los prompts han sido eliminados"
+  },
+  "msgSettingsReset": {
+    "message": "Toda la configuración ha sido restablecida a valores predeterminados"
+  },
+  "msgUpdateAvailable": {
+    "message": "Actualización disponible - haz clic en el enlace Descargar Última Versión"
+  },
+  "msgUpToDate": {
+    "message": "¡Estás actualizado!"
+  },
+  "msgCheckingUpdates": {
+    "message": "Comprobando..."
+  },
+  "msgUpdateCheckFailed": {
+    "message": "Error al buscar actualizaciones"
+  },
+  "msgVersionUnknown": {
+    "message": "Versión desconocida"
+  },
+  "msgCommitHashUnavailable": {
+    "message": "Hash de commit no disponible"
+  },
+  "msgBuildInfo": {
+    "message": "Compilación: $HASH$ ($DATE$)",
+    "placeholders": {
+      "hash": {
+        "content": "$1"
+      },
+      "date": {
+        "content": "$2"
+      }
+    }
+  },
+  "msgUpdateStatusAvailable": {
+    "message": "<strong>¡Actualización disponible!</strong><br>Última: $LATEST$ ($DATE$)<br>Actual: $CURRENT$<br><small>$MESSAGE$</small>",
+    "placeholders": {
+      "latest": {
+        "content": "$1"
+      },
+      "date": {
+        "content": "$2"
+      },
+      "current": {
+        "content": "$3"
+      },
+      "message": {
+        "content": "$4"
+      }
+    }
+  },
+  "msgUpdateStatusCurrent": {
+    "message": "¡Tienes la última versión!"
+  },
+  "msgUpdateStatusError": {
+    "message": "Error al buscar actualizaciones"
+  },
+
+  "errAtLeastOneProvider": {
+    "message": "Al menos un proveedor debe estar habilitado"
+  },
+  "errExportFailed": {
+    "message": "Error al exportar datos"
+  },
+  "errImportFailed": {
+    "message": "Error al importar datos. Por favor verifica el formato del archivo."
+  },
+  "errClearHistoryFailed": {
+    "message": "Error al borrar el historial de chat"
+  },
+  "errClearPromptsFailed": {
+    "message": "Error al borrar los prompts"
+  },
+  "errResetSettingsFailed": {
+    "message": "Error al restablecer la configuración"
+  },
+  "errImportDefaultLibrary": {
+    "message": "Error al importar la biblioteca predeterminada"
+  },
+  "errImportCustomLibrary": {
+    "message": "Error al importar prompts personalizados"
+  },
+  "errInvalidFormat": {
+    "message": "Formato inválido: El archivo debe contener un array JSON de prompts"
+  },
+  "errInvalidPromptStructure": {
+    "message": "Estructura de prompt inválida - consulta la alerta para más detalles"
+  },
+  "errInvalidJSON": {
+    "message": "Formato de archivo JSON inválido"
+  },
+  "errValidationErrors": {
+    "message": "$COUNT$ prompts tienen errores de validación",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+
+  "confirmImportData": {
+    "message": "¿Importar datos de $DATE$?\n\nEsto agregará:\n- $PROMPTS$ prompts\n- $CONVERSATIONS$ conversaciones\n- Configuración\n\nLos datos existentes se conservarán a menos que se encuentren duplicados.",
+    "placeholders": {
+      "date": {
+        "content": "$1"
+      },
+      "prompts": {
+        "content": "$2"
+      },
+      "conversations": {
+        "content": "$3"
+      }
+    }
+  },
+  "confirmClearHistory": {
+    "message": "¿Estás seguro de que quieres eliminar TODO el historial de chat?\n\nEsto eliminará permanentemente todas las conversaciones guardadas.\n\n¡Esta acción NO se puede deshacer!"
+  },
+  "confirmClearPrompts": {
+    "message": "¿Estás seguro de que quieres eliminar TODOS los prompts?\n\nEsto eliminará permanentemente todos los prompts de tu biblioteca.\n\n¡Esta acción NO se puede deshacer!"
+  },
+  "confirmResetSettings": {
+    "message": "¿Estás seguro de que quieres restablecer TODA la configuración a valores predeterminados?\n\nEsto restablecerá:\n- Configuración de tema\n- Proveedor predeterminado\n- Atajos de teclado\n- Todas las demás preferencias\n\nTus prompts e historial de chat NO se verán afectados.\n\n¡Esta acción NO se puede deshacer!"
+  },
+
+  "contextMenuSendTo": {
+    "message": "Enviar a insidebar.ai"
+  },
+  "contextMenuPromptLibrary": {
+    "message": "Biblioteca de Prompts"
+  },
+
+  "sidebarChatHistory": {
+    "message": "Historial de Chat"
+  },
+  "sidebarPromptGenie": {
+    "message": "Genio de Prompts"
+  },
+  "sidebarEditingPrompt": {
+    "message": "Editando Prompt"
+  },
+  "placeholderSearch": {
+    "message": "Buscar..."
+  },
+  "placeholderSearchConversations": {
+    "message": "Buscar conversaciones..."
+  },
+  "placeholderSearchPrompts": {
+    "message": "Buscar prompts..."
+  },
+  "btnSave": {
+    "message": "Guardar"
+  },
+  "btnCancel": {
+    "message": "Cancelar"
+  },
+  "btnClose": {
+    "message": "Cerrar"
+  },
+  "btnDelete": {
+    "message": "Eliminar"
+  },
+  "btnEdit": {
+    "message": "Editar"
+  },
+  "btnCopy": {
+    "message": "Copiar"
+  },
+  "tooltipSaveNew": {
+    "message": "Guardar como nuevo prompt"
+  },
+  "tooltipCopyClipboard": {
+    "message": "Copiar al portapapeles"
+  },
+  "tooltipClear": {
+    "message": "Borrar"
+  },
+  "tooltipSelectProvider": {
+    "message": "Seleccionar proveedor"
+  },
+  "tooltipSendProvider": {
+    "message": "Enviar al proveedor seleccionado"
+  },
+  "tooltipFilterProvider": {
+    "message": "Filtrar por proveedor"
+  },
+  "tooltipShowSearchTips": {
+    "message": "Mostrar consejos de búsqueda"
+  },
+  "tooltipShowFavorites": {
+    "message": "Mostrar solo favoritos"
+  },
+  "tooltipFilterCategory": {
+    "message": "Filtrar por categoría"
+  },
+  "tooltipRecentlyUsed": {
+    "message": "Usados Recientemente"
+  },
+  "tooltipMostUsed": {
+    "message": "Más Usados"
+  },
+  "tooltipAlphabetical": {
+    "message": "A-Z"
+  },
+  "tooltipNewestFirst": {
+    "message": "Más Recientes Primero"
+  },
+  "tooltipToggleSection": {
+    "message": "Alternar sección"
+  },
+  "tooltipCopyContent": {
+    "message": "Copiar contenido"
+  },
+  "tooltipInsertBeginning": {
+    "message": "Insertar al principio"
+  },
+  "tooltipInsertEnd": {
+    "message": "Insertar al final"
+  },
+  "tooltipReplaceAll": {
+    "message": "Reemplazar todo"
+  },
+  "labelAllProviders": {
+    "message": "Todos los Proveedores"
+  },
+  "labelAllCategories": {
+    "message": "Todas las Categorías"
+  },
+  "labelRecentlyUsed": {
+    "message": "Usados Recientemente"
+  },
+  "labelTopFavorites": {
+    "message": "Favoritos Principales"
+  },
+  "loadingText": {
+    "message": "Cargando..."
+  },
+
+  "optionsPageTitle": {
+    "message": "insidebar.ai - Configuración"
+  },
+  "headerSettingsTitle": {
+    "message": "Configuración: insidebar.ai"
+  },
+  "headerSettingsSubtitle": {
+    "message": "Personaliza tu experiencia de barra lateral multi-IA"
+  },
+  "labelEnableKeyboardShortcut": {
+    "message": "Habilitar Atajos de Teclado"
+  },
+  "descEnableKeyboardShortcut": {
+    "message": "Activa el atajo global que abre insidebar.ai desde cualquier lugar del navegador."
+  },
+  "labelEdgeShortcutHelper": {
+    "message": "Confirmar en Microsoft Edge"
+  },
+  "descEdgeShortcutHelper": {
+    "message": "Edge requiere que confirmes el atajo una vez. Haz clic en configurar para ir directamente a la página de atajos de Edge."
+  },
+  "labelEnableEnterCustom": {
+    "message": "Habilitar Personalización de Tecla Enter"
+  },
+  "descEnableEnterCustom": {
+    "message": "Cuando está habilitado, modifica el comportamiento de la tecla Enter en todos los proveedores de IA compatibles"
+  },
+  "keyShift": {
+    "message": "Shift"
+  },
+  "keyCtrl": {
+    "message": "Ctrl"
+  },
+  "keyAlt": {
+    "message": "Alt"
+  },
+  "keyMeta": {
+    "message": "⌘/Win"
+  },
+  "keyPlusEnter": {
+    "message": "+ Enter"
+  },
+  "labelDefaultPromptLibrary": {
+    "message": "Biblioteca de Prompts Predeterminada"
+  },
+  "descDefaultPromptLibrary": {
+    "message": "Meta-prompts para refinamiento de prompts, planificación, codificación, pruebas, investigación, escritura y más. Incluye soporte de variables para plantillas dinámicas."
+  },
+  "descCustomPromptReadme": {
+    "message": "Antes de importar prompts personalizados, por favor lee: <code style=\"background: #f5f5f5; padding: 2px 6px; border-radius: 3px;\">data/prompt-libraries/Generate_a_Basic_Prompt_Library.md</code>"
+  },
+  "statStorageUsed": {
+    "message": "Almacenamiento Usado"
+  },
+  "labelExportData": {
+    "message": "Exportar Datos"
+  },
+  "descExportData": {
+    "message": "Descargar todos los prompts y configuraciones como JSON"
+  },
+  "labelImportData": {
+    "message": "Importar Datos"
+  },
+  "descImportData": {
+    "message": "Restaurar prompts y configuraciones desde archivo JSON"
+  },
+  "labelLoading": {
+    "message": "Cargando..."
+  }
+}
