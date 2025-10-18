@@ -145,12 +145,23 @@ function handleEnterSwap(event) {
     event.preventDefault();
     event.stopImmediatePropagation();
 
-    // Find and click the Send button (more reliable for both element types)
+    // Find and click the Send/Update button (more reliable for both element types)
     const sendButton = findSendButton();
 
+    // Debug logging
+    console.log('[Gemini] Send action triggered');
+    console.log('[Gemini] Active element:', activeElement);
+    console.log('[Gemini] Is editing textarea?', isEditingTextarea);
+    console.log('[Gemini] Found button:', sendButton);
+    console.log('[Gemini] Button disabled?', sendButton?.disabled);
+    console.log('[Gemini] Button class:', sendButton?.className);
+    console.log('[Gemini] Button text:', sendButton?.textContent?.trim());
+
     if (sendButton && !sendButton.disabled) {
+      console.log('[Gemini] Clicking button');
       sendButton.click();
     } else {
+      console.log('[Gemini] Button disabled or not found, using fallback');
       // Fallback: dispatch plain Enter
       const newEvent = createEnterEvent();
       activeElement.dispatchEvent(newEvent);
