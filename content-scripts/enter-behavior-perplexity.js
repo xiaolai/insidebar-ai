@@ -1,7 +1,59 @@
 // Perplexity Enter/Shift+Enter behavior swap
 // Supports customizable key combinations via settings
 
-console.log('[Perplexity] Script loaded');
+// Helper: Create a synthetic Enter KeyboardEvent with specified modifiers
+function createEnterEvent(modifiers = {}) {
+  return new KeyboardEvent("keydown", {
+    key: "Enter",
+    code: "Enter",
+    keyCode: 13,
+    which: 13,
+    bubbles: true,
+    cancelable: true,
+    composed: true,
+    shiftKey: modifiers.shift || false,
+    ctrlKey: modifiers.ctrl || false,
+    metaKey: modifiers.meta || false,
+    altKey: modifiers.alt || false
+  });
+}
+
+// Helper: Find Perplexity's Submit/Save button (context-aware for editing vs new messages)
+function findSendButton(activeElement, isEditingLexical) {
+  // When editing old messages: search locally from the editor's parent container
+  if (isEditingLexical && activeElement) {
+    // Search upward to find the editing container, then search within it
+    let container = activeElement.parentElement;
+
+    // Traverse up to find a suitable container (usually within 10 levels)
+    for (let i = 0; i < 10 && container; i++) {
+      // Look for Save button within this container
+      const saveButton = container.querySelector('button[data-testid="confirm-edit-query-button"]') ||
+                        Array.from(container.querySelectorAll('button')).find(btn => {
+                          const ariaLabel = btn.getAttribute('aria-label');
+                          return ariaLabel?.includes('Save and rewrite') ||
+                                 ariaLabel?.includes('confirm-edit');
+                        });
+
+      if (saveButton) return saveButton;
+      container = container.parentElement;
+    }
+  }
+
+  // For new messages: search globally for Submit button
+  // Try by data-testid first
+  const byTestId = document.querySelector('button[data-testid="submit-button"]');
+  if (byTestId) return byTestId;
+
+  // Try by aria-label
+  const byAriaLabel = document.querySelector('button[aria-label="Submit"]');
+  if (byAriaLabel) return byAriaLabel;
+
+  // Fallback: search by aria-label content
+  return Array.from(document.querySelectorAll('button')).find(btn =>
+    btn.getAttribute('aria-label')?.includes('Submit')
+  );
+}
 
 function handleEnterSwap(event) {
   // Only handle trusted Enter key events
@@ -9,93 +61,68 @@ function handleEnterSwap(event) {
     return;
   }
 
-  console.log('[Perplexity] Enter key detected', {
-    target: event.target,
-    id: event.target.id,
-    isContentEditable: event.target.isContentEditable,
-    shiftKey: event.shiftKey,
-    ctrlKey: event.ctrlKey
-  });
-
-  // Check if this is Perplexity's Lexical editor input
-  const isPerplexityInput =
-    (event.target.id === "ask-input" && event.target.isContentEditable) ||
-    (event.target.getAttribute?.('data-lexical-editor') === "true" &&
-     event.target.getAttribute?.('role') === "textbox");
-
-  console.log('[Perplexity] Is Perplexity input?', isPerplexityInput);
-
-  if (!isPerplexityInput) {
+  if (!enterKeyConfig || !enterKeyConfig.enabled) {
     return;
   }
 
-  console.log('[Perplexity] Config:', enterKeyConfig);
+  // Get the currently focused element
+  const activeElement = document.activeElement;
 
-  if (!enterKeyConfig || !enterKeyConfig.enabled) {
-    console.log('[Perplexity] Config not enabled or not loaded');
+  // Check if this is Perplexity's input area:
+  // 1. Main prompt: Lexical editor with id="ask-input"
+  // 2. Editing area: Lexical editor without id (but has data-lexical-editor and role="textbox")
+  const isMainPrompt = activeElement &&
+                       activeElement.id === "ask-input" &&
+                       activeElement.isContentEditable &&
+                       activeElement.getAttribute("data-lexical-editor") === "true" &&
+                       activeElement.getAttribute("role") === "textbox";
+
+  const isEditingLexical = activeElement &&
+                          !activeElement.id && // No id for editing
+                          activeElement.isContentEditable &&
+                          activeElement.getAttribute("data-lexical-editor") === "true" &&
+                          activeElement.getAttribute("role") === "textbox" &&
+                          activeElement.offsetParent !== null; // visible check
+
+  if (!isMainPrompt && !isEditingLexical) {
     return;
   }
 
   // Check if this matches newline action
   if (matchesModifiers(event, enterKeyConfig.newlineModifiers)) {
-    console.log('[Perplexity] Newline action triggered');
-
-    // Stop the original event completely
     event.preventDefault();
     event.stopImmediatePropagation();
-    event.stopPropagation();
 
-    // Dispatch a synthetic Shift+Enter event (Perplexity's default for newline)
-    const syntheticEvent = new KeyboardEvent('keydown', {
-      key: 'Enter',
-      code: 'Enter',
-      keyCode: 13,
-      which: 13,
-      shiftKey: true,  // Shift+Enter is Perplexity's default newline
-      ctrlKey: false,
-      metaKey: false,
-      altKey: false,
-      bubbles: true,
-      cancelable: true,
-      composed: true
-    });
-
-    console.log('[Perplexity] Dispatching synthetic Shift+Enter');
-    event.target.dispatchEvent(syntheticEvent);
-
+    // For Lexical editor (both main and editing): Shift+Enter inserts newline
+    const newEvent = createEnterEvent({ shift: true });
+    activeElement.dispatchEvent(newEvent);
     return;
   }
   // Check if this matches send action
   else if (matchesModifiers(event, enterKeyConfig.sendModifiers)) {
-    console.log('[Perplexity] Send action triggered');
-
-    // Stop the original event completely
     event.preventDefault();
     event.stopImmediatePropagation();
-    event.stopPropagation();
 
-    // Dispatch a synthetic plain Enter event (Perplexity's default for send)
-    const syntheticEvent = new KeyboardEvent('keydown', {
-      key: 'Enter',
-      code: 'Enter',
-      keyCode: 13,
-      which: 13,
-      shiftKey: false,  // Plain Enter is Perplexity's default send
-      ctrlKey: false,
-      metaKey: false,
-      altKey: false,
-      bubbles: true,
-      cancelable: true,
-      composed: true
-    });
+    // Find and click the Submit/Save button (context-aware for editing vs new messages)
+    const sendButton = findSendButton(activeElement, isEditingLexical);
 
-    console.log('[Perplexity] Dispatching synthetic plain Enter');
-    event.target.dispatchEvent(syntheticEvent);
-
+    if (sendButton && !sendButton.disabled) {
+      sendButton.click();
+    } else {
+      // Fallback: dispatch plain Enter
+      const newEvent = createEnterEvent();
+      activeElement.dispatchEvent(newEvent);
+    }
     return;
   }
-
-  console.log('[Perplexity] No modifier match, allowing default');
+  else {
+    // Block any other Enter combinations (Ctrl+Enter, Alt+Enter, Meta+Enter, etc.)
+    // This prevents Perplexity's native keyboard shortcuts from interfering with user settings.
+    // For example, if the user configured "swapped" mode (Enter=newline, Shift+Enter=send),
+    // then Ctrl+Enter should do nothing to avoid confusion and ensure only the configured keys work.
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }
 }
 
 // Apply the setting on initial load
