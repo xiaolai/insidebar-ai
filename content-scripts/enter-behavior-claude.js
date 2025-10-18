@@ -4,6 +4,41 @@
 // CRITICAL: Uses window.addEventListener with capture:true to intercept
 // Enter keys BEFORE ProseMirror sees them (based on working extension pattern)
 
+// Helper: Create a synthetic Enter KeyboardEvent with specified modifiers
+function createEnterEvent(modifiers = {}) {
+  return new KeyboardEvent('keydown', {
+    key: 'Enter',
+    code: 'Enter',
+    keyCode: 13,
+    which: 13,
+    bubbles: true,
+    cancelable: true,
+    shiftKey: modifiers.shift || false,
+    ctrlKey: modifiers.ctrl || false,
+    metaKey: modifiers.meta || false,
+    altKey: modifiers.alt || false
+  });
+}
+
+// Helper: Find Claude's Send/Save button (works for both main prompt and editing)
+function findSendButton() {
+  // Try aria-label first (new message area)
+  const byAriaLabel = document.querySelector('button[aria-label*="Send"]') ||
+                      document.querySelector('button[aria-label*="send"]');
+  if (byAriaLabel) return byAriaLabel;
+
+  // Try data-testid
+  const byTestId = document.querySelector('[data-testid="send-button"]');
+  if (byTestId) return byTestId;
+
+  // Fallback: search by text content (editing area has "Save" button)
+  return Array.from(document.querySelectorAll('button')).find(btn =>
+    btn.textContent.trim() === 'Save' ||
+    btn.textContent.trim() === 'Send' ||
+    btn.getAttribute('type') === 'submit'
+  );
+}
+
 function handleEnterSwap(event) {
   // Only handle trusted Enter key events
   if (!event.isTrusted || event.code !== "Enter") {
@@ -18,37 +53,39 @@ function handleEnterSwap(event) {
   // Get the currently focused element
   const activeElement = document.activeElement;
 
-  // Check if this is Claude's ProseMirror input
-  const isClaudeInput = activeElement &&
-                        activeElement.tagName === "DIV" &&
-                        activeElement.contentEditable === "true" &&
-                        activeElement.classList.contains("ProseMirror") &&
-                        activeElement.getAttribute("role") === "textbox";
+  // Check if this is Claude's input area:
+  // 1. Main prompt: ProseMirror div with role="textbox" and data-testid="chat-input"
+  // 2. Editing area: Regular textarea element (appears when editing old messages)
+  const isMainPrompt = activeElement &&
+                       activeElement.tagName === "DIV" &&
+                       activeElement.contentEditable === "true" &&
+                       activeElement.classList.contains("ProseMirror") &&
+                       activeElement.getAttribute("role") === "textbox";
 
-  if (!isClaudeInput) {
+  const isEditingTextarea = activeElement &&
+                           activeElement.tagName === "TEXTAREA" &&
+                           activeElement.offsetParent !== null; // visible check
+
+  if (!isMainPrompt && !isEditingTextarea) {
     return;
   }
 
   // Check if this matches newline action
   if (matchesModifiers(event, enterKeyConfig.newlineModifiers)) {
-    // CRITICAL: Stop the event IMMEDIATELY before ProseMirror sees it
-    event.stopImmediatePropagation();
-    event.preventDefault();
+    if (isEditingTextarea) {
+      // For regular textarea: let native Enter behavior work
+      // Don't preventDefault - just return and let browser handle it
+      return;
+    } else {
+      // For ProseMirror: intercept IMMEDIATELY before ProseMirror sees it
+      event.stopImmediatePropagation();
+      event.preventDefault();
 
-    // Dispatch synthetic Shift+Enter which ProseMirror accepts for newlines
-    const enterEvent = new KeyboardEvent('keydown', {
-      key: 'Enter',
-      code: 'Enter',
-      bubbles: true,
-      cancelable: true,
-      shiftKey: true,  // ProseMirror treats Shift+Enter as newline
-      ctrlKey: false,
-      metaKey: false,
-      altKey: false
-    });
-
-    activeElement.dispatchEvent(enterEvent);
-    return;
+      // ProseMirror treats Shift+Enter as newline
+      const enterEvent = createEnterEvent({ shift: true });
+      activeElement.dispatchEvent(enterEvent);
+      return;
+    }
   }
 
   // Check if this matches send action
@@ -57,29 +94,25 @@ function handleEnterSwap(event) {
     event.stopImmediatePropagation();
     event.preventDefault();
 
-    // Find and click the send button (more reliable than synthetic events)
-    const sendButton = document.querySelector('button[aria-label*="Send"]') ||
-                       document.querySelector('button[aria-label*="send"]') ||
-                       document.querySelector('[data-testid="send-button"]');
+    // Find and click the Send/Save button (more reliable for both element types)
+    const sendButton = findSendButton();
 
     if (sendButton && !sendButton.disabled) {
       sendButton.click();
     } else {
       // Fallback: dispatch plain Enter
-      const enterEvent = new KeyboardEvent('keydown', {
-        key: 'Enter',
-        code: 'Enter',
-        bubbles: true,
-        cancelable: true,
-        shiftKey: false,
-        ctrlKey: false,
-        metaKey: false,
-        altKey: false
-      });
+      const enterEvent = createEnterEvent();
       activeElement.dispatchEvent(enterEvent);
     }
     return;
   }
+
+  // Block any other Enter combinations (Ctrl+Enter, Alt+Enter, Meta+Enter, etc.)
+  // This prevents Claude's native keyboard shortcuts from interfering with user settings.
+  // For example, if the user configured "swapped" mode (Enter=newline, Shift+Enter=send),
+  // then Ctrl+Enter should do nothing to avoid confusion and ensure only the configured keys work.
+  event.stopImmediatePropagation();
+  event.preventDefault();
 }
 
 // CRITICAL: Use window with capture:true to intercept BEFORE ProseMirror
