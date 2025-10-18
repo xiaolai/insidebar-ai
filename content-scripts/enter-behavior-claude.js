@@ -1,8 +1,5 @@
 // Claude Enter/Shift+Enter behavior swap
 // Supports customizable key combinations via settings
-//
-// CRITICAL: Uses window.addEventListener with capture:true to intercept
-// Enter keys BEFORE ProseMirror sees them (based on working extension pattern)
 
 // Helper: Create a synthetic Enter KeyboardEvent with specified modifiers
 function createEnterEvent(modifiers = {}) {
