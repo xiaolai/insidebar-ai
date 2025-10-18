@@ -17,7 +17,7 @@ function createEnterEvent(modifiers = {}) {
   });
 }
 
-// Helper: Find Gemini's Send button
+// Helper: Find Gemini's Send/Update button (works for both main prompt and editing)
 function findSendButton() {
   // Try by aria-label or class
   const byAriaLabel = document.querySelector('button[aria-label*="Send"]') ||
@@ -25,15 +25,18 @@ function findSendButton() {
   if (byAriaLabel) return byAriaLabel;
 
   // Try by class name (Gemini specific)
-  const byClass = document.querySelector('button.send-button');
+  const byClass = document.querySelector('button.send-button') ||
+                  document.querySelector('button.update-button');
   if (byClass) return byClass;
 
-  // Fallback: search by icon or text
-  return Array.from(document.querySelectorAll('button')).find(btn =>
-    btn.textContent.trim() === 'Send' ||
-    btn.querySelector('mat-icon[fonticon="send"]') ||
-    btn.classList.contains('submit')
-  );
+  // Fallback: search by icon or text (editing has "Update" button)
+  return Array.from(document.querySelectorAll('button')).find(btn => {
+    const text = btn.textContent.trim();
+    return text === 'Send' ||
+           text === 'Update' ||
+           btn.querySelector('mat-icon[fonticon="send"]') ||
+           btn.classList.contains('submit');
+  });
 }
 
 // Helper: Insert newline into Quill contentEditable div
