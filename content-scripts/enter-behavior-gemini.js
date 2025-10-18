@@ -17,23 +17,42 @@ function createEnterEvent(modifiers = {}) {
   });
 }
 
-// Helper: Find Gemini's Send/Update button (works for both main prompt and editing)
-function findSendButton() {
+// Helper: Find Gemini's Send/Update button (context-aware for editing vs new messages)
+function findSendButton(activeElement, isEditingTextarea) {
+  // When editing old messages: search locally from the textarea's parent container
+  if (isEditingTextarea && activeElement) {
+    // Search upward to find the editing container, then search within it
+    let container = activeElement.parentElement;
+
+    // Traverse up to find a suitable container (usually within 5 levels)
+    for (let i = 0; i < 5 && container; i++) {
+      // Look for Update button within this container
+      const updateButton = Array.from(container.querySelectorAll('button')).find(btn => {
+        const text = btn.textContent.trim();
+        return text === 'Update' ||
+               btn.classList.contains('update-button') ||
+               (btn.classList.contains('submit') && text !== 'Send');
+      });
+
+      if (updateButton) return updateButton;
+      container = container.parentElement;
+    }
+  }
+
+  // For new messages: search globally for Send button
   // Try by aria-label or class
   const byAriaLabel = document.querySelector('button[aria-label*="Send"]') ||
                       document.querySelector('button[aria-label*="send"]');
   if (byAriaLabel) return byAriaLabel;
 
   // Try by class name (Gemini specific)
-  const byClass = document.querySelector('button.send-button') ||
-                  document.querySelector('button.update-button');
+  const byClass = document.querySelector('button.send-button');
   if (byClass) return byClass;
 
-  // Fallback: search by icon or text (editing has "Update" button)
+  // Fallback: search by icon or text
   return Array.from(document.querySelectorAll('button')).find(btn => {
     const text = btn.textContent.trim();
     return text === 'Send' ||
-           text === 'Update' ||
            btn.querySelector('mat-icon[fonticon="send"]') ||
            btn.classList.contains('submit');
   });
@@ -145,23 +164,12 @@ function handleEnterSwap(event) {
     event.preventDefault();
     event.stopImmediatePropagation();
 
-    // Find and click the Send/Update button (more reliable for both element types)
-    const sendButton = findSendButton();
-
-    // Debug logging
-    console.log('[Gemini] Send action triggered');
-    console.log('[Gemini] Active element:', activeElement);
-    console.log('[Gemini] Is editing textarea?', isEditingTextarea);
-    console.log('[Gemini] Found button:', sendButton);
-    console.log('[Gemini] Button disabled?', sendButton?.disabled);
-    console.log('[Gemini] Button class:', sendButton?.className);
-    console.log('[Gemini] Button text:', sendButton?.textContent?.trim());
+    // Find and click the Send/Update button (context-aware for editing vs new messages)
+    const sendButton = findSendButton(activeElement, isEditingTextarea);
 
     if (sendButton && !sendButton.disabled) {
-      console.log('[Gemini] Clicking button');
       sendButton.click();
     } else {
-      console.log('[Gemini] Button disabled or not found, using fallback');
       // Fallback: dispatch plain Enter
       const newEvent = createEnterEvent();
       activeElement.dispatchEvent(newEvent);
