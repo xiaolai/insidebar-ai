@@ -66,15 +66,24 @@ function handleEnterSwap(event) {
                            activeElement.tagName === "TEXTAREA" &&
                            activeElement.offsetParent !== null; // visible check
 
+  // Debug logging
+  console.log('[Claude Enter] Active element:', activeElement);
+  console.log('[Claude Enter] Tag:', activeElement?.tagName);
+  console.log('[Claude Enter] isMainPrompt:', isMainPrompt);
+  console.log('[Claude Enter] isEditingTextarea:', isEditingTextarea);
+
   if (!isMainPrompt && !isEditingTextarea) {
+    console.log('[Claude Enter] Not a Claude input, returning');
     return;
   }
 
   // Check if this matches newline action
   if (matchesModifiers(event, enterKeyConfig.newlineModifiers)) {
+    console.log('[Claude Enter] Newline action triggered');
     if (isEditingTextarea) {
       // For regular textarea: let native Enter behavior work
       // Don't preventDefault - just return and let browser handle it
+      console.log('[Claude Enter] Textarea: allowing native Enter');
       return;
     } else {
       // For ProseMirror: intercept IMMEDIATELY before ProseMirror sees it
@@ -90,12 +99,14 @@ function handleEnterSwap(event) {
 
   // Check if this matches send action
   if (matchesModifiers(event, enterKeyConfig.sendModifiers)) {
+    console.log('[Claude Enter] Send action triggered');
     // Stop the original event
     event.stopImmediatePropagation();
     event.preventDefault();
 
     // Find and click the Send/Save button (more reliable for both element types)
     const sendButton = findSendButton();
+    console.log('[Claude Enter] Found button:', sendButton);
 
     if (sendButton && !sendButton.disabled) {
       sendButton.click();
