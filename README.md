@@ -2,7 +2,7 @@
 
 > Access multiple AI assistants in one convenient sidebar
 
-![Version](https://img.shields.io/badge/version-1.3.0-blue.svg)
+![Version](https://img.shields.io/badge/version-1.5.1-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
 **insidebar.ai** is a browser extension that brings ChatGPT, Claude, Gemini, Grok, and DeepSeek together in a single sidebar. No more switching between tabs or windows—just open the sidebar and start chatting with your favorite AI.
