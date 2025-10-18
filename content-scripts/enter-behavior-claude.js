@@ -80,17 +80,30 @@ function handleEnterSwap(event) {
   // Check if this matches newline action
   if (matchesModifiers(event, enterKeyConfig.newlineModifiers)) {
     console.log('[Claude Enter] Newline action triggered');
+
+    // MUST preventDefault for both types, or Claude's handler will send the message
+    event.stopImmediatePropagation();
+    event.preventDefault();
+
     if (isEditingTextarea) {
-      // For regular textarea: let native Enter behavior work
-      // Don't preventDefault - just return and let browser handle it
-      console.log('[Claude Enter] Textarea: allowing native Enter');
+      // For regular textarea: manually insert newline
+      console.log('[Claude Enter] Textarea: inserting newline manually');
+      const start = activeElement.selectionStart;
+      const end = activeElement.selectionEnd;
+      const value = activeElement.value;
+
+      // Insert newline at cursor position
+      activeElement.value = value.substring(0, start) + '\n' + value.substring(end);
+
+      // Move cursor after the newline
+      activeElement.selectionStart = activeElement.selectionEnd = start + 1;
+
+      // Trigger input event so Claude detects the change
+      activeElement.dispatchEvent(new Event('input', { bubbles: true }));
       return;
     } else {
-      // For ProseMirror: intercept IMMEDIATELY before ProseMirror sees it
-      event.stopImmediatePropagation();
-      event.preventDefault();
-
-      // ProseMirror treats Shift+Enter as newline
+      // For ProseMirror: Shift+Enter inserts newline
+      // (preventDefault already called above)
       const enterEvent = createEnterEvent({ shift: true });
       activeElement.dispatchEvent(enterEvent);
       return;
