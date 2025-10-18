@@ -1,6 +1,37 @@
 // ChatGPT Enter/Shift+Enter behavior swap
 // Supports customizable key combinations via settings
 
+// Helper: Create a synthetic Enter KeyboardEvent with specified modifiers
+function createEnterEvent(modifiers = {}) {
+  return new KeyboardEvent("keydown", {
+    key: "Enter",
+    code: "Enter",
+    keyCode: 13,
+    which: 13,
+    bubbles: true,
+    cancelable: true,
+    shiftKey: modifiers.shift || false,
+    ctrlKey: modifiers.ctrl || false,
+    metaKey: modifiers.meta || false,
+    altKey: modifiers.alt || false
+  });
+}
+
+// Helper: Find ChatGPT's Send button (works for both main prompt and editing)
+function findSendButton() {
+  // Try specific data-testid attributes first (faster)
+  const byTestId = document.querySelector('button[data-testid="send-button"]') ||
+                   document.querySelector('button[data-testid="fruitjuice-send-button"]');
+  if (byTestId) return byTestId;
+
+  // Fallback: search by text content or aria-label
+  return Array.from(document.querySelectorAll('button')).find(btn =>
+    btn.textContent.trim() === 'Send' ||
+    btn.getAttribute('aria-label')?.includes('Send') ||
+    btn.getAttribute('aria-label')?.includes('send')
+  );
+}
+
 function handleEnterSwap(event) {
   // Only handle trusted Enter key events
   if (!event.isTrusted || event.code !== "Enter") {
@@ -41,18 +72,8 @@ function handleEnterSwap(event) {
       event.preventDefault();
       event.stopImmediatePropagation();
 
-      const newEvent = new KeyboardEvent("keydown", {
-        key: "Enter",
-        code: "Enter",
-        keyCode: 13,
-        which: 13,
-        bubbles: true,
-        cancelable: true,
-        shiftKey: true,  // ProseMirror treats Shift+Enter as newline
-        ctrlKey: false,
-        metaKey: false,
-        altKey: false
-      });
+      // ProseMirror treats Shift+Enter as newline
+      const newEvent = createEnterEvent({ shift: true });
       activeElement.dispatchEvent(newEvent);
     }
   }
@@ -62,38 +83,22 @@ function handleEnterSwap(event) {
     event.stopImmediatePropagation();
 
     // Find and click the Send button (more reliable for both element types)
-    // For editing: button is nearby with text "Send"
-    // For main prompt: button has data-testid or aria-label
-    const sendButton = document.querySelector('button[data-testid="send-button"]') ||
-                       document.querySelector('button[data-testid="fruitjuice-send-button"]') ||
-                       Array.from(document.querySelectorAll('button')).find(btn =>
-                         btn.textContent.trim() === 'Send' ||
-                         btn.getAttribute('aria-label')?.includes('Send') ||
-                         btn.getAttribute('aria-label')?.includes('send')
-                       );
+    const sendButton = findSendButton();
 
     if (sendButton && !sendButton.disabled) {
       sendButton.click();
     } else {
       // Fallback: dispatch Meta+Enter for ProseMirror
-      const newEvent = new KeyboardEvent("keydown", {
-        key: "Enter",
-        code: "Enter",
-        keyCode: 13,
-        which: 13,
-        bubbles: true,
-        cancelable: true,
-        metaKey: true,
-        shiftKey: false,
-        ctrlKey: false,
-        altKey: false
-      });
+      const newEvent = createEnterEvent({ meta: true });
       activeElement.dispatchEvent(newEvent);
     }
   }
   else {
-    // Block any other Enter combinations (Ctrl+Enter, Alt+Enter, etc.)
-    // Only allow the configured newline and send actions
+    // Block any other Enter combinations (Ctrl+Enter, Alt+Enter, Meta+Enter, etc.)
+    // This prevents ChatGPT's native keyboard shortcuts from interfering with user settings.
+    // For example, ChatGPT natively uses Ctrl+Enter to send messages, but if the user
+    // configured "swapped" mode (Enter=newline, Shift+Enter=send), then Ctrl+Enter
+    // should do nothing to avoid confusion and ensure only the configured keys work.
     event.preventDefault();
     event.stopImmediatePropagation();
   }
