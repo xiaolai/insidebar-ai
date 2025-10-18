@@ -106,10 +106,9 @@ function handleEnterSwap(event) {
   }
 
   // Check if this matches send action
-  if (matchesModifiers(event, enterKeyConfig.sendModifiers)) {
-    // Stop the original event
-    event.stopImmediatePropagation();
+  else if (matchesModifiers(event, enterKeyConfig.sendModifiers)) {
     event.preventDefault();
+    event.stopImmediatePropagation();
 
     // Find and click the Send/Save button (more reliable for both element types)
     const sendButton = findSendButton();
@@ -123,24 +122,15 @@ function handleEnterSwap(event) {
     }
     return;
   }
-
-  // Block any other Enter combinations (Ctrl+Enter, Alt+Enter, Meta+Enter, etc.)
-  // This prevents Claude's native keyboard shortcuts from interfering with user settings.
-  // For example, if the user configured "swapped" mode (Enter=newline, Shift+Enter=send),
-  // then Ctrl+Enter should do nothing to avoid confusion and ensure only the configured keys work.
-  event.stopImmediatePropagation();
-  event.preventDefault();
+  else {
+    // Block any other Enter combinations (Ctrl+Enter, Alt+Enter, Meta+Enter, etc.)
+    // This prevents Claude's native keyboard shortcuts from interfering with user settings.
+    // For example, if the user configured "swapped" mode (Enter=newline, Shift+Enter=send),
+    // then Ctrl+Enter should do nothing to avoid confusion and ensure only the configured keys work.
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }
 }
-
-// CRITICAL: Use window with capture:true to intercept BEFORE ProseMirror
-window.addEventListener("keydown", handleEnterSwap, { capture: true });
 
 // Apply the setting on initial load
 applyEnterSwapSetting();
-
-// Listen for settings changes
-chrome.storage.onChanged.addListener((changes, area) => {
-  if (area === "sync" && changes.enterKeyBehavior) {
-    applyEnterSwapSetting();
-  }
-});
