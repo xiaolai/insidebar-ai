@@ -1,7 +1,74 @@
 // Grok Enter/Shift+Enter behavior swap
 // Supports customizable key combinations via settings
 
-// Debug logging removed in production
+// Helper: Create a synthetic Enter KeyboardEvent with specified modifiers
+function createEnterEvent(modifiers = {}) {
+  return new KeyboardEvent("keydown", {
+    key: "Enter",
+    code: "Enter",
+    keyCode: 13,
+    which: 13,
+    bubbles: true,
+    cancelable: true,
+    shiftKey: modifiers.shift || false,
+    ctrlKey: modifiers.ctrl || false,
+    metaKey: modifiers.meta || false,
+    altKey: modifiers.alt || false
+  });
+}
+
+// Helper: Find Grok's Submit/Save button (context-aware for editing vs new messages)
+function findSendButton(activeElement, isEditingTextarea) {
+  // When editing old messages: search locally from the textarea's parent container
+  if (isEditingTextarea && activeElement) {
+    // Search upward to find the editing container, then search within it
+    let container = activeElement.parentElement;
+
+    // Traverse up to find a suitable container (usually within 5 levels)
+    for (let i = 0; i < 5 && container; i++) {
+      // Look for Save button within this container
+      const saveButton = Array.from(container.querySelectorAll('button')).find(btn => {
+        const text = btn.textContent.trim();
+        return text === 'Save' ||
+               btn.classList.contains('bg-button-filled') && text !== 'Submit';
+      });
+
+      if (saveButton) return saveButton;
+      container = container.parentElement;
+    }
+  }
+
+  // For new messages: search globally for Submit button
+  // Try by aria-label first
+  const byAriaLabel = document.querySelector('button[aria-label="Submit"]');
+  if (byAriaLabel) return byAriaLabel;
+
+  // Try by type="submit"
+  const byType = document.querySelector('button[type="submit"]');
+  if (byType) return byType;
+
+  // Fallback: search by text content
+  return Array.from(document.querySelectorAll('button')).find(btn =>
+    btn.textContent.trim() === 'Submit' ||
+    btn.getAttribute('aria-label')?.includes('Submit')
+  );
+}
+
+// Helper: Manually insert newline into textarea at cursor position
+function insertTextareaNewline(textarea) {
+  const start = textarea.selectionStart;
+  const end = textarea.selectionEnd;
+  const value = textarea.value;
+
+  // Insert newline at cursor position
+  textarea.value = value.substring(0, start) + '\n' + value.substring(end);
+
+  // Move cursor after the newline
+  textarea.selectionStart = textarea.selectionEnd = start + 1;
+
+  // Trigger input event so Grok detects the change
+  textarea.dispatchEvent(new Event('input', { bubbles: true }));
+}
 
 function handleEnterSwap(event) {
   // Only handle trusted Enter key events
@@ -9,57 +76,44 @@ function handleEnterSwap(event) {
     return;
   }
 
-  // Check if this is Grok's input (textarea or TipTap/ProseMirror editor)
-  const isTextarea = event.target.tagName === "TEXTAREA";
-  const isTipTap = event.target.tagName === "DIV" &&
-                   event.target.contentEditable === "true" &&
-                   (event.target.classList.contains("tiptap") ||
-                    event.target.classList.contains("ProseMirror"));
-
-  const isGrokInput = isTextarea || isTipTap;
-
-  if (!isGrokInput) {
-    return;
-  }
-
   if (!enterKeyConfig || !enterKeyConfig.enabled) {
     return;
   }
 
-  // Debug logging removed
+  // Get the currently focused element
+  const activeElement = document.activeElement;
+
+  // Check if this is Grok's input area:
+  // 1. Main prompt: TipTap/ProseMirror editor (contentEditable div)
+  // 2. Editing area: Regular textarea (appears when editing old messages)
+  const isMainPrompt = activeElement &&
+                       activeElement.tagName === "DIV" &&
+                       activeElement.contentEditable === "true" &&
+                       (activeElement.classList.contains("tiptap") ||
+                        activeElement.classList.contains("ProseMirror"));
+
+  const isEditingTextarea = activeElement &&
+                           activeElement.tagName === "TEXTAREA" &&
+                           activeElement.offsetParent !== null; // visible check
+
+  if (!isMainPrompt && !isEditingTextarea) {
+    return;
+  }
 
   // Check if this matches newline action
   if (matchesModifiers(event, enterKeyConfig.newlineModifiers)) {
     event.preventDefault();
     event.stopImmediatePropagation();
 
-    // Newline action triggered
-
-    // For textarea in iframe, use direct manipulation
-    if (event.target.tagName === "TEXTAREA" && window !== window.top) {
-      const target = event.target;
-      const start = target.selectionStart;
-      const end = target.selectionEnd;
-      const value = target.value;
-
-      target.value = value.substring(0, start) + '\n' + value.substring(end);
-      target.selectionStart = target.selectionEnd = start + 1;
-      target.dispatchEvent(new Event('input', { bubbles: true }));
+    if (isEditingTextarea) {
+      // For regular textarea: manually insert newline
+      insertTextareaNewline(activeElement);
+      return;
     } else {
-      // Use Shift+Enter for newline
-      const newEvent = new KeyboardEvent("keydown", {
-        key: "Enter",
-        code: "Enter",
-        keyCode: 13,
-        which: 13,
-        bubbles: true,
-        cancelable: true,
-        shiftKey: true,
-        ctrlKey: false,
-        metaKey: false,
-        altKey: false
-      });
-      event.target.dispatchEvent(newEvent);
+      // For ProseMirror: Shift+Enter inserts newline
+      const newEvent = createEnterEvent({ shift: true });
+      activeElement.dispatchEvent(newEvent);
+      return;
     }
   }
   // Check if this matches send action
@@ -67,22 +121,25 @@ function handleEnterSwap(event) {
     event.preventDefault();
     event.stopImmediatePropagation();
 
-    // Send action triggered
+    // Find and click the Submit/Save button (context-aware for editing vs new messages)
+    const sendButton = findSendButton(activeElement, isEditingTextarea);
 
-    // Plain Enter to send
-    const newEvent = new KeyboardEvent("keydown", {
-      key: "Enter",
-      code: "Enter",
-      keyCode: 13,
-      which: 13,
-      bubbles: true,
-      cancelable: true,
-      shiftKey: false,
-      ctrlKey: false,
-      metaKey: false,
-      altKey: false
-    });
-    event.target.dispatchEvent(newEvent);
+    if (sendButton && !sendButton.disabled) {
+      sendButton.click();
+    } else {
+      // Fallback: dispatch plain Enter
+      const newEvent = createEnterEvent();
+      activeElement.dispatchEvent(newEvent);
+    }
+    return;
+  }
+  else {
+    // Block any other Enter combinations (Ctrl+Enter, Alt+Enter, Meta+Enter, etc.)
+    // This prevents Grok's native keyboard shortcuts from interfering with user settings.
+    // For example, if the user configured "swapped" mode (Enter=newline, Shift+Enter=send),
+    // then Ctrl+Enter should do nothing to avoid confusion and ensure only the configured keys work.
+    event.preventDefault();
+    event.stopImmediatePropagation();
   }
 }
 
