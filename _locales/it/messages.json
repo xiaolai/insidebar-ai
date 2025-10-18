@@ -146,6 +146,25 @@
     "message": "Apre automaticamente la barra laterale e passa alla cronologia chat quando salvi una conversazione"
   },
 
+  "sectionContentSending": {
+    "message": "Invio contenuti"
+  },
+  "labelSourceUrlPlacement": {
+    "message": "Posizionamento URL di origine"
+  },
+  "descSourceUrlPlacement": {
+    "message": "Scegli dove posizionare l'URL di origine quando invii testo selezionato o contenuto della pagina ai provider IA"
+  },
+  "urlPlacementEnd": {
+    "message": "Alla fine (dopo il contenuto)"
+  },
+  "urlPlacementBeginning": {
+    "message": "All'inizio (prima del contenuto)"
+  },
+  "urlPlacementNone": {
+    "message": "Non includere URL"
+  },
+
   "sectionEnterBehavior": {
     "message": "Comportamento tasto Invio"
   },
@@ -333,6 +352,9 @@
   },
   "msgEnterCustomizationDisabled": {
     "message": "Personalizzazione tasto Invio disattivata"
+  },
+  "msgSourceUrlPlacementUpdated": {
+    "message": "Posizionamento URL di origine aggiornato"
   },
   "msgPresetChanged": {
     "message": "Preimpostazione cambiata in: $PRESET$",

@@ -141,6 +141,12 @@ async function loadSettings() {
     rememberLastProviderToggle.checked = settings.rememberLastProvider !== false;
   }
 
+  // Source URL placement setting
+  const sourceUrlPlacementSelect = document.getElementById('source-url-placement-select');
+  if (sourceUrlPlacementSelect) {
+    sourceUrlPlacementSelect.value = settings.sourceUrlPlacement || 'end';
+  }
+
   // Enter key behavior settings
   const enterBehavior = settings.enterKeyBehavior || {
     enabled: true,
@@ -353,6 +359,15 @@ function setupEventListeners() {
       const enabled = e.target.checked;
       await saveSetting('autoOpenSidebarOnSave', enabled);
       showStatus('success', enabled ? t('msgAutoOpenEnabled') : t('msgAutoOpenDisabled'));
+    });
+  }
+
+  // Source URL placement change
+  const sourceUrlPlacementSelect = document.getElementById('source-url-placement-select');
+  if (sourceUrlPlacementSelect) {
+    sourceUrlPlacementSelect.addEventListener('change', async (e) => {
+      await saveSetting('sourceUrlPlacement', e.target.value);
+      showStatus('success', t('msgSourceUrlPlacementUpdated'));
     });
   }
 

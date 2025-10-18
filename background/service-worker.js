@@ -141,10 +141,22 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
       await chrome.sidePanel.open({ windowId: tab.windowId });
       sidePanelState.set(tab.windowId, true);
 
+      // Get source URL placement setting
+      const settings = await chrome.storage.sync.get({ sourceUrlPlacement: 'end' });
+      const placement = settings.sourceUrlPlacement;
+
       // Check if text is selected
       if (info.selectionText) {
-        // Send selection with source
-        const contentToSend = `${info.selectionText}\n\nSource: ${info.pageUrl}`;
+        // Format content with source based on user preference
+        let contentToSend;
+        if (placement === 'none') {
+          contentToSend = info.selectionText;
+        } else if (placement === 'beginning') {
+          contentToSend = `Source: ${info.pageUrl}\n\n${info.selectionText}`;
+        } else {
+          // default: 'end'
+          contentToSend = `${info.selectionText}\n\nSource: ${info.pageUrl}`;
+        }
 
         // Wait for sidebar to load, then send message to switch provider
         setTimeout(() => {
@@ -197,10 +209,22 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
       await chrome.sidePanel.open({ windowId: tab.windowId });
       sidePanelState.set(tab.windowId, true);
 
+      // Get source URL placement setting
+      const settings = await chrome.storage.sync.get({ sourceUrlPlacement: 'end' });
+      const placement = settings.sourceUrlPlacement;
+
       // Check if text is selected
       if (info.selectionText) {
-        // Send selection with source
-        const contentToSend = `${info.selectionText}\n\nSource: ${info.pageUrl}`;
+        // Format content with source based on user preference
+        let contentToSend;
+        if (placement === 'none') {
+          contentToSend = info.selectionText;
+        } else if (placement === 'beginning') {
+          contentToSend = `Source: ${info.pageUrl}\n\n${info.selectionText}`;
+        } else {
+          // default: 'end'
+          contentToSend = `${info.selectionText}\n\nSource: ${info.pageUrl}`;
+        }
 
         // Wait for sidebar to load, then switch to prompt library
         setTimeout(() => {

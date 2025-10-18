@@ -146,6 +146,25 @@
     "message": "Abre automáticamente la barra lateral y cambia al historial de chat cuando guardas una conversación"
   },
 
+  "sectionContentSending": {
+    "message": "Envío de Contenido"
+  },
+  "labelSourceUrlPlacement": {
+    "message": "Ubicación de URL de Origen"
+  },
+  "descSourceUrlPlacement": {
+    "message": "Elige dónde colocar la URL de origen al enviar texto seleccionado o contenido de página a proveedores de IA"
+  },
+  "urlPlacementEnd": {
+    "message": "Al final (después del contenido)"
+  },
+  "urlPlacementBeginning": {
+    "message": "Al principio (antes del contenido)"
+  },
+  "urlPlacementNone": {
+    "message": "No incluir URL"
+  },
+
   "sectionEnterBehavior": {
     "message": "Comportamiento de la Tecla Enter"
   },
@@ -333,6 +352,9 @@
   },
   "msgEnterCustomizationDisabled": {
     "message": "Personalización de tecla Enter deshabilitada"
+  },
+  "msgSourceUrlPlacementUpdated": {
+    "message": "Ubicación de URL de origen actualizada"
   },
   "msgPresetChanged": {
     "message": "Preajuste cambiado a: $PRESET$",

@@ -146,6 +146,25 @@
     "message": "Автоматически открывать боковую панель и переключаться на историю чатов при сохранении беседы"
   },
 
+  "sectionContentSending": {
+    "message": "Отправка содержимого"
+  },
+  "labelSourceUrlPlacement": {
+    "message": "Размещение исходного URL"
+  },
+  "descSourceUrlPlacement": {
+    "message": "Выберите, где размещать исходный URL при отправке выделенного текста или содержимого страницы провайдерам ИИ"
+  },
+  "urlPlacementEnd": {
+    "message": "В конце (после содержимого)"
+  },
+  "urlPlacementBeginning": {
+    "message": "В начале (перед содержимым)"
+  },
+  "urlPlacementNone": {
+    "message": "Не включать URL"
+  },
+
   "sectionEnterBehavior": {
     "message": "Поведение клавиши Enter"
   },
@@ -333,6 +352,9 @@
   },
   "msgEnterCustomizationDisabled": {
     "message": "Настройка клавиши Enter отключена"
+  },
+  "msgSourceUrlPlacementUpdated": {
+    "message": "Размещение исходного URL обновлено"
   },
   "msgPresetChanged": {
     "message": "Предустановка изменена на: $PRESET$",

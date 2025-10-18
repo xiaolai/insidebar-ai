@@ -140,6 +140,26 @@
   "descAutoOpenSidebar": {
     "message": "保存对话时自动打开侧边栏并切换到聊天历史"
   },
+
+  "sectionContentSending": {
+    "message": "内容发送"
+  },
+  "labelSourceUrlPlacement": {
+    "message": "来源网址位置"
+  },
+  "descSourceUrlPlacement": {
+    "message": "选择向 AI 提供商发送选定文本或页面内容时来源网址的放置位置"
+  },
+  "urlPlacementEnd": {
+    "message": "在末尾（内容之后）"
+  },
+  "urlPlacementBeginning": {
+    "message": "在开头（内容之前）"
+  },
+  "urlPlacementNone": {
+    "message": "不包含网址"
+  },
+
   "sectionEnterBehavior": {
     "message": "回车键行为"
   },
@@ -322,6 +342,9 @@
   },
   "msgEnterCustomizationDisabled": {
     "message": "回车键自定义已禁用"
+  },
+  "msgSourceUrlPlacementUpdated": {
+    "message": "来源网址位置已更新"
   },
   "msgPresetChanged": {
     "message": "预设已更改为： $PRESET$",

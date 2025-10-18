@@ -140,6 +140,24 @@
   "descAutoOpenSidebar": {
     "message": "儲存對話時自動開啟側邊欄並切換到聊天記錄"
   },
+  "sectionContentSending": {
+    "message": "內容傳送"
+  },
+  "labelSourceUrlPlacement": {
+    "message": "來源網址位置"
+  },
+  "descSourceUrlPlacement": {
+    "message": "選擇向 AI 提供商傳送選定文字或頁面內容時來源網址的放置位置"
+  },
+  "urlPlacementEnd": {
+    "message": "在末尾（內容之後）"
+  },
+  "urlPlacementBeginning": {
+    "message": "在開頭（內容之前）"
+  },
+  "urlPlacementNone": {
+    "message": "不包含網址"
+  },
   "sectionEnterBehavior": {
     "message": "Enter 鍵行為"
   },
@@ -322,6 +340,9 @@
   },
   "msgEnterCustomizationDisabled": {
     "message": "Enter 鍵自訂已停用"
+  },
+  "msgSourceUrlPlacementUpdated": {
+    "message": "來源網址位置已更新"
   },
   "msgPresetChanged": {
     "message": "預設已更改為： $PRESET$",

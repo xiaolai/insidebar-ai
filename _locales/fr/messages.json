@@ -146,6 +146,25 @@
     "message": "Ouvrir automatiquement la barre latérale et basculer vers l'historique des conversations lorsque vous enregistrez une conversation"
   },
 
+  "sectionContentSending": {
+    "message": "Envoi de contenu"
+  },
+  "labelSourceUrlPlacement": {
+    "message": "Placement de l'URL source"
+  },
+  "descSourceUrlPlacement": {
+    "message": "Choisissez où placer l'URL source lors de l'envoi de texte sélectionné ou de contenu de page aux fournisseurs IA"
+  },
+  "urlPlacementEnd": {
+    "message": "À la fin (après le contenu)"
+  },
+  "urlPlacementBeginning": {
+    "message": "Au début (avant le contenu)"
+  },
+  "urlPlacementNone": {
+    "message": "Ne pas inclure l'URL"
+  },
+
   "sectionEnterBehavior": {
     "message": "Comportement de la touche Entrée"
   },
@@ -333,6 +352,9 @@
   },
   "msgEnterCustomizationDisabled": {
     "message": "Personnalisation de la touche Entrée désactivée"
+  },
+  "msgSourceUrlPlacementUpdated": {
+    "message": "Placement de l'URL source mis à jour"
   },
   "msgPresetChanged": {
     "message": "Préréglage modifié en : $PRESET$",

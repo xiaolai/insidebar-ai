@@ -146,6 +146,25 @@
     "message": "Automatically open the sidebar and switch to chat history when you save a conversation"
   },
 
+  "sectionContentSending": {
+    "message": "Content Sending"
+  },
+  "labelSourceUrlPlacement": {
+    "message": "Source URL Placement"
+  },
+  "descSourceUrlPlacement": {
+    "message": "Choose where to place the source URL when sending selected text or page content to AI providers"
+  },
+  "urlPlacementEnd": {
+    "message": "At end (after content)"
+  },
+  "urlPlacementBeginning": {
+    "message": "At beginning (before content)"
+  },
+  "urlPlacementNone": {
+    "message": "Don't include URL"
+  },
+
   "sectionEnterBehavior": {
     "message": "Enter Key Behavior"
   },
@@ -321,6 +340,9 @@
   },
   "msgAutoOpenDisabled": {
     "message": "Auto-open sidebar disabled"
+  },
+  "msgSourceUrlPlacementUpdated": {
+    "message": "Source URL placement updated"
   },
   "msgRememberLastProviderEnabled": {
     "message": "Sidebar will remember last provider"
