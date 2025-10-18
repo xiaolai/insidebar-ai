@@ -39,6 +39,22 @@ function findSendButton() {
   );
 }
 
+// Helper: Manually insert newline into textarea at cursor position
+function insertTextareaNewline(textarea) {
+  const start = textarea.selectionStart;
+  const end = textarea.selectionEnd;
+  const value = textarea.value;
+
+  // Insert newline at cursor position
+  textarea.value = value.substring(0, start) + '\n' + value.substring(end);
+
+  // Move cursor after the newline
+  textarea.selectionStart = textarea.selectionEnd = start + 1;
+
+  // Trigger input event so Claude detects the change
+  textarea.dispatchEvent(new Event('input', { bubbles: true }));
+}
+
 function handleEnterSwap(event) {
   // Only handle trusted Enter key events
   if (!event.isTrusted || event.code !== "Enter") {
@@ -66,40 +82,19 @@ function handleEnterSwap(event) {
                            activeElement.tagName === "TEXTAREA" &&
                            activeElement.offsetParent !== null; // visible check
 
-  // Debug logging
-  console.log('[Claude Enter] Active element:', activeElement);
-  console.log('[Claude Enter] Tag:', activeElement?.tagName);
-  console.log('[Claude Enter] isMainPrompt:', isMainPrompt);
-  console.log('[Claude Enter] isEditingTextarea:', isEditingTextarea);
-
   if (!isMainPrompt && !isEditingTextarea) {
-    console.log('[Claude Enter] Not a Claude input, returning');
     return;
   }
 
   // Check if this matches newline action
   if (matchesModifiers(event, enterKeyConfig.newlineModifiers)) {
-    console.log('[Claude Enter] Newline action triggered');
-
     // MUST preventDefault for both types, or Claude's handler will send the message
     event.stopImmediatePropagation();
     event.preventDefault();
 
     if (isEditingTextarea) {
       // For regular textarea: manually insert newline
-      console.log('[Claude Enter] Textarea: inserting newline manually');
-      const start = activeElement.selectionStart;
-      const end = activeElement.selectionEnd;
-      const value = activeElement.value;
-
-      // Insert newline at cursor position
-      activeElement.value = value.substring(0, start) + '\n' + value.substring(end);
-
-      // Move cursor after the newline
-      activeElement.selectionStart = activeElement.selectionEnd = start + 1;
-
-      // Trigger input event so Claude detects the change
-      activeElement.dispatchEvent(new Event('input', { bubbles: true }));
+      insertTextareaNewline(activeElement);
       return;
     } else {
       // For ProseMirror: Shift+Enter inserts newline
@@ -112,14 +107,12 @@ function handleEnterSwap(event) {
 
   // Check if this matches send action
   if (matchesModifiers(event, enterKeyConfig.sendModifiers)) {
-    console.log('[Claude Enter] Send action triggered');
     // Stop the original event
     event.stopImmediatePropagation();
     event.preventDefault();
 
     // Find and click the Send/Save button (more reliable for both element types)
     const sendButton = findSendButton();
-    console.log('[Claude Enter] Found button:', sendButton);
 
     if (sendButton && !sendButton.disabled) {
       sendButton.click();
