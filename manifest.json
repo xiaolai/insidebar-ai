@@ -5,13 +5,6 @@
   "description": "__MSG_extensionDescription__",
   "default_locale": "en",
 
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "insidebar-ai@xiaolai.github.io",
-      "strict_min_version": "115.0"
-    }
-  },
-
   "permissions": [
     "sidePanel",
     "storage",
@@ -28,8 +21,6 @@
     "*://gemini.google.com/*",
     "*://grok.com/*",
     "*://chat.deepseek.com/*",
-    "*://www.perplexity.ai/*",
-    "*://perplexity.ai/*",
     "*://www.perplexity.ai/*",
     "*://perplexity.ai/*",
     "*://www.google.com/*",
