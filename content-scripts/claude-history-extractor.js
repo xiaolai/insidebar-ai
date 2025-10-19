@@ -19,6 +19,9 @@
     setupKeyboardShortcut
   } = window.ConversationExtractorUtils;
 
+  // Share button selector for language detection
+  const SHARE_BUTTON_SELECTOR = '[data-testid="wiggle-controls-actions-share"]';
+
   let saveButton = null;
 
   // Initialize after page loads
@@ -49,6 +52,9 @@
 
   // Create save button matching Claude's UI
   function createSaveButton() {
+    // Detect provider's UI language and get matching Save button text
+    const { text, tooltip } = window.LanguageDetector.getSaveButtonText(SHARE_BUTTON_SELECTOR);
+
     const button = document.createElement('button');
     button.id = 'insidebar-save-conversation';
     button.className = `inline-flex
@@ -74,9 +80,9 @@
     bg-bg-300/0
     hover:bg-bg-400
     backface-hidden h-8 rounded-md px-3 min-w-[4rem] active:scale-[0.985] whitespace-nowrap !text-xs`;
-    button.textContent = 'Save';
+    button.textContent = text;
     button.type = 'button';
-    button.title = 'Save this conversation to insidebar.ai';
+    button.title = tooltip;
     button.style.marginLeft = '8px';
     button.addEventListener('click', handleSaveClick);
 

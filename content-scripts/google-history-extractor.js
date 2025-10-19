@@ -20,6 +20,10 @@
     observeUrlChanges
   } = window.ConversationExtractorUtils;
 
+  // Share button selector for language detection
+  // Google AI Mode doesn't have a text-based share button, use null to fallback to document language
+  const SHARE_BUTTON_SELECTOR = null;
+
   let saveButton = null;
 
   // Initialize after page loads
@@ -50,13 +54,16 @@
 
   // Create save button with download icon matching Google's style
   function createSaveButton() {
+    // Detect provider's UI language and get matching Save button text
+    const { tooltip } = window.LanguageDetector.getSaveButtonText(SHARE_BUTTON_SELECTOR);
+
     const button = document.createElement('button');
     button.id = 'insidebar-google-save-conversation';
     button.className = 'UTNPFf';
     button.setAttribute('data-test-id', 'insidebar-google-save-button');
     button.type = 'button';
-    button.title = 'Save this conversation to insidebar.ai';
-    button.setAttribute('aria-label', 'Save to insidebar.ai');
+    button.title = tooltip;
+    button.setAttribute('aria-label', tooltip);
 
     // Create button structure with download icon
     button.innerHTML = `

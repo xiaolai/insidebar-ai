@@ -89,6 +89,7 @@
         "content-scripts/enter-behavior-chatgpt.js",
         "content-scripts/text-injection-all-providers.js",
         "content-scripts/conversation-extractor-utils.js",
+        "content-scripts/language-detector.js",
         "content-scripts/chatgpt-history-extractor.js"
       ],
       "css": ["content-scripts/chatgpt-save-button.css"],
@@ -102,6 +103,7 @@
         "content-scripts/enter-behavior-claude.js",
         "content-scripts/text-injection-all-providers.js",
         "content-scripts/conversation-extractor-utils.js",
+        "content-scripts/language-detector.js",
         "content-scripts/claude-history-extractor.js"
       ],
       "css": ["content-scripts/claude-save-button.css"],
@@ -115,6 +117,7 @@
         "content-scripts/enter-behavior-gemini.js",
         "content-scripts/text-injection-all-providers.js",
         "content-scripts/conversation-extractor-utils.js",
+        "content-scripts/language-detector.js",
         "content-scripts/gemini-history-extractor.js"
       ],
       "css": ["content-scripts/gemini-save-button.css"],
@@ -157,6 +160,7 @@
         "content-scripts/enter-behavior-utils.js",
         "content-scripts/enter-behavior-perplexity.js",
         "content-scripts/conversation-extractor-utils.js",
+        "content-scripts/language-detector.js",
         "content-scripts/perplexity-history-extractor.js"
       ],
       "css": ["content-scripts/perplexity-save-button.css"],
@@ -170,6 +174,7 @@
         "content-scripts/enter-behavior-google.js",
         "content-scripts/text-injection-all-providers.js",
         "content-scripts/conversation-extractor-utils.js",
+        "content-scripts/language-detector.js",
         "content-scripts/google-history-extractor.js"
       ],
       "css": ["content-scripts/google-save-button.css"],

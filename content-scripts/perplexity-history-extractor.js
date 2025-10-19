@@ -20,6 +20,9 @@
     observeUrlChanges
   } = window.ConversationExtractorUtils;
 
+  // Share button selector for language detection
+  const SHARE_BUTTON_SELECTOR = 'button[data-testid="share-button"]';
+
   let saveButton = null;
 
   // Initialize after page loads
@@ -50,12 +53,15 @@
 
   // Create save button matching Perplexity's button style
   function createSaveButton() {
+    // Detect provider's UI language and get matching Save button text
+    const { text, tooltip } = window.LanguageDetector.getSaveButtonText(SHARE_BUTTON_SELECTOR);
+
     const button = document.createElement('button');
     button.id = 'insidebar-save-conversation';
     button.setAttribute('data-testid', 'save-button');
     button.type = 'button';
     button.className = 'bg-subtle text-foreground md:hover:text-quiet font-sans focus:outline-none outline-none outline-transparent transition duration-300 ease-out select-none items-center relative group/button font-semimedium justify-center text-center items-center rounded-lg cursor-pointer active:scale-[0.97] active:duration-150 active:ease-outExpo origin-center whitespace-nowrap inline-flex text-sm h-8 px-2.5';
-    button.title = 'Save this conversation to insidebar.ai';
+    button.title = tooltip;
 
     // Create button structure matching share button
     button.innerHTML = `
@@ -65,7 +71,7 @@
             <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2 M7 11l5 5l5 -5 M12 4l0 12"></path>
           </svg>
         </div>
-        <div class="relative truncate text-center px-1 leading-loose -mb-px" data-label="save">Save</div>
+        <div class="relative truncate text-center px-1 leading-loose -mb-px" data-label="save">${text}</div>
       </div>
     `;
 

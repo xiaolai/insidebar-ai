@@ -20,6 +20,10 @@
     observeUrlChanges
   } = window.ConversationExtractorUtils;
 
+  // Share button selector for language detection
+  // Gemini doesn't have a text-based share button, use null to fallback to document language
+  const SHARE_BUTTON_SELECTOR = null;
+
   let saveButton = null;
 
   // Initialize after page loads
@@ -50,19 +54,22 @@
 
   // Create save button matching Gemini's referral button style
   function createSaveButton() {
+    // Detect provider's UI language and get matching Save button text
+    const { text, tooltip } = window.LanguageDetector.getSaveButtonText(SHARE_BUTTON_SELECTOR);
+
     const button = document.createElement('button');
     button.id = 'insidebar-save-conversation';
     button.className = 'mdc-button mat-mdc-button-base gds-referral-button mdc-button--unelevated mat-mdc-unelevated-button mat-unthemed';
     button.setAttribute('mat-flat-button', '');
     button.setAttribute('data-test-id', 'insidebar-save-button');
     button.type = 'button';
-    button.title = 'Save this conversation to insidebar.ai';
+    button.title = tooltip;
 
     // Create button structure matching Gemini's referral button
     button.innerHTML = `
       <span class="mat-mdc-button-persistent-ripple mdc-button__ripple"></span>
       <span class="mdc-button__label">
-        <span data-test-id="save-label" class="gds-label-m">Save</span>
+        <span data-test-id="save-label" class="gds-label-m">${text}</span>
       </span>
       <span class="mat-focus-indicator"></span>
       <span class="mat-mdc-button-touch-target"></span>
