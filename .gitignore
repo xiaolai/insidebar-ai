@@ -50,6 +50,7 @@ specs/
 .codex/
 AGENTS.md
 scripts/
+web-ext-artifacts/
 
 # Documentation (local reference only)
 docs/
