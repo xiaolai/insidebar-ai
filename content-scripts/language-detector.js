@@ -19,9 +19,9 @@
    */
   const SHARE_BUTTON_TEXT = {
     'en': ['Share'],
-    'zh_CN': ['分享', '共享'],  // ChatGPT uses 共享, others use 分享
+    'zh_CN': ['分享', '共享'],      // ChatGPT uses 共享, others use 分享
     'zh_TW': ['分享', '共享'],
-    'ja': ['共有'],
+    'ja': ['共有する', '共有'],    // Grok uses 共有する (verb), others use 共有 (noun)
     'ko': ['공유'],
     'ru': ['Поделиться'],
     'es': ['Compartir'],

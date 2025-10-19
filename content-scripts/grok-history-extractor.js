@@ -20,8 +20,35 @@
     observeUrlChanges
   } = window.ConversationExtractorUtils;
 
-  // Share button selector for language detection
-  const SHARE_BUTTON_SELECTOR = 'button[aria-label="Create share link"]';
+  // Helper function to find Share button by its text content (language-agnostic)
+  function findShareButton() {
+    const buttons = document.querySelectorAll('button.rounded-full');
+
+    for (const button of buttons) {
+      const text = button.textContent?.trim();
+      // Check if button text matches any known Share text variation
+      // Note: Order matters - check longer strings first to avoid partial matches
+      const shareTexts = [
+        '共有する',      // Japanese (verb form)
+        'Поделиться',  // Russian
+        'Compartir',   // Spanish
+        'Partager',    // French
+        'Condividi',   // Italian
+        'Teilen',      // German
+        'Share',       // English
+        '共享',        // Chinese
+        '分享',        // Chinese
+        '共有',        // Japanese (noun)
+        '공유'         // Korean
+      ];
+
+      if (text && shareTexts.some(shareText => text.includes(shareText))) {
+        return button;
+      }
+    }
+
+    return null;
+  }
 
   let saveButton = null;
 
@@ -53,8 +80,66 @@
 
   // Create save button matching Grok's UI with SVG icon
   function createSaveButton() {
-    // Detect provider's UI language and get matching Save button text
-    const { text, tooltip, lang } = window.LanguageDetector.getSaveButtonText(SHARE_BUTTON_SELECTOR);
+    // Find Share button to detect language
+    const shareButton = findShareButton();
+    let lang = 'en'; // default
+
+    if (shareButton) {
+      const shareText = shareButton.textContent?.trim();
+      // Detect language from Share button text
+      // Note: Order matters - check longer strings first to avoid partial matches
+      const langMap = {
+        '共有する': 'ja',      // Japanese (verb form) - check before noun form
+        'Поделиться': 'ru',
+        'Compartir': 'es',
+        'Partager': 'fr',
+        'Condividi': 'it',
+        'Teilen': 'de',
+        'Share': 'en',
+        '共享': 'zh_CN',
+        '分享': 'zh_CN',
+        '共有': 'ja',         // Japanese (noun form)
+        '공유': 'ko'
+      };
+
+      for (const [text, detectedLang] of Object.entries(langMap)) {
+        if (shareText && shareText.includes(text)) {
+          lang = detectedLang;
+          break;
+        }
+      }
+    }
+
+    // Get Save button text for detected language
+    const saveTexts = {
+      'en': 'Save',
+      'zh_CN': '保存',
+      'zh_TW': '保存',
+      'ja': '保存',
+      'ko': '저장',
+      'ru': 'Сохранить',
+      'es': 'Guardar',
+      'fr': 'Enregistrer',
+      'de': 'Speichern',
+      'it': 'Salva'
+    };
+
+    const tooltips = {
+      'en': 'Save this conversation to insidebar.ai',
+      'zh_CN': '保存此对话到 insidebar.ai',
+      'zh_TW': '保存此對話到 insidebar.ai',
+      'ja': 'この会話を insidebar.ai に保存',
+      'ko': '이 대화를 insidebar.ai에 저장',
+      'ru': 'Сохранить этот разговор в insidebar.ai',
+      'es': 'Guardar esta conversación en insidebar.ai',
+      'fr': 'Enregistrer cette conversation dans insidebar.ai',
+      'de': 'Dieses Gespräch in insidebar.ai speichern',
+      'it': 'Salva questa conversazione su insidebar.ai'
+    };
+
+    const text = saveTexts[lang] || saveTexts['en'];
+    const tooltip = tooltips[lang] || tooltips['en'];
+
     console.log('[Grok Extractor] Creating Save button in language:', lang);
 
     const button = document.createElement('button');
@@ -93,8 +178,8 @@
       return;
     }
 
-    // Find share button (button with aria-label "Create share link")
-    const shareButton = document.querySelector('button[aria-label="Create share link"]');
+    // Find share button using language-agnostic helper
+    const shareButton = findShareButton();
 
     console.log('[Grok Extractor] Looking for share button...');
     console.log('[Grok Extractor] Share button found?', !!shareButton);
