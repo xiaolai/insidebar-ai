@@ -76,6 +76,47 @@ function setupShortcutHelpers() {
   }
 }
 
+// Helper to detect if extension is installed from Chrome Web Store
+async function isWebStoreInstall() {
+  try {
+    const info = await chrome.management.getSelf();
+    // installType: 'normal' = Chrome Web Store, 'development' = loaded unpacked
+    return info.installType === 'normal';
+  } catch (error) {
+    console.error('Error detecting install type:', error);
+    // Default to false (show update checking) if detection fails
+    return false;
+  }
+}
+
+// Hide update checking UI for web store installations
+async function hideUpdateCheckingIfNeeded() {
+  const isFromStore = await isWebStoreInstall();
+
+  if (isFromStore) {
+    // Hide "Check for Updates" button
+    const checkUpdatesBtn = document.getElementById('check-updates-btn');
+    if (checkUpdatesBtn) {
+      checkUpdatesBtn.style.display = 'none';
+    }
+
+    // Hide update status message area
+    const updateStatus = document.getElementById('update-status');
+    if (updateStatus) {
+      updateStatus.style.display = 'none';
+    }
+
+    // Hide "Download Latest Version" link
+    const downloadLink = document.getElementById('download-latest-link');
+    if (downloadLink) {
+      const downloadContainer = downloadLink.closest('.version-download');
+      if (downloadContainer) {
+        downloadContainer.style.display = 'none';
+      }
+    }
+  }
+}
+
 function updateShortcutHelperVisibility(isEnabled) {
   const edgeHelper = document.getElementById('edge-shortcut-helper');
   if (!edgeHelper) return;
@@ -97,6 +138,7 @@ async function init() {
   await loadDataStats();
   await loadLibraryCount();  // Load default library count
   await loadVersionDisplay();  // T073: Load and display version info
+  await hideUpdateCheckingIfNeeded();  // Hide update checking for web store installations
   await renderProviderList();
   setupEventListeners();
   setupShortcutHelpers();
