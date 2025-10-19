@@ -77,6 +77,12 @@ function handleEnterSwap(event) {
     return;
   }
 
+  // Skip synthetic events we created (let them pass through to Claude)
+  if (event._synthetic_from_extension) {
+    console.log('[Claude Enter] Synthetic event, letting it pass through to Claude');
+    return;
+  }
+
   // Check configuration
   if (!enterKeyConfig || !enterKeyConfig.enabled) {
     console.log('[Claude Enter] Config not loaded or disabled:', enterKeyConfig);
@@ -118,6 +124,13 @@ function handleEnterSwap(event) {
         bubbles: true,
         shiftKey: true
       });
+
+      // Mark this as synthetic so we don't process it again
+      Object.defineProperty(enterEvent, '_synthetic_from_extension', {
+        value: true,
+        writable: false
+      });
+
       activeElement.dispatchEvent(enterEvent);
       console.log('[Claude Enter] Shift+Enter dispatched');
     }
