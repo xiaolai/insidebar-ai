@@ -325,6 +325,8 @@ Choose where source URLs appear when sending selected text or page content:
 
 ## Privacy & Security
 
+📄 **[Read our full Privacy Policy](PRIVACY.md)**
+
 **Your data stays local.** All prompts, settings, and saved conversations are stored in your browser's local storage. Nothing is sent to external servers.
 
 **No API keys required.** The extension uses your existing browser login sessions. It loads the real AI websites in the sidebar using your cookies—just like opening them in a new tab.
