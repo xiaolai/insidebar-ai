@@ -5,7 +5,7 @@ console.log('[Claude Enter] Script loaded');
 
 // Helper: Create a synthetic Enter KeyboardEvent with specified modifiers
 function createEnterEvent(modifiers = {}) {
-  return new KeyboardEvent('keydown', {
+  const event = new KeyboardEvent('keydown', {
     key: 'Enter',
     code: 'Enter',
     keyCode: 13,
@@ -17,6 +17,15 @@ function createEnterEvent(modifiers = {}) {
     metaKey: modifiers.meta || false,
     altKey: modifiers.alt || false
   });
+
+  // Mark this as a synthetic event from our extension
+  // so handleEnterSwap ignores it
+  Object.defineProperty(event, '_synthetic_from_extension', {
+    value: true,
+    writable: false
+  });
+
+  return event;
 }
 
 // Helper: Find Claude's Send/Save button (works for both main prompt and editing)
@@ -57,6 +66,12 @@ function insertTextareaNewline(textarea) {
 function handleEnterSwap(event) {
   // Only handle trusted Enter key events
   if (!event.isTrusted || event.code !== "Enter") {
+    return;
+  }
+
+  // Ignore synthetic events we created ourselves
+  if (event._synthetic_from_extension) {
+    console.log('[Claude Enter] Ignoring our own synthetic event');
     return;
   }
 
