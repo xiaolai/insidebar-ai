@@ -62,24 +62,40 @@ function insertTextareaNewline(textarea) {
 }
 
 function handleEnterSwap(event) {
+  console.log('[Claude Enter] handleEnterSwap called', {
+    isTrusted: event.isTrusted,
+    code: event.code,
+    shift: event.shiftKey,
+    ctrl: event.ctrlKey,
+    alt: event.altKey,
+    meta: event.metaKey
+  });
+
   // Only handle trusted Enter key events
   if (!event.isTrusted || event.code !== "Enter") {
+    console.log('[Claude Enter] Not trusted or not Enter, ignoring');
     return;
   }
 
   // Check configuration
   if (!enterKeyConfig || !enterKeyConfig.enabled) {
+    console.log('[Claude Enter] Config not loaded or disabled:', enterKeyConfig);
     return;
   }
 
   // Get the currently focused element
   const activeElement = document.activeElement;
   if (!activeElement) {
+    console.log('[Claude Enter] No active element');
     return;
   }
 
   // Simplified detection: just check if it's a textarea
   const isTextarea = activeElement.tagName === "TEXTAREA";
+  console.log('[Claude Enter] Active element:', {
+    tagName: activeElement.tagName,
+    isTextarea: isTextarea
+  });
 
   // Check if this matches newline action
   if (matchesModifiers(event, enterKeyConfig.newlineModifiers)) {
@@ -132,4 +148,5 @@ function handleEnterSwap(event) {
 }
 
 // Apply the setting on initial load
+console.log('[Claude Enter] Script loaded, calling applyEnterSwapSetting()');
 applyEnterSwapSetting();
