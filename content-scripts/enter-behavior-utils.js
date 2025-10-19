@@ -4,11 +4,13 @@
 let enterKeyConfig = null;
 
 function enableEnterSwap() {
-  document.addEventListener("keydown", handleEnterSwap, { capture: true });
+  console.log('[Enter Utils] Attaching listener to window');
+  window.addEventListener("keydown", handleEnterSwap, { capture: true });
 }
 
 function disableEnterSwap() {
-  document.removeEventListener("keydown", handleEnterSwap, { capture: true });
+  console.log('[Enter Utils] Removing listener from window');
+  window.removeEventListener("keydown", handleEnterSwap, { capture: true });
 }
 
 // Check if event matches the configured modifiers
