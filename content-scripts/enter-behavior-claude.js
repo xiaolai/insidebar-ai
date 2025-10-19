@@ -108,9 +108,9 @@ function handleEnterSwap(event) {
       insertTextareaNewline(activeElement);
       return;
     } else {
-      // For ProseMirror: Shift+Enter inserts newline
+      // For ProseMirror: Plain Enter inserts newline (Claude's native behavior)
       // (preventDefault already called above)
-      const enterEvent = createEnterEvent({ shift: true });
+      const enterEvent = createEnterEvent();
       activeElement.dispatchEvent(enterEvent);
       return;
     }
