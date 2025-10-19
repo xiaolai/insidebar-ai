@@ -17,6 +17,40 @@ function createEnterEvent(modifiers = {}) {
   });
 }
 
+/**
+ * Selector array for finding DeepSeek's Submit/Send button
+ * Priority order: icon button detection → structural selectors → multi-language text
+ */
+const SEND_BUTTON_SELECTORS = [
+  // Priority 1: Icon button with SVG (language-independent, most reliable for new messages)
+  {
+    type: 'function',
+    matcher: () => {
+      const iconButton = document.querySelector('button.ds-icon-button:not([aria-disabled="true"])') ||
+                        document.querySelector('.ds-icon-button[role="button"]:not([aria-disabled="true"])');
+      if (iconButton) {
+        // Verify it's the send button by checking if it has an up arrow SVG
+        const hasSendIcon = iconButton.querySelector('svg path[d*="M8.3125"]') ||
+                           iconButton.querySelector('svg');
+        if (hasSendIcon) return iconButton;
+      }
+      return null;
+    }
+  },
+
+  // Priority 2: Generic icon button fallback
+  {
+    type: 'function',
+    matcher: () => {
+      return Array.from(document.querySelectorAll('button, [role="button"]')).find(btn => {
+        return btn.classList.contains('ds-icon-button') &&
+               !btn.getAttribute('aria-disabled') &&
+               btn.querySelector('svg');
+      });
+    }
+  }
+];
+
 // Helper: Find DeepSeek's Submit/Send button (context-aware for editing vs new messages)
 function findSendButton(activeElement, isEditingTextarea) {
   // When editing old messages: search locally from the textarea's parent container
@@ -26,10 +60,10 @@ function findSendButton(activeElement, isEditingTextarea) {
 
     // Traverse up to find a suitable container (usually within 10 levels)
     for (let i = 0; i < 10 && container; i++) {
-      // Look for Send button within this container (primary button with text "Send")
+      // Look for Send button within this container (multi-language)
       const sendButton = Array.from(container.querySelectorAll('button')).find(btn => {
         const text = btn.textContent.trim();
-        return (text === 'Send' || text === 'send') &&
+        return window.ButtonFinderUtils.TEXT_MAPS.send.some(t => t === text) &&
                (btn.classList.contains('ds-basic-button--primary') ||
                 btn.classList.contains('ds-atom-button'));
       });
@@ -39,23 +73,8 @@ function findSendButton(activeElement, isEditingTextarea) {
     }
   }
 
-  // For new messages: search globally for Submit button (icon button)
-  // Try by class name first (icon button)
-  const iconButton = document.querySelector('button.ds-icon-button:not([aria-disabled="true"])') ||
-                     document.querySelector('.ds-icon-button[role="button"]:not([aria-disabled="true"])');
-  if (iconButton) {
-    // Verify it's the send button by checking if it has an up arrow SVG
-    const hasSendIcon = iconButton.querySelector('svg path[d*="M8.3125"]') ||
-                       iconButton.querySelector('svg'); // Any SVG in icon button likely the send button
-    if (hasSendIcon) return iconButton;
-  }
-
-  // Fallback: search by button structure
-  return Array.from(document.querySelectorAll('button, [role="button"]')).find(btn => {
-    return btn.classList.contains('ds-icon-button') &&
-           !btn.getAttribute('aria-disabled') &&
-           btn.querySelector('svg');
-  });
+  // For new messages: search globally for Submit button using selector array
+  return window.ButtonFinderUtils.findButton(SEND_BUTTON_SELECTORS);
 }
 
 // Helper: Manually insert newline into textarea at cursor position

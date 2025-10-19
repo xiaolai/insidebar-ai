@@ -124,10 +124,12 @@
     {
       "matches": ["https://grok.com/*"],
       "js": [
+        "content-scripts/button-finder-utils.js",
         "content-scripts/enter-behavior-utils.js",
         "content-scripts/enter-behavior-grok.js",
         "content-scripts/text-injection-all-providers.js",
         "content-scripts/conversation-extractor-utils.js",
+        "content-scripts/language-detector.js",
         "content-scripts/grok-history-extractor.js"
       ],
       "css": ["content-scripts/grok-save-button.css"],
@@ -137,10 +139,12 @@
     {
       "matches": ["https://chat.deepseek.com/*"],
       "js": [
+        "content-scripts/button-finder-utils.js",
         "content-scripts/enter-behavior-utils.js",
         "content-scripts/enter-behavior-deepseek.js",
         "content-scripts/text-injection-all-providers.js",
         "content-scripts/conversation-extractor-utils.js",
+        "content-scripts/language-detector.js",
         "content-scripts/deepseek-history-extractor.js"
       ],
       "css": ["content-scripts/deepseek-save-button.css"],

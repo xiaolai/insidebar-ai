@@ -17,6 +17,41 @@ function createEnterEvent(modifiers = {}) {
   });
 }
 
+/**
+ * Selector array for finding Grok's Submit/Save button
+ * Priority order: structural selectors → multi-language ARIA → multi-language text
+ */
+const SEND_BUTTON_SELECTORS = [
+  // Priority 1: Type-based (language-independent)
+  { type: 'css', value: 'button[type="submit"]' },
+
+  // Priority 2: Multi-language ARIA label (Submit or Save)
+  {
+    type: 'function',
+    matcher: () => {
+      return Array.from(document.querySelectorAll('button')).find(btn => {
+        const aria = btn.getAttribute('aria-label');
+        if (!aria) return false;
+        return window.ButtonFinderUtils.TEXT_MAPS.submit.some(t => aria.includes(t)) ||
+               window.ButtonFinderUtils.TEXT_MAPS.save.some(t => aria.includes(t));
+      });
+    }
+  },
+
+  // Priority 3: Multi-language text (Submit or Save)
+  {
+    type: 'function',
+    matcher: () => {
+      return Array.from(document.querySelectorAll('button')).find(btn => {
+        const text = btn.textContent?.trim();
+        if (!text) return false;
+        return window.ButtonFinderUtils.TEXT_MAPS.submit.some(t => t === text) ||
+               window.ButtonFinderUtils.TEXT_MAPS.save.some(t => t === text);
+      });
+    }
+  }
+];
+
 // Helper: Find Grok's Submit/Save button (context-aware for editing vs new messages)
 function findSendButton(activeElement, isEditingTextarea) {
   // When editing old messages: search locally from the textarea's parent container
@@ -26,11 +61,11 @@ function findSendButton(activeElement, isEditingTextarea) {
 
     // Traverse up to find a suitable container (usually within 5 levels)
     for (let i = 0; i < 5 && container; i++) {
-      // Look for Save button within this container
+      // Look for Save button within this container (multi-language)
       const saveButton = Array.from(container.querySelectorAll('button')).find(btn => {
         const text = btn.textContent.trim();
-        return text === 'Save' ||
-               btn.classList.contains('bg-button-filled') && text !== 'Submit';
+        return window.ButtonFinderUtils.TEXT_MAPS.save.some(t => t === text) ||
+               (btn.classList.contains('bg-button-filled') && !window.ButtonFinderUtils.TEXT_MAPS.submit.some(t => t === text));
       });
 
       if (saveButton) return saveButton;
@@ -38,20 +73,8 @@ function findSendButton(activeElement, isEditingTextarea) {
     }
   }
 
-  // For new messages: search globally for Submit button
-  // Try by aria-label first
-  const byAriaLabel = document.querySelector('button[aria-label="Submit"]');
-  if (byAriaLabel) return byAriaLabel;
-
-  // Try by type="submit"
-  const byType = document.querySelector('button[type="submit"]');
-  if (byType) return byType;
-
-  // Fallback: search by text content
-  return Array.from(document.querySelectorAll('button')).find(btn =>
-    btn.textContent.trim() === 'Submit' ||
-    btn.getAttribute('aria-label')?.includes('Submit')
-  );
+  // For new messages: search globally for Submit button using selector array
+  return window.ButtonFinderUtils.findButton(SEND_BUTTON_SELECTORS);
 }
 
 // Helper: Manually insert newline into textarea at cursor position

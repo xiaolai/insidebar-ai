@@ -1,7 +1,7 @@
 // DeepSeek Conversation History Extractor
 // Extracts current conversation from DeepSeek DOM and saves to extension
 //
-// IMPORTANT: Requires conversation-extractor-utils.js to be loaded first
+// IMPORTANT: Requires conversation-extractor-utils.js and language-detector.js to be loaded first
 
 (function() {
   'use strict';
@@ -17,6 +17,10 @@
     setupKeyboardShortcut,
     observeUrlChanges
   } = window.ConversationExtractorUtils;
+
+  // Share button selector for language detection
+  // DeepSeek doesn't have a text-based share button, use null to fallback to document language
+  const SHARE_BUTTON_SELECTOR = null;
 
   let saveButton = null;
 
@@ -48,15 +52,19 @@
 
   // Create save button matching DeepSeek's icon button style
   function createSaveButton() {
+    // Detect provider's UI language and get matching Save button text
+    const { text, tooltip, lang } = window.LanguageDetector.getSaveButtonText(SHARE_BUTTON_SELECTOR);
+    console.log('[DeepSeek Extractor] Creating Save button in language:', lang);
+
     const button = document.createElement('div');
     button.id = 'insidebar-save-conversation';
     button.className = 'ds-icon-button _57370c5 _5dedc1e';
     button.setAttribute('tabindex', '0');
     button.setAttribute('role', 'button');
     button.setAttribute('aria-disabled', 'false');
-    button.setAttribute('aria-label', 'Save conversation');
+    button.setAttribute('aria-label', text);
     button.style.cssText = '--hover-size: 34px; width: 34px; height: 34px;';
-    button.title = 'Save this conversation to insidebar.ai';
+    button.title = tooltip;
 
     // Create button structure matching share button exactly
     button.innerHTML = `
