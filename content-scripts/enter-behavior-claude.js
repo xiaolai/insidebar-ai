@@ -67,11 +67,6 @@ function handleEnterSwap(event) {
     return;
   }
 
-  // Ignore synthetic events we created ourselves
-  if (event._synthetic_from_extension) {
-    return;
-  }
-
   // Check configuration
   if (!enterKeyConfig || !enterKeyConfig.enabled) {
     return;
@@ -79,23 +74,12 @@ function handleEnterSwap(event) {
 
   // Get the currently focused element
   const activeElement = document.activeElement;
-
-  // Check if this is Claude's input area:
-  // 1. Main prompt: ProseMirror div with role="textbox" and data-testid="chat-input"
-  // 2. Editing area: Regular textarea element (appears when editing old messages)
-  const isMainPrompt = activeElement &&
-                       activeElement.tagName === "DIV" &&
-                       activeElement.contentEditable === "true" &&
-                       activeElement.classList.contains("ProseMirror") &&
-                       activeElement.getAttribute("role") === "textbox";
-
-  const isEditingTextarea = activeElement &&
-                           activeElement.tagName === "TEXTAREA" &&
-                           activeElement.offsetParent !== null; // visible check
-
-  if (!isMainPrompt && !isEditingTextarea) {
+  if (!activeElement) {
     return;
   }
+
+  // Simplified detection: just check if it's a textarea
+  const isTextarea = activeElement.tagName === "TEXTAREA";
 
   // Check if this matches newline action
   if (matchesModifiers(event, enterKeyConfig.newlineModifiers)) {
@@ -103,16 +87,21 @@ function handleEnterSwap(event) {
     event.stopImmediatePropagation();
     event.preventDefault();
 
-    if (isEditingTextarea) {
+    if (isTextarea) {
       // For regular textarea: manually insert newline
       insertTextareaNewline(activeElement);
-      return;
     } else {
-      // For ProseMirror: manually insert newline using execCommand
-      // Synthetic events are untrusted and ignored by Claude's editor
-      document.execCommand('insertLineBreak');
-      return;
+      // For ProseMirror/contenteditable: dispatch Shift+Enter
+      // Claude's native behavior: Shift+Enter = newline
+      const enterEvent = new KeyboardEvent('keydown', {
+        key: 'Enter',
+        code: 'Enter',
+        bubbles: true,
+        shiftKey: true
+      });
+      activeElement.dispatchEvent(enterEvent);
     }
+    return;
   }
 
   // Check if this matches send action
