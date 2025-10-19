@@ -1,6 +1,6 @@
 # insidebar.ai
 
-> Your AI command center: ChatGPT, Claude, Gemini, Google AI, Grok, DeepSeek, and Perplexity—all in one sidebar
+> Your AI command center: ChatGPT, Claude, Gemini, Google AI, Grok, and DeepSeek—all in one sidebar
 
 ![Version](https://img.shields.io/badge/version-1.6.0-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
@@ -29,9 +29,9 @@
 
 ## Features
 
-### 🤖 7 AI Providers in One Sidebar
+### 🤖 6 AI Providers in One Sidebar
 
-ChatGPT, Claude, Gemini, Google AI Mode, Grok, DeepSeek, and Perplexity—all accessible with one click. No more juggling tabs.
+ChatGPT, Claude, Gemini, Google AI Mode, Grok, and DeepSeek — all accessible with one click. No more juggling tabs.
 
 Switch between providers using the tabs at the bottom of the sidebar. Each session persists, so you can return to any conversation right where you left off.
 
@@ -51,7 +51,7 @@ Save, organize, and reuse your best prompts across any AI provider.
 
 Save important conversations from any AI provider. Never lose a valuable discussion.
 
-- **Universal Saving**: Works with ChatGPT, Claude, Gemini, Grok, DeepSeek, and Perplexity
+- **Universal Saving**: Works with ChatGPT, Claude, Gemini, Grok, and DeepSeek
 - **Full Markdown Rendering**: Conversations display beautifully with code highlighting
 - **Search & Filter**: Find conversations by provider or content
 - **Original Links**: Access the original conversation URL anytime
@@ -167,7 +167,6 @@ Download the latest version from GitHub, remove the old extension from `chrome:/
 | **Google AI** | Search Enhancement | https://google.com (AI Mode) |
 | **Grok** | Full Sidebar | https://grok.com |
 | **DeepSeek** | Full Sidebar | https://chat.deepseek.com |
-| **Perplexity** | Full Sidebar | https://perplexity.ai |
 
 **No API keys required.** Just log into the providers you want to use in your browser, and insidebar.ai will use those existing sessions.
 
@@ -228,7 +227,7 @@ Click "Import Custom Prompts" to load your own prompt libraries. Files must be i
 
 ### Saving Chat History
 
-While viewing a conversation in any supported AI provider (ChatGPT, Claude, Gemini, Grok, DeepSeek, Perplexity), click the save button that appears at the top of the chat interface.
+While viewing a conversation in any supported AI provider (ChatGPT, Claude, Gemini, Grok, DeepSeek), click the save button that appears at the top of the chat interface.
 
 The conversation is saved locally with:
 - Full message content with markdown rendering
@@ -381,7 +380,7 @@ Your session may have expired. Open the provider in a regular tab, log in again,
 **Chat History save button doesn't appear**
 1. Make sure you're viewing an actual conversation (not the AI's home screen)
 2. The save button appears at the top of the chat interface
-3. Currently supported: ChatGPT, Claude, Gemini, Grok, DeepSeek, Perplexity
+3. Currently supported: ChatGPT, Claude, Gemini, Grok, DeepSeek
 
 **Update checking shows old version**
 - **Chrome Web Store installation**: Update checking is disabled (the store handles updates automatically)
