@@ -1,6 +1,8 @@
 // Claude Enter/Shift+Enter behavior swap
 // Supports customizable key combinations via settings
 
+console.log('[Claude Enter] Script loaded');
+
 // Helper: Create a synthetic Enter KeyboardEvent with specified modifiers
 function createEnterEvent(modifiers = {}) {
   return new KeyboardEvent('keydown', {
@@ -58,13 +60,34 @@ function handleEnterSwap(event) {
     return;
   }
 
+  console.log('[Claude Enter] Key pressed:', {
+    shift: event.shiftKey,
+    ctrl: event.ctrlKey,
+    alt: event.altKey,
+    meta: event.metaKey
+  });
+
   // Check configuration
   if (!enterKeyConfig || !enterKeyConfig.enabled) {
+    console.log('[Claude Enter] Config not loaded or disabled:', enterKeyConfig);
     return;
   }
 
+  console.log('[Claude Enter] Config:', {
+    preset: enterKeyConfig.preset,
+    newlineModifiers: enterKeyConfig.newlineModifiers,
+    sendModifiers: enterKeyConfig.sendModifiers
+  });
+
   // Get the currently focused element
   const activeElement = document.activeElement;
+  console.log('[Claude Enter] Active element:', {
+    tagName: activeElement?.tagName,
+    contentEditable: activeElement?.contentEditable,
+    role: activeElement?.getAttribute('role'),
+    classes: activeElement?.className,
+    id: activeElement?.id
+  });
 
   // Check if this is Claude's input area:
   // 1. Main prompt: ProseMirror div with role="textbox" and data-testid="chat-input"
@@ -79,23 +102,46 @@ function handleEnterSwap(event) {
                            activeElement.tagName === "TEXTAREA" &&
                            activeElement.offsetParent !== null; // visible check
 
+  console.log('[Claude Enter] Element detection:', {
+    isMainPrompt,
+    isEditingTextarea,
+    hasProseMirror: activeElement?.classList.contains("ProseMirror"),
+    hasRole: activeElement?.getAttribute("role") === "textbox"
+  });
+
   if (!isMainPrompt && !isEditingTextarea) {
+    console.log('[Claude Enter] Not a Claude input area, ignoring');
     return;
   }
 
+  console.log('[Claude Enter] Detected Claude input area!');
+
   // Check if this matches newline action
-  if (matchesModifiers(event, enterKeyConfig.newlineModifiers)) {
+  const matchesNewline = matchesModifiers(event, enterKeyConfig.newlineModifiers);
+  const matchesSend = matchesModifiers(event, enterKeyConfig.sendModifiers);
+
+  console.log('[Claude Enter] Modifier matching:', {
+    matchesNewline,
+    matchesSend,
+    configNewline: enterKeyConfig.newlineModifiers,
+    configSend: enterKeyConfig.sendModifiers
+  });
+
+  if (matchesNewline) {
+    console.log('[Claude Enter] Matched newline action - inserting newline');
     // MUST preventDefault for both types, or Claude's handler will send the message
     event.stopImmediatePropagation();
     event.preventDefault();
 
     if (isEditingTextarea) {
       // For regular textarea: manually insert newline
+      console.log('[Claude Enter] Using textarea newline insertion');
       insertTextareaNewline(activeElement);
       return;
     } else {
       // For ProseMirror: Shift+Enter inserts newline
       // (preventDefault already called above)
+      console.log('[Claude Enter] Dispatching Shift+Enter for ProseMirror');
       const enterEvent = createEnterEvent({ shift: true });
       activeElement.dispatchEvent(enterEvent);
       return;
@@ -103,7 +149,8 @@ function handleEnterSwap(event) {
   }
 
   // Check if this matches send action
-  else if (matchesModifiers(event, enterKeyConfig.sendModifiers)) {
+  else if (matchesSend) {
+    console.log('[Claude Enter] Matched send action - clicking Send button');
     event.preventDefault();
     event.stopImmediatePropagation();
 
