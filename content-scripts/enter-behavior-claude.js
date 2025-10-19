@@ -108,10 +108,9 @@ function handleEnterSwap(event) {
       insertTextareaNewline(activeElement);
       return;
     } else {
-      // For ProseMirror: Plain Enter inserts newline (Claude's native behavior)
-      // (preventDefault already called above)
-      const enterEvent = createEnterEvent();
-      activeElement.dispatchEvent(enterEvent);
+      // For ProseMirror: manually insert newline using execCommand
+      // Synthetic events are untrusted and ignored by Claude's editor
+      document.execCommand('insertLineBreak');
       return;
     }
   }
