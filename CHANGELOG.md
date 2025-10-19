@@ -5,6 +5,22 @@ All notable changes to insidebar.ai will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- **Source URL Placement Setting**: User-configurable option to control where source URLs appear when sending content to AI providers
+  - Choose between "At end (after content)", "At beginning (before content)", or "Don't include URL"
+  - Applies to both selected text and page content extraction
+  - Helps save tokens when URL is not needed
+  - Full i18n support for all 10 languages
+
+### Fixed
+- Google AI Mode now appears in default enabled providers list in options page
+- Test suite improvements:
+  - Fixed timeout in prompt-manager tests (IndexedDB mock now triggers callbacks properly)
+  - Fixed type validation to properly reject non-string content types
+  - Updated providers test to correctly expect 6 providers (including Google)
+
 ## [1.3.0] - 2025-10-16
 
 ### Added
