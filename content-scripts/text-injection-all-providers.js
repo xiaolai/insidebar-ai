@@ -112,8 +112,26 @@
 
   // Handle text injection message
   function handleTextInjection(event) {
+    // Validate event data structure
+    if (!event || !event.data || typeof event.data !== 'object') {
+      return;
+    }
+
     // Only handle INJECT_TEXT messages
-    if (!event.data || event.data.type !== 'INJECT_TEXT' || !event.data.text) {
+    if (event.data.type !== 'INJECT_TEXT') {
+      return;
+    }
+
+    // Validate text payload
+    const text = event.data.text;
+    if (!text || typeof text !== 'string' || text.length === 0) {
+      console.warn('[Text Injection] Invalid text payload');
+      return;
+    }
+
+    // Sanity check: reject extremely large payloads (> 1MB)
+    if (text.length > 1048576) {
+      console.error('[Text Injection] Text payload too large:', text.length, 'bytes');
       return;
     }
 
@@ -137,38 +155,24 @@
     }
 
     if (element) {
-      const success = injectTextIntoElement(element, event.data.text);
+      const success = injectTextIntoElement(element, text);
       if (!success) {
-        console.error(`Failed to inject text into ${provider}`);
+        console.error(`[Text Injection] Failed to inject text into ${provider}`);
       }
     } else {
-      // Debug: For Claude, log what elements we can find
-      if (provider === 'claude') {
-        console.log('DEBUG: Claude selectors tried:', selectors);
-        console.log('DEBUG: ProseMirror elements found:', document.querySelectorAll('.ProseMirror').length);
-        console.log('DEBUG: Contenteditable elements found:', document.querySelectorAll('[contenteditable="true"]').length);
-        console.log('DEBUG: First contenteditable:', document.querySelector('[contenteditable="true"]'));
-      }
-
       // Retry after a short delay in case page is still loading
       setTimeout(() => {
         let retryElement = null;
         for (const selector of selectors) {
           retryElement = findTextInputElement(selector);
           if (retryElement) {
-            if (provider === 'claude') {
-              console.log('DEBUG: Found element on retry with selector:', selector);
-            }
             break;
           }
         }
         if (retryElement) {
-          injectTextIntoElement(retryElement, event.data.text);
+          injectTextIntoElement(retryElement, text);
         } else {
-          console.error(`${provider} editor not found`);
-          if (provider === 'claude') {
-            console.log('DEBUG: All contenteditable elements:', document.querySelectorAll('[contenteditable="true"]'));
-          }
+          console.error(`[Text Injection] ${provider} editor not found`);
         }
       }, 1000);
     }

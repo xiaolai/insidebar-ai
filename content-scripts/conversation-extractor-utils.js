@@ -422,12 +422,13 @@
    * Observe URL changes for single-page applications
    * @param {Function} callback - Function to call when URL changes
    * @param {RegExp|string} urlPattern - Optional pattern to filter URLs
+   * @returns {Function} Cleanup function to stop observing and clear resources
    */
   window.ConversationExtractorUtils.observeUrlChanges = function(callback, urlPattern = null) {
   let lastUrl = window.location.href;
 
   // Check URL periodically (SPAs often don't fire popstate)
-  setInterval(() => {
+  const intervalId = setInterval(() => {
     const currentUrl = window.location.href;
     if (currentUrl !== lastUrl) {
       lastUrl = currentUrl;
@@ -450,9 +451,24 @@
   }, 1000);
 
   // Also listen for popstate (back/forward navigation)
-  window.addEventListener('popstate', () => {
+  const popstateHandler = () => {
     callback(window.location.href);
-  });
+  };
+  window.addEventListener('popstate', popstateHandler);
+
+  // Auto-cleanup on page unload
+  const unloadHandler = () => {
+    clearInterval(intervalId);
+    window.removeEventListener('popstate', popstateHandler);
+  };
+  window.addEventListener('beforeunload', unloadHandler);
+
+  // Return cleanup function
+  return function cleanup() {
+    clearInterval(intervalId);
+    window.removeEventListener('popstate', popstateHandler);
+    window.removeEventListener('beforeunload', unloadHandler);
+  };
   };
 
 })();
