@@ -32,7 +32,6 @@ function getTargetModifiers(actionType) {
 }
 
 function applyEnterSwapSetting() {
-  console.log('[Enter Utils] Loading enter key behavior settings...');
   chrome.storage.sync.get({
     enterKeyBehavior: {
       enabled: true,
@@ -42,13 +41,10 @@ function applyEnterSwapSetting() {
     }
   }, (data) => {
     enterKeyConfig = data.enterKeyBehavior;
-    console.log('[Enter Utils] Config loaded:', enterKeyConfig);
 
     if (enterKeyConfig.enabled) {
-      console.log('[Enter Utils] Enter swap enabled, attaching listener');
       enableEnterSwap();
     } else {
-      console.log('[Enter Utils] Enter swap disabled, removing listener');
       disableEnterSwap();
     }
   });
