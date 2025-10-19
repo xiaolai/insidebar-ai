@@ -15,18 +15,19 @@
   /**
    * Share button text in different languages
    * Used to detect what language the provider is using
+   * Note: Some providers use multiple variations for the same language
    */
   const SHARE_BUTTON_TEXT = {
-    'en': 'Share',
-    'zh_CN': '分享',
-    'zh_TW': '分享',
-    'ja': '共有',
-    'ko': '공유',
-    'ru': 'Поделиться',
-    'es': 'Compartir',
-    'fr': 'Partager',
-    'de': 'Teilen',
-    'it': 'Condividi'
+    'en': ['Share'],
+    'zh_CN': ['分享', '共享'],  // ChatGPT uses 共享, others use 分享
+    'zh_TW': ['分享', '共享'],
+    'ja': ['共有'],
+    'ko': ['공유'],
+    'ru': ['Поделиться'],
+    'es': ['Compartir'],
+    'fr': ['Partager'],
+    'de': ['Teilen'],
+    'it': ['Condividi']
   };
 
   /**
@@ -92,9 +93,10 @@
 
           if (shareText) {
             // Match against known Share button texts
-            for (const [lang, text] of Object.entries(SHARE_BUTTON_TEXT)) {
-              if (shareText === text) {
-                console.debug('[Language Detector] Detected from Share button:', lang);
+            for (const [lang, texts] of Object.entries(SHARE_BUTTON_TEXT)) {
+              // texts is now an array of possible variations
+              if (texts.includes(shareText)) {
+                console.debug('[Language Detector] Detected from Share button:', lang, 'text:', shareText);
                 return lang;
               }
             }
