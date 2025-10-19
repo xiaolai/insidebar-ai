@@ -71,9 +71,9 @@ function handleEnterSwap(event) {
     meta: event.metaKey
   });
 
-  // Only handle trusted Enter key events
-  if (!event.isTrusted || event.code !== "Enter") {
-    console.log('[Claude Enter] Not trusted or not Enter, ignoring');
+  // Only handle Enter key events
+  if (event.code !== "Enter") {
+    console.log('[Claude Enter] Not Enter key, ignoring');
     return;
   }
 
@@ -99,14 +99,17 @@ function handleEnterSwap(event) {
 
   // Check if this matches newline action
   if (matchesModifiers(event, enterKeyConfig.newlineModifiers)) {
+    console.log('[Claude Enter] Matched NEWLINE action');
     // MUST preventDefault for both types, or Claude's handler will send the message
     event.stopImmediatePropagation();
     event.preventDefault();
 
     if (isTextarea) {
+      console.log('[Claude Enter] Using textarea newline insertion');
       // For regular textarea: manually insert newline
       insertTextareaNewline(activeElement);
     } else {
+      console.log('[Claude Enter] Dispatching Shift+Enter for ProseMirror');
       // For ProseMirror/contenteditable: dispatch Shift+Enter
       // Claude's native behavior: Shift+Enter = newline
       const enterEvent = new KeyboardEvent('keydown', {
@@ -116,12 +119,14 @@ function handleEnterSwap(event) {
         shiftKey: true
       });
       activeElement.dispatchEvent(enterEvent);
+      console.log('[Claude Enter] Shift+Enter dispatched');
     }
     return;
   }
 
   // Check if this matches send action
   else if (matchesModifiers(event, enterKeyConfig.sendModifiers)) {
+    console.log('[Claude Enter] Matched SEND action');
     event.preventDefault();
     event.stopImmediatePropagation();
 
@@ -129,8 +134,10 @@ function handleEnterSwap(event) {
     const sendButton = findSendButton();
 
     if (sendButton && !sendButton.disabled) {
+      console.log('[Claude Enter] Clicking Send button');
       sendButton.click();
     } else {
+      console.log('[Claude Enter] Send button not found, using fallback');
       // Fallback: dispatch plain Enter
       const enterEvent = createEnterEvent();
       activeElement.dispatchEvent(enterEvent);
@@ -138,6 +145,7 @@ function handleEnterSwap(event) {
     return;
   }
   else {
+    console.log('[Claude Enter] Matched NEITHER - blocking event');
     // Block any other Enter combinations (Ctrl+Enter, Alt+Enter, Meta+Enter, etc.)
     // This prevents Claude's native keyboard shortcuts from interfering with user settings.
     // For example, if the user configured "swapped" mode (Enter=newline, Shift+Enter=send),
