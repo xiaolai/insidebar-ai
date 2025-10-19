@@ -48,6 +48,27 @@ global.chrome = {
   },
 };
 
+// Helper to create mock IndexedDB request that triggers callbacks
+const createMockRequest = (shouldSucceed = false, result = null, error = null) => {
+  const request = {
+    onsuccess: null,
+    onerror: null,
+    result: result,
+    error: error || new Error('IndexedDB not available in test environment'),
+  };
+
+  // Trigger callbacks asynchronously to simulate real IndexedDB behavior
+  setTimeout(() => {
+    if (shouldSucceed && request.onsuccess) {
+      request.onsuccess({ target: request });
+    } else if (!shouldSucceed && request.onerror) {
+      request.onerror({ target: request });
+    }
+  }, 0);
+
+  return request;
+};
+
 // Mock indexedDB
 global.indexedDB = {
   open: vi.fn(() => {
@@ -62,14 +83,14 @@ global.indexedDB = {
         })),
         transaction: vi.fn(() => ({
           objectStore: vi.fn(() => ({
-            get: vi.fn(() => ({ onsuccess: null, onerror: null })),
-            getAll: vi.fn(() => ({ onsuccess: null, onerror: null })),
-            add: vi.fn(() => ({ onsuccess: null, onerror: null })),
-            put: vi.fn(() => ({ onsuccess: null, onerror: null })),
-            delete: vi.fn(() => ({ onsuccess: null, onerror: null })),
-            clear: vi.fn(() => ({ onsuccess: null, onerror: null })),
+            get: vi.fn(() => createMockRequest(false)),
+            getAll: vi.fn(() => createMockRequest(false)),
+            add: vi.fn(() => createMockRequest(false)),
+            put: vi.fn(() => createMockRequest(false)),
+            delete: vi.fn(() => createMockRequest(false)),
+            clear: vi.fn(() => createMockRequest(false)),
             index: vi.fn(() => ({
-              getAll: vi.fn(() => ({ onsuccess: null, onerror: null })),
+              getAll: vi.fn(() => createMockRequest(false)),
             })),
           })),
         })),

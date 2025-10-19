@@ -49,7 +49,7 @@ function sanitizeString(str, maxLength) {
 function validatePromptData(promptData) {
   const errors = [];
 
-  if (!promptData.content || promptData.content.trim().length === 0) {
+  if (typeof promptData.content !== 'string' || promptData.content.trim().length === 0) {
     errors.push('Prompt content is required');
   }
 
