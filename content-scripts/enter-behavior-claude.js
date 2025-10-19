@@ -62,60 +62,40 @@ function insertTextareaNewline(textarea) {
 }
 
 function handleEnterSwap(event) {
-  console.log('[Claude Enter] handleEnterSwap called', {
-    isTrusted: event.isTrusted,
-    code: event.code,
-    shift: event.shiftKey,
-    ctrl: event.ctrlKey,
-    alt: event.altKey,
-    meta: event.metaKey
-  });
-
   // Only handle Enter key events
   if (event.code !== "Enter") {
-    console.log('[Claude Enter] Not Enter key, ignoring');
     return;
   }
 
   // Skip synthetic events we created (let them pass through to Claude)
   if (event._synthetic_from_extension) {
-    console.log('[Claude Enter] Synthetic event, letting it pass through to Claude');
     return;
   }
 
   // Check configuration
   if (!enterKeyConfig || !enterKeyConfig.enabled) {
-    console.log('[Claude Enter] Config not loaded or disabled:', enterKeyConfig);
     return;
   }
 
   // Get the currently focused element
   const activeElement = document.activeElement;
   if (!activeElement) {
-    console.log('[Claude Enter] No active element');
     return;
   }
 
   // Simplified detection: just check if it's a textarea
   const isTextarea = activeElement.tagName === "TEXTAREA";
-  console.log('[Claude Enter] Active element:', {
-    tagName: activeElement.tagName,
-    isTextarea: isTextarea
-  });
 
   // Check if this matches newline action
   if (matchesModifiers(event, enterKeyConfig.newlineModifiers)) {
-    console.log('[Claude Enter] Matched NEWLINE action');
     // MUST preventDefault for both types, or Claude's handler will send the message
     event.stopImmediatePropagation();
     event.preventDefault();
 
     if (isTextarea) {
-      console.log('[Claude Enter] Using textarea newline insertion');
       // For regular textarea: manually insert newline
       insertTextareaNewline(activeElement);
     } else {
-      console.log('[Claude Enter] Dispatching Shift+Enter for ProseMirror');
       // For ProseMirror/contenteditable: dispatch Shift+Enter
       // Claude's native behavior: Shift+Enter = newline
       const enterEvent = new KeyboardEvent('keydown', {
@@ -132,14 +112,12 @@ function handleEnterSwap(event) {
       });
 
       activeElement.dispatchEvent(enterEvent);
-      console.log('[Claude Enter] Shift+Enter dispatched');
     }
     return;
   }
 
   // Check if this matches send action
   else if (matchesModifiers(event, enterKeyConfig.sendModifiers)) {
-    console.log('[Claude Enter] Matched SEND action');
     event.preventDefault();
     event.stopImmediatePropagation();
 
@@ -147,10 +125,8 @@ function handleEnterSwap(event) {
     const sendButton = findSendButton();
 
     if (sendButton && !sendButton.disabled) {
-      console.log('[Claude Enter] Clicking Send button');
       sendButton.click();
     } else {
-      console.log('[Claude Enter] Send button not found, using fallback');
       // Fallback: dispatch plain Enter
       const enterEvent = createEnterEvent();
       activeElement.dispatchEvent(enterEvent);
@@ -158,7 +134,6 @@ function handleEnterSwap(event) {
     return;
   }
   else {
-    console.log('[Claude Enter] Matched NEITHER - blocking event');
     // Block any other Enter combinations (Ctrl+Enter, Alt+Enter, Meta+Enter, etc.)
     // This prevents Claude's native keyboard shortcuts from interfering with user settings.
     // For example, if the user configured "swapped" mode (Enter=newline, Shift+Enter=send),
@@ -169,5 +144,4 @@ function handleEnterSwap(event) {
 }
 
 // Apply the setting on initial load
-console.log('[Claude Enter] Script loaded, calling applyEnterSwapSetting()');
 applyEnterSwapSetting();

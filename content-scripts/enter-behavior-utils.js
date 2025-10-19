@@ -4,12 +4,10 @@
 let enterKeyConfig = null;
 
 function enableEnterSwap() {
-  console.log('[Enter Utils] Attaching listener to window');
   window.addEventListener("keydown", handleEnterSwap, { capture: true });
 }
 
 function disableEnterSwap() {
-  console.log('[Enter Utils] Removing listener from window');
   window.removeEventListener("keydown", handleEnterSwap, { capture: true });
 }
 
@@ -34,7 +32,6 @@ function getTargetModifiers(actionType) {
 }
 
 function applyEnterSwapSetting() {
-  console.log('[Enter Utils] applyEnterSwapSetting called');
   chrome.storage.sync.get({
     enterKeyBehavior: {
       enabled: true,
@@ -44,13 +41,10 @@ function applyEnterSwapSetting() {
     }
   }, (data) => {
     enterKeyConfig = data.enterKeyBehavior;
-    console.log('[Enter Utils] Config loaded:', enterKeyConfig);
 
     if (enterKeyConfig.enabled) {
-      console.log('[Enter Utils] Calling enableEnterSwap()');
       enableEnterSwap();
     } else {
-      console.log('[Enter Utils] Calling disableEnterSwap()');
       disableEnterSwap();
     }
   });
