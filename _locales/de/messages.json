@@ -105,6 +105,10 @@
   "sectionKeyboardShortcuts": {
     "message": "Tastaturkürzel"
   },
+
+  "sectionKeyboard": {
+    "message": "Tastatur"
+  },
   "labelEnableShortcut": {
     "message": "Tastaturkürzel aktivieren"
   },

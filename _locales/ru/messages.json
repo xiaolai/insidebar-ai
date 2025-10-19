@@ -105,6 +105,10 @@
   "sectionKeyboardShortcuts": {
     "message": "Горячие клавиши"
   },
+
+  "sectionKeyboard": {
+    "message": "Клавиатура"
+  },
   "labelEnableShortcut": {
     "message": "Включить горячие клавиши"
   },

@@ -105,6 +105,10 @@
   "sectionKeyboardShortcuts": {
     "message": "Raccourcis clavier"
   },
+
+  "sectionKeyboard": {
+    "message": "Clavier"
+  },
   "labelEnableShortcut": {
     "message": "Activer le raccourci clavier"
   },

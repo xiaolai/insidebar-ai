@@ -105,6 +105,10 @@
   "sectionKeyboardShortcuts": {
     "message": "Scorciatoie da tastiera"
   },
+
+  "sectionKeyboard": {
+    "message": "Tastiera"
+  },
   "labelEnableShortcut": {
     "message": "Abilita scorciatoie da tastiera"
   },

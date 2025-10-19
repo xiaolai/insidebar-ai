@@ -101,6 +101,10 @@
   "sectionKeyboardShortcuts": {
     "message": "鍵盤快速鍵"
   },
+
+  "sectionKeyboard": {
+    "message": "鍵盤"
+  },
   "labelEnableShortcut": {
     "message": "啟用鍵盤快速鍵"
   },

@@ -105,6 +105,10 @@
   "sectionKeyboardShortcuts": {
     "message": "Atajos de Teclado"
   },
+
+  "sectionKeyboard": {
+    "message": "Teclado"
+  },
   "labelEnableShortcut": {
     "message": "Habilitar Atajos de Teclado"
   },

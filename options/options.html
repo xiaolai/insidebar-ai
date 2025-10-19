@@ -100,8 +100,9 @@
         </div>
       </section>
 
+      <!-- Keyboard Settings -->
       <section class="section">
-        <h2 class="section-title" data-i18n="sectionKeyboardShortcuts">Keyboard Shortcuts</h2>
+        <h2 class="section-title" data-i18n="sectionKeyboard">Keyboard</h2>
 
         <div class="setting-item">
           <div class="setting-info">
@@ -144,70 +145,8 @@
           </div>
         </div>
 
-        <div class="setting-item">
-          <div class="setting-info">
-            <div class="setting-label" data-i18n="labelAutoPaste">Auto-paste Clipboard to Prompt Library</div>
-            <div class="setting-description" data-i18n="descAutoPaste">
-              Automatically paste clipboard content to workspace when opening Prompt Library with Command+Shift+P
-            </div>
-          </div>
-          <div class="setting-control">
-            <label class="switch">
-              <input type="checkbox" id="auto-paste-toggle" />
-              <span class="slider"></span>
-            </label>
-          </div>
-        </div>
-
-      </section>
-
-      <!-- Chat History Settings -->
-      <section class="section">
-        <h2 class="section-title" data-i18n="sectionChatHistory">Chat History</h2>
-
-        <div class="setting-item">
-          <div class="setting-info">
-            <div class="setting-label" data-i18n="labelAutoOpenSidebar">Auto-open Sidebar After Save</div>
-            <div class="setting-description" data-i18n="descAutoOpenSidebar">
-              Automatically open the sidebar and switch to chat history when you save a conversation
-            </div>
-          </div>
-          <div class="setting-control">
-            <label class="switch">
-              <input type="checkbox" id="auto-open-sidebar-toggle" />
-              <span class="slider"></span>
-            </label>
-          </div>
-        </div>
-
-      </section>
-
-      <!-- Content Sending Settings -->
-      <section class="section">
-        <h2 class="section-title" data-i18n="sectionContentSending">Content Sending</h2>
-
-        <div class="setting-item">
-          <div class="setting-info">
-            <div class="setting-label" data-i18n="labelSourceUrlPlacement">Source URL Placement</div>
-            <div class="setting-description" data-i18n="descSourceUrlPlacement">
-              Choose where to place the source URL when sending selected text or page content to AI providers
-            </div>
-          </div>
-          <div class="setting-control">
-            <select id="source-url-placement-select">
-              <option value="end" data-i18n="urlPlacementEnd">At end (after content)</option>
-              <option value="beginning" data-i18n="urlPlacementBeginning">At beginning (before content)</option>
-              <option value="none" data-i18n="urlPlacementNone">Don't include URL</option>
-            </select>
-          </div>
-        </div>
-
-      </section>
-
-      <!-- Enter Key Behavior Settings -->
-      <section class="section">
-        <h2 class="section-title" data-i18n="sectionEnterBehavior">Enter Key Behavior</h2>
-        <p style="font-size: 14px; color: #666; margin-bottom: 8px;" data-i18n="descEnterBehavior1">
+        <!-- Enter Key Behavior -->
+        <p style="font-size: 14px; color: #666; margin-top: 24px; margin-bottom: 8px;" data-i18n="descEnterBehavior1">
           Customize how Enter and modifier keys work when typing in AI provider input fields.
         </p>
         <p style="font-size: 13px; color: #888; margin-bottom: 16px;" data-i18n-html="descEnterBehavior2">
@@ -289,12 +228,48 @@
 
       </section>
 
-      <!-- Default Prompt Library -->
+      <!-- Chat History Settings -->
+      <section class="section">
+        <h2 class="section-title" data-i18n="sectionChatHistory">Chat History</h2>
+
+        <div class="setting-item">
+          <div class="setting-info">
+            <div class="setting-label" data-i18n="labelAutoOpenSidebar">Auto-open Sidebar After Save</div>
+            <div class="setting-description" data-i18n="descAutoOpenSidebar">
+              Automatically open the sidebar and switch to chat history when you save a conversation
+            </div>
+          </div>
+          <div class="setting-control">
+            <label class="switch">
+              <input type="checkbox" id="auto-open-sidebar-toggle" />
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Prompt Library -->
       <section class="section">
         <h2 class="section-title" data-i18n="sectionPromptLibrary">Prompt Library</h2>
         <p style="font-size: 14px; color: #666; margin-bottom: 16px;" data-i18n="descPromptLibrary">
           Import curated meta-prompts for AI workflows, research, coding, and analysis
         </p>
+
+        <div class="setting-item">
+          <div class="setting-info">
+            <div class="setting-label" data-i18n="labelAutoPaste">Auto-paste Clipboard to Prompt Library</div>
+            <div class="setting-description" data-i18n="descAutoPaste">
+              Automatically paste clipboard content to workspace when opening Prompt Library with Command+Shift+P
+            </div>
+          </div>
+          <div class="setting-control">
+            <label class="switch">
+              <input type="checkbox" id="auto-paste-toggle" />
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
 
         <div class="library-import-card">
           <div class="library-header">
@@ -313,6 +288,28 @@
           </p>
           <input type="file" id="import-custom-library-file" accept=".json" style="display: none;" />
         </div>
+      </section>
+
+      <!-- Content Sending Settings -->
+      <section class="section">
+        <h2 class="section-title" data-i18n="sectionContentSending">Content Sending</h2>
+
+        <div class="setting-item">
+          <div class="setting-info">
+            <div class="setting-label" data-i18n="labelSourceUrlPlacement">Source URL Placement</div>
+            <div class="setting-description" data-i18n="descSourceUrlPlacement">
+              Choose where to place the source URL when sending selected text or page content to AI providers
+            </div>
+          </div>
+          <div class="setting-control">
+            <select id="source-url-placement-select">
+              <option value="end" data-i18n="urlPlacementEnd">At end (after content)</option>
+              <option value="beginning" data-i18n="urlPlacementBeginning">At beginning (before content)</option>
+              <option value="none" data-i18n="urlPlacementNone">Don't include URL</option>
+            </select>
+          </div>
+        </div>
+
       </section>
 
       <!-- T056-T064: Data Management -->

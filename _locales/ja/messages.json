@@ -101,6 +101,10 @@
   "sectionKeyboardShortcuts": {
     "message": "キーボードショートカット"
   },
+
+  "sectionKeyboard": {
+    "message": "キーボード"
+  },
   "labelEnableShortcut": {
     "message": "キーボードショートカットを有効にする"
   },

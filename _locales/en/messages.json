@@ -105,6 +105,10 @@
   "sectionKeyboardShortcuts": {
     "message": "Keyboard Shortcuts"
   },
+
+  "sectionKeyboard": {
+    "message": "Keyboard"
+  },
   "labelEnableShortcut": {
     "message": "Enable Keyboard Shortcut"
   },

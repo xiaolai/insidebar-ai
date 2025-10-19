@@ -101,6 +101,10 @@
   "sectionKeyboardShortcuts": {
     "message": "键盘快捷键"
   },
+
+  "sectionKeyboard": {
+    "message": "键盘"
+  },
   "labelEnableShortcut": {
     "message": "启用键盘快捷键"
   },

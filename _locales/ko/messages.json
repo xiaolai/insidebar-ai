@@ -101,6 +101,10 @@
   "sectionKeyboardShortcuts": {
     "message": "키보드 단축키"
   },
+
+  "sectionKeyboard": {
+    "message": "키보드"
+  },
   "labelEnableShortcut": {
     "message": "키보드 단축키 활성화"
   },
