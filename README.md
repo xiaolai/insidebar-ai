@@ -101,7 +101,7 @@ Choose your installation method:
 
 **One-click installation. Automatic updates. No developer mode needed.**
 
-1. Visit the [Chrome Web Store page](https://chrome.google.com/webstore/detail/insidebar-ai/[ID])
+1. Visit the [Chrome Web Store page](https://chromewebstore.google.com/detail/insidebarai/jhlfjcmiemebjjnbdoddhoohbdjnfece)
 2. Click **"Add to Chrome"**
 3. Click **"Add Extension"** in the popup
 4. Done! Click the extension icon or press `Cmd/Ctrl+Shift+E`
