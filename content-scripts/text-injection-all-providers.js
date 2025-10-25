@@ -17,8 +17,8 @@
     grok: ['textarea', '.tiptap', '.ProseMirror'],
     deepseek: ['textarea.ds-scroll-area'],
     google: ['textarea.ITIRGe', 'textarea[aria-label="Ask anything"]', 'textarea[maxlength="8192"]'],
-    // TODO: Update Copilot selectors after DOM inspection
-    copilot: ['textarea', 'div[contenteditable="true"]', '[role="textbox"]']
+    // Copilot uses textarea with id="userInput" or data-testid="composer-input"
+    copilot: ['textarea#userInput', 'textarea[data-testid="composer-input"]', 'textarea[placeholder*="Message Copilot"]']
   };
 
   // Detect which provider we're on based on hostname

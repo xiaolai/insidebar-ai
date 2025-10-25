@@ -23,19 +23,18 @@ function createEnterEvent(modifiers = {}) {
 
 // Helper: Find Copilot's Send button
 function findSendButton() {
-  // TODO: Update these selectors after inspecting Copilot's DOM
-  // Try specific data-testid attributes first (faster)
-  const byTestId = document.querySelector('button[data-testid="send-button"]') ||
-                   document.querySelector('button[aria-label*="Send"]') ||
-                   document.querySelector('button[aria-label*="send"]');
+  // Copilot uses data-testid="submit-button" for the send button
+  const byTestId = document.querySelector('button[data-testid="submit-button"]');
   if (byTestId) return byTestId;
 
-  // Fallback: search by text content or classes
+  // Fallback: search by aria-label
+  const byAriaLabel = document.querySelector('button[aria-label="Submit message"]');
+  if (byAriaLabel) return byAriaLabel;
+
+  // Another fallback: search all buttons for matching aria-label
   return Array.from(document.querySelectorAll('button')).find(btn =>
-    btn.textContent.trim() === 'Send' ||
-    btn.textContent.trim() === 'Submit' ||
-    btn.getAttribute('aria-label')?.includes('Send') ||
-    btn.getAttribute('aria-label')?.includes('Submit')
+    btn.getAttribute('aria-label')?.includes('Submit') ||
+    btn.getAttribute('title')?.includes('Submit')
   );
 }
 
@@ -52,18 +51,21 @@ function handleEnterSwap(event) {
   // Get the currently focused element
   const activeElement = document.activeElement;
 
-  // TODO: Update these selectors after inspecting Copilot's input area
   // Check if this is Copilot's input area
-  // Common patterns: textarea, contenteditable div, or specific input elements
-  const isTextarea = activeElement &&
-                     activeElement.tagName === "TEXTAREA" &&
-                     activeElement.offsetParent !== null; // visible check
+  // Copilot uses textarea with id="userInput" and data-testid="composer-input"
+  const isMainComposer = activeElement &&
+                         activeElement.tagName === "TEXTAREA" &&
+                         (activeElement.id === "userInput" ||
+                          activeElement.getAttribute('data-testid') === 'composer-input') &&
+                         activeElement.offsetParent !== null;
 
-  const isContentEditable = activeElement &&
-                           activeElement.contentEditable === "true" &&
-                           activeElement.offsetParent !== null;
+  // Also check for floating/inline textarea (appears during editing)
+  const isFloatingTextarea = activeElement &&
+                            activeElement.tagName === "TEXTAREA" &&
+                            activeElement.placeholder?.includes('question or edit') &&
+                            activeElement.offsetParent !== null;
 
-  const isCopilotInput = isTextarea || isContentEditable;
+  const isCopilotInput = isMainComposer || isFloatingTextarea;
 
   if (!isCopilotInput) {
     return;
@@ -71,20 +73,9 @@ function handleEnterSwap(event) {
 
   // Check if this matches newline action
   if (matchesModifiers(event, enterKeyConfig.newlineModifiers)) {
-    if (isTextarea) {
-      // For regular textarea: let native Enter behavior work
-      // Don't preventDefault - just return and let browser handle it
-      return;
-    } else if (isContentEditable) {
-      // For contentEditable: intercept and send Shift+Enter or let default behavior
-      // This may need adjustment based on how Copilot handles contentEditable
-      event.preventDefault();
-      event.stopImmediatePropagation();
-
-      // Try Shift+Enter for newline
-      const newEvent = createEnterEvent({ shift: true });
-      activeElement.dispatchEvent(newEvent);
-    }
+    // For Copilot textarea: let native Enter behavior work for newlines
+    // Don't preventDefault - just return and let browser handle it
+    return;
   }
   // Check if this matches send action
   else if (matchesModifiers(event, enterKeyConfig.sendModifiers)) {
@@ -97,7 +88,7 @@ function handleEnterSwap(event) {
     if (sendButton && !sendButton.disabled) {
       sendButton.click();
     } else {
-      // Fallback: dispatch Enter without shift
+      // Fallback: dispatch Enter without modifiers
       const newEvent = createEnterEvent({});
       activeElement.dispatchEvent(newEvent);
     }
