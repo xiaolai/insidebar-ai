@@ -1,0 +1,88 @@
+/* Save conversation button for Microsoft Copilot pages */
+
+/* TODO: After inspecting Copilot's UI, update these styles to match native buttons */
+.copilot-save-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 8px 16px;
+  margin: 0 8px;
+
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background: white;
+  color: #333;
+
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.copilot-save-btn:hover {
+  background: #f5f5f5;
+  border-color: #d0d0d0;
+}
+
+.copilot-save-btn:active {
+  background: #e8e8e8;
+}
+
+#insidebar-save-conversation:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Notification styles */
+.insidebar-notification {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 10000;
+
+  padding: 16px 24px;
+  background: #0078d4;
+  color: white;
+  border-radius: 8px;
+
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  opacity: 0;
+  transform: translateX(400px);
+  transition: all 0.3s ease;
+}
+
+.insidebar-notification.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.insidebar-notification-success {
+  background: #0078d4;
+}
+
+.insidebar-notification-error {
+  background: #ef4444;
+}
+
+.insidebar-notification-info {
+  background: #3b82f6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .insidebar-notification {
+    top: 16px;
+    right: 16px;
+    left: 16px;
+    max-width: none;
+  }
+}

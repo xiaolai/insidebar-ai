@@ -20,7 +20,7 @@ import {
   checkForUpdates
 } from '../modules/version-checker.js';
 import { t, translatePage, getCurrentLanguage, initializeLanguage } from '../modules/i18n.js';
-const DEFAULT_ENABLED_PROVIDERS = ['chatgpt', 'claude', 'gemini', 'google', 'grok', 'deepseek'];
+const DEFAULT_ENABLED_PROVIDERS = ['chatgpt', 'claude', 'gemini', 'google', 'grok', 'deepseek', 'copilot'];
 
 // Helper function to get browser's current language in our supported format
 function getCurrentBrowserLanguage() {

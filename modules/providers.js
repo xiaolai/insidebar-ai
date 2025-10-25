@@ -46,6 +46,14 @@ export const PROVIDERS = [
     icon: '/icons/providers/deepseek.png',
     iconDark: '/icons/providers/dark/deepseek.png',
     enabled: true
+  },
+  {
+    id: 'copilot',
+    name: 'Microsoft Copilot',
+    url: 'https://copilot.microsoft.com',
+    icon: '/icons/providers/copilot.png',
+    iconDark: '/icons/providers/dark/copilot.png',
+    enabled: true
   }
 ];
 
@@ -62,7 +70,7 @@ export async function getProviderByIdWithSettings(id) {
 
 export async function getEnabledProviders() {
   const settings = await chrome.storage.sync.get({
-    enabledProviders: ['chatgpt', 'claude', 'gemini', 'google', 'grok', 'deepseek']
+    enabledProviders: ['chatgpt', 'claude', 'gemini', 'google', 'grok', 'deepseek', 'copilot']
   });
 
   return PROVIDERS

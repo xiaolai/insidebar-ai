@@ -16,7 +16,9 @@
     gemini: ['.ql-editor'],
     grok: ['textarea', '.tiptap', '.ProseMirror'],
     deepseek: ['textarea.ds-scroll-area'],
-    google: ['textarea.ITIRGe', 'textarea[aria-label="Ask anything"]', 'textarea[maxlength="8192"]']
+    google: ['textarea.ITIRGe', 'textarea[aria-label="Ask anything"]', 'textarea[maxlength="8192"]'],
+    // TODO: Update Copilot selectors after DOM inspection
+    copilot: ['textarea', 'div[contenteditable="true"]', '[role="textbox"]']
   };
 
   // Detect which provider we're on based on hostname
@@ -34,6 +36,8 @@
       return 'deepseek';
     } else if (hostname.includes('google.com') && window.location.search.includes('udm=50')) {
       return 'google';
+    } else if (hostname.includes('copilot.microsoft.com') || hostname.includes('bing.com/chat')) {
+      return 'copilot';
     }
     return null;
   }
