@@ -13,8 +13,6 @@
 (function() {
   'use strict';
 
-  console.log('[Copilot Extractor] Script loaded');
-
   // Import shared utilities from global namespace
   const {
     extractMarkdownFromElement,
@@ -60,10 +58,6 @@
   }
 
   function init() {
-    console.log('[Copilot Extractor] Initializing...');
-    console.log('[Copilot Extractor] In iframe?', window !== window.top);
-    console.log('[Copilot Extractor] URL:', window.location.href);
-
     // Check for Copilot conversation pages: /chats/* or /pages/*
     const isCopilotConversation =
       (window.location.href.includes('copilot.microsoft.com/chats/') ||
@@ -71,13 +65,11 @@
        window.location.href.includes('bing.com/chat'));
 
     if (!isCopilotConversation) {
-      console.log('[Copilot Extractor] Not on Copilot conversation page, skipping');
       return;
     }
 
     // Wait a bit for Copilot to fully render
     setTimeout(() => {
-      console.log('[Copilot Extractor] Attempting to insert save button...');
       insertSaveButton();
       observeForShareButton();
     }, 2000);
@@ -128,75 +120,40 @@
   function insertSaveButton() {
     // Check if button already exists
     if (document.getElementById('insidebar-save-conversation')) {
-      console.log('[Copilot Extractor] Save button already exists');
       return;
     }
 
     // Find share button (handles both /chats/ and /pages/ layouts)
     const shareButton = findShareButton();
 
-    console.log('[Copilot Extractor] Looking for share button...');
-    console.log('[Copilot Extractor] Share button found?', !!shareButton);
-
     if (!shareButton) {
-      console.log('[Copilot Extractor] Share button not found yet, will retry');
-      console.log('[Copilot Extractor] All buttons on page:',
-        Array.from(document.querySelectorAll('button')).map(b => ({
-          text: b.textContent.substring(0, 30),
-          testId: b.getAttribute('data-testid'),
-          classes: b.className
-        }))
-      );
       return;
     }
 
     // Check if conversation exists
     const hasConversation = detectConversation();
-    console.log('[Copilot Extractor] Has conversation?', hasConversation);
-    console.log('[Copilot Extractor] URL:', window.location.href);
-    console.log('[Copilot Extractor] Is /pages/?', window.location.href.includes('/pages/'));
-    console.log('[Copilot Extractor] Is /chats/?', window.location.href.includes('/chats/'));
 
     if (!hasConversation) {
-      console.log('[Copilot Extractor] No conversation detected, skipping button insertion');
       return;
     }
 
     // Create and insert save button after share button
-    console.log('[Copilot Extractor] Creating save button...');
     saveButton = createSaveButton(shareButton);
-    console.log('[Copilot Extractor] Save button created:', saveButton);
-    console.log('[Copilot Extractor] Share button parent:', shareButton.parentElement);
-    console.log('[Copilot Extractor] Inserting save button...');
     shareButton.parentElement.insertBefore(saveButton, shareButton.nextSibling);
-
-    console.log('[Copilot Extractor] Save button inserted! ID:', saveButton.id);
   }
 
   // Detect if there's a conversation on the page
   function detectConversation() {
     // For /pages/, check if there's content in the page editor
     if (window.location.href.includes('/pages/')) {
-      // Pages always have content, just check if we're on a page URL
-      const contenteditable = document.querySelector('[contenteditable="true"]');
-      const textbox = document.querySelector('[role="textbox"]');
-      const textarea = document.querySelector('textarea');
-
-      console.log('[Copilot Extractor] detectConversation() for /pages/:');
-      console.log('  - contenteditable element:', contenteditable);
-      console.log('  - textbox element:', textbox);
-      console.log('  - textarea element:', textarea);
-
-      const hasPageContent = contenteditable || textbox || textarea;
-      console.log('  - hasPageContent:', !!hasPageContent);
-
+      const hasPageContent = document.querySelector('[contenteditable="true"]') ||
+                            document.querySelector('[role="textbox"]') ||
+                            document.querySelector('textarea');
       return !!hasPageContent;
     }
 
     // For /chats/, look for messages
-    console.log('[Copilot Extractor] detectConversation() for /chats/');
     const messages = getMessages();
-    console.log('  - messages found:', messages ? messages.length : 0);
     return messages && messages.length > 0;
   }
 
