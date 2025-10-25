@@ -41,11 +41,13 @@ function handleEnterSwap(event) {
   }
 
   if (!enterKeyConfig || !enterKeyConfig.enabled) {
+    console.log('[Copilot] Enter key config disabled or missing');
     return;
   }
 
   // Get the currently focused element
   const activeElement = document.activeElement;
+  console.log('[Copilot] Enter pressed in:', activeElement?.tagName, activeElement?.id, activeElement?.getAttribute('data-testid'));
 
   // Check if this is Copilot's input area
   // Copilot uses textarea with id="userInput" and data-testid="composer-input"
@@ -62,19 +64,24 @@ function handleEnterSwap(event) {
                             activeElement.offsetParent !== null;
 
   const isCopilotInput = isMainComposer || isFloatingTextarea;
+  console.log('[Copilot] isCopilotInput:', isCopilotInput);
 
   if (!isCopilotInput) {
     return;
   }
 
+  console.log('[Copilot] Shift key:', event.shiftKey, 'Config newline mods:', enterKeyConfig.newlineModifiers, 'Config send mods:', enterKeyConfig.sendModifiers);
+
   // Check if this matches newline action
   if (matchesModifiers(event, enterKeyConfig.newlineModifiers)) {
+    console.log('[Copilot] Newline action - allowing native');
     // For Copilot textarea: let native Enter behavior work for newlines
     // Don't preventDefault - just return and let browser handle it
     return;
   }
   // Check if this matches send action
   else if (matchesModifiers(event, enterKeyConfig.sendModifiers)) {
+    console.log('[Copilot] Send action - clicking button');
     event.preventDefault();
     event.stopImmediatePropagation();
 
@@ -90,11 +97,14 @@ function handleEnterSwap(event) {
     }
   }
   else {
+    console.log('[Copilot] Blocking other combination');
     // Block any other Enter combinations to avoid conflicts
     event.preventDefault();
     event.stopImmediatePropagation();
   }
 }
+
+console.log('[Copilot] Script loaded');
 
 // Apply the setting on initial load
 applyEnterSwapSetting();
