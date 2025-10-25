@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.7.0] - 2025-10-25
+
+### Added
+- **Microsoft Copilot Support**: Full integration of Microsoft Copilot as a new AI provider
+  - History extraction (Save button) for both /chats/ and /pages/ URLs
+  - Text injection support for sending prompts from sidebar
+  - Enter key behavior customization with automatic handling of Copilot's opposite native behavior
+  - Header bypass rules for iframe embedding (X-Frame-Options, CSP)
+  - Support for multiple Copilot domains: copilot.microsoft.com, bing.com/chat
+  - Provider icons (light and dark theme variants)
+
+### Changed
+- **Provider Order**: Moved DeepSeek to the end of providers list
+- **UI Improvements**: Made popup menus responsive to content height
+  - workspace-provider-popup: Now adjusts height based on number of providers
+  - category-popup: Dynamic height instead of fixed 300px
+  - provider-popup: Dynamic height instead of fixed 300px
+  - All popups now use `calc(100vh - 200px)` for better responsiveness
+
+### Fixed
+- **Copilot Enter Key Behavior**: Properly handles Copilot's opposite native behavior
+  - Copilot native: Enter = Send, Shift+Enter = Newline (opposite of ChatGPT/Claude)
+  - Solution: Always preventDefault and manually handle both actions
+  - Newline action: Insert '\n' at cursor position via textarea manipulation
+  - Send action: Click send button programmatically
+
 ## [1.6.0] - 2025-10-19
 
 ### Added
@@ -131,6 +157,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+[1.7.0]: https://github.com/xiaolai/insidebar-ai/releases/tag/v1.7.0
 [1.6.0]: https://github.com/xiaolai/insidebar-ai/releases/tag/v1.6.0
 [1.3.0]: https://github.com/xiaolai/insidebar-ai/releases/tag/v1.3.0
 [1.2.0]: https://github.com/xiaolai/insidebar-ai/releases/tag/v1.2.0
