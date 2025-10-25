@@ -2,13 +2,6 @@
 // Extracts current conversation from copilot.microsoft.com and bing.com/chat DOM and saves to extension
 //
 // IMPORTANT: Requires conversation-extractor-utils.js to be loaded first
-//
-// TODO: After manual DOM inspection, update the following selectors:
-// - SHARE_BUTTON_SELECTOR: Selector for the share button (for language detection and button placement)
-// - Conversation URL pattern check in init()
-// - Message container selectors in getMessages()
-// - Role detection attributes/classes in extractMessageFromContainer()
-// - Content element selectors in extractMessageFromContainer()
 
 (function() {
   'use strict';

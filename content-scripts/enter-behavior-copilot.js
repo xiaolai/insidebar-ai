@@ -1,9 +1,5 @@
 // Microsoft Copilot Enter/Shift+Enter behavior swap
 // Supports customizable key combinations via settings
-//
-// TODO: After inspecting Copilot's DOM, update the following:
-// - Text input selectors in handleEnterSwap()
-// - Send button selectors in findSendButton()
 
 // Helper: Create a synthetic Enter KeyboardEvent with specified modifiers
 function createEnterEvent(modifiers = {}) {
