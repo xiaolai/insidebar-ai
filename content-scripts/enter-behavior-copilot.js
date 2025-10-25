@@ -72,12 +72,26 @@ function handleEnterSwap(event) {
 
   console.log('[Copilot] Shift key:', event.shiftKey, 'Config newline mods:', enterKeyConfig.newlineModifiers, 'Config send mods:', enterKeyConfig.sendModifiers);
 
+  // IMPORTANT: Copilot's native behavior is OPPOSITE of ChatGPT/Claude:
+  // - Enter (no shift) = Send message
+  // - Shift+Enter = Newline
+  // So we must ALWAYS preventDefault and handle both actions ourselves
+
   // Check if this matches newline action
   if (matchesModifiers(event, enterKeyConfig.newlineModifiers)) {
-    console.log('[Copilot] Newline action - allowing native');
-    // For Copilot textarea: let native Enter behavior work for newlines
-    // Don't preventDefault - just return and let browser handle it
-    return;
+    console.log('[Copilot] Newline action - inserting newline');
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+    // Insert a newline character at cursor position
+    const start = activeElement.selectionStart;
+    const end = activeElement.selectionEnd;
+    const value = activeElement.value;
+    activeElement.value = value.substring(0, start) + '\n' + value.substring(end);
+    activeElement.selectionStart = activeElement.selectionEnd = start + 1;
+
+    // Trigger input event so Copilot knows the content changed
+    activeElement.dispatchEvent(new Event('input', { bubbles: true }));
   }
   // Check if this matches send action
   else if (matchesModifiers(event, enterKeyConfig.sendModifiers)) {
@@ -91,7 +105,8 @@ function handleEnterSwap(event) {
     if (sendButton && !sendButton.disabled) {
       sendButton.click();
     } else {
-      // Fallback: dispatch Enter without modifiers
+      console.log('[Copilot] Send button not found, allowing native send');
+      // Let Copilot's native Enter behavior send the message
       const newEvent = createEnterEvent({});
       activeElement.dispatchEvent(newEvent);
     }
