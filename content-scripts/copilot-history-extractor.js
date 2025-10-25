@@ -168,7 +168,16 @@
 
   // Detect if there's a conversation on the page
   function detectConversation() {
-    // Look for messages
+    // For /pages/, check if there's content in the page editor
+    if (window.location.href.includes('/pages/')) {
+      // Pages always have content, just check if we're on a page URL
+      const hasPageContent = document.querySelector('[contenteditable="true"]') ||
+                            document.querySelector('[role="textbox"]') ||
+                            document.querySelector('textarea');
+      return !!hasPageContent;
+    }
+
+    // For /chats/, look for messages
     const messages = getMessages();
     return messages && messages.length > 0;
   }
@@ -330,8 +339,29 @@
   function extractConversation() {
     try {
       const title = getConversationTitle();
-      const messages = getMessages();
 
+      // For /pages/, extract the page content instead of messages
+      if (window.location.href.includes('/pages/')) {
+        const pageContent = extractPageContent();
+        if (!pageContent || !pageContent.trim()) {
+          throw new Error('No content found on page');
+        }
+
+        return {
+          title,
+          content: pageContent,
+          messages: [{
+            role: 'assistant',
+            content: pageContent
+          }],
+          timestamp: Date.now(),
+          url: window.location.href,
+          provider: 'Microsoft Copilot'
+        };
+      }
+
+      // For /chats/, extract messages
+      const messages = getMessages();
       if (!messages || messages.length === 0) {
         throw new Error('No messages found in conversation');
       }
@@ -350,6 +380,23 @@
       console.error('[Copilot Extractor] Error extracting conversation:', error);
       throw error;
     }
+  }
+
+  // Extract content from /pages/ (document editor)
+  function extractPageContent() {
+    // Look for the main content area in Pages
+    const contentArea = document.querySelector('[contenteditable="true"]') ||
+                       document.querySelector('[role="textbox"]') ||
+                       document.querySelector('main');
+
+    if (!contentArea) {
+      console.warn('[Copilot Extractor] No content area found on page');
+      return '';
+    }
+
+    // Extract and format the content
+    const clone = contentArea.cloneNode(true);
+    return extractMarkdownFromElement(clone);
   }
 
   // Handle save button click
