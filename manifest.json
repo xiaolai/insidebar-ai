@@ -11,8 +11,7 @@
     "contextMenus",
     "declarativeNetRequest",
     "declarativeNetRequestWithHostAccess",
-    "clipboardRead",
-    "management"
+    "clipboardRead"
   ],
 
   "host_permissions": [
