@@ -63,7 +63,8 @@ function insertTextareaNewline(textarea) {
 
 function handleEnterSwap(event) {
   // Only handle Enter key events
-  if (event.code !== "Enter") {
+  // Skip if IME composition is in progress (e.g., Chinese/Japanese input method)
+  if (event.code !== "Enter" || event.isComposing) {
     return;
   }
 

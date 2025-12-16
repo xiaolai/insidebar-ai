@@ -96,7 +96,8 @@ function insertTextareaNewline(textarea) {
 
 function handleEnterSwap(event) {
   // Only handle trusted Enter key events
-  if (!event.isTrusted || event.code !== "Enter") {
+  // Skip if IME composition is in progress (e.g., Chinese/Japanese input method)
+  if (!event.isTrusted || event.code !== "Enter" || event.isComposing) {
     return;
   }
 
