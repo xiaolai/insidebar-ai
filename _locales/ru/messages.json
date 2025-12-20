@@ -11,6 +11,9 @@
   "commandOpenPromptLibrary": {
     "message": "Открыть библиотеку промптов insidebar.ai"
   },
+  "commandToggleFocus": {
+    "message": "Переключить фокус между боковой панелью и страницей"
+  },
   "actionDefaultTitle": {
     "message": "Открыть insidebar.ai"
   },

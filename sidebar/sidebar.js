@@ -383,6 +383,25 @@ function setupMessageListener() {
             await renderConversationList();
           }
           sendResponse({ success: true });
+        } else if (message.action === 'checkFocus') {
+          // Check if sidebar has focus
+          sendResponse({ hasFocus: document.hasFocus() });
+        } else if (message.action === 'takeFocus') {
+          // Focus the sidebar - try workspace textarea first, then current iframe
+          let focusSuccess = false;
+          const workspace = document.getElementById('prompt-workspace-text');
+          if (workspace && currentView === 'prompt-library') {
+            workspace.focus();
+            focusSuccess = true;
+          } else if (currentProvider && loadedIframes.has(currentProvider)) {
+            // Focus the current provider's iframe
+            const iframe = loadedIframes.get(currentProvider);
+            if (iframe) {
+              iframe.focus();
+              focusSuccess = true;
+            }
+          }
+          sendResponse({ success: focusSuccess });
         }
       } catch (error) {
         console.error('Error handling message:', error);

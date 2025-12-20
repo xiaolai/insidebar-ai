@@ -11,6 +11,9 @@
   "commandOpenPromptLibrary": {
     "message": "insidebar.ai 프롬프트 라이브러리 열기"
   },
+  "commandToggleFocus": {
+    "message": "사이드바와 페이지 간 포커스 전환"
+  },
   "actionDefaultTitle": {
     "message": "insidebar.ai 열기"
   },

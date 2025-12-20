@@ -11,6 +11,9 @@
   "commandOpenPromptLibrary": {
     "message": "開啟 insidebar.ai 提示詞庫"
   },
+  "commandToggleFocus": {
+    "message": "在側邊欄和頁面之間切換焦點"
+  },
   "actionDefaultTitle": {
     "message": "開啟 insidebar.ai"
   },

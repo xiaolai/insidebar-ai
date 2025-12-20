@@ -11,6 +11,9 @@
   "commandOpenPromptLibrary": {
     "message": "insidebar.ai Prompt-Bibliothek öffnen"
   },
+  "commandToggleFocus": {
+    "message": "Fokus zwischen Seitenleiste und Seite wechseln"
+  },
   "actionDefaultTitle": {
     "message": "insidebar.ai öffnen"
   },

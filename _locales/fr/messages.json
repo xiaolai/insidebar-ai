@@ -11,6 +11,9 @@
   "commandOpenPromptLibrary": {
     "message": "Ouvrir la bibliothèque de prompts insidebar.ai"
   },
+  "commandToggleFocus": {
+    "message": "Basculer le focus entre la barre latérale et la page"
+  },
   "actionDefaultTitle": {
     "message": "Ouvrir insidebar.ai"
   },

@@ -72,6 +72,13 @@
         "mac": "Command+Shift+P"
       },
       "description": "__MSG_commandOpenPromptLibrary__"
+    },
+    "toggle-focus": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+F",
+        "mac": "Command+Shift+F"
+      },
+      "description": "__MSG_commandToggleFocus__"
     }
   },
 
@@ -92,7 +99,8 @@
         "content-scripts/text-injection-all-providers.js",
         "content-scripts/conversation-extractor-utils.js",
         "content-scripts/language-detector.js",
-        "content-scripts/chatgpt-history-extractor.js"
+        "content-scripts/chatgpt-history-extractor.js",
+        "content-scripts/focus-toggle.js"
       ],
       "css": ["content-scripts/chatgpt-save-button.css"],
       "run_at": "document_end",
@@ -106,7 +114,8 @@
         "content-scripts/text-injection-all-providers.js",
         "content-scripts/conversation-extractor-utils.js",
         "content-scripts/language-detector.js",
-        "content-scripts/claude-history-extractor.js"
+        "content-scripts/claude-history-extractor.js",
+        "content-scripts/focus-toggle.js"
       ],
       "css": ["content-scripts/claude-save-button.css"],
       "run_at": "document_end",
@@ -120,7 +129,8 @@
         "content-scripts/text-injection-all-providers.js",
         "content-scripts/conversation-extractor-utils.js",
         "content-scripts/language-detector.js",
-        "content-scripts/gemini-history-extractor.js"
+        "content-scripts/gemini-history-extractor.js",
+        "content-scripts/focus-toggle.js"
       ],
       "css": ["content-scripts/gemini-save-button.css"],
       "run_at": "document_start",
@@ -135,7 +145,8 @@
         "content-scripts/text-injection-all-providers.js",
         "content-scripts/conversation-extractor-utils.js",
         "content-scripts/language-detector.js",
-        "content-scripts/grok-history-extractor.js"
+        "content-scripts/grok-history-extractor.js",
+        "content-scripts/focus-toggle.js"
       ],
       "css": ["content-scripts/grok-save-button.css"],
       "run_at": "document_start",
@@ -150,7 +161,8 @@
         "content-scripts/text-injection-all-providers.js",
         "content-scripts/conversation-extractor-utils.js",
         "content-scripts/language-detector.js",
-        "content-scripts/deepseek-history-extractor.js"
+        "content-scripts/deepseek-history-extractor.js",
+        "content-scripts/focus-toggle.js"
       ],
       "css": ["content-scripts/deepseek-save-button.css"],
       "run_at": "document_start",
@@ -163,7 +175,8 @@
         "content-scripts/enter-behavior-perplexity.js",
         "content-scripts/conversation-extractor-utils.js",
         "content-scripts/language-detector.js",
-        "content-scripts/perplexity-history-extractor.js"
+        "content-scripts/perplexity-history-extractor.js",
+        "content-scripts/focus-toggle.js"
       ],
       "css": ["content-scripts/perplexity-save-button.css"],
       "run_at": "document_end",
@@ -177,7 +190,8 @@
         "content-scripts/text-injection-all-providers.js",
         "content-scripts/conversation-extractor-utils.js",
         "content-scripts/language-detector.js",
-        "content-scripts/google-history-extractor.js"
+        "content-scripts/google-history-extractor.js",
+        "content-scripts/focus-toggle.js"
       ],
       "css": ["content-scripts/google-save-button.css"],
       "run_at": "document_end",
@@ -191,7 +205,8 @@
         "content-scripts/text-injection-all-providers.js",
         "content-scripts/conversation-extractor-utils.js",
         "content-scripts/language-detector.js",
-        "content-scripts/copilot-history-extractor.js"
+        "content-scripts/copilot-history-extractor.js",
+        "content-scripts/focus-toggle.js"
       ],
       "css": ["content-scripts/copilot-save-button.css"],
       "run_at": "document_end",

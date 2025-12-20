@@ -11,6 +11,9 @@
   "commandOpenPromptLibrary": {
     "message": "insidebar.ai プロンプトライブラリを開く"
   },
+  "commandToggleFocus": {
+    "message": "サイドバーとページ間でフォーカスを切り替え"
+  },
   "actionDefaultTitle": {
     "message": "insidebar.ai を開く"
   },

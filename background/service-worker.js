@@ -484,5 +484,52 @@ chrome.commands.onCommand.addListener(async (command, tab) => {
         sidePanelState.set(windowId, false);
       }
     }
+  } else if (command === 'toggle-focus') {
+    // Toggle focus between sidebar and main page
+    if (!isOpen) {
+      // Sidebar not open - open it (it will auto-focus)
+      try {
+        await chrome.sidePanel.open({ windowId });
+        sidePanelState.set(windowId, true);
+      } catch (error) {
+        // Silently handle errors
+      }
+    } else {
+      // Sidebar is open - toggle focus between sidebar and page
+      try {
+        // Check if sidebar has focus
+        const sidebarResponse = await notifyMessage({
+          action: 'checkFocus',
+          payload: {}
+        });
+
+        if (sidebarResponse && sidebarResponse.hasFocus) {
+          // Sidebar has focus - switch to page input
+          if (tab && tab.id) {
+            try {
+              await chrome.tabs.sendMessage(tab.id, { action: 'takeFocus' });
+            } catch (error) {
+              // Content script may not be available
+            }
+          }
+        } else {
+          // Page has focus (or unknown) - switch to sidebar
+          await notifyMessage({
+            action: 'takeFocus',
+            payload: {}
+          });
+        }
+      } catch (error) {
+        // If sidebar messaging fails, try to focus sidebar anyway
+        try {
+          await notifyMessage({
+            action: 'takeFocus',
+            payload: {}
+          });
+        } catch (e) {
+          // Silently handle errors
+        }
+      }
+    }
   }
 });
