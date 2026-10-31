@@ -9,8 +9,34 @@ import { t, initializeLanguage } from '../modules/i18n.js';
 const DEFAULT_SHORTCUT_SETTING = { keyboardShortcutEnabled: true };
 let keyboardShortcutEnabled = true;
 
-// T070: Track side panel state per window
-const sidePanelState = new Map(); // windowId -> boolean (true = open, false = closed)
+// Chrome owns per-tab visibility, including restoring a panel left open on a tab.
+const sidePanelState = new Map(); // tabId -> explicitly open
+const configuredTabs = new Set();
+
+async function configureTabPanel(tabId) {
+  if (!Number.isInteger(tabId) || configuredTabs.has(tabId)) return;
+  await chrome.sidePanel.setOptions({ tabId, path: `sidebar/sidebar.html?tabId=${tabId}`, enabled: true });
+  configuredTabs.add(tabId);
+}
+
+async function openTabPanel(tab) {
+  // Panels are configured on install/startup and tab creation. Open synchronously
+  // in the click/shortcut handler so Chrome retains its required user gesture.
+  await chrome.sidePanel.open({ tabId: tab.id });
+  sidePanelState.set(tab.id, true);
+}
+
+async function closeTabPanel(tab) {
+  if (chrome.sidePanel.close) await chrome.sidePanel.close({ tabId: tab.id });
+  else await notifyMessage({ action: 'closeSidePanel', payload: { sourceTabId: tab.id, sourceWindowId: tab.windowId } });
+  sidePanelState.set(tab.id, false);
+}
+
+chrome.tabs.onCreated.addListener(tab => configureTabPanel(tab.id).catch(() => {}));
+chrome.tabs.onRemoved.addListener(tabId => {
+  configuredTabs.delete(tabId);
+  sidePanelState.delete(tabId);
+});
 
 async function loadShortcutSetting() {
   try {
@@ -22,41 +48,17 @@ async function loadShortcutSetting() {
   }
 }
 
-// T070: Helper to toggle side panel
-async function toggleSidePanel(windowId, action = null) {
-  if (!windowId) {
-    return;
-  }
-
-  const isOpen = sidePanelState.get(windowId) || false;
-
-  if (!isOpen) {
-    // Open the side panel
-    try {
-      await chrome.sidePanel.open({ windowId });
-      sidePanelState.set(windowId, true);
-    } catch (error) {
-      // Silently fail - side panel may not be available
-    }
-  } else {
-    // Close the side panel by sending message to sidebar
-    try {
-      await notifyMessage({ action: 'closeSidePanel', payload: {} });
-      sidePanelState.set(windowId, false);
-    } catch (error) {
-      // Even if message fails, assume it's closed
-      sidePanelState.set(windowId, false);
-    }
-  }
+async function toggleSidePanel(tab) {
+  if (sidePanelState.get(tab.id)) await closeTabPanel(tab);
+  else await openTabPanel(tab);
 }
 
 async function configureActionBehavior() {
-  // Always handle action clicks ourselves so we can respect the toggle state.
-  try {
-    await chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: false });
-  } catch (error) {
-    // Silently fail if API not available
-  }
+  await chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: false });
+  // Disable the old window-wide panel. Every tab has its own initially closed panel.
+  await chrome.sidePanel.setOptions({ enabled: false });
+  const tabs = await chrome.tabs.query({});
+  await Promise.all(tabs.map(tab => configureTabPanel(tab.id).catch(() => {})));
 }
 
 chrome.runtime.onInstalled.addListener(async () => {
@@ -139,8 +141,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
       const providerId = info.menuItemId.replace('provider-', '');
 
       // Open side panel and track state
-      await chrome.sidePanel.open({ windowId: tab.windowId });
-      sidePanelState.set(tab.windowId, true);
+      await openTabPanel(tab);
 
       // Get source URL placement setting
       const settings = await chrome.storage.sync.get({ sourceUrlPlacement: 'end' });
@@ -163,7 +164,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
         setTimeout(() => {
           notifyMessage({
             action: 'switchProvider',
-            payload: { providerId, selectedText: contentToSend }
+            payload: { sourceTabId: tab.id, sourceWindowId: tab.windowId, providerId, selectedText: contentToSend }
           }).catch(() => {
             // Sidebar may not be ready yet, silently ignore
           });
@@ -180,7 +181,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
             setTimeout(() => {
               notifyMessage({
                 action: 'switchProvider',
-                payload: { providerId, selectedText: response.content }
+                payload: { sourceTabId: tab.id, sourceWindowId: tab.windowId, providerId, selectedText: response.content }
               }).catch(() => {
                 // Sidebar may not be ready yet, silently ignore
               });
@@ -190,7 +191,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
             setTimeout(() => {
               notifyMessage({
                 action: 'switchProvider',
-                payload: { providerId, selectedText: '' }
+                payload: { sourceTabId: tab.id, sourceWindowId: tab.windowId, providerId, selectedText: '' }
               }).catch(() => {});
             }, 100);
           }
@@ -200,15 +201,14 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
           setTimeout(() => {
             notifyMessage({
               action: 'switchProvider',
-              payload: { providerId, selectedText: '' }
+              payload: { sourceTabId: tab.id, sourceWindowId: tab.windowId, providerId, selectedText: '' }
             }).catch(() => {});
           }, 100);
         }
       }
     } else if (info.menuItemId === 'open-prompt-library') {
       // Open side panel with prompt library and track state
-      await chrome.sidePanel.open({ windowId: tab.windowId });
-      sidePanelState.set(tab.windowId, true);
+      await openTabPanel(tab);
 
       // Get source URL placement setting
       const settings = await chrome.storage.sync.get({ sourceUrlPlacement: 'end' });
@@ -231,7 +231,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
         setTimeout(() => {
           notifyMessage({
             action: 'openPromptLibrary',
-            payload: { selectedText: contentToSend }
+            payload: { sourceTabId: tab.id, sourceWindowId: tab.windowId, selectedText: contentToSend }
           }).catch(() => {
             // Sidebar may not be ready yet, ignore error
           });
@@ -248,7 +248,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
             setTimeout(() => {
               notifyMessage({
                 action: 'openPromptLibrary',
-                payload: { selectedText: response.content }
+                payload: { sourceTabId: tab.id, sourceWindowId: tab.windowId, selectedText: response.content }
               }).catch(() => {
                 // Sidebar may not be ready yet, ignore error
               });
@@ -258,7 +258,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
             setTimeout(() => {
               notifyMessage({
                 action: 'openPromptLibrary',
-                payload: { selectedText: '' }
+                payload: { sourceTabId: tab.id, sourceWindowId: tab.windowId, selectedText: '' }
               }).catch(() => {});
             }, 100);
           }
@@ -268,7 +268,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
           setTimeout(() => {
             notifyMessage({
               action: 'openPromptLibrary',
-              payload: { selectedText: '' }
+              payload: { sourceTabId: tab.id, sourceWindowId: tab.windowId, selectedText: '' }
             }).catch(() => {});
           }, 100);
         }
@@ -289,7 +289,7 @@ chrome.action.onClicked.addListener(async (tab) => {
     return;
   }
 
-  await toggleSidePanel(tab.windowId);
+  await toggleSidePanel(tab);
 });
 
 chrome.storage.onChanged.addListener((changes, namespace) => {
@@ -300,18 +300,22 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
   }
 });
 
-// T070: Clean up state when windows are closed
-chrome.windows.onRemoved.addListener((windowId) => {
-  sidePanelState.delete(windowId);
+// Hiding on a tab switch is managed by Chrome, rather than closing another tab's panel.
+chrome.sidePanel.onClosed?.addListener(({ tabId }) => {
+  if (Number.isInteger(tabId)) sidePanelState.set(tabId, false);
+});
+chrome.sidePanel.onOpened?.addListener(({ tabId }) => {
+  if (Number.isInteger(tabId)) sidePanelState.set(tabId, true);
 });
 
 // T070: Listen for sidebar close notifications, conversation saves, and duplicate checks
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'sidePanelClosed') {
-    // Get windowId from sender
-    if (sender.tab && sender.tab.windowId) {
-      sidePanelState.set(sender.tab.windowId, false);
-    }
+    const sidebarUrl = chrome.runtime.getURL('sidebar/sidebar.html');
+    const tabId = sender.tab?.id || (
+      sender.url?.split('?')[0] === sidebarUrl && message.payload?.tabId
+    );
+    if (Number.isInteger(tabId)) sidePanelState.set(tabId, false);
     sendResponse({ success: true });
   } else if (message.action === 'saveConversationFromPage') {
     // Handle conversation save from ChatGPT page
@@ -415,19 +419,18 @@ async function handleSaveConversation(conversationData, sender) {
     // Optionally open sidebar and switch to chat history
     if (settings.autoOpenSidebarOnSave && sender.tab) {
       const windowId = sender.tab.windowId;
-      const isOpen = sidePanelState.get(windowId) || false;
+      const isOpen = sidePanelState.get(sender.tab.id) || false;
 
       if (!isOpen && windowId) {
         try {
           // This will work because it's within the user gesture flow
-          await chrome.sidePanel.open({ windowId });
-          sidePanelState.set(windowId, true);
+          await openTabPanel(sender.tab);
 
           // Wait for sidebar to load, then switch to chat history
           setTimeout(() => {
             notifyMessage({
               action: 'switchToChatHistory',
-              payload: { conversationId: savedConversation.id }
+              payload: { sourceTabId: sender.tab.id, sourceWindowId: windowId, conversationId: savedConversation.id }
             }).catch(() => {
               // Sidebar may not be ready, ignore
             });
@@ -453,20 +456,19 @@ chrome.commands.onCommand.addListener(async (command, tab) => {
   }
 
   const windowId = tab.windowId;
-  const isOpen = sidePanelState.get(windowId) || false;
+  const isOpen = sidePanelState.get(tab.id) || false;
 
   if (command === 'open-prompt-library') {
     if (!isOpen) {
       // Open and switch to Prompt Library
       try {
-        await chrome.sidePanel.open({ windowId });
-        sidePanelState.set(windowId, true);
+        await openTabPanel(tab);
 
         // Wait for sidebar to load, then switch to Prompt Library
         setTimeout(() => {
           notifyMessage({
             action: 'openPromptLibrary',
-            payload: {}
+            payload: { sourceTabId: tab.id, sourceWindowId: windowId }
           }).catch(() => {
             // Sidebar may not be ready yet, ignore error
           });
@@ -477,11 +479,10 @@ chrome.commands.onCommand.addListener(async (command, tab) => {
     } else {
       // Close side panel (toggle off)
       try {
-        await notifyMessage({ action: 'closeSidePanel', payload: {} });
-        sidePanelState.set(windowId, false);
+        await closeTabPanel(tab);
       } catch (error) {
         // Even if message fails, assume it's closed
-        sidePanelState.set(windowId, false);
+        sidePanelState.set(tab.id, false);
       }
     }
   } else if (command === 'toggle-focus') {
@@ -489,8 +490,7 @@ chrome.commands.onCommand.addListener(async (command, tab) => {
     if (!isOpen) {
       // Sidebar not open - open it (it will auto-focus)
       try {
-        await chrome.sidePanel.open({ windowId });
-        sidePanelState.set(windowId, true);
+        await openTabPanel(tab);
       } catch (error) {
         // Silently handle errors
       }
@@ -500,7 +500,7 @@ chrome.commands.onCommand.addListener(async (command, tab) => {
         // Check if sidebar has focus
         const sidebarResponse = await notifyMessage({
           action: 'checkFocus',
-          payload: {}
+          payload: { sourceTabId: tab.id, sourceWindowId: windowId }
         });
 
         if (sidebarResponse && sidebarResponse.hasFocus) {
@@ -516,7 +516,7 @@ chrome.commands.onCommand.addListener(async (command, tab) => {
           // Page has focus (or unknown) - switch to sidebar
           await notifyMessage({
             action: 'takeFocus',
-            payload: {}
+            payload: { sourceTabId: tab.id, sourceWindowId: windowId }
           });
         }
       } catch (error) {
@@ -524,7 +524,7 @@ chrome.commands.onCommand.addListener(async (command, tab) => {
         try {
           await notifyMessage({
             action: 'takeFocus',
-            payload: {}
+            payload: { sourceTabId: tab.id, sourceWindowId: windowId }
           });
         } catch (e) {
           // Silently handle errors

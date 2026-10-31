@@ -24,6 +24,13 @@
 </head>
 <body data-theme="auto">
   <div id="app">
+    <header id="session-toolbar">
+      <label for="conversation-scope">Conversation</label>
+      <select id="conversation-scope" aria-label="Conversation scope">
+        <option value="tab">This tab</option>
+        <option value="shared">Shared research</option>
+      </select>
+    </header>
     <!-- Provider iframe container -->
     <div id="provider-container">
       <div id="loading" style="display: none;">Loading AI provider...</div>
@@ -254,6 +261,21 @@
       </div>
     </div>
 
+    <form id="page-question-form">
+      <div id="page-chip" hidden>
+        <span aria-hidden="true">▤</span>
+        <span id="page-title"></span>
+        <button id="page-remove" type="button" aria-label="Remove attached page" title="Remove attached page">×</button>
+      </div>
+      <button id="page-attach" type="button">Attach current page</button>
+      <p id="page-status"></p>
+      <button id="page-reload" type="button" hidden>Reload and attach</button>
+      <div id="question-row">
+        <textarea id="page-question" rows="2" title="Enter to send; Shift+Enter for a new line" aria-description="Enter sends. Shift+Enter inserts a new line." aria-label="Question for this conversation" placeholder="Ask about this page…"></textarea>
+        <button id="page-send" type="submit">Send</button>
+      </div>
+      <p id="question-status" role="status" aria-live="polite"></p>
+    </form>
     <!-- Provider tabs (bottom navigation) -->
     <nav id="provider-tabs">
       <!-- Provider tabs will be dynamically generated here -->

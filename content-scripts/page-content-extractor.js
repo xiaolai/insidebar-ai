@@ -268,6 +268,7 @@
           sendResponse({
             success: true,
             content: formatted,
+            rawContent: extracted.content,
             title: extracted.title,
             url: extracted.url
           });

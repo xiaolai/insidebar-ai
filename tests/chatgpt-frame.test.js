@@ -13,14 +13,15 @@ describe('sidebar readiness waits', () => {
   const sidebar = readFileSync(resolve(ROOT, 'sidebar/sidebar.js'), 'utf8');
   const source = sidebar.slice(sidebar.indexOf('async function waitForIframeReady'),
     sidebar.indexOf('// Inject selected text into provider iframe'));
-  let states, wait;
+  let states, wait, context;
   beforeEach(() => {
     vi.useFakeTimers();
     states = new Map([['chatgpt', 'loading']]);
-    wait = vm.runInNewContext(`${source}\nwaitForIframeReady`, {
+    context = {
       loadedIframes: new Map([['chatgpt', {}]]), loadedIframesState: states,
       Date, setTimeout
-    });
+    };
+    wait = vm.runInNewContext(`${source}\nwaitForIframeReady`, context);
   });
   afterEach(() => vi.useRealTimers());
   it('rejects a failed frame instead of reporting successful delivery', async () => {
@@ -37,6 +38,61 @@ describe('sidebar readiness waits', () => {
     states.set('chatgpt', 'ready');
     await vi.advanceTimersByTimeAsync(100);
     await expect(pending).resolves.toBeUndefined();
+  });
+  it('keeps an outstanding wait tied to its conversation after a scope switch', async () => {
+    const pending = expect(wait('chatgpt')).rejects.toThrow('not ready');
+    context.loadedIframesState = new Map([['chatgpt', 'ready']]);
+    states.set('chatgpt', 'failed');
+    await vi.advanceTimersByTimeAsync(100);
+    await pending;
+  });
+});
+
+describe('sidebar ChatGPT frames across conversations', () => {
+  const sidebar = readFileSync(resolve(ROOT, 'sidebar/sidebar.js'), 'utf8');
+  const source = sidebar.slice(sidebar.indexOf('function createProviderIframe'),
+    sidebar.indexOf('// T017: Load default or last selected provider'));
+  let monitors, context, create;
+  beforeEach(() => {
+    vi.useFakeTimers();
+    document.body.innerHTML = '<div id="provider-container"></div>';
+    monitors = new Map();
+    context = {
+      document, browserSessions: null, loadedIframesState: new Map(),
+      frameMonitors: monitors, monitorChatGPTFrame,
+      hideLoading: vi.fn(), showError: vi.fn()
+    };
+    create = vm.runInNewContext(`${source}\ncreateProviderIframe`, context);
+  });
+  afterEach(() => {
+    monitors.forEach(monitor => monitor.dispose());
+    vi.useRealTimers();
+  });
+  it('isolates readiness and recovery between the old and current conversations', () => {
+    const firstStates = context.loadedIframesState;
+    const first = create({ id: 'chatgpt', url: 'https://chatgpt.com/' });
+    Object.defineProperty(first, 'contentWindow', { value: { postMessage: vi.fn() } });
+    const secondStates = new Map();
+    context.loadedIframesState = secondStates;
+    const second = create({ id: 'chatgpt', url: 'https://chatgpt.com/' });
+    Object.defineProperty(second, 'contentWindow', { value: { postMessage: vi.fn() } });
+    first.dispatchEvent(new Event('load'));
+    expect(firstStates.get('chatgpt')).toBe('loading');
+    expect(secondStates.get('chatgpt')).toBe('loading');
+    window.dispatchEvent(new MessageEvent('message', {
+      origin: 'https://chatgpt.com', source: first.contentWindow,
+      data: { type: 'INSIDEBAR_CHATGPT_STATUS', ready: true }
+    }));
+    expect(firstStates.get('chatgpt')).toBe('ready');
+    expect(secondStates.get('chatgpt')).toBe('loading');
+    monitors.get(first).setActive(false);
+    monitors.get(second).setActive(true);
+    vi.advanceTimersByTime(20000);
+    expect(firstStates.get('chatgpt')).toBe('ready');
+    expect(secondStates.get('chatgpt')).toBe('failed');
+    const notices = document.querySelectorAll('.provider-recovery');
+    expect(notices[0].hidden).toBe(true);
+    expect(notices[1].hidden).toBe(false);
   });
 });
 

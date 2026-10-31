@@ -2249,3 +2249,21 @@ a.conversation-link:hover {
 @media (prefers-color-scheme: dark) {
   [data-theme="auto"] .provider-recovery { background: #262626; color: #eee; }
 }
+
+/* Page-aware conversations */
+#session-toolbar { display: flex; gap: 10px; align-items: center; padding: 8px 12px; border-bottom: 1px solid #ddd; flex-shrink: 0; font-size: 12px; }
+#conversation-scope { flex: 1; min-width: 0; padding: 6px; border: 1px solid #aaa; border-radius: 6px; background: inherit; color: inherit; }
+#page-question-form { flex-shrink: 0; padding: 8px 10px; border-top: 1px solid #ddd; background: inherit; }
+#page-chip { display: flex; align-items: center; gap: 6px; padding: 4px 6px; border: 1px solid #aac3db; border-radius: 6px; background: #eef6ff; color: #163e66; font-size: 12px; }
+#page-chip[hidden], #page-attach[hidden], #page-reload[hidden] { display: none; }
+#page-title { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#page-remove { border: 0; background: transparent; color: inherit; font-size: 20px; cursor: pointer; padding: 0 5px; }
+#page-status, #question-status { font-size: 11px; line-height: 1.4; color: #666; margin: 4px 0; }
+#question-status:empty { display: none; }
+#question-row { display: flex; align-items: stretch; gap: 8px; }
+#page-question { flex: 1; min-width: 0; max-height: 120px; resize: vertical; padding: 8px; font: inherit; font-size: 13px; border: 1px solid #aaa; border-radius: 7px; background: inherit; color: inherit; }
+#page-send, #page-attach, #page-reload { padding: 6px 10px; border: 1px solid #aaa; border-radius: 6px; cursor: pointer; background: inherit; color: inherit; }
+#page-send { background: #255ea0; color: white; border-color: #255ea0; }
+#page-send:disabled { opacity: .5; cursor: wait; }
+[data-theme="dark"] #page-chip { background: #1c3045; color: #d3e8ff; }
+[data-theme="dark"] #page-status, [data-theme="dark"] #question-status { color: #bbb; }

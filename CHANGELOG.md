@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Independent conversations, question drafts, provider drafts, and Prompt Genie workspaces for each browser tab.
+- Optional shared research conversation across tabs in one window, without merging independent chats.
+- Current-page title chip, remove/reattach controls, and page-aware question submission. Page text is included once per provider conversation; follow-up questions reuse that context.
+- Local session restoration of provider conversation addresses and drafts, with origin-checked frame messages.
+
+### Changed
+- Sidebar visibility belongs to each browser tab. New tabs start closed; returning to a tab restores its open/closed state.
+- Toolbar, shortcuts and context menus open only the requested tab's sidebar.
+- In **Ask about this page**, Enter sends the question and Shift+Enter inserts a new line. IME confirmation and held Enter do not submit repeatedly.
+
+### Fixed
+- Local HTML attachments work when Chrome file access is enabled, with filename-only source labels.
+- Tabs opened before an extension update offer **Reload and attach** when their page-reading script is unavailable, preserving question drafts during recovery.
+- ChatGPT recovery notices and readiness state remain isolated between tab and shared conversations.
+
 ## [1.7.3] - 2026-10-31
 
 ### Fixed

@@ -27,6 +27,23 @@
 
 ---
 
+## Page-aware conversations
+
+- Sidebars start closed in new tabs. Opening or closing a sidebar affects only that tab. Returning to a tab restores the sidebar if you left it open.
+- **This tab** keeps an independent AI conversation, question draft, and Prompt Genie workspace for each browser tab. Switching back restores that tab's provider and live chat.
+- **Shared research** uses one conversation and draft across tabs in the same window. Switching back to **This tab** restores the independent draft; switching modes does not merge chats.
+- The current page is attached automatically when readable. Its title appears above the question box. Click **×** to exclude it, or **Attach current page** to add it again.
+- Type into the new **Ask about this page** box and press **Enter** or click **Send to [provider]**. **Shift+Enter** inserts a new line. The page text goes with the first question about that page in the current AI conversation. Follow-up questions send only your question. A different page or a new AI conversation includes page text again. Typing directly into the provider's own input does not add page context.
+- If the provider cannot submit automatically, the question remains prepared in its input and a message asks you to review and send it there. An existing provider draft is never overwritten.
+
+Drafts and conversation addresses are kept locally in Chrome's session storage. They survive closing/reopening the sidebar, but are not a permanent chat backup and are cleared when the browser session ends or the extension is reloaded. Provider conversation history and the extension's manually saved History remain separate.
+
+Local HTML files are supported when **Allow access to file URLs** is enabled in Chrome’s extension details. Only the open document is read; local source labels use the filename rather than the full filesystem path.
+
+Attachments contain extracted page text, not every image, hidden section, or linked page. Page excerpts are limited to 40,000 characters. Chrome internal pages and some PDFs cannot be extracted. Tabs opened before installation or an extension update may need their page-reading script refreshed. If so, click **Reload and attach**; the extension keeps your question draft while reloading the page. Page content is sent only when you use **Send**, to the provider you selected; it is not synced through Chrome storage.
+
+The extension still uses each provider's website and login. Website changes, sign-in requirements, and provider limits can affect restoring or submitting chats.
+
 ## Features
 
 ### 🤖 6 AI Providers in One Sidebar
